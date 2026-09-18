@@ -12,7 +12,7 @@
 <title>RiseONE</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icone-192.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1115'/%3E%3Cpath d='M14 44 L24 24 L32 36 L40 16 L50 44' fill='none' stroke='%23ff7a2f' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="icone-192.png">
 <style>
 /* ============ TOKENS ============ */
 :root{
@@ -37,6 +37,23 @@ html[data-theme="light"]{
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
+/* ---- arte de fundo ---- */
+#bgart{position:fixed;inset:0;z-index:-2;pointer-events:none;display:none;
+  background:url("fundo.jpg") center center / cover no-repeat}
+#bgart::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 62% 70% at 50% 45%, rgba(15,17,21,.80) 0%, rgba(15,17,21,.62) 55%, rgba(15,17,21,.30) 100%)}
+html[data-bg="1"] #bgart{display:block}
+html[data-bg="1"] body{background:transparent}
+html[data-bg="1"] .card{background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(7px)}
+html[data-bg="1"] .stat,html[data-bg="1"] .item,html[data-bg="1"] .ex,html[data-bg="1"] .mvcard,html[data-bg="1"] .eqcard{
+  background:color-mix(in srgb,var(--surface2) 78%,transparent)}
+html[data-bg="1"] header.app{background:color-mix(in srgb,var(--bg) 74%,transparent)}
+html[data-bg="1"] #bottombar{background:color-mix(in srgb,var(--bg) 88%,transparent)}
+html[data-bg="1"] footer.app{background:color-mix(in srgb,var(--bg) 70%,transparent)}
+html[data-theme="light"] #bgart{opacity:.22}
+html[data-theme="light"] #bgart::after{
+  background:radial-gradient(ellipse 62% 70% at 50% 45%, rgba(246,247,249,.90) 0%, rgba(246,247,249,.80) 55%, rgba(246,247,249,.62) 100%)}
+@media (max-width:900px){ #bgart{background-image:url("fundo-celular.jpg")} }
 body{
   background:var(--bg); color:var(--text); font-family:var(--font);
   font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
@@ -325,6 +342,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
 </style>
 </head>
 <body>
+<div id="bgart" aria-hidden="true"></div>
 
 <!-- ===== BANNER DE ANUNCIO (dispensavel na sessao, volta no proximo login) ===== -->
 <div id="adbar" class="hidden">
@@ -343,12 +361,14 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
     <button class="brand" id="brandbtn" title="RiseONE">
       <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
         <rect width="64" height="64" rx="14" fill="var(--surface2)"/>
-        <path d="M14 46 L24 26 L32 38 L40 16 L50 46" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="mkg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#e8563a"/><stop offset="1" stop-color="#ffaa3c"/></linearGradient></defs>
+        <path d="M14 46 L24 26 L32 38 L40 16 L50 46" fill="none" stroke="url(#mkg)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span>Rise<span class="one">ONE</span></span>
     </button>
     <span class="spacer"></span>
     <button class="iconbtn" id="langbtn" title="Idioma / Language"><span class="flag">🌐</span><span id="langlabel">PT</span></button>
+    <button class="iconbtn" id="bgbtn" title="Fundo">▨</button>
     <button class="iconbtn" id="timerhdr" title="Cronômetro">⏱</button>
     <button class="iconbtn" id="themebtn" title="Tema">🌙</button>
     <button class="iconbtn" id="sharebtn" title="Compartilhar">↗</button>
@@ -363,7 +383,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
 
 <footer class="app">
   <div class="wrap">
-    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.1.0</span></span>
+    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.2.0</span></span>
     <span><a href="#" id="legalbtn" data-i18n="footer.legal">Aviso legal e privacidade</a></span>
   </div>
 </footer>
@@ -376,7 +396,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "2.1.0";
+const APP_VERSION = "2.2.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 1. DICIONARIO PT/EN  [pt, en] ---------- */
@@ -1255,6 +1275,20 @@ function confirmBox(msg, onYes){
 function mh(title){ return '<div class="mh"><h3>'+esc(title)+'</h3><button class="iconbtn" data-close>&times;</button></div>'; }
 
 /* ---------- 9. TEMA E IDIOMA ---------- */
+function applyBg(on){
+  document.documentElement.setAttribute("data-bg", on?"1":"0");
+  ROOT.prefs.bg = on?1:0; saveRoot();
+  const b=document.getElementById("bgbtn");
+  if(b) b.classList.toggle("on", !!on);
+}
+function checkBgArt(){
+  const img=new Image();
+  img.onload=()=>{ BG_OK=true; };
+  img.onerror=()=>{ BG_OK=false; applyBg(false);
+    const b=document.getElementById("bgbtn"); if(b) b.classList.add("hidden"); };
+  img.src="fundo.jpg";
+}
+let BG_OK=null;
 function applyTheme(th){
   document.documentElement.setAttribute("data-theme", th);
   document.querySelector('meta[name=theme-color]').setAttribute("content", th==="dark"?"#0f1115":"#f6f7f9");
@@ -5012,6 +5046,7 @@ function boot(){
   loadRoot();
   LANG = ROOT.prefs.lang || "pt";
   applyTheme(ROOT.prefs.theme || "dark");
+  applyBg(ROOT.prefs.bg===undefined ? true : !!ROOT.prefs.bg);
   document.documentElement.lang = LANG==="pt"?"pt-BR":"en";
   document.getElementById("langlabel").textContent = LANG==="pt"?"PT":"EN";
   document.getElementById("vertxt").textContent = "v"+APP_VERSION;
@@ -5047,6 +5082,8 @@ document.getElementById("sharebtn").onclick=()=>{
 document.getElementById("whoami").onclick=()=>loginModal();
 document.getElementById("brandbtn").onclick=()=>go("home");
 document.getElementById("timerhdr").onclick=()=>openTimer();
+document.getElementById("bgbtn").onclick=()=>applyBg(document.documentElement.getAttribute("data-bg")!=="1");
+checkBgArt();
 document.getElementById("legalbtn").onclick=e=>{ e.preventDefault(); legalModal(); };
 window.addEventListener("beforeunload", ()=>{ stopCam(); });
 
