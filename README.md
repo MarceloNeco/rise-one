@@ -50,7 +50,7 @@ ou OneDrive só funciona quando o próprio usuário informa a chave (Client ID) 
 ## Aviso
 
 Uso pessoal e para fins de estudo e pesquisa. As informações sobre exercícios, alimentação e
-saúde são informativas e não substituem profissional de educação física, nutricionista ou médico.
+saúde são informativas e não substituem profissional de educação física, nutricionista ou médico. 
 
 ---
 Versão 1.2.0
