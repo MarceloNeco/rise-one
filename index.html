@@ -53,7 +53,11 @@ html[data-bg="1"] footer.app{background:color-mix(in srgb,var(--bg) 70%,transpar
 /* tema claro usa a arte na versao clara, com traco forte e fundo do mesmo tom da pagina */
 html[data-theme="light"] #bgart{background-image:url("fundo-claro.jpg")}
 html[data-theme="light"] #bgart::after{
-  background:radial-gradient(ellipse 58% 66% at 50% 45%, rgba(246,247,249,.72) 0%, rgba(246,247,249,.42) 55%, rgba(246,247,249,.10) 100%)}
+  background:radial-gradient(ellipse 58% 66% at 50% 45%, rgba(255,242,230,.80) 0%, rgba(255,242,230,.46) 55%, rgba(255,242,230,.10) 100%)}
+/* com a arte ligada, o tema claro fica num creme quente, do mesmo tom do desenho */
+html[data-theme="light"][data-bg="1"]{
+  --bg:#fff2e6; --surface:#fffaf4; --surface2:#fdf0e3; --surface3:#f8e4d2;
+  --border:#f0dcc6; --text2:#6b6158; --text3:#93877c; --grid:#f0dcc6}
 html[data-theme="light"][data-bg="1"] .card{background:color-mix(in srgb,var(--surface) 88%,transparent)}
 html[data-theme="light"][data-bg="1"] .stat,html[data-theme="light"][data-bg="1"] .item,
 html[data-theme="light"][data-bg="1"] .ex,html[data-theme="light"][data-bg="1"] .mvcard,
@@ -392,7 +396,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
 
 <footer class="app">
   <div class="wrap">
-    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.2.1</span></span>
+    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.2.3</span></span>
     <span><a href="#" id="legalbtn" data-i18n="footer.legal">Aviso legal e privacidade</a></span>
   </div>
 </footer>
@@ -405,7 +409,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "2.2.1";
+const APP_VERSION = "2.2.3";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 1. DICIONARIO PT/EN  [pt, en] ---------- */
@@ -3164,9 +3168,20 @@ SCREENS.coach_after = function(){
   document.querySelectorAll("[data-wcode]").forEach(b=>b.onclick=()=>codeModal([STATE.workouts.find(w=>w.id===b.getAttribute("data-wcode"))]));
   document.querySelectorAll("[data-code]").forEach(b=>b.onclick=()=>codeModal(STATE.workouts));
 };
+/* texto <-> base64 usando TextEncoder/TextDecoder (sem escape/unescape, que são obsoletos) */
+function textoParaB64(txt){
+  const bytes=new TextEncoder().encode(txt);
+  let bin=""; for(let i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+function b64ParaTexto(b64){
+  const bin=atob(b64), bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
 function makeCode(workouts){
   const payload={v:1, w:(workouts||[]).filter(Boolean).map(w=>({name:w.name,days:w.days,items:w.items})), d:STATE.diet};
-  return "RISE1:"+btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  return "RISE1:"+textoParaB64(JSON.stringify(payload));
 }
 function codeModal(workouts){
   const code=makeCode(workouts);
@@ -3182,7 +3197,7 @@ function applyCoachCode(code){
   code=String(code||"").trim();
   if(code.indexOf("RISE1:")!==0){ toast(t("tr.badCode")); return; }
   try{
-    const p=JSON.parse(decodeURIComponent(escape(atob(code.slice(6)))));
+    const p=JSON.parse(b64ParaTexto(code.slice(6)));
     (p.w||[]).forEach(w=>STATE.workouts.push({id:uid(), name:w.name, days:w.days||[], items:w.items||[], fromCoach:true}));
     if(p.d && p.d.kcal) STATE.diet=Object.assign({},STATE.diet,p.d);
     save(); toast(t("tr.applied")); go("workout");
