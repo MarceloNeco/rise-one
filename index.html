@@ -50,10 +50,19 @@ html[data-bg="1"] .stat,html[data-bg="1"] .item,html[data-bg="1"] .ex,html[data-
 html[data-bg="1"] header.app{background:color-mix(in srgb,var(--bg) 74%,transparent)}
 html[data-bg="1"] #bottombar{background:color-mix(in srgb,var(--bg) 88%,transparent)}
 html[data-bg="1"] footer.app{background:color-mix(in srgb,var(--bg) 70%,transparent)}
-html[data-theme="light"] #bgart{opacity:.22}
+/* tema claro usa a arte na versao clara, com traco forte e fundo do mesmo tom da pagina */
+html[data-theme="light"] #bgart{background-image:url("fundo-claro.jpg")}
 html[data-theme="light"] #bgart::after{
-  background:radial-gradient(ellipse 62% 70% at 50% 45%, rgba(246,247,249,.90) 0%, rgba(246,247,249,.80) 55%, rgba(246,247,249,.62) 100%)}
-@media (max-width:900px){ #bgart{background-image:url("fundo-celular.jpg")} }
+  background:radial-gradient(ellipse 58% 66% at 50% 45%, rgba(246,247,249,.72) 0%, rgba(246,247,249,.42) 55%, rgba(246,247,249,.10) 100%)}
+html[data-theme="light"][data-bg="1"] .card{background:color-mix(in srgb,var(--surface) 88%,transparent)}
+html[data-theme="light"][data-bg="1"] .stat,html[data-theme="light"][data-bg="1"] .item,
+html[data-theme="light"][data-bg="1"] .ex,html[data-theme="light"][data-bg="1"] .mvcard,
+html[data-theme="light"][data-bg="1"] .eqcard{background:color-mix(in srgb,var(--surface2) 88%,transparent)}
+html[data-theme="light"][data-bg="1"] header.app{background:color-mix(in srgb,var(--bg) 84%,transparent)}
+@media (max-width:900px){
+  #bgart{background-image:url("fundo-celular.jpg")}
+  html[data-theme="light"] #bgart{background-image:url("fundo-claro-celular.jpg")}
+}
 body{
   background:var(--bg); color:var(--text); font-family:var(--font);
   font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
@@ -383,7 +392,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
 
 <footer class="app">
   <div class="wrap">
-    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.2.0</span></span>
+    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.2.1</span></span>
     <span><a href="#" id="legalbtn" data-i18n="footer.legal">Aviso legal e privacidade</a></span>
   </div>
 </footer>
@@ -396,7 +405,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "2.2.0";
+const APP_VERSION = "2.2.1";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 1. DICIONARIO PT/EN  [pt, en] ---------- */

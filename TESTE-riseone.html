@@ -52,7 +52,7 @@ code{background:var(--card2);border:1px solid var(--bd);border-radius:6px;paddin
   <div class="item"><span class="dot">9</span><div><span class="k">OCR</span><br><small class="mut">Aba Escanear: rótulo nutricional, ficha de treino, balança, exame e medidas.</small></div></div>
   <div class="item"><span class="dot">10</span><div><span class="k">Assistente de IA</span><br><small class="mut">Aba Assistente: cole a sua chave (Gemini, OpenAI ou Claude) e pergunte algo.</small></div></div>
   <div class="item"><span class="dot">11</span><div><span class="k">Nuvem e compartilhamento</span><br><small class="mut">Ajustes › Nuvem e login (Google Drive / OneDrive com o seu Client ID) e o botão ↗ de compartilhar.</small></div></div>
-  <div class="item"><span class="dot">12</span><div><span class="k">Arte de fundo</span><br><small class="mut">Botão ▨ no cabeçalho liga e desliga. No computador entra a arte deitada, no celular a versão em pé.</small></div></div>
+  <div class="item"><span class="dot">12</span><div><span class="k">Arte de fundo</span><br><small class="mut">Botão ▨ no cabeçalho liga e desliga. No computador entra a arte deitada, no celular a versão em pé. Trocando para o tema claro, entra a versão clara da mesma arte.</small></div></div>
   <div class="item"><span class="dot">13</span><div><span class="k">Responsivo</span><br><small class="mut">Estreite a janela até a largura de celular: o menu vira barra de baixo com o botão ⋯ Mais.</small></div></div>
 </div>
 
@@ -86,7 +86,7 @@ function run(){
   line(A, !!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia), 'Câmera disponível', 'Usada pelo OCR e pelo espelho.');
   line(A, navigator.onLine, 'Conexão', navigator.onLine? 'online':'offline — o app ainda deve abrir pelo cache');
   line(A, !!window.indexedDB && !!window.localStorage, 'Armazenamento local', 'Onde ficam treinos, fotos e medidas.');
-  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg'].forEach(f=>{
+  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg'].forEach(f=>{
     fetch(f,{method:'HEAD'}).then(r=>line(F, r.ok, f, r.ok? 'encontrado':'faltando na raiz'))
       .catch(()=>line(F,false,f,'faltando na raiz'));
   });

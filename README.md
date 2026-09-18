@@ -26,7 +26,8 @@ Site: https://marceloneco.github.io/rise-one/
 - **Assistente de IA** — perguntas de treino e dieta usando a chave do próprio usuário
   (Google Gemini, OpenAI ou Anthropic Claude), com a opção de enviar junto os dados da anamnese.
 - **Arte de fundo** — imagem de academia em traço laranja sobre fundo escuro, com versão deitada para
-  computador e em pé para celular, ligada e desligada pelo botão ▨ do cabeçalho.
+  computador e em pé para celular, e uma versão clara (traço terracota sobre fundo claro) que entra
+  sozinha quando o tema muda para dia. Liga e desliga pelo botão ▨ do cabeçalho.
 - **Anamnese** — data de nascimento (idade calculada sozinha), sexo, altura e peso com IMC e gasto
   calórico na hora; objetivo, tempo de treino, dias por semana e onde treina; lesões e dores por região,
   que passam a marcar com ⚠ os exercícios daquela área; e saúde geral (pressão, diabetes, coração,
@@ -79,7 +80,8 @@ Todos vão soltos na **raiz** do repositório:
 | `manifest.json` | deixa instalar como aplicativo |
 | `sw.js` | faz abrir sem internet e entrega os avisos |
 | `icone-192.png`, `icone-512.png`, `icone-maskable.png` | ícones do aplicativo |
-| `fundo.jpg`, `fundo-celular.jpg` | arte de fundo (computador e celular) |
+| `fundo.jpg`, `fundo-celular.jpg` | arte de fundo do tema escuro (computador e celular) |
+| `fundo-claro.jpg`, `fundo-claro-celular.jpg` | a mesma arte na versão do tema claro |
 | `TESTE-riseone.html` | página de conferência das diretrizes |
 
 A pasta `.github` (com `workflows/static.yml`) já está no repositório e **não pode ser apagada** —
@@ -98,4 +100,4 @@ Uso pessoal e para fins de estudo e pesquisa. As informações sobre exercícios
 saúde são informativas e não substituem profissional de educação física, nutricionista ou médico.
 
 ---
-Versão 2.2.0
+Versão 2.2.1
