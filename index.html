@@ -10,6 +10,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="RiseONE">
 <title>RiseONE</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icone-192.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1115'/%3E%3Cpath d='M14 44 L24 24 L32 36 L40 16 L50 44' fill='none' stroke='%23ff7a2f' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
 /* ============ TOKENS ============ */
@@ -56,7 +58,7 @@ small{color:var(--text2)}
 #adbar{background:linear-gradient(90deg,var(--surface2),var(--surface3));border-bottom:1px solid var(--border);position:relative}
 #adbar .adinner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:8px 40px 8px 14px}
 #adbar a.adlink{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);flex:1;min-width:0}
-#adbar .adbox{flex:1;min-width:0;border:1px dashed var(--accent);border-radius:10px;padding:8px 12px;background:var(--accent-soft);
+#adbar .adbox{flex:1;min-width:0;transition:opacity .18s;border:1px dashed var(--accent);border-radius:10px;padding:8px 12px;background:var(--accent-soft);
   display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;letter-spacing:.04em;font-size:.85rem;color:var(--accent);text-align:center}
 #adbar .adtag{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);flex-shrink:0}
 #adclose{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--surface);border:1px solid var(--border);
@@ -221,6 +223,10 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .item .gr{flex:1;min-width:0}
 .item .t{font-weight:700;font-size:.9rem}
 .item .s{font-size:.77rem;color:var(--text2)}
+.item.admrow{flex-direction:column;align-items:stretch;gap:7px}
+.item.admrow .admhead{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem}
+.item.admrow .s{font-size:.78rem;color:var(--text2)}
+.item.admrow .chips{gap:6px}
 .mission{cursor:pointer;user-select:none}
 .mission .bx{width:26px;height:26px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;
   font-size:.9rem;flex-shrink:0;color:transparent;transition:.15s}
@@ -357,7 +363,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
 
 <footer class="app">
   <div class="wrap">
-    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.0.0</span></span>
+    <span>Rise<span style="color:var(--accent);font-weight:700">ONE</span> · <span id="vertxt">v2.1.0</span></span>
     <span><a href="#" id="legalbtn" data-i18n="footer.legal">Aviso legal e privacidade</a></span>
   </div>
 </footer>
@@ -370,7 +376,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "2.0.0";
+const APP_VERSION = "2.1.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 1. DICIONARIO PT/EN  [pt, en] ---------- */
@@ -466,7 +472,7 @@ const L = {
 "body.back":["Costas","Back"],
 "body.level":["Como você prefere os nomes?","How do you prefer the names?"],
 "body.lv1":["Simples","Simple"],
-"body.lv2":["Comum","Common"],
+"body.lv2":["Padrão","Standard"],
 "body.lv3":["Técnico","Technical"],
 "body.lv1d":["“Quero deixar o peito forte”","“I want a strong chest”"],
 "body.lv2d":["“Peitoral”","“Pectorals”"],
@@ -890,6 +896,106 @@ const L = {
 "mir.aiFail":["Não consegui carregar o leitor de postura. O guia continua funcionando.","Could not load the posture reader. The guide still works."],
 "mir.noBody":["Não estou vendo o corpo inteiro","I cannot see your whole body"],
 "mir.seen":["Corpo detectado","Body detected"],
+"nav.ia":["Assistente","Assistant"],
+"nav.admin":["Administrador","Administrator"],
+"pl.guest":["Visitante","Guest"],
+"pl.included":["Incluso","Included"],
+"pl.premium":["Premium","Premium"],
+"pl.guestDesc":["Aberto para todo mundo, inclusive quem entra como visitante.","Open to everyone, including guests."],
+"pl.includedDesc":["Liberado para quem tem conta, sem precisar assinar.","Available to anyone with an account, no subscription needed."],
+"pl.premiumDesc":["Só para conta premium (assinante).","Premium (subscriber) accounts only."],
+"pl.needAccount":["Este recurso pede uma conta. Criar uma é rápido e o histórico passa a ficar guardado.","This feature needs an account. Creating one is quick and your history starts being kept."],
+"pl.needPremium":["Este recurso é da conta premium. Você pode ativar em Ajustes › Anúncios.","This feature is part of the premium account. You can switch it on in Settings › Ads."],
+"pl.adminNote":["Quem define o que é premium, incluso ou aberto é o perfil de administrador.","The administrator profile decides what is premium, included or open."],
+"adm.title":["Administrador","Administrator"],
+"adm.sub":["Escolha, recurso por recurso, quem pode usar o quê. Tudo começa aberto, do jeito que o app já funcionava.","Choose, feature by feature, who can use what. Everything starts open, exactly as the app already worked."],
+"adm.reset":["Voltar ao padrão","Back to defaults"],
+"adm.users":["Contas neste aparelho","Accounts on this device"],
+"adm.role":["Perfil","Profile"],
+"adm.premium":["Premium","Premium"],
+"adm.usersNote":["Ligar o premium aqui é para testar. A cobrança de verdade entra quando o app tiver pagamento.","Turning premium on here is for testing. Real billing comes when the app has payments."],
+"ia.title":["Assistente","Assistant"],
+"ia.sub":["Tire dúvidas de treino e alimentação usando a sua própria chave de IA.","Ask training and nutrition questions using your own AI key."],
+"ia.setup":["Ligar o assistente","Set up the assistant"],
+"ia.key":["Sua chave","Your key"],
+"ia.keyPh":["cole aqui a chave do serviço escolhido","paste the key from the chosen service"],
+"ia.keyNote":["A chave fica guardada só neste aparelho e vai direto do seu navegador para o serviço escolhido. O app não tem servidor no meio.","The key is kept on this device only and goes straight from your browser to the chosen service. The app has no server in between."],
+"ia.ctx":["Enviar meus dados da anamnese junto com a pergunta","Send my intake data along with the question"],
+"ia.chat":["Perguntas","Questions"],
+"ia.ask":["Sua pergunta","Your question"],
+"ia.askPh":["Ex.: como dividir meu treino em 4 dias?","E.g.: how should I split my training over 4 days?"],
+"ia.send":["Perguntar","Ask"],
+"ia.clear":["Limpar","Clear"],
+"ia.empty":["Nenhuma pergunta ainda.","No questions yet."],
+"ia.empty2":["Sem resposta.","No answer."],
+"ia.thinking":["Pensando…","Thinking…"],
+"ia.noKey":["Informe a sua chave primeiro.","Enter your key first."],
+"ia.offline":["Sem internet agora. O assistente precisa de conexão.","No internet right now. The assistant needs a connection."],
+"ia.error":["Deu erro:","Error:"],
+"ia.disclaimer":["As respostas são geradas por IA e podem errar. Não substituem profissional de educação física, nutricionista ou médico.","Answers are AI-generated and can be wrong. They do not replace a physical education professional, dietitian or physician."],
+"ia.q1":["Como dividir meu treino na semana?","How should I split my week?"],
+"ia.q2":["O que comer antes e depois do treino?","What to eat before and after training?"],
+"ia.q3":["Quanto peso devo usar para começar?","How much weight should I start with?"],
+"ia.q4":["Estou com dor, posso treinar?","I am in pain, can I train?"],
+"ad.kind":["Tipo","Type"],
+"ad.banner":["Banner do topo","Top banner"],
+"ad.popup":["Pop-up","Pop-up"],
+"ad.adText":["Linha de apoio (opcional)","Supporting line (optional)"],
+"ad.adImg":["Imagem do pop-up","Pop-up image"],
+"ad.rotNote":["Com mais de um banner ativo eles se alternam a cada 8 segundos, cada um com o seu link.","With more than one active banner they rotate every 8 seconds, each with its own link."],
+"ad.testPop":["Ver o pop-up agora","Preview the pop-up now"],
+"ad.popNote":["O X libera depois de 3 segundos. Conta premium não vê anúncio nenhum.","The X unlocks after 3 seconds. Premium accounts see no ads at all."],
+"role.admin":["Administrador","Administrator"],
+"login.admin.d":["Define o que é premium, incluso ou aberto para visitante.","Sets what is premium, included or open to guests."],
+"lg.who":["Apelido ou e-mail","Username or e-mail"],
+"lg.whoPh":["seu apelido ou e-mail","your username or e-mail"],
+"lg.nick":["Apelido (nome de usuário)","Username"],
+"lg.nickPh":["como você quer ser chamado","what you want to be called"],
+"lg.email":["E-mail","E-mail"],
+"lg.badEmail":["Escreva um e-mail válido.","Type a valid e-mail."],
+"lg.forgot":["Esqueci a senha","Forgot password"],
+"lg.forgotSub":["Informe o apelido ou e-mail e o código de recuperação que apareceu quando você criou a conta.","Enter your username or e-mail and the recovery code shown when you created the account."],
+"lg.recCode":["Código de recuperação","Recovery code"],
+"lg.badCode":["Código de recuperação não confere.","Recovery code does not match."],
+"lg.newPass":["Nova senha","New password"],
+"lg.oldPass":["Senha atual","Current password"],
+"lg.passChanged":["Senha alterada","Password changed"],
+"lg.changePass":["Trocar a senha","Change password"],
+"lg.recTitle":["Guarde este código","Keep this code"],
+"lg.recSub":["É com ele que você recupera o acesso se esquecer a senha. Ele aparece uma única vez.","This is what gets your access back if you forget the password. It is shown only once."],
+"lg.recWarn":["Anote num lugar seguro. Como tudo fica só no seu aparelho, não há como reenviar por e-mail nesta versão.","Write it down somewhere safe. Since everything stays on your device, there is no way to resend it by e-mail in this version."],
+"lg.account":["Minha conta","My account"],
+"lg.newCode":["Gerar novo código","Generate new code"],
+"lg.makeCode":["Criar código de recuperação","Create recovery code"],
+"lg.hasCode":["Você já tem um código de recuperação. Gerar um novo invalida o anterior.","You already have a recovery code. Generating a new one invalidates the old one."],
+"lg.noCode":["Esta conta ainda não tem código de recuperação.","This account has no recovery code yet."],
+"nt.title":["Avisos e notificações","Alerts and notifications"],
+"nt.sub":["Escolha um por um o que o app pode te avisar.","Choose one by one what the app may alert you about."],
+"nt.master":["Ligar os avisos","Turn alerts on"],
+"nt.perm":["Autorizar no navegador","Allow in the browser"],
+"nt.denied":["O navegador bloqueou os avisos. Libere nas permissões do site.","The browser blocked alerts. Allow them in the site permissions."],
+"nt.test":["Testar um aviso","Send a test alert"],
+"nt.testMsg":["Funcionou! É assim que os avisos vão aparecer.","It works! This is how alerts will show up."],
+"nt.closedNote":["Com o app aberto (mesmo em segundo plano) os avisos tocam sozinhos. Para avisar com o app totalmente fechado é preciso um servidor de push — a estrutura já está pronta no código, esperando essa conexão.","With the app open (even in the background) alerts fire on their own. To alert with the app fully closed a push server is needed — the structure is already in the code, waiting for that connection."],
+"nt.treino":["Treino do dia","Today's workout"],
+"nt.treinoMsg":["Hoje é dia de {n}. Bora?","Today is {n} day. Shall we?"],
+"nt.descanso":["Fim do descanso","End of rest"],
+"nt.descansoMsg":["Descanso acabou — próxima série!","Rest is over — next set!"],
+"nt.missoes":["Missões do dia","Today's missions"],
+"nt.missoesMsg":["Faltam missões: {a} de {b} cumpridas.","Missions left: {a} of {b} done."],
+"nt.agua":["Beber água","Drink water"],
+"nt.aguaMsg":["Água: {a} de {b} copos hoje.","Water: {a} of {b} glasses today."],
+"nt.checkin":["Check-in do dia","Daily check-in"],
+"nt.checkinMsg":["Ainda dá tempo do check-in de hoje.","There is still time for today's check-in."],
+"nt.lembretes":["Meus lembretes","My reminders"],
+"nt.every":["A cada","Every"],
+"nt.window":["Entre","Between"],
+"nt.and":["e","and"],
+"nt.min":["min","min"],
+"nt.install":["Instalar o RiseONE","Install RiseONE"],
+"nt.installed":["Aplicativo instalado","App installed"],
+"nt.offline":["Funciona sem internet","Works offline"],
+"nt.offlineNote":["Depois da primeira visita o app abre mesmo sem rede.","After the first visit the app opens even without a network."],
 "mir.disclaimer":["A conferência é automática e aproximada. Não substitui a correção de um profissional.","The check is automatic and approximate. It does not replace a professional's correction."],
 "wu.history":["Minhas rotinas feitas","Routines I have done"]
 };
@@ -1208,7 +1314,7 @@ function bodySVG(view, sel){
 
 /* ---------- 11. ROTAS E NAVEGACAO ---------- */
 const ROUTES = [
- {id:"home",     ic:"🏠", k:"nav.home",     roles:["guest","student","trainer","advertiser"]},
+ {id:"home",     ic:"🏠", k:"nav.home",     roles:["guest","student","trainer","advertiser","admin"]},
  {id:"body",     ic:"🧍", k:"nav.body",     roles:["guest","student","trainer"]},
  {id:"warm",     ic:"🤸", k:"nav.warm",     roles:["guest","student","trainer"]},
  {id:"ex",       ic:"📚", k:"nav.ex",       roles:["guest","student","trainer"]},
@@ -1218,7 +1324,9 @@ const ROUTES = [
  {id:"scan",     ic:"📷", k:"nav.scan",     roles:["guest","student","trainer"]},
  {id:"coach",    ic:"🧑‍🏫", k:"nav.coach",  roles:["trainer"]},
  {id:"ads",      ic:"📣", k:"nav.ads",      roles:["advertiser"]},
- {id:"set",      ic:"⚙️", k:"nav.set",      roles:["guest","student","trainer","advertiser"]}
+ {id:"ia",       ic:"🤖", k:"nav.ia",       roles:["guest","student","trainer"]},
+ {id:"admin",    ic:"🛡", k:"nav.admin",    roles:["admin"]},
+ {id:"set",      ic:"⚙️", k:"nav.set",      roles:["guest","student","trainer","advertiser","admin"]}
 ];
 let ROUTE = "home";
 function role(){ return (ROOT.session && ROOT.session.role) || "guest"; }
@@ -1226,7 +1334,7 @@ function visibleRoutes(){ return ROUTES.filter(r=>r.roles.indexOf(role())>=0); }
 function buildNav(){
   const rs=visibleRoutes();
   document.getElementById("tabs").innerHTML = rs.map(r=>
-    '<button data-go="'+r.id+'" class="'+(r.id===ROUTE?"active":"")+'"><span class="ic">'+r.ic+"</span>"+t(r.k)+"</button>").join("");
+    '<button data-go="'+r.id+'" class="'+(r.id===ROUTE?"active":"")+'"><span class="ic">'+r.ic+"</span>"+t(r.k)+(ROUTE_FEAT[r.id]?lockBadge(ROUTE_FEAT[r.id]):"")+"</button>").join("");
   const pref=["home","workout","warm","diet","progress","ads","coach","set"];
   let bot;
   if(rs.length<=5) bot=rs.slice();
@@ -1246,7 +1354,7 @@ function buildNav(){
     m.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>m.remove()));
   };
 }
-function go(id){ ROUTE=id; buildNav(); render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function go(id){ ROUTE=id; buildNav(); render(); window.scrollTo({top:0,behavior:"smooth"}); maybePopupAd(); }
 document.addEventListener("click", e=>{
   const b=e.target.closest("[data-go]"); if(b){ go(b.getAttribute("data-go")); }
 });
@@ -1278,8 +1386,16 @@ function age(){ if(!STATE.profile.birth) return 30; const b=parseISO(STATE.profi
 
 /* ---------- 13. RENDERIZADOR ---------- */
 const SCREENS = {};
+const ROUTE_FEAT={scan:"scan", warm:"warm", diet:"diet", progress:"progress", coach:"coach", ia:"ia"};
 function render(){
   const el=document.getElementById("screen");
+  const feat=ROUTE_FEAT[ROUTE];
+  if(feat && feat!=="ia" && !canUse(feat)){
+    el.innerHTML=lockedScreen(feat);
+    const lk=el.querySelector("#lk_go");
+    if(lk) lk.onclick=()=>{ role()==="guest"? loginModal("student") : go("set"); };
+    refreshWho(); return;
+  }
   const fn=SCREENS[ROUTE]||SCREENS.home;
   el.innerHTML = fn();
   (SCREENS[ROUTE+"_after"]||function(){})();
@@ -1292,17 +1408,7 @@ function refreshWho(){
   document.getElementById("whonm").textContent=nm;
   document.getElementById("whoav").textContent=(nm[0]||"?").toUpperCase();
 }
-function showAds(){ return role()==="guest" || !(STATE && STATE.pro); }
-function paintAd(){
-  const bar=document.getElementById("adbar");
-  if(!showAds() || sessionStorage.getItem("riseone.addismiss")==="1"){ bar.classList.add("hidden"); return; }
-  bar.classList.remove("hidden");
-  const act=(ROOT.ads||[]).filter(a=>a.active);
-  const box=document.getElementById("adbox"), lnk=document.getElementById("adlink");
-  if(act.length){ const a=act[Math.floor(Math.random()*act.length)];
-    box.textContent=a.title; lnk.href=a.url||AD_URL; lnk.dataset.ad=a.id; a.views=(a.views||0)+1; saveRoot();
-  } else { box.textContent=t("ad.here"); lnk.href=AD_URL; delete lnk.dataset.ad; }
-}
+function showAds(){ return !adsOff(); }
 
 /* ---------- 14. TELA: INICIO ---------- */
 SCREENS.home = function(){
@@ -1346,6 +1452,7 @@ SCREENS.home = function(){
      '<button class="chip" data-go="diet">🥗 '+t("dt.addMeal")+'</button>'+
      '<button class="chip" data-go="warm">🤸 '+t("wu.title")+'</button>'+
      '<button class="chip" data-go="progress">📸 '+t("pg.addPhoto")+'</button>'+
+     '<button class="chip" data-go="ia">🤖 '+t("ia.title")+'</button>'+
      '<button class="chip" id="timerbtn">⏱ '+t("tm.title")+"</button></div></div>";
   return h;
 };
@@ -1773,6 +1880,7 @@ function resetTimer(){
   paintTimer();
 }
 function setTimerMode(md){
+  if(md==="series" && !canUse("series")) return gotItLocked("series");
   if(TIMER.mode===md) return;
   stopRing(); TIMER.running=false; clearInterval(TIMER.tick); TIMER.tick=null;
   if(typeof SER!=="undefined"){ clearInterval(SER.tick); SER.tick=null; SER.running=false; SER.done=false; }
@@ -1837,7 +1945,11 @@ function startRing(){
     TIMER.ringTick=setInterval(fire,2200);
     if(TIMER.autoBack){ TIMER.ringStop=setTimeout(()=>{ stopRing(); closeTimer(); }, 6500); }
   }
-  if(!TIMER.el) toast("⏰ "+t("tm.over"));
+  if(!TIMER.el){
+    toast("⏰ "+t("tm.over"));
+    const nc=notifCfg();
+    if(nc.on && nc.types.descanso.on) notifyNow("RiseONE", t("nt.descansoMsg"), "descanso");
+  }
   paintTimer();
 }
 function stopRing(){
@@ -2529,6 +2641,7 @@ SCREENS.progress_after = function(){
   };
 };
 function photoModal(){
+  if(!canUse("photos")) return gotItLocked("photos");
   pickImage(src=>{
     const m=modal(mh(t("pg.addPhoto"))+'<img src="'+src+'" style="width:100%;max-height:44vh;object-fit:contain;border-radius:12px;background:var(--surface2)">'+
       '<div class="grid g2 collapse" style="margin-top:10px"><label class="fld"><span>'+t("common.date")+'</span><input type="date" id="ph_d" value="'+todayISO()+'"></label>'+
@@ -2623,9 +2736,8 @@ setInterval(function(){
   (STATE.reminders||[]).forEach(r=>{
     if(r.on && r.time===hh && (!(r.days||[]).length || r.days.indexOf(d.getDay())>=0)){
       beep(2); toast("⏰ "+r.label);
-      if(STATE.settings.notif && "Notification" in window && Notification.permission==="granted"){
-        try{ new Notification("RiseONE", {body:r.label}); }catch(e){}
-      }
+      const nc=notifCfg();
+      if(nc.on && nc.types.lembretes.on) notifyNow("RiseONE", r.label, "lembrete-"+r.id);
     }
   });
 },20000);
@@ -2860,7 +2972,9 @@ SCREENS.set = function(){
   h+='<div class="card"><h3>🧑‍🏫 '+t("tr.receive")+'</h3><div class="sep"></div>'+
     '<label class="fld"><span>'+t("tr.pasteCode")+'</span><textarea id="rc_code" placeholder="RISE1:..."></textarea></label>'+
     '<button class="btn ghost" id="rc_ok">'+t("common.save")+"</button></div>";
+  h+=notifCard();
   h+='<div class="card"><h3>📱 '+t("st.install")+'</h3><div class="sep"></div><p class="tiny muted">'+t("st.installNote")+"</p></div>";
+  h+=accountCard();
   h+='<div class="card"><h3>🔐 '+t("login.switch")+'</h3><div class="sep"></div><div class="row">'+
     '<button class="btn ghost" id="switchu">'+t("login.switch")+'</button>'+(role()!=="guest"?'<button class="btn line" id="logout">'+t("login.out")+"</button>":"")+"</div></div>";
   h+='<div class="card" style="border-color:var(--bad)"><h3>🗑 '+t("st.reset")+'</h3><p class="tiny muted">'+t("st.resetC")+'</p><button class="btn danger" id="reset">'+t("st.reset")+"</button></div>";
@@ -2898,6 +3012,8 @@ SCREENS.set_after = function(){
   document.getElementById("shareapp").onclick=shareApp;
   document.getElementById("wbk").onchange=e=>{ STATE.settings.weeklyBackup=e.target.checked; save(); };
   document.getElementById("rc_ok").onclick=()=>applyCoachCode(document.getElementById("rc_code").value);
+  wireAccountCard();
+  wireNotifCard();
   document.getElementById("switchu").onclick=()=>loginModal();
   const lo=document.getElementById("logout"); if(lo) lo.onclick=()=>{ ROOT.session=null; saveRoot(); boot(); };
   document.getElementById("reset").onclick=()=>confirmBox(t("st.resetC"),()=>{
@@ -2938,6 +3054,7 @@ function backupBlob(){
   return new Blob([JSON.stringify(data)],{type:"application/json"});
 }
 function exportBackup(){
+  if(!canUse("cloud")) return gotItLocked("cloud");
   const a=document.createElement("a");
   a.href=URL.createObjectURL(backupBlob());
   a.download="riseone-backup-"+todayISO()+".json";
@@ -3032,41 +3149,87 @@ function applyCoachCode(code){
 /* ---------- 30. TELA: ANUNCIANTE ---------- */
 SCREENS.ads = function(){
   const ads=ROOT.ads||[];
+  const tot=(k)=>ads.filter(a=>(a.kind||"banner")===k).reduce((o,a)=>({v:o.v+(a.views||0),c:o.c+(a.clicks||0)}),{v:0,c:0});
+  const tb=tot("banner"), tp=tot("popup");
   let h='<div class="between" style="margin-bottom:12px"><h1 style="margin:0">📣 '+t("ad.title")+'</h1><button class="btn" id="newad">+ '+t("ad.new")+"</button></div>";
+  h+='<div class="grid g4" style="margin-bottom:14px">'+
+     stat(t("ad.banner")+" · "+t("ad.views"), fmtNum(tb.v,0),"","")+
+     stat(t("ad.banner")+" · "+t("ad.clicks"), fmtNum(tb.c,0),"", tb.v?((tb.c/tb.v*100).toFixed(1)+"%"):"")+
+     stat(t("ad.popup")+" · "+t("ad.views"), fmtNum(tp.v,0),"","")+
+     stat(t("ad.popup")+" · "+t("ad.clicks"), fmtNum(tp.c,0),"", tp.v?((tp.c/tp.v*100).toFixed(1)+"%"):"")+"</div>";
   h+='<div class="card"><h3>'+t("ad.preview")+'</h3><div class="sep"></div>'+
     '<div style="border:1px dashed var(--accent);border-radius:10px;padding:10px;text-align:center;color:var(--accent);font-weight:800;background:var(--accent-soft)">'+
-    esc(ads.filter(a=>a.active)[0]?ads.filter(a=>a.active)[0].title:t("ad.here"))+"</div></div>";
+    esc(adList("banner")[0]?adList("banner")[0].title:t("ad.here"))+"</div>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("ad.rotNote")+"</p>"+
+    (adList("popup").length?'<div class="row" style="margin-top:10px"><button class="btn ghost sm" id="adtest">'+t("ad.testPop")+"</button></div>":"")+"</div>";
   h+='<div class="card"><h3>'+t("ad.campaigns")+"</h3><div class='sep'></div>";
-  h+= ads.length? '<table class="tbl"><thead><tr><th>'+t("ad.adTitle")+"</th><th>"+t("ad.active")+'</th><th class="num">'+t("ad.views")+'</th><th class="num">'+t("ad.clicks")+'</th><th class="num">'+t("ad.ctr")+"</th><th></th></tr></thead><tbody>"+
-      ads.map(a=>"<tr><td>"+esc(a.title)+'<div class="tiny muted">'+esc(a.url)+"</div></td>"+
-      '<td><label class="switch"><input type="checkbox" data-adon="'+a.id+'" '+(a.active?"checked":"")+'><span class="tr"></span></label></td>'+
+  h+= ads.length? '<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>'+t("ad.kind")+"</th><th>"+t("ad.adTitle")+"</th><th>"+t("ad.active")+'</th><th class="num">'+t("ad.views")+'</th><th class="num">'+t("ad.clicks")+'</th><th class="num">'+t("ad.ctr")+"</th><th></th></tr></thead><tbody>"+
+      ads.map(a=>'<tr><td><span class="pill">'+((a.kind||"banner")==="popup"?("🪧 "+t("ad.popup")):("🎞 "+t("ad.banner")))+"</span></td>"+
+      "<td>"+esc(a.title)+'<div class="tiny muted">'+esc(a.url)+"</div></td>"+
+      '<td><label class="switch"><input type="checkbox" data-adon="'+a.id+'" '+(a.active!==false?"checked":"")+'><span class="tr"></span></label></td>'+
       '<td class="num">'+fmtNum(a.views||0,0)+'</td><td class="num">'+fmtNum(a.clicks||0,0)+'</td>'+
-      '<td class="num">'+((a.views?((a.clicks||0)/a.views*100):0).toFixed(1))+'%</td><td class="num"><button class="btn xs line" data-delad="'+a.id+'">&times;</button></td></tr>').join("")+"</tbody></table>"
+      '<td class="num">'+((a.views?((a.clicks||0)/a.views*100):0).toFixed(1))+'%</td>'+
+      '<td class="num"><button class="btn xs line" data-edad="'+a.id+'">✎</button> <button class="btn xs line" data-delad="'+a.id+'">&times;</button></td></tr>').join("")+"</tbody></table></div>"
     : '<div class="empty">'+t("common.empty")+"</div>";
   h+='<p class="tiny muted" style="margin-top:10px">'+t("ad.note")+"</p></div>";
   return h;
 };
-SCREENS.ads_after = function(){
-  document.getElementById("newad").onclick=()=>{
-    const m=modal(mh(t("ad.new"))+
-      '<label class="fld"><span>'+t("ad.adTitle")+'</span><input id="ad_t" type="text" value="&lt;ANUNCIE AQUI&gt;"></label>'+
-      '<label class="fld"><span>'+t("ad.adUrl")+'</span><input id="ad_u" type="text" value="'+AD_URL+'"></label>'+
-      '<div class="row" style="justify-content:flex-end"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="ad_s">'+t("common.save")+"</button></div>");
-    m.querySelector("#ad_s").onclick=()=>{
-      ROOT.ads.push({id:uid(), title:m.querySelector("#ad_t").value||t("ad.here"), url:m.querySelector("#ad_u").value||AD_URL, active:true, views:0, clicks:0});
-      saveRoot(); m.remove(); render(); paintAd();
-    };
+function adForm(existing){
+  const a=existing||{id:uid(), kind:"banner", title:"<ANUNCIE AQUI>", text:"", url:AD_URL, img:"", active:true, views:0, clicks:0};
+  const m=modal(mh(existing?t("common.edit"):t("ad.new"))+
+    '<label class="fld"><span>'+t("ad.kind")+'</span><div class="chips" id="ad_k">'+
+      [["banner","🎞 "+t("ad.banner")],["popup","🪧 "+t("ad.popup")]].map(o=>'<button type="button" class="chip '+(a.kind===o[0]?"on":"")+'" data-k="'+o[0]+'">'+o[1]+"</button>").join("")+"</div></label>"+
+    '<label class="fld"><span>'+t("ad.adTitle")+'</span><input id="ad_t" type="text" value="'+esc(a.title)+'"></label>'+
+    '<label class="fld"><span>'+t("ad.adText")+'</span><input id="ad_x" type="text" value="'+esc(a.text||"")+'"></label>'+
+    '<label class="fld"><span>'+t("ad.adUrl")+'</span><input id="ad_u" type="text" value="'+esc(a.url)+'"></label>'+
+    '<div class="row"><button class="btn line sm" id="ad_img">🖼 '+t("ad.adImg")+'</button><span class="tiny muted" id="ad_imgs">'+(a.img?"✓":t("common.none"))+"</span></div>"+
+    '<div class="row" style="justify-content:flex-end;margin-top:10px"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="ad_s">'+t("common.save")+"</button></div>");
+  m.querySelectorAll("#ad_k .chip").forEach(c=>c.onclick=()=>{ a.kind=c.getAttribute("data-k");
+    m.querySelectorAll("#ad_k .chip").forEach(x=>x.classList.remove("on")); c.classList.add("on"); });
+  m.querySelector("#ad_img").onclick=()=>pickImage(d=>{ a.img=d; m.querySelector("#ad_imgs").textContent="✓"; });
+  m.querySelector("#ad_s").onclick=()=>{
+    a.title=m.querySelector("#ad_t").value||t("ad.here");
+    a.text=m.querySelector("#ad_x").value;
+    a.url=m.querySelector("#ad_u").value||AD_URL;
+    if(!existing) ROOT.ads.push(a);
+    saveRoot(); m.remove(); render(); paintAd();
   };
+}
+SCREENS.ads_after = function(){
+  document.getElementById("newad").onclick=()=>adForm(null);
+  document.querySelectorAll("[data-edad]").forEach(b=>b.onclick=()=>adForm((ROOT.ads||[]).find(x=>x.id===b.getAttribute("data-edad"))));
   document.querySelectorAll("[data-adon]").forEach(b=>b.onchange=()=>{
     const a=ROOT.ads.find(x=>x.id===b.getAttribute("data-adon")); if(a){ a.active=b.checked; saveRoot(); paintAd(); } });
   document.querySelectorAll("[data-delad]").forEach(b=>b.onclick=()=>{
     ROOT.ads=ROOT.ads.filter(x=>x.id!==b.getAttribute("data-delad")); saveRoot(); render(); paintAd(); });
+  const tp=document.getElementById("adtest");
+  if(tp) tp.onclick=()=>showPopupAd(adList("popup")[0]);
 };
 
-/* ---------- 31. LOGIN ---------- */
+/* ---------- 31. LOGIN, CONTA E RECUPERACAO ---------- */
+function makeRecovery(){
+  const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const blk=()=>Array.from({length:4},()=>A[Math.floor(Math.random()*A.length)]).join("");
+  return "RISE-"+blk()+"-"+blk();
+}
+function findUser(who, role2){
+  const q=String(who||"").trim().toLowerCase();
+  if(!q) return null;
+  return Object.values(ROOT.users).find(u=>(!role2||u.role===role2) &&
+    ((u.name||"").toLowerCase()===q || (u.email||"").toLowerCase()===q)) || null;
+}
+function recoveryModal(code){
+  const m=modal(mh("🔑 "+t("lg.recTitle"))+
+    '<p class="muted">'+t("lg.recSub")+"</p>"+
+    '<div class="card tight" style="text-align:center;margin:10px 0"><div style="font-size:1.5rem;font-weight:800;letter-spacing:.12em;font-family:ui-monospace,monospace">'+esc(code)+"</div></div>"+
+    '<div class="row"><button class="btn ghost" id="rc_cp">'+t("tr.copy")+'</button><button class="btn" data-close>'+t("common.ok")+"</button></div>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("lg.recWarn")+"</p>",{sticky:true});
+  m.querySelector("#rc_cp").onclick=()=>{ if(navigator.clipboard) navigator.clipboard.writeText(code).then(()=>toast(t("tr.copied"))); };
+}
 function loginModal(preset){
   const cards=[["guest","👤",t("role.guest"),t("login.guest.d")],["student","🏃",t("role.student"),t("login.student.d")],
-    ["trainer","🧑‍🏫",t("role.trainer"),t("login.trainer.d")],["advertiser","📣",t("role.advertiser"),t("login.adv.d")]];
+    ["trainer","🧑‍🏫",t("role.trainer"),t("login.trainer.d")],["advertiser","📣",t("role.advertiser"),t("login.adv.d")],
+    ["admin","🛡",t("role.admin"),t("login.admin.d")]];
   const m=modal('<div class="mh"><h2 style="margin:0">Rise<span style="color:var(--accent)">ONE</span></h2><button class="iconbtn" data-close>&times;</button></div>'+
     '<p class="muted">'+t("login.title")+"</p><div id='lgbody'></div>",{wide:false,sticky:false});
   const body=m.querySelector("#lgbody");
@@ -3084,36 +3247,48 @@ function loginModal(preset){
     const existing=Object.values(ROOT.users).filter(u=>u.role===r);
     let mode = existing.length? "in":"up";
     const paint=()=>{
-      body.innerHTML='<div class="pill acc" style="margin-bottom:10px">'+t("role."+(r==="advertiser"?"advertiser":r))+"</div>"+
-        (mode==="in"
-          ? '<label class="fld"><span>'+t("login.name")+'</span><select id="lg_u">'+existing.map(u=>'<option value="'+u.id+'">'+esc(u.name)+"</option>").join("")+"</select></label>"
-          : '<label class="fld"><span>'+t("login.name")+'</span><input id="lg_n" type="text"></label>')+
-        '<label class="fld"><span>'+t("login.pass")+'</span><input id="lg_p" type="password"></label>'+
-        (mode==="up"?'<label class="fld"><span>'+t("login.pass2")+'</span><input id="lg_p2" type="password"></label>':"")+
-        '<div class="row"><button class="btn" id="lg_go">'+(mode==="in"?t("login.enter"):t("login.create"))+"</button>"+
-        '<button class="btn line sm" id="lg_sw">'+(mode==="in"?t("login.new"):t("login.have"))+"</button></div>"+
+      let h='<div class="pill acc" style="margin-bottom:10px">'+t("role."+r)+"</div>";
+      if(mode==="in"){
+        h+='<label class="fld"><span>'+t("lg.who")+'</span><input id="lg_u" type="text" placeholder="'+t("lg.whoPh")+'" value="'+esc(existing.length?existing[0].name:"")+'"></label>';
+        if(existing.length>1) h+='<div class="chips" style="margin:-4px 0 10px">'+existing.map(u=>'<button type="button" class="chip" data-pick="'+esc(u.name)+'">'+esc(u.name)+"</button>").join("")+"</div>";
+        h+='<label class="fld"><span>'+t("login.pass")+'</span><input id="lg_p" type="password"></label>';
+      } else {
+        h+='<label class="fld"><span>'+t("lg.nick")+'</span><input id="lg_n" type="text" placeholder="'+t("lg.nickPh")+'"></label>'+
+           '<label class="fld"><span>'+t("lg.email")+'</span><input id="lg_e" type="email" placeholder="voce@exemplo.com"></label>'+
+           '<label class="fld"><span>'+t("login.pass")+'</span><input id="lg_p" type="password"></label>'+
+           '<label class="fld"><span>'+t("login.pass2")+'</span><input id="lg_p2" type="password"></label>';
+      }
+      h+='<div class="row"><button class="btn" id="lg_go">'+(mode==="in"?t("login.enter"):t("login.create"))+"</button>"+
+        '<button class="btn line sm" id="lg_sw">'+(mode==="in"?t("login.new"):t("login.have"))+"</button>"+
+        (mode==="in"?'<button class="btn line sm" id="lg_fg">'+t("lg.forgot")+"</button>":"")+"</div>"+
         '<div class="sep"></div><div class="row"><button class="btn ghost sm" id="lg_bio">🔒 '+t("login.bio")+'</button><button class="btn ghost sm" id="lg_soc">🟦 '+t("login.social")+"</button></div>"+
         '<p class="tiny muted" style="margin-top:8px">'+t("login.soon")+"</p>"+
         '<div class="sep"></div><button class="btn line sm" id="lg_back">← '+t("common.back")+"</button>";
+      body.innerHTML=h;
+      body.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{ body.querySelector("#lg_u").value=b.getAttribute("data-pick"); });
       body.querySelector("#lg_sw").onclick=()=>{ mode=(mode==="in")?"up":"in"; if(mode==="in"&&!existing.length){ toast(t("login.none")); mode="up"; } paint(); };
       body.querySelector("#lg_back").onclick=pickRole;
-      body.querySelector("#lg_bio").onclick=bioLogin;
+      body.querySelector("#lg_bio").onclick=()=>toast(t("login.soon"));
       body.querySelector("#lg_soc").onclick=()=>toast(t("login.soon"));
+      const fg=body.querySelector("#lg_fg"); if(fg) fg.onclick=()=>forgotForm(r);
       body.querySelector("#lg_go").onclick=()=>{
         const p=body.querySelector("#lg_p").value;
         if(mode==="up"){
           const n=body.querySelector("#lg_n").value.trim();
+          const em=body.querySelector("#lg_e").value.trim();
           if(!n) return toast(t("login.noname"));
+          if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return toast(t("lg.badEmail"));
           if(p.length<4) return toast(t("login.short"));
           if(p!==body.querySelector("#lg_p2").value) return toast(t("login.nomatch"));
-          if(Object.values(ROOT.users).some(u=>u.name.toLowerCase()===n.toLowerCase()&&u.role===r)) return toast(t("login.exists"));
-          const id=uid();
-          ROOT.users[id]={id, name:n, role:r, pass:hashPass(p)};
+          if(Object.values(ROOT.users).some(u=>u.role===r && ((u.name||"").toLowerCase()===n.toLowerCase()||(u.email||"").toLowerCase()===em.toLowerCase())))
+            return toast(t("login.exists"));
+          const id=uid(), code=makeRecovery();
+          ROOT.users[id]={id, name:n, email:em, role:r, pass:hashPass(p), rec:hashPass(code), created:todayISO()};
           ROOT.data[id]=defaultState(n);
           ROOT.session={role:r, name:n, uid:id};
-          saveRoot(); m.remove(); boot();
+          saveRoot(); m.remove(); boot(); recoveryModal(code);
         } else {
-          const id=body.querySelector("#lg_u").value, u=ROOT.users[id];
+          const u=findUser(body.querySelector("#lg_u").value, r);
           if(!u || u.pass!==hashPass(p)) return toast(t("login.wrong"));
           ROOT.session={role:u.role, name:u.name, uid:u.id};
           saveRoot(); m.remove(); boot();
@@ -3122,14 +3297,75 @@ function loginModal(preset){
     };
     paint();
   }
-  function bioLogin(){
-    if(!window.PublicKeyCredential){ toast(t("login.soon")); return; }
-    toast(t("login.soon"));
+  function forgotForm(r){
+    body.innerHTML='<div class="pill acc" style="margin-bottom:10px">'+t("lg.forgot")+"</div>"+
+      '<p class="tiny muted">'+t("lg.forgotSub")+"</p>"+
+      '<label class="fld"><span>'+t("lg.who")+'</span><input id="fg_u" type="text" placeholder="'+t("lg.whoPh")+'"></label>'+
+      '<label class="fld"><span>'+t("lg.recCode")+'</span><input id="fg_c" type="text" placeholder="RISE-XXXX-XXXX"></label>'+
+      '<label class="fld"><span>'+t("lg.newPass")+'</span><input id="fg_p" type="password"></label>'+
+      '<div class="row"><button class="btn" id="fg_go">'+t("common.save")+'</button><button class="btn line sm" id="fg_back">← '+t("common.back")+"</button></div>";
+    body.querySelector("#fg_back").onclick=()=>authForm(r);
+    body.querySelector("#fg_go").onclick=()=>{
+      const u=findUser(body.querySelector("#fg_u").value, r);
+      const code=body.querySelector("#fg_c").value.trim().toUpperCase();
+      const np=body.querySelector("#fg_p").value;
+      if(!u) return toast(t("login.wrong"));
+      if(!u.rec || u.rec!==hashPass(code)) return toast(t("lg.badCode"));
+      if(np.length<4) return toast(t("login.short"));
+      u.pass=hashPass(np); saveRoot(); toast(t("lg.passChanged"));
+      ROOT.session={role:u.role, name:u.name, uid:u.id}; saveRoot(); m.remove(); boot();
+    };
   }
   if(preset) authForm(preset); else pickRole();
   return m;
 }
-
+/* --- cartao da conta em Ajustes --- */
+function accountCard(){
+  const s2=ROOT.session||{};
+  const u=s2.uid?ROOT.users[s2.uid]:null;
+  let h='<div class="card"><h3>🔐 '+t("lg.account")+'</h3><div class="sep"></div>';
+  if(!u){ h+='<p class="muted">'+t("guest.warn")+'</p><button class="btn" id="ac_new">'+t("guest.upgrade")+"</button>"; }
+  else{
+    h+='<div class="grid g2 collapse"><label class="fld"><span>'+t("lg.nick")+'</span><input id="ac_n" type="text" value="'+esc(u.name||"")+'"></label>'+
+       '<label class="fld"><span>'+t("lg.email")+'</span><input id="ac_e" type="email" value="'+esc(u.email||"")+'" placeholder="voce@exemplo.com"></label></div>'+
+       '<div class="row"><button class="btn ghost sm" id="ac_save">'+t("common.save")+'</button>'+
+       '<button class="btn line sm" id="ac_pw">'+t("lg.changePass")+'</button>'+
+       '<button class="btn line sm" id="ac_rc">'+(u.rec?t("lg.newCode"):t("lg.makeCode"))+"</button></div>"+
+       '<p class="tiny muted" style="margin-top:8px">'+(u.rec?t("lg.hasCode"):t("lg.noCode"))+"</p>";
+  }
+  return h+"</div>";
+}
+function wireAccountCard(){
+  const s2=ROOT.session||{}; const u=s2.uid?ROOT.users[s2.uid]:null;
+  const nb=document.getElementById("ac_new"); if(nb) nb.onclick=()=>loginModal("student");
+  if(!u) return;
+  const sv=document.getElementById("ac_save");
+  if(sv) sv.onclick=()=>{
+    const n=document.getElementById("ac_n").value.trim(), em=document.getElementById("ac_e").value.trim();
+    if(!n) return toast(t("login.noname"));
+    if(em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return toast(t("lg.badEmail"));
+    if(Object.values(ROOT.users).some(x=>x.id!==u.id && x.role===u.role && ((x.name||"").toLowerCase()===n.toLowerCase()||(em&&(x.email||"").toLowerCase()===em.toLowerCase()))))
+      return toast(t("login.exists"));
+    u.name=n; u.email=em; ROOT.session.name=n; STATE.profile.name=n; save(); saveRoot(); render(); toast(t("common.saved"));
+  };
+  const pw=document.getElementById("ac_pw");
+  if(pw) pw.onclick=()=>{
+    const md=modal(mh(t("lg.changePass"))+
+      '<label class="fld"><span>'+t("lg.oldPass")+'</span><input id="cp_o" type="password"></label>'+
+      '<label class="fld"><span>'+t("lg.newPass")+'</span><input id="cp_n" type="password"></label>'+
+      '<label class="fld"><span>'+t("login.pass2")+'</span><input id="cp_n2" type="password"></label>'+
+      '<div class="row" style="justify-content:flex-end"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="cp_go">'+t("common.save")+"</button></div>");
+    md.querySelector("#cp_go").onclick=()=>{
+      if(u.pass!==hashPass(md.querySelector("#cp_o").value)) return toast(t("login.wrong"));
+      const np=md.querySelector("#cp_n").value;
+      if(np.length<4) return toast(t("login.short"));
+      if(np!==md.querySelector("#cp_n2").value) return toast(t("login.nomatch"));
+      u.pass=hashPass(np); saveRoot(); md.remove(); toast(t("lg.passChanged"));
+    };
+  };
+  const rc=document.getElementById("ac_rc");
+  if(rc) rc.onclick=()=>{ const code=makeRecovery(); u.rec=hashPass(code); saveRoot(); render(); recoveryModal(code); };
+}
 
 function offerStretch(w){
   const md=modal('<div class="mh"><h3 style="margin:0">🎉 '+t("wu.afterWorkout")+'</h3></div>'+
@@ -4306,6 +4542,7 @@ function checkFor(animId){
 }
 /* --- abrir o espelho --- */
 function openMirror(animId, title){
+  if(!canUse("mirror")) return gotItLocked("mirror");
   closeMirror(true);
   MIR.anim=animId||null; MIR.title=title||t("mir.title"); MIR.msgs=[];
   const d=document.createElement("div"); d.id="mirrorscreen"; document.body.appendChild(d); MIR.el=d;
@@ -4410,6 +4647,366 @@ function drawSkeleton(ctx,cv,lm,bad){
   });
 }
 
+
+/* ---------- 44. PWA: SERVICE WORKER, MANIFESTO E AVISOS ---------- */
+let SW_REG=null;
+function registerSW(){
+  if(!("serviceWorker" in navigator)) return;
+  if(location.protocol==="file:") return;            /* aberto como arquivo solto: sem service worker */
+  navigator.serviceWorker.register("sw.js").then(r=>{ SW_REG=r; }).catch(()=>{});
+}
+function notifCfg(){
+  STATE.settings=STATE.settings||{};
+  const d={on:false, types:{
+    treino:{on:true,time:"18:00"}, descanso:{on:true}, missoes:{on:true,time:"20:00"},
+    agua:{on:true,every:120,from:"08:00",to:"21:00"}, checkin:{on:true,time:"21:30"}, lembretes:{on:true}}};
+  const c=STATE.settings.notif;
+  if(!c || typeof c!=="object" || c===true || c===false) STATE.settings.notif=JSON.parse(JSON.stringify(d));
+  const n=STATE.settings.notif;
+  n.types=n.types||{};
+  for(const k in d.types){ n.types[k]=Object.assign({},d.types[k],n.types[k]||{}); }
+  return n;
+}
+const NOTIF_TYPES=[
+ {id:"treino",   ic:"🏋️", time:true},
+ {id:"descanso", ic:"⏱",  time:false},
+ {id:"missoes",  ic:"✅", time:true},
+ {id:"agua",     ic:"💧", time:false, every:true},
+ {id:"checkin",  ic:"📝", time:true},
+ {id:"lembretes",ic:"⏰", time:false}
+];
+function notifyNow(title, body, tag, url){
+  const ok = ("Notification" in window) && Notification.permission==="granted";
+  if(!ok){ toast(title+" — "+body); return false; }
+  try{
+    if(SW_REG && SW_REG.active){ SW_REG.active.postMessage({type:"notify",title,body,tag,url:url||location.href}); }
+    else new Notification(title,{body, icon:"icone-192.png", tag});
+  }catch(e){ toast(title+" — "+body); }
+  return true;
+}
+function askNotifPerm(){
+  if(!("Notification" in window)) return Promise.resolve(false);
+  if(Notification.permission==="granted") return Promise.resolve(true);
+  if(Notification.permission==="denied") return Promise.resolve(false);
+  return Notification.requestPermission().then(p=>p==="granted");
+}
+/* motor: roda com o app aberto */
+let NOTIF_MARK={};
+function notifTick(){
+  if(!STATE) return;
+  const c=notifCfg();
+  if(!c.on || !("Notification" in window) || Notification.permission!=="granted") return;
+  const now=new Date(), hhmm=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  const day=todayISO();
+  const once=(key)=>{ const k=day+"|"+key; if(NOTIF_MARK[k]) return false; NOTIF_MARK[k]=1; return true; };
+  const T=c.types;
+  if(T.treino.on && T.treino.time===hhmm && once("treino")){
+    const w=workoutToday();
+    if(w && !STATE.logs.some(l=>l.date===day)) notifyNow("RiseONE", t("nt.treinoMsg").replace("{n}",w.name), "treino");
+  }
+  if(T.missoes.on && T.missoes.time===hhmm && once("missoes")){
+    const ci2=ci(day), done=ci2?ci2.done.length:0, tot=missionsToday().length;
+    if(done<tot) notifyNow("RiseONE", t("nt.missoesMsg").replace("{a}",done).replace("{b}",tot), "missoes");
+  }
+  if(T.checkin.on && T.checkin.time===hhmm && once("checkin")){
+    if(!ci(day)) notifyNow("RiseONE", t("nt.checkinMsg"), "checkin");
+  }
+  if(T.agua.on){
+    const mins=now.getHours()*60+now.getMinutes();
+    const toMin=s=>{ const a=String(s||"08:00").split(":"); return (+a[0])*60+(+a[1]); };
+    const f=toMin(T.agua.from), to=toMin(T.agua.to), ev=Math.max(30,+T.agua.every||120);
+    if(mins>=f && mins<=to && (mins-f)%ev===0 && once("agua"+mins)){
+      const goal=(STATE.diet&&STATE.diet.water)||8, got=(ci(day)||{}).water||0;
+      if(got<goal) notifyNow("RiseONE", t("nt.aguaMsg").replace("{a}",got).replace("{b}",goal), "agua");
+    }
+  }
+}
+setInterval(notifTick, 20000);
+
+
+/* ---------- 45. CARTAO DE AVISOS E INSTALACAO ---------- */
+let INSTALL_EVT=null;
+window.addEventListener("beforeinstallprompt", e=>{ e.preventDefault(); INSTALL_EVT=e;
+  const b=document.getElementById("pwainstall"); if(b) b.classList.remove("hidden"); });
+window.addEventListener("appinstalled", ()=>{ INSTALL_EVT=null;
+  const b=document.getElementById("pwainstall"); if(b) b.classList.add("hidden"); toast(t("nt.installed")); });
+function notifCard(){
+  const c=notifCfg();
+  const perm=("Notification" in window)? Notification.permission : "unsupported";
+  let h='<div class="card"><div class="between"><div><h3 style="margin:0">🔔 '+t("nt.title")+'</h3><small class="muted">'+t("nt.sub")+"</small></div>"+
+    '<label class="switch"><input type="checkbox" id="nt_on" '+(c.on?"checked":"")+'><span class="tr"></span></label></div>';
+  if(perm==="denied") h+='<p class="tiny" style="color:var(--warn);margin:.6em 0 0">⚠ '+t("nt.denied")+"</p>";
+  h+='<div class="sep"></div><div class="list">';
+  NOTIF_TYPES.forEach(ty=>{
+    const s2=c.types[ty.id];
+    h+='<div class="item"><span style="font-size:1.1rem">'+ty.ic+'</span><div class="gr"><div class="t">'+t("nt."+ty.id)+"</div>";
+    if(ty.time) h+='<div class="s"><input type="time" data-nttime="'+ty.id+'" value="'+esc(s2.time||"18:00")+'" style="width:120px;padding:3px 7px;font-size:.8rem"></div>';
+    if(ty.every) h+='<div class="s row" style="gap:6px"><span class="tiny">'+t("nt.every")+'</span><input type="number" data-ntevery="'+ty.id+'" value="'+(s2.every||120)+'" min="30" step="30" style="width:74px;padding:3px 7px;font-size:.8rem"><span class="tiny">'+t("nt.min")+
+      '</span><span class="tiny">'+t("nt.window")+'</span><input type="time" data-ntfrom="'+ty.id+'" value="'+esc(s2.from||"08:00")+'" style="width:104px;padding:3px 7px;font-size:.8rem"><span class="tiny">'+t("nt.and")+
+      '</span><input type="time" data-ntto="'+ty.id+'" value="'+esc(s2.to||"21:00")+'" style="width:104px;padding:3px 7px;font-size:.8rem"></div>';
+    h+='</div><label class="switch"><input type="checkbox" data-nttype="'+ty.id+'" '+(s2.on?"checked":"")+'><span class="tr"></span></label></div>';
+  });
+  h+='</div><div class="sep"></div><div class="row"><button class="btn ghost sm" id="nt_test">'+t("nt.test")+'</button>'+
+     '<button class="btn sm hidden" id="pwainstall">📲 '+t("nt.install")+"</button></div>"+
+     '<p class="tiny muted" style="margin-top:8px">'+t("nt.closedNote")+"</p>"+
+     '<p class="tiny muted">📴 '+t("nt.offline")+" — "+t("nt.offlineNote")+"</p></div>";
+  return h;
+}
+function wireNotifCard(){
+  const c=notifCfg();
+  const on=document.getElementById("nt_on");
+  if(on) on.onchange=e=>{
+    if(e.target.checked){ askNotifPerm().then(ok=>{ c.on=ok; save(); if(!ok){ e.target.checked=false; render(); } else { toast(t("common.saved")); render(); } }); }
+    else { c.on=false; save(); }
+  };
+  document.querySelectorAll("[data-nttype]").forEach(b=>b.onchange=()=>{ c.types[b.getAttribute("data-nttype")].on=b.checked; save(); });
+  document.querySelectorAll("[data-nttime]").forEach(n=>n.onchange=()=>{ c.types[n.getAttribute("data-nttime")].time=n.value; save(); });
+  document.querySelectorAll("[data-ntevery]").forEach(n=>n.onchange=()=>{ c.types[n.getAttribute("data-ntevery")].every=Math.max(30,num(n.value,120)); save(); });
+  document.querySelectorAll("[data-ntfrom]").forEach(n=>n.onchange=()=>{ c.types[n.getAttribute("data-ntfrom")].from=n.value; save(); });
+  document.querySelectorAll("[data-ntto]").forEach(n=>n.onchange=()=>{ c.types[n.getAttribute("data-ntto")].to=n.value; save(); });
+  const tb=document.getElementById("nt_test");
+  if(tb) tb.onclick=()=>askNotifPerm().then(ok=>{ if(!ok){ toast(t("nt.denied")); return; } c.on=true; save(); notifyNow("RiseONE", t("nt.testMsg"), "teste"); });
+  const ib=document.getElementById("pwainstall");
+  if(ib){ if(INSTALL_EVT) ib.classList.remove("hidden");
+    ib.onclick=()=>{ if(!INSTALL_EVT) return; INSTALL_EVT.prompt(); INSTALL_EVT=null; ib.classList.add("hidden"); }; }
+}
+
+
+/* ---------- 46. ANUNCIOS: CARROSSEL E POP-UP ---------- */
+function adList(kind){ return (ROOT.ads||[]).filter(a=>a.active!==false && (a.kind||"banner")===kind); }
+function adsOff(){ return role()==="admin" || (STATE && STATE.pro); }
+let AD_ROT=null, AD_IDX=0, AD_NAV=0, AD_LAST=0;
+function paintAd(){
+  const bar=document.getElementById("adbar");
+  clearInterval(AD_ROT); AD_ROT=null;
+  if(adsOff() || sessionStorage.getItem("riseone.addismiss")==="1"){ bar.classList.add("hidden"); return; }
+  bar.classList.remove("hidden");
+  const act=adList("banner");
+  const box=document.getElementById("adbox"), lnk=document.getElementById("adlink");
+  const show=()=>{
+    if(!act.length){ box.textContent=t("ad.here"); lnk.href=AD_URL; delete lnk.dataset.ad; return; }
+    const a=act[AD_IDX%act.length]; AD_IDX++;
+    box.style.opacity="0";
+    setTimeout(()=>{ box.textContent=a.title||t("ad.here"); lnk.href=a.url||AD_URL; lnk.dataset.ad=a.id;
+      a.views=(a.views||0)+1; saveRoot(); box.style.opacity="1"; },180);
+  };
+  show();
+  if(act.length>1) AD_ROT=setInterval(show, 8000);
+}
+function countAdClick(id){ const a=(ROOT.ads||[]).find(x=>x.id===id); if(a){ a.clicks=(a.clicks||0)+1; saveRoot(); } }
+/* pop-up: aparece na area logada, com 3 segundos antes de liberar o X */
+function maybePopupAd(){
+  if(adsOff()) return;
+  if(role()==="guest" && !(ROOT.session&&ROOT.session.role)) return;
+  const list=adList("popup"); if(!list.length) return;
+  AD_NAV++;
+  const gap=6, cool=4*60*1000;
+  if(AD_NAV<gap) return;
+  if(Date.now()-AD_LAST<cool) return;
+  AD_NAV=0; AD_LAST=Date.now();
+  showPopupAd(list[Math.floor(Math.random()*list.length)]);
+}
+function showPopupAd(a){
+  a.views=(a.views||0)+1; saveRoot();
+  let left=3;
+  const m=modal('<div class="mh"><span class="pill">'+t("ad.tag")+'</span><button class="iconbtn" id="pa_x" disabled style="opacity:.45">'+left+"</button></div>"+
+    '<a id="pa_link" href="'+esc(a.url||AD_URL)+'" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">'+
+      (a.img?'<img src="'+esc(a.img)+'" alt="" style="width:100%;border-radius:12px;margin-bottom:10px">':"")+
+      '<div style="border:1px dashed var(--accent);border-radius:14px;padding:22px 14px;text-align:center;background:var(--accent-soft)">'+
+      '<div style="font-size:1.15rem;font-weight:800;color:var(--accent)">'+esc(a.title||t("ad.here"))+"</div>"+
+      (a.text?'<div class="tiny muted" style="margin-top:6px">'+esc(a.text)+"</div>":"")+"</div></a>"+
+    '<p class="tiny muted" style="margin-top:10px;text-align:center">'+t("ad.popNote")+"</p>",{sticky:true});
+  const x=m.querySelector("#pa_x");
+  m.querySelector("#pa_link").onclick=()=>countAdClick(a.id);
+  const tk=setInterval(()=>{
+    left--;
+    if(left>0){ x.textContent=left; return; }
+    clearInterval(tk); x.textContent="×"; x.disabled=false; x.style.opacity="1";
+    x.onclick=()=>m.remove();
+  },1000);
+  m.addEventListener("click",e=>{ if(e.target===m && !x.disabled) m.remove(); });
+}
+
+
+/* ---------- 47. PLANOS: O QUE É PREMIUM, INCLUSO OU ABERTO ---------- */
+const FEATURES=[
+ {id:"warm",   ic:"🤸", pt:"Aquecer & Alongar",     en:"Warm up & Stretch",   def:"guest"},
+ {id:"diet",   ic:"🥗", pt:"Dieta",                 en:"Diet",                def:"guest"},
+ {id:"progress",ic:"📈",pt:"Evolução e medidas",    en:"Progress and measures",def:"guest"},
+ {id:"photos", ic:"📸", pt:"Fotos antes e depois",  en:"Before and after photos", def:"guest"},
+ {id:"scan",   ic:"📷", pt:"Escanear (OCR)",        en:"Scan (OCR)",          def:"guest"},
+ {id:"series", ic:"🔁", pt:"Séries no cronômetro",  en:"Interval timer",      def:"guest"},
+ {id:"mirror", ic:"🪞", pt:"Espelho com câmera",    en:"Camera mirror",       def:"guest"},
+ {id:"cloud",  ic:"☁️", pt:"Backup e nuvem",        en:"Backup and cloud",    def:"guest"},
+ {id:"ia",     ic:"🤖", pt:"Assistente de IA",      en:"AI assistant",        def:"included"},
+ {id:"coach",  ic:"🧑‍🏫", pt:"Área do Personal",    en:"Trainer area",        def:"included"}
+];
+const PLAN_LEVELS=[["guest","🌐"],["included","✅"],["premium","⭐"]];
+function plans(){
+  ROOT.plans=ROOT.plans||{};
+  FEATURES.forEach(f=>{ if(!ROOT.plans[f.id]) ROOT.plans[f.id]=f.def; });
+  return ROOT.plans;
+}
+function featName(f){ return LANG==="pt"?f.pt:f.en; }
+function canUse(id){
+  if(role()==="admin") return true;
+  const lv=plans()[id]||"included";
+  if(lv==="guest") return true;
+  if(role()==="guest") return false;
+  if(lv==="included") return true;
+  return !!(STATE && STATE.pro);
+}
+function gotItLocked(id){
+  const f=FEATURES.find(x=>x.id===id)||{pt:id,en:id,ic:"🔒"};
+  const lv=plans()[id]||"included";
+  const why = (role()==="guest" && lv!=="guest") ? t("pl.needAccount") : t("pl.needPremium");
+  const m=modal('<div class="mh"><h3 style="margin:0">'+f.ic+" "+esc(featName(f))+'</h3><button class="iconbtn" data-close>&times;</button></div>'+
+    '<p class="muted">'+why+"</p>"+
+    '<div class="row" style="justify-content:flex-end">'+
+    ((role()==="guest" && lv!=="guest")?'<button class="btn" id="gl_acc">'+t("guest.upgrade")+"</button>"
+      :'<button class="btn" id="gl_pro">'+t("st.goPro")+"</button>")+
+    '<button class="btn line" data-close>'+t("common.ok")+"</button></div>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("pl.adminNote")+"</p>");
+  const a=m.querySelector("#gl_acc"); if(a) a.onclick=()=>{ m.remove(); loginModal("student"); };
+  const p2=m.querySelector("#gl_pro"); if(p2) p2.onclick=()=>{ m.remove(); go("set"); toast(t("st.proNote")); };
+  return false;
+}
+function gate(id, fn){ if(canUse(id)) return fn(); return gotItLocked(id); }
+function lockBadge(id){ return canUse(id)? "" : ' <span class="pill" style="padding:1px 6px">🔒</span>'; }
+function lockedScreen(id){
+  const f=FEATURES.find(x=>x.id===id)||{ic:"🔒",pt:id,en:id};
+  return '<div class="card" style="text-align:center;padding:30px 16px"><div style="font-size:2.4rem">'+f.ic+"</div>"+
+    '<h2 style="margin:.3em 0">'+esc(featName(f))+"</h2>"+
+    '<p class="muted">'+((role()==="guest"&&plans()[id]!=="guest")?t("pl.needAccount"):t("pl.needPremium"))+"</p>"+
+    '<div class="row" style="justify-content:center"><button class="btn" id="lk_go">'+((role()==="guest"&&plans()[id]!=="guest")?t("guest.upgrade"):t("st.goPro"))+"</button></div></div>";
+}
+/* ---------- 48. TELA: ADMINISTRADOR ---------- */
+SCREENS.admin = function(){
+  const p2=plans();
+  let h='<h1 style="margin:0 0 4px">🛡 '+t("adm.title")+'</h1><small class="muted">'+t("adm.sub")+"</small>";
+  h+='<div class="card" style="margin-top:12px"><div class="list">'+FEATURES.map(f=>
+    '<div class="item admrow"><div class="admhead"><span style="font-size:1.15rem">'+f.ic+'</span><span class="t">'+esc(featName(f))+"</span></div>"+
+    '<div class="s">'+t("pl."+(p2[f.id]||"included")+"Desc")+"</div>"+
+    '<div class="chips">'+PLAN_LEVELS.map(l=>'<button class="chip '+((p2[f.id]||"included")===l[0]?"on":"")+'" data-pl="'+f.id+":"+l[0]+'">'+l[1]+" "+t("pl."+l[0])+"</button>").join("")+"</div></div>").join("")+"</div>"+
+    '<div class="sep"></div><div class="row"><button class="btn ghost sm" id="adm_reset">'+t("adm.reset")+"</button></div></div>";
+  h+='<div class="card"><h3>👥 '+t("adm.users")+"</h3><div class='sep'></div>"+
+    '<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>'+t("lg.nick")+"</th><th>"+t("lg.email")+"</th><th>"+t("adm.role")+'</th><th class="num">'+t("adm.premium")+"</th></tr></thead><tbody>"+
+    (Object.values(ROOT.users).length? Object.values(ROOT.users).map(u=>"<tr><td>"+esc(u.name)+"</td><td>"+esc(u.email||"—")+"</td><td>"+t("role."+u.role)+
+      '</td><td class="num"><label class="switch"><input type="checkbox" data-prem="'+u.id+'" '+(((ROOT.data[u.id]||{}).pro)?"checked":"")+'><span class="tr"></span></label></td></tr>').join("")
+      : '<tr><td colspan="4">'+t("common.empty")+"</td></tr>")+"</tbody></table></div>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("adm.usersNote")+"</p></div>";
+  return h;
+};
+SCREENS.admin_after = function(){
+  document.querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>{
+    const a=b.getAttribute("data-pl").split(":"); ROOT.plans[a[0]]=a[1]; saveRoot(); render(); buildNav(); });
+  document.getElementById("adm_reset").onclick=()=>confirmBox(t("common.confirmDel"),()=>{
+    ROOT.plans={}; FEATURES.forEach(f=>ROOT.plans[f.id]=f.def); saveRoot(); render(); });
+  document.querySelectorAll("[data-prem]").forEach(b=>b.onchange=()=>{
+    const id=b.getAttribute("data-prem");
+    ROOT.data[id]=ROOT.data[id]||defaultState("");
+    ROOT.data[id].pro=b.checked; saveRoot();
+    if(ROOT.session&&ROOT.session.uid===id){ STATE.pro=b.checked; save(); }
+    paintAd(); });
+};
+/* ---------- 49. ASSISTENTE DE IA ---------- */
+function aiCfg(){
+  STATE.settings=STATE.settings||{};
+  const d={provider:"gemini", key:"", useContext:true, history:[]};
+  STATE.settings.ai=Object.assign({},d,STATE.settings.ai||{});
+  return STATE.settings.ai;
+}
+function aiContext(){
+  const a=anam(), w=anamWeight(), v=bmi();
+  const parts=[];
+  if(anamAge()) parts.push((LANG==="pt"?"Idade ":"Age ")+anamAge());
+  if(a.sex) parts.push(LANG==="pt"?(a.sex==="f"?"sexo feminino":"sexo masculino"):(a.sex==="f"?"female":"male"));
+  if(a.height) parts.push((LANG==="pt"?"altura ":"height ")+a.height+" cm");
+  if(w) parts.push((LANG==="pt"?"peso ":"weight ")+fmtNum(w,1)+" kg");
+  if(v) parts.push("IMC "+fmtNum(v,1));
+  if(a.goal) parts.push((LANG==="pt"?"objetivo: ":"goal: ")+t("an."+a.goal));
+  if(a.level) parts.push((LANG==="pt"?"experiência: ":"experience: ")+t("an."+a.level));
+  if(a.days) parts.push(a.days+(LANG==="pt"?" dias por semana":" days per week"));
+  if((a.injuries||[]).length) parts.push((LANG==="pt"?"lesões/dores: ":"injuries/pain: ")+a.injuries.map(id=>injName(INJURIES.find(x=>x.id===id)||{pt:id,en:id})).join(", "));
+  if(STATE.diet&&STATE.diet.kcal) parts.push((LANG==="pt"?"meta ":"target ")+fmtNum(STATE.diet.kcal,0)+" kcal");
+  return parts.join("; ");
+}
+function aiAsk(question){
+  const c=aiCfg();
+  if(!c.key) return Promise.reject(new Error("nokey"));
+  if(!navigator.onLine) return Promise.reject(new Error("offline"));
+  const sys=(LANG==="pt"
+    ? "Você é um assistente de treino e alimentação dentro do app RiseONE. Responda em português do Brasil, de forma curta, prática e cuidadosa. Não dê diagnóstico médico; quando o assunto for saúde, oriente a procurar profissional."
+    : "You are a training and nutrition assistant inside the RiseONE app. Answer in English, short, practical and careful. Do not give medical diagnosis; for health matters, advise seeing a professional.")
+    + (c.useContext && aiContext() ? ("\n"+(LANG==="pt"?"Dados da pessoa":"Person data")+": "+aiContext()) : "");
+  if(c.provider==="gemini"){
+    return fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(c.key),
+      {method:"POST",headers:{"Content-Type":"application/json"},
+       body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:[{role:"user",parts:[{text:question}]}]})})
+      .then(r=>r.json()).then(j=>{
+        if(j.error) throw new Error(j.error.message||"erro");
+        return ((j.candidates||[])[0]||{}).content?.parts?.map(p=>p.text).join("")||"";
+      });
+  }
+  if(c.provider==="openai"){
+    return fetch("https://api.openai.com/v1/chat/completions",
+      {method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
+       body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"system",content:sys},{role:"user",content:question}]})})
+      .then(r=>r.json()).then(j=>{ if(j.error) throw new Error(j.error.message||"erro");
+        return ((j.choices||[])[0]||{}).message?.content||""; });
+  }
+  return fetch("https://api.anthropic.com/v1/messages",
+    {method:"POST",headers:{"Content-Type":"application/json","x-api-key":c.key,
+      "anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+     body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:900,system:sys,messages:[{role:"user",content:question}]})})
+    .then(r=>r.json()).then(j=>{ if(j.error) throw new Error(j.error.message||"erro");
+      return (j.content||[]).map(p=>p.text).join(""); });
+}
+SCREENS.ia = function(){
+  if(!canUse("ia")) return lockedScreen("ia");
+  const c=aiCfg();
+  let h='<div class="between" style="margin-bottom:10px"><div><h1 style="margin:0">🤖 '+t("ia.title")+'</h1><small>'+t("ia.sub")+"</small></div></div>";
+  h+='<div class="card"><h3>🔑 '+t("ia.setup")+'</h3><div class="sep"></div>'+
+    '<div class="chips" style="margin-bottom:10px">'+[["gemini","Google Gemini"],["openai","OpenAI"],["claude","Anthropic Claude"]]
+      .map(o=>'<button class="chip '+(c.provider===o[0]?"on":"")+'" data-aip="'+o[0]+'">'+o[1]+"</button>").join("")+"</div>"+
+    '<label class="fld"><span>'+t("ia.key")+'</span><input type="password" id="ia_k" value="'+esc(c.key)+'" placeholder="'+t("ia.keyPh")+'"></label>'+
+    '<label class="switch" style="margin-bottom:10px"><input type="checkbox" id="ia_c" '+(c.useContext?"checked":"")+'><span class="tr"></span><span class="tiny">'+t("ia.ctx")+"</span></label>"+
+    '<div class="row"><button class="btn ghost sm" id="ia_save">'+t("common.save")+"</button></div>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("ia.keyNote")+"</p></div>";
+  h+='<div class="card"><div class="between"><h3 style="margin:0">💬 '+t("ia.chat")+'</h3><button class="btn xs line" id="ia_clr">'+t("ia.clear")+"</button></div><div class='sep'></div>"+
+    '<div id="ia_log" class="list">'+ (c.history.length? c.history.map(mm=>
+      '<div class="item" style="align-items:flex-start"><span class="pill '+(mm.r==="u"?"acc":"")+'">'+(mm.r==="u"?"🙋":"🤖")+'</span><div class="gr"><div class="s" style="white-space:pre-wrap;color:var(--text)">'+esc(mm.t)+"</div></div></div>").join("")
+      : '<div class="empty">'+t("ia.empty")+"</div>")+"</div>"+
+    '<div class="sep"></div><div class="chips" style="margin-bottom:8px">'+
+      [t("ia.q1"),t("ia.q2"),t("ia.q3"),t("ia.q4")].map(q=>'<button class="chip" data-iaq="'+esc(q)+'">'+esc(q)+"</button>").join("")+"</div>"+
+    '<label class="fld"><span>'+t("ia.ask")+'</span><textarea id="ia_q" placeholder="'+t("ia.askPh")+'"></textarea></label>'+
+    '<button class="btn wide" id="ia_go">'+t("ia.send")+"</button>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("ia.disclaimer")+"</p></div>";
+  return h;
+};
+SCREENS.ia_after = function(){
+  const lk=document.getElementById("lk_go");
+  if(lk){ lk.onclick=()=>{ role()==="guest"? loginModal("student") : go("set"); }; return; }
+  const c=aiCfg();
+  document.querySelectorAll("[data-aip]").forEach(b=>b.onclick=()=>{ c.provider=b.getAttribute("data-aip"); save(); render(); });
+  document.getElementById("ia_save").onclick=()=>{
+    c.key=document.getElementById("ia_k").value.trim();
+    c.useContext=document.getElementById("ia_c").checked; save(); toast(t("common.saved")); };
+  document.getElementById("ia_clr").onclick=()=>{ c.history=[]; save(); render(); };
+  document.querySelectorAll("[data-iaq]").forEach(b=>b.onclick=()=>{ document.getElementById("ia_q").value=b.getAttribute("data-iaq"); });
+  document.getElementById("ia_go").onclick=()=>{
+    const q=document.getElementById("ia_q").value.trim(); if(!q) return;
+    c.key=document.getElementById("ia_k").value.trim();
+    if(!c.key){ toast(t("ia.noKey")); return; }
+    c.history.push({r:"u",t:q}); save(); render();
+    const log=document.getElementById("ia_log");
+    if(log) log.insertAdjacentHTML("beforeend",'<div class="item"><span class="pill">🤖</span><div class="gr"><div class="s">'+t("ia.thinking")+"</div></div></div>");
+    aiAsk(q).then(ans=>{ c.history.push({r:"a",t:ans||t("ia.empty2")}); save(); render(); })
+      .catch(e=>{ const msg = e.message==="offline"? t("ia.offline") : (e.message==="nokey"? t("ia.noKey") : (t("ia.error")+" "+e.message));
+        c.history.push({r:"a",t:msg}); save(); render(); });
+  };
+};
+
 /* ---------- 32. INICIALIZACAO ---------- */
 function boot(){
   loadRoot();
@@ -4437,7 +5034,7 @@ function boot(){
 /* barra de anuncio */
 document.getElementById("adclose").onclick=()=>{ sessionStorage.setItem("riseone.addismiss","1"); document.getElementById("adbar").classList.add("hidden"); };
 document.getElementById("adlink").addEventListener("click", function(){
-  const id=this.dataset.ad; if(id){ const a=(ROOT.ads||[]).find(x=>x.id===id); if(a){ a.clicks=(a.clicks||0)+1; saveRoot(); } }
+  if(this.dataset.ad) countAdClick(this.dataset.ad);
 });
 /* cabecalho */
 document.getElementById("langbtn").onclick=()=>applyLang(LANG==="pt"?"en":"pt");
@@ -4453,8 +5050,9 @@ document.getElementById("timerhdr").onclick=()=>openTimer();
 document.getElementById("legalbtn").onclick=e=>{ e.preventDefault(); legalModal(); };
 window.addEventListener("beforeunload", ()=>{ stopCam(); });
 
-/* manifest embutido (instalar como app) */
+/* manifesto embutido — so entra em acao quando o arquivo e aberto solto (file:) */
 (function(){
+  if(location.protocol!=="file:") return;
   const icon="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#0f1115"/><path d="M112 360 L192 200 L256 288 L320 130 L400 360" fill="none" stroke="#ff7a2f" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/></svg>');
   const mf={name:"RiseONE", short_name:"RiseONE", start_url:".", display:"standalone",
     background_color:"#0f1115", theme_color:"#0f1115", orientation:"portrait",
@@ -4465,6 +5063,14 @@ window.addEventListener("beforeunload", ()=>{ stopCam(); });
   document.head.appendChild(l);
 })();
 
+registerSW();
+/* atalhos do manifesto: index.html#workout, #timer, #scan, #progress */
+(function(){
+  const h=(location.hash||"").replace("#","");
+  if(!h) return;
+  if(h==="timer"){ setTimeout(()=>openTimer(),400); return; }
+  if(visibleRoutes().some(r=>r.id===h)) setTimeout(()=>go(h),200);
+})();
 boot();
 </script>
 </body>

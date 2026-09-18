@@ -10,6 +10,21 @@ Site: https://marceloneco.github.io/rise-one/
 - **Mapa do corpo** — desenho do corpo (frente e costas) clicável, com nomes dos músculos em 3 níveis
   (simples → comum → técnico) e busca por objetivo em linguagem do dia a dia
   (*"quero deixar o bíceps forte"*).
+- **Cinco tipos de acesso** — Visitante (com anúncios, sem guardar dados), Aluno, Personal Trainer,
+  Anunciante e Administrador. A conta tem apelido, e-mail e senha, com código de recuperação
+  `RISE-XXXX-XXXX` mostrado uma vez e fluxo de "esqueci a senha".
+- **Administrador dos níveis** — cada recurso pode ser marcado como aberto ao Visitante, Incluso
+  (qualquer conta) ou Premium. Recurso trancado mostra um aviso explicando o porquê.
+- **Anúncios** — banner do topo em carrossel (troca a cada 8 s, cada anúncio com o seu link) e
+  pop-up na área logada com 3 segundos antes de liberar o X. Conta premium não vê anúncio nenhum.
+  O painel do anunciante conta exibições, cliques e taxa dos dois tipos.
+- **Avisos e notificações** — treino do dia, fim do descanso, missões, água, check-in e lembretes,
+  cada um ligável e com horário próprio. Estrutura de push de servidor já pronta no service worker.
+- **Instala e funciona sem internet** — `manifest.json`, `sw.js` e ícones na raiz; depois da primeira
+  visita o app abre offline e pode ser instalado como aplicativo, com atalhos de treino, cronômetro,
+  check-in e escanear.
+- **Assistente de IA** — perguntas de treino e dieta usando a chave do próprio usuário
+  (Google Gemini, OpenAI ou Anthropic Claude), com a opção de enviar junto os dados da anamnese.
 - **Anamnese** — data de nascimento (idade calculada sozinha), sexo, altura e peso com IMC e gasto
   calórico na hora; objetivo, tempo de treino, dias por semana e onde treina; lesões e dores por região,
   que passam a marcar com ⚠ os exercícios daquela área; e saúde geral (pressão, diabetes, coração,
@@ -52,6 +67,21 @@ Os dados ficam no próprio aparelho (armazenamento do navegador). Nada é enviad
 do app. O backup é um arquivo `.json` que fica com o usuário. A ligação opcional com Google Drive
 ou OneDrive só funciona quando o próprio usuário informa a chave (Client ID) do serviço dele.
 
+## Arquivos do pacote
+
+Todos vão soltos na **raiz** do repositório:
+
+| Arquivo | Para que serve |
+|---|---|
+| `index.html` | o app inteiro |
+| `manifest.json` | deixa instalar como aplicativo |
+| `sw.js` | faz abrir sem internet e entrega os avisos |
+| `icone-192.png`, `icone-512.png`, `icone-maskable.png` | ícones do aplicativo |
+| `TESTE-riseone.html` | página de conferência das diretrizes |
+
+A pasta `.github` (com `workflows/static.yml`) já está no repositório e **não pode ser apagada** —
+é ela que publica o site a cada envio.
+
 ## Como publicar (GitHub Pages)
 
 1. Crie um repositório público chamado `rise-one`.
@@ -65,4 +95,4 @@ Uso pessoal e para fins de estudo e pesquisa. As informações sobre exercícios
 saúde são informativas e não substituem profissional de educação física, nutricionista ou médico.
 
 ---
-Versão 2.0.0
+Versão 2.1.0
