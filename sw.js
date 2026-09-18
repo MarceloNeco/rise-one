@@ -1,8 +1,8 @@
 /* RiseONE — service worker
    Guarda o app para abrir sem internet e recebe as notificacoes.
    Troque CACHE_VER ao publicar uma versao nova. */
-const CACHE_VER = "riseone-v2.2.3";
-const CORE = ["./", "./index.html", "./manifest.json", "./icone-192.png", "./icone-512.png", "./icone-maskable.png", "./fundo.jpg", "./fundo-celular.jpg", "./fundo-claro.jpg", "./fundo-claro-celular.jpg"];
+const CACHE_VER = "riseone-v2.3.0";
+const CORE = ["./", "./index.html", "./manifest.json", "./icone-192.png", "./icone-512.png", "./icone-maskable.png", "./fundo.jpg", "./fundo-celular.jpg", "./fundo-claro.jpg", "./fundo-claro-celular.jpg", "./anuncios.json"];
 
 self.addEventListener("install", ev => {
   ev.waitUntil(caches.open(CACHE_VER).then(c => c.addAll(CORE).catch(() => null)).then(() => self.skipWaiting()));

@@ -15,9 +15,12 @@ Site: https://marceloneco.github.io/rise-one/
   `RISE-XXXX-XXXX` mostrado uma vez e fluxo de "esqueci a senha".
 - **Administrador dos níveis** — cada recurso pode ser marcado como aberto ao Visitante, Incluso
   (qualquer conta) ou Premium. Recurso trancado mostra um aviso explicando o porquê.
-- **Anúncios** — banner do topo em carrossel (troca a cada 8 s, cada anúncio com o seu link) e
-  pop-up na área logada com 3 segundos antes de liberar o X. Conta premium não vê anúncio nenhum.
-  O painel do anunciante conta exibições, cliques e taxa dos dois tipos.
+- **Anúncios (diretriz do portfólio)** — faixa do topo com os anúncios rolando para a esquerda em laço,
+  imagem ao lado do texto, pausa no toque ou no mouse, palavra ANÚNCIO na vertical e × que fecha até o
+  próximo login. Pop-up em dois momentos (antes do login com um app sorteado; depois do login com
+  outro app), contagem 3-2-1 antes de liberar o ×, fecha no ×, Esc ou clique fora; deitado no computador
+  e em pé no celular; botão "Conhecer". Lista em `anuncios.json`; sem o arquivo usa os apps do hub.
+  O RiseONE nunca anuncia a si mesmo. Exibições e cliques contados por anúncio. Premium não vê nada.
 - **Avisos e notificações** — treino do dia, fim do descanso, missões, água, check-in e lembretes,
   cada um ligável e com horário próprio. Estrutura de push de servidor já pronta no service worker.
 - **Instala e funciona sem internet** — `manifest.json`, `sw.js` e ícones na raiz; depois da primeira
@@ -82,6 +85,7 @@ Todos vão soltos na **raiz** do repositório:
 | `icone-192.png`, `icone-512.png`, `icone-maskable.png` | ícones do aplicativo |
 | `fundo.jpg`, `fundo-celular.jpg` | arte de fundo do tema escuro (computador e celular) |
 | `fundo-claro.jpg`, `fundo-claro-celular.jpg` | a mesma arte na versão do tema claro |
+| `anuncios.json` | lista de anúncios da faixa e do pop-up (editável) |
 | `TESTE-riseone.html` | página de conferência das diretrizes |
 
 A pasta `.github` (com `workflows/static.yml`) já está no repositório e **não pode ser apagada** —
@@ -100,4 +104,4 @@ Uso pessoal e para fins de estudo e pesquisa. As informações sobre exercícios
 saúde são informativas e não substituem profissional de educação física, nutricionista ou médico.
 
 ---
-Versão 2.2.3
+Versão 2.3.0

@@ -1,0 +1,26 @@
+{
+  "_comentario": "Anúncios do RiseONE. Edite à vontade. 'id' precisa ser único; 'ic' é um emoji usado quando não houver imagem; 'img' é opcional. O app nunca anuncia a si mesmo.",
+  "banner": [
+    { "id": "moneytrio", "nome": "MoneyTrio", "url": "https://marceloneco.github.io/investify-me/", "ic": "💰",
+      "img": "https://marceloneco.github.io/investify-me/icone-192.png",
+      "pt": "Sabe para onde foi o seu dinheiro este mês?", "en": "Do you know where your money went this month?",
+      "pt2": "Orçamento, investimentos e imposto de renda num lugar só.", "en2": "Budget, investments and taxes in one place." },
+    { "id": "cifras", "nome": "Cifras e Acordes", "url": "https://marceloneco.github.io/cifras-violao/", "ic": "🎸",
+      "img": "https://marceloneco.github.io/cifras-violao/icone-192.png",
+      "pt": "Aquela música que você sempre quis tocar.", "en": "That song you always wanted to play.",
+      "pt2": "Cifras com rolagem automática e diagramas de acorde.", "en2": "Chord sheets with auto-scroll and chord diagrams." },
+    { "id": "historias", "nome": "Contador de Histórias", "url": "https://marceloneco.github.io/contador-de-historias/", "ic": "🌙",
+      "img": "https://marceloneco.github.io/contador-de-historias/icone-192.png",
+      "pt": "Hora de dormir sem briga.", "en": "Bedtime without a fight.",
+      "pt2": "Histórias narradas em voz alta para as crianças.", "en2": "Stories read aloud for the kids." },
+    { "id": "eleicoes", "nome": "Eleições 2026", "url": "https://marceloneco.github.io/planos-candidatos-2026/", "ic": "🗳️",
+      "img": "https://marceloneco.github.io/planos-candidatos-2026/icone-192.png",
+      "pt": "Você sabe o que cada candidato prometeu?", "en": "Do you know what each candidate promised?",
+      "pt2": "Compare os planos de governo lado a lado.", "en2": "Compare the government plans side by side." },
+    { "id": "omnilife", "nome": "OmniLifeONE", "url": "https://marceloneco.github.io/omnilife-one/", "ic": "🏠", "soon": true,
+      "pt": "A casa e a família organizadas num app só.", "en": "Home and family organised in one app.",
+      "pt2": "Compras, agenda, documentos e saúde.", "en2": "Shopping, calendar, documents and health." }
+  ],
+  "popup": "mesmos",
+  "config": { "velocidade": 55, "popupAntesDoLogin": true, "popupDepoisDoLogin": true, "aCadaTelas": 6, "intervaloMin": 4 }
+}

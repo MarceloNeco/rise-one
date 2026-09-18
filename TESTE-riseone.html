@@ -44,8 +44,8 @@ code{background:var(--card2);border:1px solid var(--bd);border-radius:6px;paddin
   <div class="item"><span class="dot">1</span><div><span class="k">Idioma sempre à vista</span><br><small class="mut">Botão 🌐 PT/EN no cabeçalho. Trocar muda tudo, inclusive as datas: <code>18/Set/2026</code> em PT e <code>Sep/18/2026</code> em EN.</small></div></div>
   <div class="item"><span class="dot">2</span><div><span class="k">Cinco tipos de acesso</span><br><small class="mut">Visitante, Aluno, Personal Trainer, Anunciante e Administrador na tela de entrada.</small></div></div>
   <div class="item"><span class="dot">3</span><div><span class="k">Conta com apelido, e-mail e recuperação</span><br><small class="mut">Ao criar a conta aparece um código <code>RISE-XXXX-XXXX</code>. Teste "Esqueci a senha" com ele.</small></div></div>
-  <div class="item"><span class="dot">4</span><div><span class="k">Banner em carrossel</span><br><small class="mut">Com dois ou mais anúncios ativos (painel do Anunciante), o banner do topo troca a cada 8 segundos.</small></div></div>
-  <div class="item"><span class="dot">5</span><div><span class="k">Pop-up com espera de 3 segundos</span><br><small class="mut">Crie um anúncio do tipo Pop-up e use "Ver o pop-up agora". O X só libera depois de 3 segundos.</small></div></div>
+  <div class="item"><span class="dot">4</span><div><span class="k">Faixa do topo em rolagem</span><br><small class="mut">Anúncios andando para a esquerda em laço, imagem ao lado do texto, pausa com o mouse ou o dedo, palavra ANÚNCIO na vertical à esquerda. Nenhum é do próprio RiseONE.</small></div></div>
+  <div class="item"><span class="dot">5</span><div><span class="k">Pop-up em dois momentos</span><br><small class="mut">Um antes do login e outro depois (app diferente), com contagem 3-2-1 antes de liberar o X; fecha no X, Esc ou clique fora. Deitado no computador, em pé no celular. Botão "Conhecer".</small></div></div>
   <div class="item"><span class="dot">6</span><div><span class="k">Premium sem anúncio</span><br><small class="mut">Ajustes › Anúncios › ativar conta sem anúncios: banner e pop-up somem.</small></div></div>
   <div class="item"><span class="dot">7</span><div><span class="k">Administrador define os níveis</span><br><small class="mut">Entre como Administrador e marque cada recurso como Visitante, Incluso ou Premium. Recurso trancado mostra o aviso "got it".</small></div></div>
   <div class="item"><span class="dot">8</span><div><span class="k">Avisos por tipo</span><br><small class="mut">Ajustes › Avisos: treino do dia, fim do descanso, missões, água, check-in e lembretes, cada um com seu horário.</small></div></div>
@@ -86,7 +86,7 @@ function run(){
   line(A, !!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia), 'Câmera disponível', 'Usada pelo OCR e pelo espelho.');
   line(A, navigator.onLine, 'Conexão', navigator.onLine? 'online':'offline — o app ainda deve abrir pelo cache');
   line(A, !!window.indexedDB && !!window.localStorage, 'Armazenamento local', 'Onde ficam treinos, fotos e medidas.');
-  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg'].forEach(f=>{
+  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg','anuncios.json'].forEach(f=>{
     fetch(f,{method:'HEAD'}).then(r=>line(F, r.ok, f, r.ok? 'encontrado':'faltando na raiz'))
       .catch(()=>line(F,false,f,'faltando na raiz'));
   });
