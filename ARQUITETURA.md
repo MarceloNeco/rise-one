@@ -45,6 +45,8 @@ Procure pelo número para ir direto ao assunto.
 - **47 e 48. Níveis e administrador** — `canUse(recurso)` decide se a pessoa pode usar algo; `servicos.json`; "ver o app como".
 - **50 e 51. Central de ajuda** — motor do tutorial (`TOUR`), motor de guias (`wizDef`/`wizRun`), busca (`GLOSS`) e ajuda por tela (`HELP`).
 - **52. Conteúdo extra** — exercícios e movimentos vindos de fichas reais, modelos de treino (`TEMPLATES`) e mapa das fotos (`PHOTOS`).
+- **53. Conferência de versão** — pergunta ao site qual versão está publicada (lê o `CACHE_VER` do `sw.js`)
+  e oferece "Atualizar agora", que limpa caches e service worker e recarrega.
 - **32. Inicialização** — `boot()` e a API pública `window.RISE`.
 
 ## O que não se toca sem pensar duas vezes
@@ -71,7 +73,7 @@ Procure pelo número para ir direto ao assunto.
 ## API pública (estável)
 
 `window.RISE` expõe: `versao`, `pode(recurso)`, `entrar(sessao)`, `sair()`, `idioma("pt"|"en")`, `tema("dark"|"light")`,
-`ir(tela, subtela)`, `ajuda(aba)`, `tutorial(passo)`, `guia(id)`. Outro código pode usar isso sem mexer por dentro.
+`ir(tela, subtela)`, `ajuda(aba)`, `tutorial(passo)`, `guia(id)`, `atualizar()`, `versaoDoSite()`. Outro código pode usar isso sem mexer por dentro.
 
 ## Regras de publicação
 

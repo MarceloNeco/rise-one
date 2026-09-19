@@ -5,6 +5,15 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.0.1 — aviso de versão
+
+- **O app confere sozinho se está atualizado.** Em Mais › Sobre aparecem duas linhas: a versão neste
+  aparelho e a versão publicada no site. Se o site estiver mais novo, o Início mostra um cartão
+  "Tem uma versão nova" com o botão **Atualizar agora**, que limpa o que o navegador guardou e recarrega
+  (seus treinos, fotos e medidas **não** são apagados).
+- Serve para o caso em que o envio de um arquivo para o GitHub falha sem avisar: em vez de ficar na
+  dúvida, o próprio app diz qual versão está no ar.
+
 ## Novo na versão 3.0.0 — interface limpa e as diretrizes do portfólio
 
 - **Cinco áreas em vez de treze abas** — Início, Treinar (Treino · Exercícios · Corpo · Aquecer & Alongar),
@@ -140,4 +149,4 @@ Uso pessoal e para fins de estudo e pesquisa. As informações sobre exercícios
 saúde são informativas e não substituem profissional de educação física, nutricionista ou médico.
 
 ---
-Versão 3.0.0
+Versão 3.0.1

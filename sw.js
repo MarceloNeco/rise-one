@@ -1,7 +1,7 @@
 /* RiseONE — service worker
    Guarda o app para abrir sem internet e recebe as notificacoes.
    Troque CACHE_VER ao publicar uma versao nova. */
-const CACHE_VER = "riseone-v3.0.0";
+const CACHE_VER = "riseone-v3.0.1";
 const CORE = ["./", "./index.html", "./manifest.json", "./icone-192.png", "./icone-512.png", "./icone-maskable.png", "./fundo.jpg", "./fundo-celular.jpg", "./fundo-claro.jpg", "./fundo-claro-celular.jpg", "./anuncios.json", "./servicos.json", "./fotos-exercicios.jpg"];
 
 self.addEventListener("install", ev => {
@@ -28,6 +28,9 @@ self.addEventListener("fetch", ev => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;           /* CDNs seguem direto para a rede */
+  /* o proprio sw.js e a conferencia de versao ("?ping=") nunca saem do cache:
+     e assim que o app descobre que ja existe uma versao nova publicada */
+  if (url.pathname.endsWith("/sw.js") || url.searchParams.has("ping")) return;
   if (req.mode === "navigate") {
     ev.respondWith(fetch(req).then(r => {
       const cp = r.clone(); caches.open(CACHE_VER).then(c => c.put(req, cp));
