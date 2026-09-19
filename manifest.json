@@ -22,7 +22,7 @@
   "shortcuts": [
     { "name": "Treino de hoje", "short_name": "Treino", "url": "./#workout", "icons": [{ "src": "icone-192.png", "sizes": "192x192" }] },
     { "name": "Cronômetro", "short_name": "Cronômetro", "url": "./#timer", "icons": [{ "src": "icone-192.png", "sizes": "192x192" }] },
-    { "name": "Check-in do dia", "short_name": "Check-in", "url": "./#progress", "icons": [{ "src": "icone-192.png", "sizes": "192x192" }] },
-    { "name": "Escanear", "short_name": "Escanear", "url": "./#scan", "icons": [{ "src": "icone-192.png", "sizes": "192x192" }] }
+    { "name": "Registro do dia", "short_name": "Registro", "url": "./#progress", "icons": [{ "src": "icone-192.png", "sizes": "192x192" }] },
+    { "name": "Ler com a câmera", "short_name": "Câmera", "url": "./#scan", "icons": [{ "src": "icone-192.png", "sizes": "192x192" }] }
   ]
 }

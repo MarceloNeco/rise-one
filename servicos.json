@@ -1,0 +1,18 @@
+{
+  "app": "RiseONE",
+  "versao": "3.0.0",
+  "atualizado": "2026-09-19",
+  "comentario": "Quem pode usar cada recurso. Valores: guest (Visitante: aberto a todos), included (Membro: precisa de conta), premium (Premium: conta sem anúncios). O administrador baixa este arquivo pronto no app (Mais › Administrador › Baixar servicos.json) e coloca na raiz do repositório.",
+  "niveis": {
+    "warm": "guest",
+    "diet": "guest",
+    "progress": "guest",
+    "photos": "guest",
+    "scan": "guest",
+    "series": "guest",
+    "mirror": "guest",
+    "cloud": "guest",
+    "ia": "included",
+    "coach": "included"
+  }
+}

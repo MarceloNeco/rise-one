@@ -1,9 +1,42 @@
 # RiseONE
 
 App de **exercício + dieta** que roda direto no navegador (celular, tablet e computador).
-Tudo em **um arquivo só**: `index.html`.
+Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são apoio (ícones, arte, listas).
 
-Site: https://marceloneco.github.io/rise-one/
+Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
+
+## Novo na versão 3.0.0 — interface limpa e as diretrizes do portfólio
+
+- **Cinco áreas em vez de treze abas** — Início, Treinar (Treino · Exercícios · Corpo · Aquecer & Alongar),
+  Dieta, Evolução (Hoje · Peso · Fotos · Medidas · Exames · Missões) e Mais (câmera, assistente, perfil,
+  avisos, conta, dados, preferências, ajuda). No celular vira barra de baixo. Nada foi retirado: cada tela
+  antiga continua existindo, só mudou de lugar.
+- **Início com um próximo passo claro** — o cartão laranja mostra o que fazer agora (começar o treino,
+  completar os primeiros passos, registrar o dia), depois os números do dia, as missões e os atalhos.
+- **Ícones desenhados iguais em todo aparelho**, cartões com título e explicação curta, telas vazias que
+  dizem o que fazer, folhas que sobem de baixo no celular e linguagem simples (sem gíria e sem
+  termos técnicos sem explicação).
+- **Botão Ajuda (Assist ONE)** — um botão só abre a central: **Tutorial** (destaca cada parte na tela de
+  verdade, oferecido na primeira visita), **Guia passo a passo** (Primeiros passos: idioma, seus dados,
+  objetivo, lesões, saúde e avisos — com pular, salvar e retomar de onde parou), **Buscar por termo**
+  (glossário: série, IMC, backup, missão…) e **Esta tela** (o que cada parte da tela faz). Tudo em PT e EN.
+  Se os arquivos `ajuda-botao.png` e `ajuda-icone.png` do portfólio estiverem na raiz, o botão usa eles.
+- **Faixa do topo na ordem da diretriz** — [PT | EN] · [IA] · [ANÚNCIO] · [carrossel] · [×]. O × fecha só os
+  anúncios; o idioma continua sempre à vista. Conta Premium vê só PT | EN e IA.
+- **Níveis Visitante → Membro → Premium** — o administrador define cada recurso, testa o app
+  "vendo como" Visitante, Membro ou Premium (tarja amarela de modo de teste) e baixa o `servicos.json`,
+  que viaja com o site.
+- **Senha com PBKDF2** e código de recuperação que se renova ao ser usado. Contas antigas continuam
+  entrando e são atualizadas no primeiro login.
+- **Horário silencioso** nos avisos: segura os avisos e solta depois; lembrete marcado como urgente passa.
+- **Modelos de treino prontos** — quatro treinos de exemplo montados a partir de fichas reais (iniciante,
+  intermediário, treino A e treino B), com observações por exercício. Ao usar, vira um treino seu.
+- **12 exercícios e 5 movimentos novos** (flexão escapular, rotação externa e interna com elástico,
+  remada na máquina, supino na máquina, panturrilha na parede, extensão de punho, esteira inclinada,
+  passagem de bastão, rotação de tronco com bastão…) e a rotina **Mobilidade diária (5–8 min)**.
+- **Fotos das posições** — arquivo opcional `fotos-exercicios.jpg` com as fotos de início e fim de
+  17 exercícios/movimentos. Sem o arquivo, o app mostra só o boneco animado.
+- **`ARQUITETURA.md`** — o que cada arquivo faz, o que não se toca e onde mudar o quê.
 
 ## O que tem dentro
 
@@ -64,7 +97,7 @@ Site: https://marceloneco.github.io/rise-one/
 - **Escanear (OCR)** — a câmera lê rótulo nutricional, ficha de treino em papel, visor da balança,
   exame de sangue e medidas de fita. O texto é lido **no próprio aparelho**.
 - **Perfis** — Visitante (com anúncios, sem guardar dados), Aluno, Personal Trainer e Anunciante.
-- **Português e inglês** — botão 🌐 sempre à vista. Datas em `dd/mmm/aaaa` (PT) e `mmm/dd/aaaa` (EN).
+- **Português e inglês** — botão PT | EN sempre à vista na faixa do topo. Datas em `dd/mmm/aaaa` (PT) e `mmm/dd/aaaa` (EN).
 - **Tema escuro e claro**, layout responsivo e pronto para instalar como aplicativo.
 
 ## Privacidade
@@ -86,7 +119,10 @@ Todos vão soltos na **raiz** do repositório:
 | `fundo.jpg`, `fundo-celular.jpg` | arte de fundo do tema escuro (computador e celular) |
 | `fundo-claro.jpg`, `fundo-claro-celular.jpg` | a mesma arte na versão do tema claro |
 | `anuncios.json` | lista de anúncios da faixa e do pop-up (editável) |
+| `servicos.json` | quem pode usar cada recurso (Visitante / Membro / Premium); o admin gera dentro do app |
+| `fotos-exercicios.jpg` | opcional: fotos das posições de alguns exercícios |
 | `TESTE-riseone.html` | página de conferência das diretrizes |
+| `ARQUITETURA.md` | como o app é feito por dentro (leia antes de mexer) |
 
 A pasta `.github` (com `workflows/static.yml`) já está no repositório e **não pode ser apagada** —
 é ela que publica o site a cada envio.
@@ -94,7 +130,7 @@ A pasta `.github` (com `workflows/static.yml`) já está no repositório e **nã
 ## Como publicar (GitHub Pages)
 
 1. Crie um repositório público chamado `rise-one`.
-2. Envie o arquivo `index.html` para a raiz do repositório (sem pastas).
+2. Envie todos os arquivos do pacote para a raiz do repositório (sem pastas): **Add file › Upload files**, arraste, **Commit changes**.
 3. Em **Settings › Pages**, escolha a branch `main` e a pasta `/ (root)`.
 4. Aguarde alguns minutos e abra `https://marceloneco.github.io/rise-one/`.
 
@@ -104,4 +140,4 @@ Uso pessoal e para fins de estudo e pesquisa. As informações sobre exercícios
 saúde são informativas e não substituem profissional de educação física, nutricionista ou médico.
 
 ---
-Versão 2.3.0
+Versão 3.0.0
