@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiseONE — Teste de voz</title>
+<style>
+:root{--bg:#0e1014;--surface:#15181e;--surface2:#1b1f26;--border:rgba(255,255,255,.1);
+ --text:#f3f5f8;--text2:#aab2bf;--accent:#ff7a2f;--ok:#2ecc8f;--bad:#ff5d5d;--warn:#ffb020;
+ --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;padding:18px;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.5}
+h1{font-size:1.35rem;margin:0 0 4px} h2{font-size:1rem;margin:0 0 10px}
+.sub{color:var(--text2);font-size:.88rem;margin:0 0 18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
+button{font:inherit;font-weight:700;border-radius:999px;border:1px solid var(--border);background:var(--surface2);
+ color:var(--text);padding:10px 16px;cursor:pointer;min-height:44px}
+button.p{background:var(--accent);color:#1a0c02;border-color:transparent}
+button:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.vlist{display:flex;flex-direction:column;gap:6px;max-height:44vh;overflow:auto;margin-top:10px}
+.vlist button{text-align:left;border-radius:12px;padding:10px 12px;display:block;width:100%}
+.vlist button.on{border-color:var(--accent);background:rgba(255,122,47,.14)}
+.vl{display:block;font-size:.72rem;color:var(--text2);font-weight:600;margin-top:2px}
+label{display:block;font-size:.78rem;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;font-weight:800;margin:12px 0 4px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.log{background:#0a0c10;border:1px solid var(--border);border-radius:12px;padding:10px;font-family:ui-monospace,Menlo,monospace;
+ font-size:.74rem;white-space:pre-wrap;max-height:34vh;overflow:auto}
+.ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+.big{font-size:1.6rem;font-weight:900;text-align:center;padding:14px 0}
+ol{padding-left:20px} li{margin-bottom:6px;font-size:.9rem}
+</style>
+</head>
+<body>
+<h1>RiseONE — Teste de voz</h1>
+<p class="sub">Esta página é só para conferir se a voz e o comando de voz funcionam no seu aparelho.
+Ela não mexe em nada do aplicativo. Se funcionar aqui, funciona no RiseONE.</p>
+
+<div class="card">
+  <h2>1. O aparelho fala?</h2>
+  <div class="row">
+    <button class="p" id="test">▶ Testar</button>
+    <button id="stop">■ Parar</button>
+    <button id="reload">↻ Procurar vozes de novo</button>
+  </div>
+  <p class="sub" id="diag">…</p>
+  <label>Frase</label>
+  <input type="text" id="frase" value="Vamos lá. Três séries de doze repetições. Você consegue."
+    style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font:inherit">
+  <label>Velocidade <span id="lr">1.0</span></label><input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+  <label>Tom <span id="lp">1.0</span></label><input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
+  <label>Volume <span id="lv">1.0</span></label><input type="range" id="vol" min="0" max="1" step="0.1" value="1">
+  <div class="vlist" id="vlist"></div>
+</div>
+
+<div class="card">
+  <h2>2. O aparelho entende?</h2>
+  <p class="sub">Toque em Ouvir e fale: <b>próximo</b>, <b>pausa</b>, <b>voltar</b>, <b>continuar</b> ou <b>terminei</b>.</p>
+  <div class="row"><button class="p" id="mic">🎙 Ouvir</button><button id="micoff">■ Parar de ouvir</button></div>
+  <div class="big" id="heard">—</div>
+</div>
+
+<div class="card">
+  <h2>3. Não está funcionando?</h2>
+  <ol>
+    <li>Volume alto e modo silencioso desligado.</li>
+    <li>Deixe esta página aberta na frente: muitos celulares cortam a voz quando a tela apaga.</li>
+    <li>Toque em “Procurar vozes de novo”.</li>
+    <li>Se a lista de vozes ficar vazia: Android → Configurações › Acessibilidade › Conversão de texto em voz; iPhone → Ajustes › Acessibilidade › Conteúdo falado.</li>
+    <li>Deixe em <b>Padrão do aparelho</b>: é a opção que funciona em mais celulares.</li>
+    <li>Comando de voz só funciona em navegador que tem reconhecimento de fala (Chrome do Android é o mais confiável).</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h2>Registro</h2>
+  <div class="log" id="log"></div>
+</div>
+
+<script>
+var LOG=document.getElementById("log");
+function log(msg,cls){ var d=document.createElement("div"); if(cls) d.className=cls;
+  d.textContent=new Date().toLocaleTimeString()+"  "+msg; LOG.appendChild(d); LOG.scrollTop=LOG.scrollHeight; }
+var SS = window.speechSynthesis, VOICES=[], PICK="";
+var NAT=/natural|online|neural|enhanced|premium|wavenet|piper|sherpa|coqui|vits|acapela|kokoro|-(low|medium|high)$/i;
+function engineOf(v){
+  var u=(v.voiceURI||"")+" "+(v.name||"");
+  if(/sherpa/i.test(u)) return "SherpaTTS";
+  if(/acapela/i.test(u)) return "Acapela";
+  if(/samsung/i.test(u)) return "Samsung";
+  if(/google/i.test(u)) return "Google";
+  if(/microsoft/i.test(u)) return "Microsoft";
+  if(/com\.apple|siri/i.test(u)) return "Apple";
+  if(/espeak/i.test(u)) return "eSpeak";
+  return v.localService? "aparelho" : "online";
+}
+function isPT(l){ return String(l||"").replace(/_/g,"-").toLowerCase().indexOf("pt")===0; }
+function paint(){
+  var pt=VOICES.filter(function(v){return isPT(v.lang);});
+  var eng={}; VOICES.forEach(function(v){ eng[engineOf(v)]=1; });
+  document.getElementById("diag").textContent =
+    "O navegador enxerga "+VOICES.length+" vozes, "+pt.length+" em português · mecanismos: "+(Object.keys(eng).join(", ")||"—");
+  var box=document.getElementById("vlist"); box.innerHTML="";
+  function row(v){
+    var b=document.createElement("button");
+    b.className = (PICK===v.voiceURI)?"on":"";
+    b.innerHTML = (NAT.test(v.name+" "+v.voiceURI)?"⭐ ":"")+escapeHtml(v.name)+
+      '<span class="vl">'+escapeHtml(String(v.lang))+" · "+engineOf(v)+(v.localService?"":" · online")+"</span>";
+    b.onclick=function(){ PICK=v.voiceURI; paint(); say(); };
+    box.appendChild(b);
+  }
+  var d=document.createElement("button");
+  d.className = PICK?"":"on";
+  d.innerHTML='🔧 Padrão do aparelho<span class="vl">Deixa o aparelho escolher — funciona em mais celulares</span>';
+  d.onclick=function(){ PICK=""; paint(); say(); };
+  box.appendChild(d);
+  VOICES.filter(function(v){return isPT(v.lang);}).forEach(row);
+  VOICES.filter(function(v){return !isPT(v.lang);}).slice(0,40).forEach(row);
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function loadVoices(n){
+  if(!SS){ log("speechSynthesis não existe neste navegador.","bad"); return; }
+  var list=SS.getVoices()||[];
+  if(list.length){ VOICES=list; log("Vozes encontradas: "+list.length,"ok"); paint(); return; }
+  var esperas=[100,300,900,1800,3000,5000];
+  if(n>=esperas.length){ log("Nenhuma voz apareceu depois de 5 tentativas.","warn"); paint(); return; }
+  setTimeout(function(){ loadVoices(n+1); }, esperas[n]);
+}
+if(SS){ SS.onvoiceschanged=function(){ log("O aparelho avisou que a lista de vozes mudou."); loadVoices(0); }; }
+document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible") loadVoices(0); });
+setTimeout(function(){ loadVoices(0); },100);
+
+var WATCH=null, KEEP=null;
+function say(){
+  if(!SS){ log("Este navegador não fala.","bad"); return; }
+  var txt=document.getElementById("frase").value||"teste";
+  SS.cancel();
+  setTimeout(function(){
+    var u=new SpeechSynthesisUtterance(txt);
+    var v=PICK? VOICES.filter(function(x){return x.voiceURI===PICK;})[0] : null;
+    if(v){ u.voice=v; u.lang=v.lang; } else { u.lang="pt-BR"; }
+    u.rate=+document.getElementById("rate").value;
+    u.pitch=+document.getElementById("pitch").value;
+    u.volume=+document.getElementById("vol").value;
+    u.onstart=function(){ log("começou a falar"+(v?" com "+v.name:" com a voz padrão"),"ok"); };
+    u.onend=function(){ log("terminou de falar","ok"); clearTimeout(WATCH); clearInterval(KEEP); };
+    u.onerror=function(e){ log("erro ao falar: "+(e&&e.error||"?"),"bad"); clearTimeout(WATCH); clearInterval(KEEP); };
+    SS.speak(u);
+    clearInterval(KEEP);
+    KEEP=setInterval(function(){ try{ SS.resume(); }catch(e){} },9000);
+    clearTimeout(WATCH);
+    WATCH=setTimeout(function(){
+      if(SS.speaking) return;
+      log("nada saiu em "+Math.max(6,Math.round(txt.length*0.12))+"s — volume, modo silencioso ou voz sem áudio instalado","warn");
+    }, Math.max(6000, txt.length*120));
+  },60);
+}
+document.getElementById("test").onclick=say;
+document.getElementById("stop").onclick=function(){ if(SS){ SS.cancel(); log("parado"); } clearInterval(KEEP); clearTimeout(WATCH); };
+document.getElementById("reload").onclick=function(){ log("procurando vozes de novo…"); loadVoices(0); };
+["rate","pitch","vol"].forEach(function(id,i){
+  var lb=["lr","lp","lv"][i];
+  document.getElementById(id).oninput=function(e){ document.getElementById(lb).textContent=(+e.target.value).toFixed(1); };
+});
+
+var R=window.SpeechRecognition||window.webkitSpeechRecognition, REC=null, WANT=false;
+var CMDS={"próximo":"próximo","proximo":"próximo","terminei":"próximo","pronto":"próximo",
+ "anterior":"voltar","voltar":"voltar","pausa":"pausa","pausar":"pausa","parar":"pausa",
+ "continuar":"continuar","seguir":"continuar","repetir":"repetir"};
+document.getElementById("mic").onclick=function(){
+  if(!R){ log("Este navegador não entende comando de voz.","bad"); document.getElementById("heard").textContent="não disponível"; return; }
+  try{ if(REC) REC.stop(); REC=new R(); }catch(e){ log("não deu para abrir o microfone","bad"); return; }
+  REC.lang="pt-BR"; REC.continuous=true; REC.interimResults=false;
+  REC.onresult=function(ev){
+    for(var i=ev.resultIndex;i<ev.results.length;i++){
+      var txt=(ev.results[i][0].transcript||"").toLowerCase().trim();
+      log("ouviu: "+txt);
+      var achou="";
+      for(var k in CMDS){ if(txt.indexOf(k)>=0){ achou=CMDS[k]; break; } }
+      document.getElementById("heard").textContent = achou? ("✔ "+achou) : ("… "+txt);
+      document.getElementById("heard").className = "big "+(achou?"ok":"");
+    }
+  };
+  REC.onend=function(){ if(WANT) setTimeout(function(){ try{ REC.start(); }catch(e){} },400); };
+  REC.onerror=function(e){ log("erro do microfone: "+(e&&e.error||"?"),"warn"); };
+  WANT=true;
+  try{ REC.start(); log("ouvindo…","ok"); }catch(e){ log("não deu para começar a ouvir","bad"); }
+};
+document.getElementById("micoff").onclick=function(){ WANT=false; if(REC) try{ REC.stop(); }catch(e){} log("parou de ouvir"); document.getElementById("heard").textContent="—"; };
+log("navegador: "+navigator.userAgent);
+log("fala: "+(window.speechSynthesis?"sim":"NÃO")+" · escuta: "+(R?"sim":"NÃO"), (window.speechSynthesis&&R)?"ok":"warn");
+</script>
+</body>
+</html>

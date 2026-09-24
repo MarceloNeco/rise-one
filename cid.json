@@ -1,0 +1,422 @@
+{
+ "_leia_me": "Lista inicial de códigos CID-10 do aparelho musculoesquelético, para consulta dentro do RiseONE. CONFERIR sempre na tabela oficial antes de usar em documento, pedido ou reembolso. O campo tuss fica vazio de proposito: os codigos TUSS/TISS vem da tabela oficial da ANS e nao devem ser inventados.",
+ "_readme": "Initial list of ICD-10 musculoskeletal codes for reference inside RiseONE. ALWAYS check the official table before using it on any document or reimbursement claim. The tuss field is intentionally empty: TUSS/TISS codes come from the official ANS table and must not be invented.",
+ "fonte": "CID-10 / ICD-10 — capitulo XIII (M) e capitulo VI (G), redacao resumida",
+ "versao": "2026-09-01",
+ "conferido": false,
+ "itens": [
+  {
+   "cid": "M06.9",
+   "pt": "Artrite reumatoide não especificada",
+   "en": "Rheumatoid arthritis, unspecified",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M10.9",
+   "pt": "Gota não especificada",
+   "en": "Gout, unspecified",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M13.0",
+   "pt": "Poliartrite não especificada",
+   "en": "Polyarthritis, unspecified",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M15",
+   "pt": "Poliartrose",
+   "en": "Polyarthrosis",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M16",
+   "pt": "Artrose do quadril (coxartrose)",
+   "en": "Coxarthrosis (hip osteoarthritis)",
+   "zona": "quadril",
+   "tuss": ""
+  },
+  {
+   "cid": "M17",
+   "pt": "Artrose do joelho (gonartrose)",
+   "en": "Gonarthrosis (knee osteoarthritis)",
+   "zona": "joelho",
+   "tuss": ""
+  },
+  {
+   "cid": "M18",
+   "pt": "Artrose da primeira articulação carpometacarpiana",
+   "en": "Arthrosis of first carpometacarpal joint",
+   "zona": "punho",
+   "tuss": ""
+  },
+  {
+   "cid": "M19",
+   "pt": "Outras artroses",
+   "en": "Other arthrosis",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M20.1",
+   "pt": "Hallux valgus (joanete)",
+   "en": "Hallux valgus (bunion)",
+   "zona": "tornozelo",
+   "tuss": ""
+  },
+  {
+   "cid": "M21.4",
+   "pt": "Pé chato (pé plano)",
+   "en": "Flat foot (pes planus)",
+   "zona": "tornozelo",
+   "tuss": ""
+  },
+  {
+   "cid": "M22.4",
+   "pt": "Condromalácia da patela",
+   "en": "Chondromalacia patellae",
+   "zona": "joelho",
+   "tuss": ""
+  },
+  {
+   "cid": "M23.2",
+   "pt": "Lesão de menisco por ruptura antiga",
+   "en": "Meniscus derangement due to old tear",
+   "zona": "joelho",
+   "tuss": ""
+  },
+  {
+   "cid": "M24.5",
+   "pt": "Contratura articular",
+   "en": "Contracture of joint",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M25.5",
+   "pt": "Dor articular",
+   "en": "Pain in joint",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M35.3",
+   "pt": "Polimialgia reumática",
+   "en": "Polymyalgia rheumatica",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M40.0",
+   "pt": "Cifose postural",
+   "en": "Postural kyphosis",
+   "zona": "toracica",
+   "tuss": ""
+  },
+  {
+   "cid": "M41",
+   "pt": "Escoliose",
+   "en": "Scoliosis",
+   "zona": "toracica",
+   "tuss": ""
+  },
+  {
+   "cid": "M43.6",
+   "pt": "Torcicolo",
+   "en": "Torticollis",
+   "zona": "pescoco",
+   "tuss": ""
+  },
+  {
+   "cid": "M45",
+   "pt": "Espondilite ancilosante",
+   "en": "Ankylosing spondylitis",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M47",
+   "pt": "Espondilose",
+   "en": "Spondylosis",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M48.0",
+   "pt": "Estenose do canal vertebral",
+   "en": "Spinal stenosis",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M50.1",
+   "pt": "Transtorno de disco cervical com radiculopatia",
+   "en": "Cervical disc disorder with radiculopathy",
+   "zona": "pescoco",
+   "tuss": ""
+  },
+  {
+   "cid": "M51.1",
+   "pt": "Transtorno de disco lombar com radiculopatia",
+   "en": "Lumbar disc disorder with radiculopathy",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M53.1",
+   "pt": "Síndrome cervicobraquial",
+   "en": "Cervicobrachial syndrome",
+   "zona": "pescoco",
+   "tuss": ""
+  },
+  {
+   "cid": "M54.1",
+   "pt": "Radiculopatia",
+   "en": "Radiculopathy",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M54.2",
+   "pt": "Cervicalgia (dor no pescoço)",
+   "en": "Cervicalgia (neck pain)",
+   "zona": "pescoco",
+   "tuss": ""
+  },
+  {
+   "cid": "M54.3",
+   "pt": "Ciática",
+   "en": "Sciatica",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M54.4",
+   "pt": "Lumbago com ciática",
+   "en": "Lumbago with sciatica",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M54.5",
+   "pt": "Dor lombar baixa",
+   "en": "Low back pain",
+   "zona": "lombar",
+   "tuss": ""
+  },
+  {
+   "cid": "M54.6",
+   "pt": "Dor na coluna torácica",
+   "en": "Pain in thoracic spine",
+   "zona": "toracica",
+   "tuss": ""
+  },
+  {
+   "cid": "M60.9",
+   "pt": "Miosite não especificada",
+   "en": "Myositis, unspecified",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M62.6",
+   "pt": "Distensão muscular",
+   "en": "Muscle strain",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M65.3",
+   "pt": "Dedo em gatilho",
+   "en": "Trigger finger",
+   "zona": "punho",
+   "tuss": ""
+  },
+  {
+   "cid": "M65.4",
+   "pt": "Tenossinovite de De Quervain",
+   "en": "De Quervain's tenosynovitis",
+   "zona": "punho",
+   "tuss": ""
+  },
+  {
+   "cid": "M67.4",
+   "pt": "Gânglio (cisto sinovial)",
+   "en": "Ganglion",
+   "zona": "punho",
+   "tuss": ""
+  },
+  {
+   "cid": "M70.4",
+   "pt": "Bursite pré-patelar",
+   "en": "Prepatellar bursitis",
+   "zona": "joelho",
+   "tuss": ""
+  },
+  {
+   "cid": "M70.5",
+   "pt": "Outras bursites do joelho",
+   "en": "Other bursitis of knee",
+   "zona": "joelho",
+   "tuss": ""
+  },
+  {
+   "cid": "M70.6",
+   "pt": "Bursite trocantérica",
+   "en": "Trochanteric bursitis",
+   "zona": "quadril",
+   "tuss": ""
+  },
+  {
+   "cid": "M71.2",
+   "pt": "Cisto sinovial poplíteo (cisto de Baker)",
+   "en": "Synovial cyst of popliteal space (Baker's cyst)",
+   "zona": "joelho",
+   "tuss": ""
+  },
+  {
+   "cid": "M72.0",
+   "pt": "Contratura de Dupuytren",
+   "en": "Dupuytren's contracture",
+   "zona": "punho",
+   "tuss": ""
+  },
+  {
+   "cid": "M72.2",
+   "pt": "Fascite plantar",
+   "en": "Plantar fasciitis",
+   "zona": "tornozelo",
+   "tuss": ""
+  },
+  {
+   "cid": "M75.0",
+   "pt": "Capsulite adesiva do ombro (ombro congelado)",
+   "en": "Adhesive capsulitis of shoulder (frozen shoulder)",
+   "zona": "ombro",
+   "tuss": ""
+  },
+  {
+   "cid": "M75.1",
+   "pt": "Síndrome do manguito rotador",
+   "en": "Rotator cuff syndrome",
+   "zona": "ombro",
+   "tuss": ""
+  },
+  {
+   "cid": "M75.2",
+   "pt": "Tendinite bicipital",
+   "en": "Bicipital tendinitis",
+   "zona": "ombro",
+   "tuss": ""
+  },
+  {
+   "cid": "M75.3",
+   "pt": "Tendinite calcificante do ombro",
+   "en": "Calcific tendinitis of shoulder",
+   "zona": "ombro",
+   "tuss": ""
+  },
+  {
+   "cid": "M75.4",
+   "pt": "Síndrome do impacto do ombro",
+   "en": "Impingement syndrome of shoulder",
+   "zona": "ombro",
+   "tuss": ""
+  },
+  {
+   "cid": "M75.5",
+   "pt": "Bursite do ombro",
+   "en": "Bursitis of shoulder",
+   "zona": "ombro",
+   "tuss": ""
+  },
+  {
+   "cid": "M76.5",
+   "pt": "Tendinite patelar",
+   "en": "Patellar tendinitis",
+   "zona": "joelho",
+   "tuss": ""
+  },
+  {
+   "cid": "M76.6",
+   "pt": "Tendinite do calcâneo (Aquiles)",
+   "en": "Achilles tendinitis",
+   "zona": "tornozelo",
+   "tuss": ""
+  },
+  {
+   "cid": "M77.0",
+   "pt": "Epicondilite medial (cotovelo de golfista)",
+   "en": "Medial epicondylitis (golfer's elbow)",
+   "zona": "cotovelo",
+   "tuss": ""
+  },
+  {
+   "cid": "M77.1",
+   "pt": "Epicondilite lateral (cotovelo de tenista)",
+   "en": "Lateral epicondylitis (tennis elbow)",
+   "zona": "cotovelo",
+   "tuss": ""
+  },
+  {
+   "cid": "M79.1",
+   "pt": "Mialgia (dor muscular)",
+   "en": "Myalgia",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M79.2",
+   "pt": "Nevralgia e neurite não especificadas",
+   "en": "Neuralgia and neuritis, unspecified",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M79.6",
+   "pt": "Dor em membro",
+   "en": "Pain in limb",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M79.7",
+   "pt": "Fibromialgia",
+   "en": "Fibromyalgia",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "M81.9",
+   "pt": "Osteoporose não especificada",
+   "en": "Osteoporosis, unspecified",
+   "zona": "geral",
+   "tuss": ""
+  },
+  {
+   "cid": "G56.0",
+   "pt": "Síndrome do túnel do carpo",
+   "en": "Carpal tunnel syndrome",
+   "zona": "punho",
+   "tuss": ""
+  },
+  {
+   "cid": "G56.2",
+   "pt": "Lesão do nervo ulnar",
+   "en": "Lesion of ulnar nerve",
+   "zona": "cotovelo",
+   "tuss": ""
+  },
+  {
+   "cid": "G57.1",
+   "pt": "Meralgia parestésica",
+   "en": "Meralgia paraesthetica",
+   "zona": "coxa",
+   "tuss": ""
+  }
+ ]
+}

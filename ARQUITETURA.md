@@ -19,6 +19,12 @@ Tudo roda no navegador da pessoa e os dados ficam no aparelho dela (`localStorag
 | `servicos.json` | Quem pode usar cada recurso (Visitante / Membro / Premium). O admin gera este arquivo dentro do app | Gerado pelo app; pode editar à mão |
 | `icone-192.png`, `icone-512.png`, `icone-maskable.png` | Ícones do app | Trocar por outros do mesmo tamanho |
 | `fundo.jpg`, `fundo-celular.jpg`, `fundo-claro.jpg`, `fundo-claro-celular.jpg` | Arte de fundo (escuro/claro, computador/celular) | Trocar por outras do mesmo formato |
+| `cid.json` | Lista de consulta de códigos CID-10 do aparelho musculoesquelético. **Lista inicial** — confira na tabela oficial. TUSS fica vazio de propósito | Sim, é uma lista |
+| `versoes.json` | O que mudou em cada versão, em PT e EN. O app desenha a tela "Novidades" a partir dele | Sim, a cada versão |
+| `LICENSE` | Licença MIT mais o aviso de que o app é orientativo e não substitui profissional | Raramente |
+| `CREDITOS.md` | De onde vem cada coisa de fora e sob qual licença | A cada dependência nova |
+| `TESTE-VOZ-riseone.html` | Página avulsa para testar voz e comando de voz no aparelho | Sim |
+| `ABRIR-TESTE-riseone.command` / `.bat` | Atalho que serve a pasta em `http://localhost:8123` e abre a página de teste | Não |
 | `fotos-exercicios.jpg` | **Opcional.** Mosaico 6×6 com fotos das posições de alguns exercícios. Sem ele, o app mostra só o boneco animado | Sim, mas mantendo a ordem dos quadros (ver `PHOTOS` no código) |
 | `ajuda-botao.png`, `ajuda-icone.png` | **Opcionais.** Ícone Assist ONE do botão de ajuda. Sem eles, o app usa um ícone desenhado em SVG | Colocar os arquivos do portfólio |
 | `TESTE-riseone.html` | Página de teste das diretrizes (abre no mesmo endereço do app) | Sim |
@@ -47,6 +53,23 @@ Procure pelo número para ir direto ao assunto.
 - **52. Conteúdo extra** — exercícios e movimentos vindos de fichas reais, modelos de treino (`TEMPLATES`) e mapa das fotos (`PHOTOS`).
 - **53. Conferência de versão** — pergunta ao site qual versão está publicada (lê o `CACHE_VER` do `sw.js`)
   e oferece "Atualizar agora", que limpa caches e service worker e recarrega.
+- **11b. Gaveta lateral e favoritos** — `DRAWER_GROUPS` (o que aparece no ☰), `openDrawer`/`closeDrawer`,
+  `favs()`/`setFavs()` (a barra de baixo do celular).
+- **56. Privacidade** — `consent()`, `askConsent(finalidade, aoAceitar)`, `disclaimerModal()` (o "Estou ciente"),
+  `privacyScreen()`. `gateDisclaimer(next)` é a porta de entrada: o aviso vem antes de qualquer outra janela.
+- **57 a 59. Dor e fisioterapia** — `ZONES` (regiões do corpo), `CONDS` (situações com o código CID-10,
+  exercícios e alongamentos), `painSVG(vista, selecionada)`, e a tabela `cid.json` com `cidLoad`/`cidClear`.
+- **60. Câmera** — `startCam2` (zoom, temporizador, inverter, borrar o fundo), `sharpness()` (mede o foco;
+  abaixo de `BLUR_MIN` o app pede outra foto) e `projectVideo` (janelinha flutuante / tela cheia).
+- **61. Rótulo** — `parseRotulo` (ingredientes, marca, aditivos INS, selos, "alto em"), `ragRotulo`
+  (o semáforo, com o critério escrito na tela) e `rotuloCard`.
+- **62 e 63. Exames e carteirinha** — `INDICADORES` (só nomes e unidades; faixa de referência **nunca**
+  é inventada), `parseExame`, `examSeries`/`examChart`, `parseCarteirinha` e `cards()`.
+- **64. Novidades** — lê `versoes.json` e desenha a lista, com selo até a pessoa abrir.
+- **Voz** — `vozCfg()`, `loadVoices`, `speak`, `sayExercise`/`sayMove`/`sayCount`/`sayRest`, e `sttStart`
+  (comando de voz). Nunca fixe o nome de uma voz no código: a lista muda de aparelho para aparelho.
+- **Acessibilidade** — `A11Y_DEF`, `setA11y(chave, valor)`, `applyA11y()` (põe `data-fs`, `data-contrast`,
+  `data-motion`, `data-links`, `data-read` no `<html>`; o CSS faz o resto).
 - **32. Inicialização** — `boot()` e a API pública `window.RISE`.
 
 ## O que não se toca sem pensar duas vezes
@@ -78,5 +101,21 @@ Procure pelo número para ir direto ao assunto.
 ## Regras de publicação
 
 1. Todos os arquivos soltos na raiz do repositório `rise-one`.
-2. A cada versão nova: `APP_VERSION` no `index.html` e `CACHE_VER` no `sw.js`.
+2. A cada versão nova: `APP_VERSION` no `index.html`, `CACHE_VER` no `sw.js` **e** uma entrada nova
+   no `versoes.json` (mesmo número). Sem os três, os celulares seguem na versão antiga.
 3. O repositório é público: **nunca** colocar chave, senha ou dado pessoal no código.
+4. Arquivo novo que precise abrir sem internet entra também na lista `CORE` do `sw.js`.
+5. Endereço externo novo (script, API) precisa entrar na `Content-Security-Policy` do `index.html`,
+   senão o navegador bloqueia em silêncio.
+
+## O que ficou pendente de propósito
+
+| Assunto | Situação |
+|---|---|
+| Códigos TUSS/TISS | Em branco. Vêm da tabela oficial da ANS e não podem ser inventados |
+| Faixas de referência de exame | Em branco. São do laboratório de cada pessoa, impressas no resultado |
+| Motor de OCR hospedado no repositório | Hoje vem do cdnjs, com jsdelivr de reserva. A diretriz pede hospedar os ~11 MB no próprio repositório; enquanto isso, não há `integrity` nesses dois `<script>` |
+| Spotify e relógio | Sem integração possível em site estático. A voz do treinador não interrompe o áudio de outro app, então a música continua tocando por cima |
+| Inbox (caixa de recados) | Exige servidor. Não existe ainda no RiseONE |
+| Desenho visto de lado | O visualizador mostra as **duas posições** do movimento (início e fim), lado a lado no computador e girando no celular, com pausa. Um desenho de verdade visto de lado exigiria um segundo conjunto de articulações para cada exercício — não é uma rotação do que já existe, e inventar isso mostraria postura errada |
+| Projeção na TV | O navegador não fala com a TV: o app só prepara a imagem (janelinha flutuante ou tela cheia) e quem faz a ponte é o espelhamento do aparelho |

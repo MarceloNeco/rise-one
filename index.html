@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="RiseONE — treino, dieta e evolucao em um so lugar. / RiseONE — workout, diet and progress in one place.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: mediastream:; font-src 'self' data:; connect-src 'self' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com https://generativelanguage.googleapis.com https://api.openai.com https://api.anthropic.com https://www.googleapis.com; frame-src https://www.youtube.com https://accounts.google.com https://login.microsoftonline.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0f1115">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -491,6 +493,215 @@ table.tbl td.num,table.tbl th.num{text-align:right;font-variant-numeric:tabular-
 @media(min-width:821px){#timermini{bottom:18px}}
 footer.app{border-top:1px solid var(--border);padding:16px 0 30px;margin-top:20px;color:var(--text3);font-size:.78rem}
 footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+
+/* ============ ACESSIBILIDADE (WCAG 2.2 AA) — controles na mão de quem usa ============ */
+/* Por que: quem enxerga pouco, quem usa o celular no sol ou quem se incomoda com movimento
+   precisa mudar o app, não a vida. Tudo em rem, então mexer na raiz muda a tela inteira. */
+html{font-size:100%}
+html[data-fs="1"]{font-size:112%}
+html[data-fs="2"]{font-size:125%}
+html[data-fs="3"]{font-size:140%}
+html[data-fs="-1"]{font-size:92%}
+html[data-contrast="1"]{
+  --border:rgba(255,255,255,.34); --border2:rgba(255,255,255,.55);
+  --text2:#e6eaf0; --text3:#c7ced8; --surface2:#20252e; --surface3:#2c323d}
+html[data-theme="light"][data-contrast="1"]{
+  --border:#7d8794; --border2:#5a626d; --text2:#20262e; --text3:#3b434d; --surface2:#e9ecf2; --surface3:#dbe0e8}
+html[data-contrast="1"] .card,html[data-contrast="1"] .item,html[data-contrast="1"] .tile,
+html[data-contrast="1"] .stat,html[data-contrast="1"] .chip,html[data-contrast="1"] .btn{border-width:2px}
+html[data-contrast="1"] .muted,html[data-contrast="1"] small,html[data-contrast="1"] .tiny{color:var(--text2)}
+html[data-links="1"] a,html[data-links="1"] .btn.line,html[data-links="1"] .crumb{text-decoration:underline}
+html[data-motion="0"] *,html[data-motion="0"] *::before,html[data-motion="0"] *::after{
+  animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+}
+html[data-read="1"] #bgart{display:none !important}
+html[data-read="1"] .card{box-shadow:none;background:var(--surface);backdrop-filter:none}
+html[data-read="1"] body{background:var(--bg)}
+html[data-read="1"] .tile,html[data-read="1"] .stat{box-shadow:none}
+html[data-read="1"] #adbar .adimg{display:none}
+/* a faixa do topo e o cabecalho sao fixos: sem isso eles cobrem o campo que acabou de
+   receber foco pelo teclado (WCAG 2.4.11 Focus Not Obscured) */
+html{scroll-padding-top:150px}
+@media(max-width:820px){ html{scroll-padding-top:120px} }
+.skip{position:absolute;left:-9999px;top:0;z-index:500;background:var(--accent);color:var(--accent-ink);
+  padding:10px 16px;border-radius:0 0 12px 0;font-weight:800}
+.skip:focus{left:0}
+.a11yrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.a11yrow .btn{min-width:52px;justify-content:center}
+.fssample{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:10px}
+
+/* ============ VETORES: pessoa laranja · aparelho azul · peso e elástico branco ============ */
+/* Por que: separar quem se mexe do que está parado ajuda a entender a figura num relance. */
+:root{--eq-machine:#5aa9ff; --eq-weight:#ffffff; --eq-person:var(--accent)}
+html[data-theme="light"]{--eq-machine:#1f6fd0; --eq-weight:#4a5261; --eq-person:var(--accent)}
+.pose .pl{stroke:var(--eq-person)}
+.pose .ph{fill:var(--eq-person)}
+
+.pose .aeq{stroke:var(--eq-weight);stroke-width:4.2}
+.pose .aeqp{stroke:var(--eq-weight);stroke-width:5.4}
+.pose .aeqb{stroke:var(--eq-machine);stroke-width:3.4;opacity:1}
+.pose .aeqc{stroke:var(--eq-machine);stroke-width:1.8;stroke-dasharray:3 3}
+.pose .aeqm{stroke:var(--eq-machine);stroke-width:3.4;fill:none}
+.poselegend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:.72rem;color:var(--text2);margin-top:4px}
+.poselegend span{display:inline-flex;align-items:center;gap:5px}
+.poselegend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ============ DUAS VISÕES (frente e lado) ============ */
+.viewbox{position:relative}
+.viewgrid > div{flex:1;max-width:200px;text-align:center}
+.viewcap{font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);font-weight:800;margin-top:2px}
+.viewctl{display:flex;gap:6px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.viewctl .chip{min-height:32px;font-size:.78rem}
+
+/* ============ DOR & FISIOTERAPIA ============ */
+.painwrap{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.painfig{flex:1;min-width:150px;max-width:280px;text-align:center}
+.painfig svg{width:100%;height:auto;max-height:420px}
+.bodylimb{fill:none;stroke:var(--surface2);stroke-width:13;stroke-linecap:round;stroke-linejoin:round}
+.zone{fill:color-mix(in srgb,var(--text3) 26%,transparent);stroke:var(--border2);stroke-width:1.2;cursor:pointer;transition:fill .15s,stroke .15s}
+.zone:hover,.zone:focus-visible{fill:color-mix(in srgb,var(--accent) 45%,transparent);stroke:var(--accent);outline:none}
+.zone.sel{fill:var(--accent);stroke:var(--accent)}
+.zone title{pointer-events:none}
+.conddet{border-top:1px dashed var(--border2);margin-top:2px;padding-top:12px}
+.conddet .lead{margin:0 0 10px;color:var(--text2);line-height:1.5}
+.carebox{display:flex;gap:9px;align-items:flex-start;background:var(--warn-soft);border:1px solid rgba(255,176,32,.35);border-radius:var(--radius-sm);padding:10px 12px;margin:0 0 10px;font-size:.85rem;line-height:1.45}
+.carebox .ic{color:var(--warn);flex-shrink:0}
+.codebox{background:var(--surface3);border-radius:var(--radius-xs);padding:7px 10px;margin:0 0 12px;display:inline-block}
+.cidlist{display:flex;flex-direction:column;gap:2px;max-height:340px;overflow:auto}
+.cidrow{display:grid;grid-template-columns:72px 1fr;gap:2px 10px;padding:8px 4px;border-bottom:1px solid var(--border);font-size:.85rem;align-items:baseline}
+.cidrow b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent);font-weight:800}
+.cidrow small{grid-column:2;font-size:.72rem}
+.condcard{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;display:flex;flex-direction:column;gap:6px}
+.condcard .cn{font-weight:800;font-size:.95rem}
+.condcard .cid{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;color:var(--accent);font-weight:800}
+.warnbox{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);border-radius:var(--radius-sm);padding:12px 14px;font-size:.86rem;display:flex;gap:10px;align-items:flex-start}
+.warnbox .ic{color:var(--warn);flex-shrink:0}
+.warnbox b{color:var(--text)}
+
+/* ============ SEMÁFORO (RAG) DO RÓTULO ============ */
+.rag{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);font-size:.88rem;line-height:1.4}
+.rag .dot{width:18px;height:18px;border-radius:50%;display:inline-block;flex-shrink:0}
+.rag b{font-size:.98rem}
+.rag small{color:var(--text2)}
+.rag.g{background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 40%,transparent)} .rag.g .dot{background:var(--ok)} .rag.g b{color:var(--ok)}
+.rag.a{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent)} .rag.a .dot{background:var(--warn)} .rag.a b{color:var(--warn)}
+.rag.r{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent)} .rag.r .dot{background:var(--bad)} .rag.r b{color:var(--bad)}
+.altoem{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.altoem .ae{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:52px;padding:8px 14px;border:3px solid var(--text);border-radius:6px;font-weight:900;font-size:.8rem;text-transform:uppercase;letter-spacing:.02em;line-height:1.15;max-width:170px}
+.pill.xs{font-size:.66rem;padding:1px 7px}
+.exind{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px}
+.exind .nm{font-weight:700;font-size:.88rem;margin-bottom:2px}
+.exind .vl{font-size:1.3rem;font-weight:800;line-height:1.2}
+.exind .vl small{font-size:.66rem;color:var(--text2);font-weight:600}
+.exind .dl{font-size:.7rem;font-weight:800;padding:1px 7px;border-radius:999px;vertical-align:middle}
+.exind .dl.up{color:var(--warn);background:var(--warn-soft)}
+.exind .dl.dn{color:var(--s1);background:color-mix(in srgb,var(--s1) 14%,transparent)}
+.exchart{width:100%;height:64px;display:block;margin:6px 0 4px;overflow:visible}
+.plcard{background:linear-gradient(140deg,var(--surface3),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px}
+.plcard img{width:100%;max-height:120px;object-fit:cover;border-radius:var(--radius-xs);margin-bottom:10px;border:1px solid var(--border)}
+.plcard .op{font-weight:800;font-size:.95rem}
+.plcard .num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:1.12rem;font-weight:800;letter-spacing:.04em;margin:8px 0 4px;word-break:break-all}
+.camstage{position:relative;overflow:hidden;border-radius:var(--radius-sm);background:#000}
+.camstage video{display:block;width:100%;transition:transform .18s ease;transform-origin:center}
+.camstage video.blur{filter:blur(9px) saturate(.7)}
+.camcount{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:5rem;font-weight:900;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.7);pointer-events:none}
+.camctl{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.camctl .iconbtn.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.camz{font-weight:800;font-size:.85rem;min-width:46px;text-align:center}
+.blurshot{width:100%;max-height:30vh;object-fit:contain;border-radius:var(--radius-sm);background:var(--surface2);margin:10px 0}
+@media (max-width:520px){ .altoem .ae{flex:1 1 44%} }
+.taglist{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.taglist .pill{font-size:.72rem}
+
+/* ============ CÂMERA: zoom, temporizador e privacidade ============ */
+#mirrorscreen .mzoom{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px;z-index:2}
+#mirrorscreen .mzoom .iconbtn{background:rgba(0,0,0,.55);border-color:rgba(255,255,255,.25);color:#fff}
+#mirrorscreen .mcount{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:clamp(4rem,22vw,10rem);font-weight:800;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.8);pointer-events:none}
+#mirrorscreen video.blur{filter:blur(12px)}
+#mirrorscreen .mstage.privacy::after{content:"";position:absolute;inset:0;pointer-events:none;
+  backdrop-filter:blur(14px);-webkit-mask-image:radial-gradient(ellipse 34% 62% at 50% 48%,transparent 60%,#000 78%);
+  mask-image:radial-gradient(ellipse 34% 62% at 50% 48%,transparent 60%,#000 78%)}
+
+/* ============ NOVIDADES / VERSÕES ============ */
+.verlist{display:flex;flex-direction:column;gap:12px}
+.verrow{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px}
+.verrow.new{border-color:var(--accent)}
+.verrow h4{margin:0 0 2px;display:flex;align-items:center;gap:8px}
+.verrow ul{margin:8px 0 0;padding-left:20px}
+.verrow li{margin-bottom:4px;font-size:.88rem;color:var(--text2)}
+.dot-new{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;flex-shrink:0}
+#helpbtn .badge,#bottombar .badge{position:absolute;top:2px;right:2px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+#helpbtn{position:relative}
+
+/* ============ CONSENTIMENTO / LGPD ============ */
+.consentlist .item{align-items:flex-start}
+.consentlist .item .gr{padding-right:8px}
+.legalbody{font-size:.88rem;line-height:1.65;max-height:56vh;overflow:auto;padding-right:6px}
+.legalbody h4{margin:16px 0 6px}
+.legalbody p{margin:0 0 .7em}
+.legalbody ul{margin:0 0 .8em;padding-left:20px}
+.legalbody li{margin-bottom:.3em;color:var(--text2)}
+
+/* ============ VOZ ============ */
+.voicebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.speaking{animation:spk 1.1s ease-in-out infinite}
+@keyframes spk{0%,100%{opacity:1}50%{opacity:.45}}
+.vlist{max-height:240px;overflow:auto;border:1px solid var(--border);border-radius:12px;padding:6px;background:var(--surface2)}
+.vlist button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer;font-size:.86rem;min-height:40px}
+.vlist button:hover{background:var(--surface3)}
+.vlist button.on{background:var(--accent-soft);color:var(--accent);font-weight:800}
+.vlist .vl{display:block;font-size:.72rem;color:var(--text3)}
+
+.eqpick{display:flex;flex-wrap:wrap;gap:8px}
+.eqchip{display:inline-flex;align-items:center;gap:7px;padding:7px 12px 7px 8px;border-radius:999px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);font-size:.82rem;font-weight:600;cursor:pointer;min-height:40px;transition:border-color .15s,background .15s,color .15s}
+.eqchip:hover{border-color:var(--accent-line);color:var(--text)}
+.eqchip.on{background:var(--accent-soft);border-color:var(--accent-line);color:var(--text)}
+.eqchipic{width:26px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:var(--text3);flex-shrink:0}
+.eqchip.on .eqchipic{color:var(--accent)}
+.eqchipic svg{width:100%;height:100%}
+.eqchipic img{width:24px;height:20px;object-fit:cover;border-radius:4px}
+/* ---- gaveta lateral (☰) ---- */
+.iconbtn.menu{flex-shrink:0}
+body.noscroll{overflow:hidden}
+#drawerback{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:80;opacity:0;transition:opacity .2s ease}
+#drawerback.show{opacity:1}
+#drawer{position:fixed;top:0;left:0;bottom:0;width:min(86vw,320px);z-index:81;background:var(--surface);
+ border-right:1px solid var(--border2);box-shadow:var(--shadow);display:flex;flex-direction:column;
+ transform:translateX(-102%);transition:transform .22s cubic-bezier(.22,.8,.3,1);overscroll-behavior:contain}
+#drawer.show{transform:translateX(0)}
+#drawer.hidden,#drawerback.hidden{display:none}
+#drawer .dhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 10px;border-bottom:1px solid var(--border)}
+#drawer .dtitle{font-weight:900;font-size:1.05rem}
+#drawer .dtitle .one{color:var(--accent)}
+#drawer .dbody{flex:1;overflow:auto;padding:10px 0 24px}
+.dgroup{margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.dg{display:flex;align-items:center;gap:8px;padding:6px 14px 4px;font-size:.7rem;font-weight:800;
+ text-transform:uppercase;letter-spacing:.06em;color:var(--text3)}
+.dg .ic{width:14px;height:14px}
+.ditem{display:flex;align-items:center;gap:11px;width:100%;min-height:46px;padding:8px 14px;background:none;
+ border:0;border-left:3px solid transparent;color:var(--text2);font:inherit;font-size:.92rem;font-weight:600;
+ text-align:left;cursor:pointer;transition:background .13s,color .13s}
+.ditem:hover,.ditem:focus-visible{background:var(--surface2);color:var(--text);outline:none}
+.ditem.on{border-left-color:var(--accent);background:var(--accent-soft);color:var(--text);font-weight:800}
+.ditem.on .ic{color:var(--accent)}
+.ditem.big{font-size:1rem;font-weight:800;min-height:52px}
+.ditem .ic{width:20px;height:20px;flex:0 0 20px}
+.ditem .dl{flex:1;min-width:0}
+@media (prefers-reduced-motion:reduce){ #drawer,#drawerback{transition:none} }
+html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none}
+.viewgrid{display:grid;gap:10px;margin:4px 0 6px}
+.viewgrid[data-mode="pair"]{grid-template-columns:1fr 1fr}
+.viewgrid[data-mode="pair"] .mov{display:none}
+.viewgrid[data-mode="move"]{grid-template-columns:1fr;max-width:280px;margin-left:auto;margin-right:auto}
+.viewgrid[data-mode="move"] .stat{display:none}
+.vwcell{margin:0;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 8px}
+.vwcell svg.pose{max-height:230px}
+.viewcap{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);text-align:center;margin-top:4px}
+.viewctl{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:6px 0}
+@media (max-width:560px){ .viewgrid[data-mode="pair"]{grid-template-columns:1fr 1fr} .vwcell svg.pose{max-height:150px} }
 @media print{ #topbar,header.app,#bottombar,footer.app,#timermini{display:none} }
 </style>
 </head>
@@ -512,6 +723,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
 <!-- ===== CABECALHO ===== -->
 <header class="app">
   <div class="hrow">
+    <button class="iconbtn menu" id="menubtn" aria-expanded="false" aria-controls="drawer" aria-label="Menu" title="Menu"><span class="ic" data-icon="menu"></span></button>
     <button class="brand" id="brandbtn" title="RiseONE">
       <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
         <rect width="64" height="64" rx="14" fill="var(--surface2)"/>
@@ -538,6 +750,16 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
   </div>
 </footer>
 
+<!-- ===== GAVETA LATERAL: todas as funcoes ===== -->
+<div id="drawerback" class="hidden" aria-hidden="true"></div>
+<aside id="drawer" class="hidden" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1">
+  <div class="dhead">
+    <span class="dtitle">Rise<span class="one">ONE</span></span>
+    <button class="iconbtn" id="drawerclose" aria-label="Fechar"><span class="ic" data-icon="x"></span></button>
+  </div>
+  <div class="dbody" id="drawerbody"></div>
+</aside>
+
 <nav id="bottombar"></nav>
 
 <script>
@@ -546,7 +768,7 @@ footer.app .wrap{display:flex;gap:10px;justify-content:space-between;flex-wrap:w
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.0.1";
+const APP_VERSION = "3.1.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -576,7 +798,8 @@ const ICONS={
  key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="M11 12l9-9M15 7l3 3M18 4l2 2"/>',
  chevr:'<path d="M9 18l6-6-6-6"/>', chevl:'<path d="M15 18l-6-6 6-6"/>',
  arrowl:'<path d="M19 12H5M12 19l-7-7 7-7"/>', arrowr:'<path d="M5 12h14M12 5l7 7-7 7"/>',
- check:'<path d="M20 6L9 17l-5-5"/>', plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M18 6L6 18M6 6l12 12"/>',
+ check:'<path d="M20 6L9 17l-5-5"/>', menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',
+ x:'<path d="M18 6L6 18M6 6l12 12"/>',
  play:'<path d="M6 4l14 8-14 8z"/>', share:'<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/>',
  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
  moon:'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
@@ -616,7 +839,22 @@ const ICONS={
  cog:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
  history:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>',
  layers:'<path d="M12 2l10 5-10 5L2 7z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/>',
- pause:'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+ pause:'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ minus:'<path d="M5 12h14"/>',
+ alert:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/>',
+ chevup:'<path d="M18 15l-6-6-6 6"/>',
+ chevdown:'<path d="M6 9l6 6 6-6"/>',
+ mic:'<rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/>',
+ micoff:'<path d="M2 2l20 20"/><path d="M9 9v4a3 3 0 0 0 4.59 2.55M15 9.34V5a3 3 0 0 0-5.94-.6"/><path d="M19 10a7 7 0 0 1-1.6 4.45M5 10a7 7 0 0 0 10.7 5.96M12 17v5M8 22h8"/>',
+ speaker:'<path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>',
+ speakeroff:'<path d="M11 5L6 9H2v6h4l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/>',
+ flip:'<path d="M3 7v6a4 4 0 0 0 4 4h10M21 17v-6a4 4 0 0 0-4-4H7"/><path d="M17 20l4-3-4-3M7 4L3 7l4 3"/>',
+ zoomin:'<circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M20 20l-3.5-3.5"/>',
+ zoomout:'<circle cx="11" cy="11" r="7"/><path d="M8 11h6M20 20l-3.5-3.5"/>',
+ cast:'<path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><path d="M2 20h.01"/>',
+ accessibility:'<circle cx="12" cy="4" r="2"/><path d="M4 8h16M12 8v6M12 14l-3 7M12 14l3 7"/>',
+ card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/>',
 };
 function I(name, cls){
   const p=ICONS[name]||ICONS.info;
@@ -1478,6 +1716,289 @@ Object.assign(L,{
 "sc.modeLabel":["O que você vai ler","What you will read"]
 });
 
+/* ---------- 1c. TEXTOS DA VERSÃO 3.1: dor e fisioterapia, CID, voz, acessibilidade, privacidade ---------- */
+Object.assign(L,{
+/* --- comuns --- */
+"common.done":["Pronto","Done"],
+"common.no":["Agora não","Not now"],
+"nav.fisio":["Dor e alívio","Pain relief"],
+/* --- dor e fisioterapia --- */
+"fis.title":["Dor e alívio","Pain relief"],
+"fis.sub":["Diga onde dói e veja o que costuma ajudar","Tell us where it hurts and see what usually helps"],
+"fis.warnT":["Isto não é consulta médica","This is not a medical appointment"],
+"fis.warnB":["Os exercícios e alongamentos aqui são sugestões gerais de apoio. Eles nunca substituem a avaliação de um médico, fisioterapeuta ou educador físico. Se doer durante, pare.","The exercises and stretches here are general supporting suggestions. They never replace assessment by a doctor, physiotherapist or trainer. If it hurts while doing them, stop."],
+"fis.whereT":["Onde está doendo?","Where does it hurt?"],
+"fis.whereS":["Toque na parte do corpo, na frente ou nas costas","Tap the body part, front or back"],
+"fis.orPick":["Ou escolha pelo nome","Or pick it by name"],
+"fis.searchph":["Buscar por dor, doença ou código (ex.: lombar, tendinite, M54.5)","Search by pain, condition or code (e.g. low back, tendinitis, M54.5)"],
+"fis.results":["O que encontramos","What we found"],
+"fis.found":["resultados","results"],
+"fis.noHits":["Nada com esse nome","Nothing by that name"],
+"fis.noHitsSub":["Tente outra palavra, ou toque no desenho do corpo logo abaixo.","Try another word, or tap the body drawing below."],
+"fis.conds":["situações comuns nessa área","common situations in this area"],
+"fis.noneZone":["Ainda não temos conteúdo para essa área","No content for this area yet"],
+"fis.noneZoneSub":["Escolha outra parte do corpo por enquanto.","Pick another body part for now."],
+"fis.pickFirst":["Escolha uma parte do corpo","Pick a body part"],
+"fis.pickFirstSub":["Toque no desenho acima ou em um dos nomes.","Tap the drawing above or one of the names."],
+"fis.care":["Cuidado:","Take care:"],
+"fis.cid":["Código CID-10","ICD-10 code"],
+"fis.tuss":["TUSS/TISS","TUSS/TISS"],
+"fis.tussNone":["não preenchido — vem da tabela oficial","not filled in — comes from the official table"],
+"fis.stretches":["Alongamentos e mobilidade","Stretching and mobility"],
+"fis.strength":["Exercícios de fortalecimento","Strengthening exercises"],
+"fis.doStretch":["Fazer os alongamentos agora","Do the stretches now"],
+"fis.makeWorkout":["Criar treino desta área","Create a workout for this area"],
+"fis.serieFor":["Série para","Series for"],
+"fis.workoutMade":["Treino criado. Ajuste as cargas antes de começar.","Workout created. Adjust the loads before you start."],
+"fis.needAcc":["Entre com uma conta para salvar treinos.","Sign in with an account to save workouts."],
+"fis.whenPro":["Quando procurar um profissional","When to see a professional"],
+"fis.whenProB":["Nenhum exercício substitui uma avaliação. Procure atendimento se notar qualquer um destes sinais:","No exercise replaces an assessment. Seek care if you notice any of these signs:"],
+"fis.red1":["Dor forte que apareceu depois de queda, pancada ou acidente.","Severe pain that started after a fall, blow or accident."],
+"fis.red2":["Formigamento, dormência ou perda de força que não passa.","Tingling, numbness or loss of strength that does not go away."],
+"fis.red3":["Febre, perda de peso sem explicação ou dor que piora à noite.","Fever, unexplained weight loss or pain that gets worse at night."],
+"fis.red4":["Articulação inchada, vermelha e quente.","A joint that is swollen, red and warm."],
+"fis.red5":["Dor que não melhora nada depois de duas a quatro semanas.","Pain that has not improved at all after two to four weeks."],
+/* --- tabela CID --- */
+"cid.title":["Tabela de códigos CID","ICD code table"],
+"cid.sub":["Uma lista de consulta do aparelho musculoesquelético. Fica guardada no aparelho e funciona sem internet.","A reference list for musculoskeletal conditions. It is stored on your device and works offline."],
+"cid.download":["Baixar a tabela","Download the table"],
+"cid.loading":["Baixando…","Downloading…"],
+"cid.ready":["Tabela pronta para consulta.","Table ready to use."],
+"cid.fail":["Não consegui baixar a tabela agora.","I could not download the table right now."],
+"cid.fileOnly":["A tabela só baixa quando o app é aberto pelo endereço do site.","The table only downloads when the app is opened from the site address."],
+"cid.codes":["códigos","codes"],
+"cid.refresh":["Atualizar","Refresh"],
+"cid.clear":["Apagar do aparelho","Delete from device"],
+"cid.clearAsk":["Apagar a tabela de códigos deste aparelho? Você pode baixar de novo quando quiser.","Delete the code table from this device? You can download it again whenever you want."],
+"cid.searchph":["Buscar por código ou por nome","Search by code or by name"],
+"cid.noHits":["Nenhum código com esse termo.","No code matches that term."],
+"cid.check":["Lista inicial, de consulta. Confira sempre na tabela oficial antes de usar em pedido, laudo ou reembolso. Os códigos TUSS/TISS vêm da tabela da ANS e não foram preenchidos aqui.","Initial reference list. Always check the official table before using it on a request, report or reimbursement claim. TUSS/TISS codes come from the ANS table and were not filled in here."],
+/* --- aviso legal de entrada --- */
+"dc.title":["Antes de começar","Before you start"],
+"dc.sub":["Leia com atenção — leva menos de um minuto","Please read — it takes less than a minute"],
+"dc.body":["<p>O RiseONE é um app de apoio. Os treinos, as séries, os alongamentos, as sugestões de dieta e as leituras de rótulo e de exame são <b>meramente orientativos</b>.</p><p><b>Eles nunca substituem um profissional.</b> Antes de começar qualquer programa de exercício ou mudança de alimentação, fale com um médico, fisioterapeuta, educador físico ou nutricionista — principalmente se você tem alguma doença, faz uso de medicamento, está grávida ou sente dor.</p><p>Se sentir dor, falta de ar, tontura ou mal-estar durante um exercício, pare na hora e procure atendimento.</p><p>Seus dados ficam no seu aparelho. Você pode ver, exportar e apagar tudo quando quiser, em <i>Mais › Privacidade e dados</i>.</p>","<p>RiseONE is a support app. The workouts, series, stretches, diet suggestions and label or lab readings are <b>advisory only</b>.</p><p><b>They never replace a professional.</b> Before starting any exercise programme or dietary change, talk to a doctor, physiotherapist, trainer or dietitian — especially if you have any condition, take medication, are pregnant or feel pain.</p><p>If you feel pain, shortness of breath, dizziness or feel unwell during an exercise, stop right away and seek care.</p><p>Your data stays on your device. You can view, export and delete all of it whenever you want, under <i>More › Privacy and data</i>.</p>"],
+"dc.accept":["Estou ciente","I understand"],
+"dc.reread":["Ler o aviso de novo","Read the notice again"],
+/* --- privacidade e dados --- */
+"pv.title":["Privacidade e dados","Privacy and data"],
+"pv.sub":["O que é guardado, para quê, e como apagar","What is stored, why, and how to delete it"],
+"pv.whereT":["Onde ficam seus dados","Where your data lives"],
+"pv.whereD":["Tudo fica guardado só neste aparelho, no navegador. Não existe servidor do RiseONE recebendo seus dados. Se você apagar os dados do navegador ou desinstalar o app, os dados vão junto — por isso vale exportar de vez em quando.","Everything is stored only on this device, in the browser. There is no RiseONE server receiving your data. If you clear the browser data or uninstall the app, the data goes with it — so it is worth exporting from time to time."],
+"pv.consentT":["Para que você autoriza o uso","What you allow it to be used for"],
+"pv.consentNote":["Você pode desligar qualquer um destes a qualquer momento. Desligar não apaga o que já foi guardado — para apagar, use os botões abaixo.","You can turn any of these off at any time. Turning one off does not delete what was already stored — use the buttons below for that."],
+"pv.ask":["Você autoriza?","Do you allow this?"],
+"pv.allow":["Autorizar","Allow"],
+"pv.localOnly":["Isso fica guardado apenas neste aparelho e não é enviado para lugar nenhum.","This is stored only on this device and is not sent anywhere."],
+"pv.fin.saude":["Dados de saúde","Health data"],
+"pv.fin.saudeD":["Peso, medidas, exames, dores e ficha de saúde, para montar treino e acompanhar a evolução.","Weight, measurements, lab results, pains and health form, to build workouts and track progress."],
+"pv.fin.camera":["Câmera","Camera"],
+"pv.fin.cameraD":["Usar a câmera para ler rótulos, exames e carteirinha, e para o espelho de postura. A imagem é processada no próprio aparelho.","Use the camera to read labels, lab results and insurance cards, and for the posture mirror. The image is processed on the device itself."],
+"pv.fin.ia":["Assistente de IA","AI assistant"],
+"pv.fin.iaD":["Enviar o texto da sua pergunta para o serviço de IA que você escolher. A chave e o serviço são seus.","Send your question's text to the AI service you choose. The key and the service are yours."],
+"pv.fin.nuvem":["Cópia na nuvem","Cloud backup"],
+"pv.fin.nuvemD":["Guardar uma cópia do seu arquivo de dados na conta de nuvem que você conectar.","Keep a copy of your data file in the cloud account you connect."],
+"pv.fin.avisos":["Avisos e lembretes","Alerts and reminders"],
+"pv.fin.avisosD":["Mostrar notificações de treino, água e lembretes no aparelho.","Show workout, water and reminder notifications on the device."],
+"pv.rightsT":["Seus direitos","Your rights"],
+"pv.rightsD":["Ver, levar e apagar — quando você quiser","See it, take it and delete it — whenever you want"],
+"pv.rightsNote":["Apagar é definitivo e não tem como desfazer. Exporte antes se quiser guardar uma cópia.","Deleting is permanent and cannot be undone. Export first if you want to keep a copy."],
+"pv.delPart":["Apagar parte dos dados","Delete part of the data"],
+"pv.delPartD":["Escolha o que apagar","Choose what to delete"],
+"pv.delAll":["Apagar tudo","Delete everything"],
+"pv.items":["itens","items"],
+"pv.lawT":["Base legal e referências","Legal basis and references"],
+"pv.lawSub":["Por que podemos guardar isso, e sob quais regras","Why this may be stored, and under which rules"],
+"pv.lawBody":["<p><b>Quem é quem.</b> Você é o titular dos dados. Como tudo fica no seu aparelho e o RiseONE não tem servidor, não há transferência de dados para um controlador — quem decide e guarda é você. Se você ligar a cópia na nuvem ou o assistente de IA, o serviço que você escolher passa a ser um operador dos dados que você mandar para ele, sob os termos daquele serviço.</p><p><b>Dados sensíveis.</b> Peso, medidas, exames, dores e a ficha de saúde são dados pessoais sensíveis de saúde. Por isso cada finalidade é autorizada separadamente, na hora em que ela aparece, e pode ser desligada depois.</p><p><b>Regras consideradas</b> (verificadas em 1º de setembro de 2026, sem garantia de vigência depois desta data): Lei nº 13.709/2018 (LGPD), artigos 7º, 11, 18 e 46; Regulamento (UE) 2016/679 (GDPR), artigos 6º, 9º, 15 a 20 e 32; Lei nº 12.965/2014 (Marco Civil da Internet).</p><p><b>Como conferir se ainda valem:</b> consulte o texto atualizado da LGPD no Planalto (planalto.gov.br), as orientações da ANPD (gov.br/anpd) e, para o GDPR, o EUR-Lex (eur-lex.europa.eu). Recomendamos reconferir a cada seis meses ou quando o app for atualizado.</p>","<p><b>Who is who.</b> You are the data subject. Since everything stays on your device and RiseONE has no server, there is no transfer to a controller — you decide and you store. If you turn on cloud backup or the AI assistant, the service you choose becomes a processor of whatever you send it, under that service's own terms.</p><p><b>Sensitive data.</b> Weight, measurements, lab results, pains and the health form are sensitive personal health data. That is why each purpose is authorised separately, at the moment it comes up, and can be switched off later.</p><p><b>Rules considered</b> (checked on 1 September 2026, with no guarantee they remain in force after that date): Brazilian Law 13,709/2018 (LGPD), articles 7, 11, 18 and 46; Regulation (EU) 2016/679 (GDPR), articles 6, 9, 15–20 and 32; Brazilian Law 12,965/2014 (Internet Civil Framework).</p><p><b>How to check they still apply:</b> see the current LGPD text at planalto.gov.br, the ANPD guidance at gov.br/anpd and, for the GDPR, EUR-Lex at eur-lex.europa.eu. We suggest re-checking every six months or whenever the app is updated.</p>"],
+/* --- acessibilidade --- */
+"ac.title":["Acessibilidade","Accessibility"],
+"ac.sub":["Deixe o app do jeito que fica melhor para você","Set the app up the way it works best for you"],
+"ac.fs":["Tamanho da letra","Text size"],
+"ac.fsMore":["Aumentar","Bigger"],
+"ac.fsLess":["Diminuir","Smaller"],
+"ac.fsReset":["Tamanho normal","Normal size"],
+"ac.sample":["Assim vai ficar o texto do app.","This is how the app text will look."],
+"ac.contrast":["Mais contraste","Higher contrast"],
+"ac.contrastD":["Cores mais fortes e bordas mais visíveis.","Stronger colours and more visible borders."],
+"ac.motion":["Animações","Animations"],
+"ac.motionD":["Desligue se movimento na tela te incomoda ou dá tontura.","Turn off if movement on screen bothers you or makes you dizzy."],
+"ac.links":["Sublinhar links","Underline links"],
+"ac.linksD":["Deixa mais fácil ver o que é clicável.","Makes it easier to see what is clickable."],
+"ac.read":["Marcador de leitura","Reading ruler"],
+"ac.readD":["Realça a linha onde está o cursor, para não se perder no texto.","Highlights the line under the cursor so you do not lose your place."],
+"ac.speak":["Ler a tela em voz alta","Read the screen aloud"],
+"ac.speakD":["Usa a voz do aparelho para ler o que está na tela.","Uses the device voice to read what is on the screen."],
+"ac.norm":["Voltar ao padrão","Back to default"],
+"ac.normD":["Desfaz todos os ajustes desta tela.","Undoes every setting on this screen."],
+/* --- voz --- */
+"vz.title":["Voz do treinador","Trainer voice"],
+"vz.sub":["O app fala com você durante o treino","The app talks to you during the workout"],
+"vz.settings":["Ajustes da voz","Voice settings"],
+"vz.test":["Testar","Test"],
+"vz.stop":["Parar","Stop"],
+"vz.reload":["Procurar vozes de novo","Look for voices again"],
+"vz.reloaded":["Lista de vozes atualizada.","Voice list refreshed."],
+"vz.sample":["Vamos lá. Três séries de doze repetições. Você consegue.","Let's go. Three sets of twelve. You've got this."],
+"vz.deviceDefault":["Padrão do aparelho","Device default"],
+"vz.deviceDefaultD":["Deixa o aparelho escolher. É o que costuma funcionar em mais celulares.","Lets the device choose. This is what works on the most phones."],
+"vz.online":["natural","natural"],
+"vz.otherLangs":["Vozes de outros idiomas ({n})","Voices in other languages ({n})"],
+"vz.diag":["O navegador enxerga {n} vozes, {m} no seu idioma · mecanismos: {e}","The browser sees {n} voices, {m} in your language · engines: {e}"],
+"vz.nothing":["Seu aparelho não mostrou nenhuma voz. Toque em “Procurar vozes de novo”. Se continuar vazio, instale uma voz nas configurações do aparelho.","Your device did not report any voice. Tap “Look for voices again”. If it stays empty, install a voice in your device settings."],
+"vz.noTTS":["Este navegador não fala. Tente o Chrome ou o Safari atualizado.","This browser cannot speak. Try an up-to-date Chrome or Safari."],
+"vz.rate":["Velocidade","Speed"],
+"vz.pitch":["Tom","Pitch"],
+"vz.vol":["Volume","Volume"],
+"vz.whenTitle":["Quando falar","When to speak"],
+"vz.wTreino":["Durante o treino","During the workout"],
+"vz.wTreinoD":["Diz o nome do exercício, séries e repetições.","Says the exercise name, sets and reps."],
+"vz.wRotina":["No aquecimento e alongamento","During warm-up and stretching"],
+"vz.wRotinaD":["Anuncia cada movimento e o próximo.","Announces each movement and the next one."],
+"vz.wContagem":["Contagem e descanso","Countdown and rest"],
+"vz.wContagemD":["Conta os últimos segundos e avisa quando o descanso acaba.","Counts the last seconds and says when rest is over."],
+"vz.doneMsg":["Treino concluído. Muito bem.","Workout finished. Well done."],
+"vz.helpBtn":["Não estou ouvindo / instalei uma voz e ela não aparece","I can't hear it / I installed a voice and it doesn't show"],
+"vz.helpBody":["<p><b>Não sai som</b> — confira nesta ordem:</p><ol><li>Volume alto e modo silencioso desligado.</li><li>O app aberto na frente: muitos celulares cortam a voz quando a tela apaga.</li><li>Toque em “Testar”. Se não falar, toque em “Procurar vozes de novo”.</li><li>Deixe em “Padrão do aparelho”: é a opção que funciona em mais celulares.</li></ol><p><b>Instalei uma voz nova e ela não aparece na lista</b> — o navegador guarda a lista antiga até ser fechado de vez:</p><ol><li>Escolha o mecanismo novo em Configurações › (buscar) “conversão de texto em voz” › Mecanismo preferido. Na Samsung o menu se chama “Configurações de Leitura de texto Samsung” — não é o TalkBack.</li><li>Configurações › Aplicativos › Chrome (ou Edge) › <b>Forçar parada</b>.</li><li>Abra o app de novo e toque em “Procurar vozes de novo”.</li><li>Se ainda vier a voz antiga, reinicie o aparelho.</li></ol><p>Para conferir fora do app, abra a página <b>TESTE-VOZ-riseone.html</b>, publicada no mesmo endereço.</p>","<p><b>No sound</b> — check in this order:</p><ol><li>Volume up and silent mode off.</li><li>The app in the foreground: many phones cut the voice when the screen turns off.</li><li>Tap “Test”. If nothing is said, tap “Look for voices again”.</li><li>Leave it on “Device default”: that is the option that works on the most phones.</li></ol><p><b>I installed a new voice and it does not show up</b> — the browser keeps the old list until it is fully closed:</p><ol><li>Pick the new engine in Settings › (search) “text-to-speech” › Preferred engine. On Samsung the menu is called “Samsung text-to-speech settings” — not TalkBack.</li><li>Settings › Apps › Chrome (or Edge) › <b>Force stop</b>.</li><li>Open the app again and tap “Look for voices again”.</li><li>If the old voice still comes up, restart the device.</li></ol><p>To check outside the app, open the <b>TESTE-VOZ-riseone.html</b> page, published at the same address.</p>"],
+"vz.layerNote":["O RiseONE usa a voz do próprio aparelho, e não uma voz baixada da internet. O motivo: aqui as frases são curtas e mudam a cada série, então guardar áudio pronto não ajudaria — e assim a voz sai na hora, sem internet e sem gastar cota de nenhum serviço.","RiseONE uses the device's own voice rather than a downloaded internet voice. The reason: here the phrases are short and change with every set, so caching audio would not help — and this way the voice comes out instantly, offline and without spending any service quota."],
+"vz.sttTitle":["Responder por voz","Answer by voice"],
+"vz.sttSub":["Fale “próximo”, “pausa”, “voltar” ou “terminei” sem tirar a mão do aparelho","Say “next”, “pause”, “back” or “done” without touching the device"],
+"vz.sttOn":["Ouvindo os comandos","Listening for commands"],
+"vz.noSTT":["Este navegador não entende comando de voz. Funciona melhor no Chrome do Android.","This browser does not understand voice commands. It works best in Chrome on Android."],
+"vz.sttNote":["O reconhecimento é do próprio navegador. Em alguns aparelhos ele envia o áudio para o serviço do fabricante — por isso pedimos autorização antes.","Recognition is done by the browser itself. On some devices it sends the audio to the maker's service — that is why we ask for permission first."],
+/* --- carteirinha do plano (usado na tela de dados) --- */
+"ex.equipPick":["Aparelhos disponíveis","Equipment available"],
+"ex.equipPickSub":["Toque no que você tem à mão. Pode marcar mais de um. Sem nada marcado, mostramos todos os exercícios.","Tap what you have at hand. You can pick more than one. With nothing picked we show every exercise."],
+"ex.onlyBody":["Só o corpo","Bodyweight only"],
+"ex.eqClear":["Limpar escolha","Clear selection"],
+"nw.title":["Novidades","What's new"],
+"nw.sub":["O que mudou nesta versão","What changed in this version"],
+"nw.loading":["Carregando…","Loading…"],
+"nw.none":["Não consegui ler a lista de novidades agora.","I could not read the what's-new list right now."],
+"nw.fileOnly":["A lista de novidades só aparece quando o app é aberto pelo endereço do site. Aberto direto do arquivo, o navegador não deixa ler os arquivos vizinhos.","The what's-new list only appears when the app is opened from the site address. Opened straight from the file, the browser will not read neighbouring files."],
+"nw.note":["A lista vem do arquivo versoes.json, publicado junto com o app.","The list comes from the versoes.json file, published alongside the app."],
+"pl.cardTitle":["Carteirinha do plano","Insurance card"]
+});
+
+/* ---------- 1d. TEXTOS DA VERSÃO 3.1: câmera, rótulo, exames, carteirinha, TV ---------- */
+Object.assign(L,{
+"common.share":["Compartilhar","Share"],
+/* --- câmera --- */
+"cam.zoomIn":["Aproximar","Zoom in"],
+"cam.zoomOut":["Afastar","Zoom out"],
+"cam.timer":["Temporizador","Timer"],
+"cam.noTimer":["Sem espera","No delay"],
+"cam.privacy":["Borrar o fundo","Blur the background"],
+"cam.privacyNote":["Borrar o fundo serve para fotografar em lugar público. O borrão vale só para o que você vê agora; a foto sai normal.","Blurring the background helps when photographing in public. The blur applies only to what you see now; the photo comes out normal."],
+"cam.blurT":["A foto saiu tremida","The photo came out blurry"],
+"cam.blurS":["Assim a leitura erra muito","Reading it would go badly wrong"],
+"cam.blur1":["Apoie o celular ou encoste o cotovelo em algo firme.","Rest the phone or brace your elbow on something firm."],
+"cam.blur2":["Deixe o rótulo bem iluminado e sem reflexo.","Light the label well and avoid glare."],
+"cam.blur3":["Use o temporizador de 3 segundos: você não mexe no aparelho na hora do clique.","Use the 3-second timer: you don't touch the device at the moment of the shot."],
+"cam.useAnyway":["Usar mesmo assim","Use it anyway"],
+"cam.again":["Tirar outra","Take another"],
+/* --- rótulo --- */
+"rt.prod":["Produto","Product"],
+"rt.sub":["O que o rótulo diz, em português claro","What the label says, in plain words"],
+"rt.ragG":["Comida de verdade, lista curta","Real food, short list"],
+"rt.ragA":["Produto processado","Processed product"],
+"rt.ragR":["Muito processado","Heavily processed"],
+"rt.ragWhy":["{c} aditivos de aparência ou sabor · {a} avisos de “alto em” · {i} ingredientes na lista","{c} cosmetic or flavour additives · {a} “high in” warnings · {i} ingredients in the list"],
+"rt.alto":["Alto em","High in"],
+"rt.acucar":["Açúcares","Sugars"],
+"rt.gordSat":["Gordura saturada","Saturated fat"],
+"rt.sodio":["Sódio","Sodium"],
+"rt.fibra":["Fibras","Fibre"],
+"rt.altoNote":["Comparação com os limites da rotulagem frontal brasileira (RDC 429/2020 e IN 75/2020, conferidas em 1º de setembro de 2026). O cálculo é por 100 g ou 100 ml e depende da porção lida na foto — confira na embalagem.","Compared with the Brazilian front-of-pack limits (RDC 429/2020 and IN 75/2020, checked on 1 September 2026). The calculation is per 100 g or 100 ml and depends on the portion read from the photo — check the package."],
+"rt.porcao":["Porção de","Serving of"],
+"rt.tabela":["Tabela nutricional","Nutrition table"],
+"rt.pack":["Embalagem","Package"],
+"rt.portions":["Porções por embalagem","Servings per package"],
+"rt.selos":["O que a embalagem anuncia","What the package claims"],
+"rt.selosNote":["Isto é o que está escrito na embalagem. O app só repete: não confere se é verdade.","This is what is written on the package. The app only repeats it: it does not verify it."],
+"rt.aditivos":["Aditivos encontrados","Additives found"],
+"rt.ings":["Lista de ingredientes","Ingredient list"],
+"rt.ingsNote":["Os ingredientes vêm em ordem de quantidade: o primeiro é o que tem mais.","Ingredients are listed by amount: the first one is the most abundant."],
+"rt.criterio":["Como o semáforo é calculado: verde quando não há aditivo de aparência ou sabor nem aviso de “alto em”; amarelo com um deles ou lista longa; vermelho com dois ou mais. É um critério do próprio app, inspirado na ideia de alimento ultraprocessado — não é classificação oficial nem recomendação de consumo.","How the traffic light works: green when there is no cosmetic or flavour additive and no “high in” warning; amber with one of them or a long list; red with two or more. It is the app's own rule, inspired by the idea of ultra-processed food — not an official classification nor a consumption recommendation."],
+"rt.papel.cor":["Corante","Colouring"],
+"rt.papel.sabor":["Realçador de sabor ou aroma","Flavour enhancer or aroma"],
+"rt.papel.adocante":["Adoçante","Sweetener"],
+"rt.papel.conservante":["Conservante","Preservative"],
+"rt.papel.emulsificante":["Emulsificante","Emulsifier"],
+"rt.papel.espessante":["Espessante ou estabilizante","Thickener or stabiliser"],
+"rt.papel.acidulante":["Acidulante","Acidity regulator"],
+"rt.papel.outro":["Outro aditivo","Other additive"],
+"rt.dieta.diet":["Diet","Diet"],
+"rt.dieta.light":["Light","Light"],
+"rt.dieta.zero":["Zero açúcar","Zero sugar"],
+"rt.dieta.lowcarb":["Low carb","Low carb"],
+"rt.dieta.semlac":["Sem lactose","Lactose-free"],
+"rt.dieta.semglu":["Sem glúten","Gluten-free"],
+"rt.dieta.vegano":["Vegano","Vegan"],
+"rt.dieta.vegetar":["Vegetariano","Vegetarian"],
+"rt.dieta.integr":["Integral","Wholegrain"],
+"rt.dieta.organ":["Orgânico","Organic"],
+/* --- exames --- */
+"pg.indTitle":["Cada indicador ao longo do tempo","Each indicator over time"],
+"pg.indSub":["Para levar ao médico, não para se diagnosticar","To take to your doctor, not to diagnose yourself"],
+"pg.indNote":["O app agrupa pelo nome do exame e desenha a linha. Ele não diz se o valor é bom ou ruim: a faixa de referência é a do seu laboratório, impressa no seu resultado.","The app groups by exam name and draws the line. It does not say whether a value is good or bad: the reference range is your laboratory's, printed on your result."],
+"pg.reading1":["leitura","reading"],
+"pg.readings":["leituras","readings"],
+"pg.known":["reconhecido","recognised"],
+"pg.refNote":["A faixa de referência mostrada é a que estava impressa no seu laudo. Quando não aparece, fica em branco de propósito — o app não inventa faixa.","The reference range shown is the one printed on your report. When it is missing it stays blank on purpose — the app does not invent ranges."],
+/* --- carteirinha --- */
+"sc.card":["Carteirinha do plano","Insurance card"],
+"sc.cardD":["Guardar no aparelho e ter o número sempre à mão","Keep it on the device and have the number always at hand"],
+"pl.sub":["Guardada só neste aparelho","Stored on this device only"],
+"pl.card":["Plano de saúde","Health plan"],
+"pl.scan":["Fotografar","Photograph"],
+"pl.none":["Nenhuma carteirinha guardada","No card stored"],
+"pl.noneSub":["Fotografe a frente da carteirinha e o app separa operadora, número e validade.","Photograph the front of the card and the app picks out the provider, number and validity."],
+"pl.oper":["Operadora","Provider"],
+"pl.prod":["Plano / produto","Plan / product"],
+"pl.num":["Número da carteirinha","Card number"],
+"pl.valid":["Validade","Valid until"],
+"pl.holder":["Titular","Card holder"],
+"pl.until":["até","until"],
+"pl.copy":["Copiar","Copy"],
+"pl.copied":["Copiado.","Copied."],
+"pl.delAsk":["Apagar esta carteirinha do aparelho?","Delete this card from the device?"],
+"pl.note":["Fica guardada apenas neste aparelho, junto com os seus outros dados. Ao compartilhar, você escolhe para quem vai — confira antes de enviar.","It is stored on this device only, along with your other data. When you share it, you choose who receives it — check before sending."],
+"pl.checkNote":["Confira cada campo antes de salvar: a leitura por foto erra com frequência em número comprido.","Check every field before saving: photo reading often gets long numbers wrong."],
+"pl.manual":["Para guardar uma carteirinha, use o botão Fotografar em Evolução › Exames.","To store a card, use the Photograph button under Progress › Exams."],
+/* --- projetar na TV --- */
+"tv.title":["Projetar na TV","Cast to the TV"],
+"tv.body":["O navegador não conversa direto com a TV. O que dá para fazer, de verdade:","The browser cannot talk to the TV directly. What actually works:"],
+"tv.s1":["Toque no botão de projetar: a imagem vira uma janelinha flutuante, que aparece na TV se o celular estiver espelhando.","Tap the cast button: the image becomes a floating window, which shows on the TV if the phone is mirroring."],
+"tv.s2":["No celular, ligue o espelhamento de tela (Android: Transmitir; iPhone: Espelhamento).","On the phone, turn on screen mirroring (Android: Cast; iPhone: Screen Mirroring)."],
+"tv.s3":["No computador com Chrome, use o menu do navegador › Transmitir.","On a computer with Chrome, use the browser menu › Cast."],
+"tv.note":["O app não se conecta à TV sozinho e não envia imagem para lugar nenhum: quem faz a ponte é o espelhamento do seu aparelho.","The app does not connect to the TV by itself and sends no image anywhere: your device's own mirroring does the bridging."],
+"tv.noVideo":["Não há imagem de câmera aberta agora.","There is no camera image open right now."],
+"tv.noFull":["Este navegador não deixa abrir em tela cheia.","This browser does not allow full screen."]
+});
+
+/* ---------- 1e. TEXTOS DA VERSÃO 3.1: menu lateral e favoritos ---------- */
+Object.assign(L,{
+"dw.day":["O seu dia","Your day"],
+"dw.tools":["Ferramentas","Tools"],
+"dw.account":["Conta e ajustes","Account and settings"],
+"dw.pro":["Área profissional","Professional area"],
+"fav.title":["Atalhos da barra de baixo","Bottom bar shortcuts"],
+"fav.sub":["Escolha até 5 telas para o celular","Pick up to 5 screens for the phone"],
+"fav.note":["A barra de baixo do celular mostra só o que você escolher aqui. Todas as outras funções continuam no menu ☰ do topo.","The phone's bottom bar shows only what you pick here. Every other function stays in the ☰ menu at the top."],
+"fav.reset":["Voltar ao padrão","Back to default"],
+"fav.min":["Deixe pelo menos um atalho.","Keep at least one shortcut."],
+"fav.max":["Cabem no máximo 5 atalhos.","At most 5 shortcuts fit."]
+});
+
+/* ---------- 1f. TEXTOS DA VERSÃO 3.1: duas posições do movimento ---------- */
+Object.assign(L,{
+"vw.start":["Posição inicial","Starting position"],
+"vw.end":["Posição final","End position"],
+"vw.move":["Movimento","The movement"],
+"vw.pair":["Duas posições","Two positions"],
+"vw.rot":["Girando","Looping"],
+"vw.note":["No computador aparecem as duas posições lado a lado; no celular, uma só, girando. O botão pausa para você olhar com calma. Os desenhos mostram sempre o ângulo em que o movimento se enxerga melhor — ainda não existe um desenho visto de lado para cada exercício.","On a computer the two positions appear side by side; on a phone, a single looping one. The button pauses it so you can look carefully. The drawings always show the angle where the movement reads best — there is not yet a separate side-view drawing for each exercise."]
+});
+
 /* ---------- 2. MUSCULOS (3 niveis de nome) ---------- */
 const MUSCLES = [];
 function M(id, region, p1,p2,p3, e1,e2,e3){ MUSCLES.push({id,region,pt:[p1,p2,p3],en:[e1,e2,e3]}); }
@@ -1808,7 +2329,7 @@ function bodySVG(view, sel){
 const ROLES_ALL=["guest","student","trainer","advertiser","admin"], ROLES_TRAIN=["guest","student","trainer"];
 const SECTIONS=[
  {id:"home",     ic:"home",      k:"nav.home",     routes:["home"],                        roles:ROLES_ALL},
- {id:"train",    ic:"dumbbell",  k:"nav.train",    routes:["workout","ex","body","warm"],  roles:ROLES_TRAIN},
+ {id:"train",    ic:"dumbbell",  k:"nav.train",    routes:["workout","ex","body","fisio","warm"],  roles:ROLES_TRAIN},
  {id:"diet",     ic:"leaf",      k:"nav.diet",     routes:["diet"],                        roles:ROLES_TRAIN},
  {id:"progress", ic:"chart",     k:"nav.progress", routes:["progress"],                    roles:ROLES_TRAIN},
  {id:"ads",      ic:"megaphone", k:"nav.ads",      routes:["ads"],                         roles:["advertiser"]},
@@ -1820,6 +2341,7 @@ const ROUTES = [
  {id:"workout",  ic:"dumbbell",  k:"nav.workout",  roles:ROLES_TRAIN},
  {id:"ex",       ic:"book",      k:"nav.ex",       roles:ROLES_TRAIN},
  {id:"body",     ic:"body",      k:"nav.body",     roles:ROLES_TRAIN},
+ {id:"fisio",    ic:"heart",     k:"nav.fisio",    roles:ROLES_TRAIN},
  {id:"warm",     ic:"flame",     k:"nav.warm",     roles:ROLES_TRAIN},
  {id:"diet",     ic:"leaf",      k:"nav.diet",     roles:ROLES_TRAIN},
  {id:"progress", ic:"chart",     k:"nav.progress", roles:ROLES_TRAIN},
@@ -1842,7 +2364,12 @@ function buildNav(){
   const secs=visibleSections(), cur=sectionOf(ROUTE).id;
   const btn=s=>'<button data-go="'+s.routes[0]+'" data-sec="'+s.id+'" class="'+(s.id===cur?"active":"")+'" aria-label="'+esc(t(s.k))+'">'+I(s.ic)+"<span>"+t(s.k)+"</span></button>";
   document.getElementById("tabs").innerHTML = secs.map(btn).join("");
-  document.getElementById("bottombar").innerHTML = secs.map(btn).join("");
+  /* rodapé do celular: só os favoritos da pessoa (o ☰ do topo tem tudo) */
+  const fb=document.getElementById("bottombar");
+  if(fb) fb.innerHTML = favs().map(id=>{
+    const r=routeInfo(id); if(!r) return "";
+    return '<button data-go="'+r.id+'" class="'+(ROUTE===r.id?"active":"")+'" aria-label="'+esc(t(r.k))+'">'+I(r.ic)+"<span>"+t(r.k)+"</span></button>";
+  }).join("");
 }
 /* controle segmentado da área Treinar */
 function subNav(){
@@ -2030,6 +2557,7 @@ SCREENS.more = function(){
   if(r==="advertiser") h+=tile("megaphone", t("ad.title"), t("more.adsD"), 'data-go="ads"');
   if(r==="admin") h+=tile("shield", t("adm.title"), t("adm.sub"), 'data-go="admin"');
   h+=tile("help", t("help.title"), t("more.helpD"), 'id="morehelp"');
+  h+=tile("sparkles", t("nw.title"), t("nw.sub"), 'id="morenews"', hasNews()?'<span class="dot-new"></span>':"");
   h+=tile("phone", t("st.install"), t("more.installD"), 'data-go="set" data-sub="sobre"');
   h+=tile("share", t("st.share"), t("more.shareD"), 'id="moreshare"');
   h+=tile("info", t("st.about"), t("more.aboutD"), 'data-go="set" data-sub="sobre"');
@@ -2040,6 +2568,7 @@ SCREENS.more_after = function(){
   const sw=document.getElementById("switchu2"); if(sw) sw.onclick=()=>loginModal();
   const hb=document.getElementById("morehelp"); if(hb) hb.onclick=()=>openHelp("tutorial");
   const sh=document.getElementById("moreshare"); if(sh) sh.onclick=shareModal;
+  const nw=document.getElementById("morenews"); if(nw) nw.onclick=()=>openNews();
 };
 function shareModal(){
   const m=modal(mh(t("st.share"))+'<div class="optionlist"><button class="opt" id="sh1"><span class="ibub">'+I("share")+'</span><span><span class="ot">'+t("st.share")+'</span><br><span class="od">'+t("share.text")+'</span></span></button>'+
@@ -2129,7 +2658,7 @@ function videoModal(id){
   const x=allEx().find(e=>e.id===id); if(!x) return;
   const q=encodeURIComponent((LANG==="pt"? exName(x)+" execução correta academia" : exName(x)+" proper form exercise"));
   const m=modal(mh(exName(x))+
-    (exAnimId(x)?'<div class="exbig">'+exFigure(x)+'</div><p class="tiny muted" style="text-align:center;margin:.2em 0 .8em">'+t("an.animNote")+"</p>":"")+
+    (exAnimId(x)? exViewer(exAnimId(x)) : "")+
     photoStrip(x.id, true)+
     '<div class="yt"><iframe src="https://www.youtube.com/embed?listType=search&list='+q+'" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="'+esc(exName(x))+'"></iframe></div>'+
     '<p class="tiny muted" style="margin-top:8px">'+t("ex.videoNote")+"</p>"+
@@ -2137,21 +2666,40 @@ function videoModal(id){
     '<div class="row"><a class="btn ghost sm" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q+'">'+t("ex.noVideo")+'</a>'+
     (exAnimId(x)?'<button class="btn ghost sm" id="exmir">'+I("video")+t("mir.open")+"</button>":"")+
     '<button class="btn sm" data-addex2="'+x.id+'">'+I("plus")+t("ex.addToWorkout")+"</button></div>",{wide:true});
+  wireViewer(m);
   const mb=m.querySelector("#exmir"); if(mb) mb.onclick=()=>{ m.remove(); openMirror(exAnimId(x), exName(x)); };
   m.querySelector("[data-addex2]").onclick=()=>{ m.remove(); addExToWorkout(x.id); };
 }
 
 /* ---------- 17. TELA: BIBLIOTECA ---------- */
-let EXF = {q:"", m:"", eq:""};
+let EXF = {q:"", m:"", eq:"", eqs:[]};
+/* escolha de vários aparelhos ao mesmo tempo, com o desenho de cada um.
+   Sem nada marcado, mostra tudo. "Só o corpo" deixa apenas o que não precisa de equipamento. */
+function eqPickerHTML(){
+  const sel=EXF.eqs||[];
+  const chip=(id,label,svg,on)=>'<button class="eqchip'+(on?" on":"")+'" data-eqpick="'+id+'" aria-pressed="'+(on?"true":"false")+'">'+
+    (svg?'<span class="eqchipic">'+svg+"</span>":"")+"<span>"+esc(label)+"</span></button>";
+  let h='<div class="sep"></div><span class="kicker">'+t("ex.equipPick")+'</span>'+
+        '<p class="tiny muted" style="margin:2px 0 8px">'+t("ex.equipPickSub")+"</p>"+
+        '<div class="eqpick">';
+  h+=chip("", t("common.all"), "", !sel.length);
+  Object.values(EQUIP).forEach(e=>{
+    const mine=STATE.equipPhotos&&STATE.equipPhotos[e.id];
+    const fig=mine? '<img src="'+mine+'" alt="">' : e.svg;
+    h+=chip(e.id, (e.id==="livre"? t("ex.onlyBody") : (LANG==="pt"?e.pt:e.en)), fig, sel.indexOf(e.id)>=0);
+  });
+  h+="</div>";
+  if(sel.length) h+='<div class="row" style="margin-top:8px"><button class="btn xs ghost" id="eqclr">'+I("x")+t("ex.eqClear")+"</button></div>";
+  return h;
+}
 SCREENS.ex = function(){
   const list=filterEx();
   let h='<div class="pagehead"><div><h1>'+t("ex.title")+'</h1><small>'+list.length+" "+t("ex.count")+" · "+t("ex.sub")+"</small></div>"+
     '<button class="btn ghost sm" id="newex">'+I("plus")+t("ex.addMine")+"</button></div>";
   h+='<div class="card tight"><div class="help-q" style="margin-bottom:10px">'+I("search")+'<input type="search" id="exq" value="'+esc(EXF.q)+'" placeholder="'+t("ex.searchph")+'"></div>'+
-     '<div class="grid g2"><label class="fld" style="margin:0"><span>'+t("ex.filterMuscle")+'</span><select id="exm"><option value="">'+t("common.all")+"</option>"+
+     '<label class="fld" style="margin:0"><span>'+t("ex.filterMuscle")+'</span><select id="exm"><option value="">'+t("common.all")+"</option>"+
      MUSCLES.map(m=>'<option value="'+m.id+'"'+(EXF.m===m.id?" selected":"")+">"+esc(mName(m.id))+"</option>").join("")+"</select></label>"+
-     '<label class="fld" style="margin:0"><span>'+t("ex.filterEquip")+'</span><select id="exe"><option value="">'+t("common.all")+"</option>"+
-     Object.values(EQUIP).map(e=>'<option value="'+e.id+'"'+(EXF.eq===e.id?" selected":"")+">"+esc(LANG==="pt"?e.pt:e.en)+"</option>").join("")+"</select></label></div></div>";
+     eqPickerHTML()+"</div>";
   h+='<div class="exlist" id="exgrid">'+(list.length?list.map(exCard).join(""):emptyBox("search", t("ex.noHits"), t("ex.noHitsSub")))+"</div>";
   h+='<details class="fold" id="eqfold" style="margin-top:14px"'+(EXF.eqOpen?" open":"")+'><summary>'+I("camera")+t("ex.equipTitle")+"</summary><div class='fb'>"+
      '<p class="tiny muted">'+t("ex.equipSub")+"</p>"+
@@ -2163,11 +2711,26 @@ SCREENS.ex = function(){
      }).join("")+"</div></div></details>";
   return h;
 };
+
+/* liga as fichinhas de aparelho (chamado dentro de SCREENS.ex_after) */
+function wireEqPicker(){
+  document.querySelectorAll("[data-eqpick]").forEach(b=>b.onclick=()=>{
+    const id=b.getAttribute("data-eqpick");
+    EXF.eqs=EXF.eqs||[];
+    if(!id){ EXF.eqs=[]; }
+    else { const i=EXF.eqs.indexOf(id); if(i>=0) EXF.eqs.splice(i,1); else EXF.eqs.push(id); }
+    EXF.eq="";
+    render();
+  });
+  const c=document.getElementById("eqclr");
+  if(c) c.onclick=()=>{ EXF.eqs=[]; render(); };
+}
 function filterEx(){
   const q=EXF.q.toLowerCase().trim();
   return allEx().filter(x=>{
     if(EXF.m && x.m!==EXF.m && x.sec.indexOf(EXF.m)<0) return false;
     if(EXF.eq && x.eq!==EXF.eq) return false;
+    if(EXF.eqs && EXF.eqs.length && EXF.eqs.indexOf(x.eq)<0) return false;
     if(!q) return true;
     const hay=(x.pt+" "+x.en+" "+x.gpt+" "+x.gen+" "+mName(x.m,1)+" "+mName(x.m,2)+" "+mName(x.m,3)+" "+eqName(x.eq)).toLowerCase();
     if(hay.indexOf(q)>=0) return true;
@@ -2180,9 +2743,9 @@ SCREENS.ex_after = function(){
   q.oninput=()=>{ EXF.q=q.value; const g=document.getElementById("exgrid"); const l=filterEx();
     g.innerHTML=l.length?l.map(exCard).join(""):emptyBox("search", t("ex.noHits"), t("ex.noHitsSub")); wireExCards(); initAnims(g); };
   document.getElementById("exm").onchange=e=>{ EXF.m=e.target.value; render(); };
-  document.getElementById("exe").onchange=e=>{ EXF.eq=e.target.value; render(); };
+  wireEqPicker();
   document.getElementById("newex").onclick=newExModal;
-  document.querySelectorAll("[data-eqex]").forEach(b=>b.onclick=()=>{ EXF.eq=b.getAttribute("data-eqex"); EXF.q=""; EXF.eqOpen=false; render(); window.scrollTo({top:0,behavior:"smooth"}); });
+  document.querySelectorAll("[data-eqex]").forEach(b=>b.onclick=()=>{ EXF.eqs=[b.getAttribute("data-eqex")]; EXF.eq=""; EXF.q=""; EXF.eqOpen=false; render(); window.scrollTo({top:0,behavior:"smooth"}); });
   document.querySelectorAll("[data-eqphoto]").forEach(b=>b.onclick=()=>pickImage(dataUrl=>{
     STATE.equipPhotos=STATE.equipPhotos||{}; STATE.equipPhotos[b.getAttribute("data-eqphoto")]=dataUrl; EXF.eqOpen=true; save(); render(); toast(t("common.saved"));
   }));
@@ -2843,12 +3406,12 @@ function paintSeries(){
   const rm=TIMER.el.querySelector(".tmid .tiny"); if(rm) rm.textContent=t("tm.remaining")+" "+fmtClock(serRemaining());
 }
 /* compatibilidade com as chamadas antigas */
-function timerModal(seconds, onEnd){ openTimer(seconds, onEnd, !!seconds, !!seconds); }
+function timerModal(seconds, onEnd){ if(seconds && typeof sayRest==="function") sayRest(seconds); openTimer(seconds, onEnd, !!seconds, !!seconds); }
 
 /* ---------- 22. EXECUTAR TREINO ---------- */
 function runWorkout(id){
   const w=STATE.workouts.find(x=>x.id===id); if(!w||!(w.items||[]).length){ toast(t("wk.empty")); return; }
-  let idx=0, started=Date.now();
+  let idx=0, started=Date.now(), saidIdx=-1;
   const prog=w.items.map(it=>({exId:it.exId, target:it.sets, reps:it.reps, load:it.load||0, sets:[]}));
   const m=modal("<div id='runbox'></div>",{wide:true,sticky:true});
   function paint(){
@@ -2875,6 +3438,8 @@ function runWorkout(id){
       ((x&&exAnimId(x))?'<button class="btn line" id="r_mir">'+I("video")+t("mir.open")+"</button>":"")+"</div>"+
       '<div class="sep"></div><button class="btn wide" id="r_fin">'+I("check")+t("wk.finish")+"</button>";
     initAnims(m);
+    /* voz: fala o exercicio so quando ele muda, nao a cada serie anotada */
+    if(typeof sayExercise==="function" && saidIdx!==idx){ saidIdx=idx; sayExercise(x?exName(x):it.exId, it.sets, it.reps); }
     m.querySelector("#rclose").onclick=()=>{ if(confirm(LANG==="pt"?"Sair sem salvar o treino?":"Leave without saving the workout?")) m.remove(); };
     m.querySelector("#r_set").onclick=()=>{
       p.reps=m.querySelector("#r_reps").value; p.load=num(m.querySelector("#r_load").value,0);
@@ -3185,6 +3750,8 @@ SCREENS.progress = function(){
         '<td class="num"><button class="btn xs line" data-delex="'+x.id+'">&times;</button></td></tr>').join("")+"</tbody></table></div>"
       : emptyBox("flask", t("pg.noExams"), t("pg.noExamsSub"));
     h+="</div>";
+    h+=examSeriesCard();
+    h+=cardsCard();
   }
   if(v==="missoes"){
     h+='<div class="grid g2 collapse"><div class="card">'+cardHead("listcheck", t("ck.missions"), t("pg.missionsSub"), '<button class="btn sm ghost" id="addmi">'+I("plus")+t("ck.newMission")+"</button>")+'<div class="list">'+
@@ -3196,6 +3763,7 @@ SCREENS.progress = function(){
   return h;
 };
 SCREENS.progress_after = function(){
+  if(typeof wireCards==="function") wireCards();
   const $=id=>document.getElementById(id);
   /* check-in */
   document.querySelectorAll("[data-mood]").forEach(b=>b.onclick=()=>{
@@ -3449,6 +4017,7 @@ function parseExam(raw){
 SCREENS.scan = function(){
   const modes=[["label","apple",t("sc.label"),t("sc.labelD")],["sheet","clipboard",t("sc.sheet"),t("sc.sheetD")],
     ["scale","weight",t("sc.scale"),t("sc.scaleD")],["exam","flask",t("sc.exam"),t("sc.examD")],
+    ["card","card",t("sc.card"),t("sc.cardD")],
     ["tape","ruler",t("sc.tape"),t("sc.tapeD")],["free","file",t("sc.free"),t("sc.freeD")]];
   let h='<div class="pagehead"><div><h1>'+t("sc.title")+'</h1><small>'+t("sc.sub")+"</small></div></div>";
   h+='<div class="card">'+cardHead("scan", t("sc.what"), "")+'<div class="tiles">'+modes.map(m=>
@@ -3462,8 +4031,9 @@ SCREENS.scan = function(){
 };
 SCREENS.scan_after = function(){
   document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{ SCANMODE=b.getAttribute("data-mode"); SCANFOUND=null; SCANTEXT=""; render(); });
-  document.getElementById("opencam2").onclick=()=>startCam(document.getElementById("camwrap2"), d=>{ stopCam(); document.getElementById("camwrap2").innerHTML=""; runOCR(d); });
-  document.getElementById("fileinp2").onchange=e=>{ const f=e.target.files[0]; if(f) readFile(f, runOCR); };
+  document.getElementById("opencam2").onclick=()=>askConsent("camera",()=>
+    startCam2(document.getElementById("camwrap2"), d=>{ stopCam(); document.getElementById("camwrap2").innerHTML=""; runOCR(d); }));
+  document.getElementById("fileinp2").onchange=e=>{ const f=e.target.files[0]; if(f) readFile(f, d=>shootChecked(d, runOCR)); };
   if(SCANTEXT) paintScan();
 };
 function runOCR(dataUrl){
@@ -3491,6 +4061,7 @@ function manualFallback(){
   d.querySelector("#manbtn").onclick=()=>manualFor(SCANMODE,{});
 }
 function manualFor(mode, pre){
+  if(mode==="card"){ toast(t("pl.manual")); return; }
   if(mode==="label") mealModal(pre);
   else if(mode==="scale"||mode==="tape") measureModal(pre);
   else if(mode==="exam") examModal(pre);
@@ -3499,30 +4070,36 @@ function manualFor(mode, pre){
 function paintScan(){
   const out=document.getElementById("scanout");
   let parsed=null, body="";
-  if(SCANMODE==="label") parsed=parseLabel(SCANTEXT);
+  if(SCANMODE==="label") parsed=parseRotulo(SCANTEXT);
+  else if(SCANMODE==="card") parsed=parseCarteirinha(SCANTEXT);
   else if(SCANMODE==="scale") parsed=parseScale(SCANTEXT);
   else if(SCANMODE==="tape") parsed=parseTape(SCANTEXT);
   else if(SCANMODE==="sheet") parsed=parseSheet(SCANTEXT);
-  else if(SCANMODE==="exam") parsed=parseExam(SCANTEXT);
+  else if(SCANMODE==="exam") parsed=parseExame(SCANTEXT);
   SCANFOUND=parsed;
   if(SCANMODE==="label" && parsed){
-    body='<div class="grid g4">'+
-      stat("kcal", parsed.kcal!==null&&parsed.kcal!==undefined?fmtNum(parsed.kcal,0):"—","","")+
-      stat(t("dt.prot"), parsed.prot!=null?fmtNum(parsed.prot,1):"—","g","")+
-      stat(t("dt.carb"), parsed.carb!=null?fmtNum(parsed.carb,1):"—","g","")+
-      stat(t("dt.fat"), parsed.fat!=null?fmtNum(parsed.fat,1):"—","g","")+"</div>"+
-      (parsed.portion?'<p class="tiny muted">'+t("dt.qty")+": "+fmtNum(parsed.portion,0)+" g</p>":"");
+    body="";
+  } else if(SCANMODE==="card" && parsed){
+    body='<div class="grid g2 collapse">'+
+      '<label class="fld"><span>'+t("pl.oper")+'</span><input id="cd_o" type="text" value="'+esc(parsed.operadora||"")+'"></label>'+
+      '<label class="fld"><span>'+t("pl.prod")+'</span><input id="cd_p" type="text" value="'+esc(parsed.produto||"")+'"></label></div>'+
+      '<div class="grid g2 collapse"><label class="fld"><span>'+t("pl.num")+'</span><input id="cd_n" type="text" inputmode="numeric" value="'+esc(parsed.numero||"")+'"></label>'+
+      '<label class="fld"><span>'+t("pl.valid")+'</span><input id="cd_v" type="text" value="'+esc(parsed.validade||"")+'"></label></div>'+
+      '<label class="fld"><span>'+t("pl.holder")+'</span><input id="cd_t" type="text" value="'+esc(parsed.titular||"")+'"></label>'+
+      '<p class="tiny muted">'+t("pl.checkNote")+"</p>";
   } else if((SCANMODE==="scale"||SCANMODE==="tape") && parsed){
     body='<div class="grid g4">'+Object.keys(parsed).map(k=>stat(scLabel(k), fmtNum(parsed[k],1), k==="fat"?"%":(k==="weight"?"kg":"cm"),"")).join("")+"</div>";
   } else if(SCANMODE==="sheet" && parsed){
     body='<table class="tbl"><thead><tr><th>'+t("ex.title")+'</th><th class="num">'+t("wk.sets")+'</th><th class="num">'+t("wk.reps")+'</th><th class="num">'+t("wk.load")+"</th></tr></thead><tbody>"+
       parsed.map(p=>"<tr><td>"+esc(p.name)+'</td><td class="num">'+p.sets+'</td><td class="num">'+esc(p.reps)+'</td><td class="num">'+(p.load?fmtNum(p.load,1)+" kg":"—")+"</td></tr>").join("")+"</tbody></table>";
   } else if(SCANMODE==="exam" && parsed){
-    body='<table class="tbl"><thead><tr><th>'+t("pg.examName")+'</th><th class="num">'+t("pg.value")+"</th><th>"+t("pg.unit")+"</th></tr></thead><tbody>"+
-      parsed.map(p=>"<tr><td>"+esc(p.name)+'</td><td class="num">'+esc(p.value)+"</td><td>"+esc(p.unit)+"</td></tr>").join("")+"</tbody></table>";
+    body='<table class="tbl"><thead><tr><th>'+t("pg.examName")+'</th><th class="num">'+t("pg.value")+"</th><th>"+t("pg.unit")+"</th><th>"+t("pg.ref")+"</th></tr></thead><tbody>"+
+      parsed.map(p=>"<tr><td>"+esc(p.name)+(p.ind?' <span class="pill xs ok">'+t("pg.known")+"</span>":"")+'</td><td class="num">'+esc(p.value)+"</td><td>"+esc(p.unit)+"</td><td>"+esc(p.ref||"—")+"</td></tr>").join("")+"</tbody></table>"+
+      '<p class="tiny muted">'+t("pg.refNote")+"</p>";
   } else if(SCANMODE==="free"){ body='<div class="ocrbox">'+esc(SCANTEXT||"")+"</div>"; }
   else body='<p class="muted">'+t("sc.nothing")+"</p>";
-  out.innerHTML='<div class="card">'+cardHead("search", t("sc.found"), "")+body+
+  out.innerHTML=((SCANMODE==="label"&&parsed)? rotuloCard(parsed) : "")+
+    '<div class="card">'+cardHead("search", t("sc.found"), "")+body+
     (parsed&&SCANMODE!=="free"?'<div class="sep"></div><div class="row"><button class="btn" id="scok">'+t("sc.confirm")+'</button><button class="btn line" id="scman">'+t("common.edit")+"</button></div>":
       '<div class="sep"></div><button class="btn ghost" id="scman">'+t("common.add")+"</button>")+
     "</div>"+
@@ -3541,6 +4118,11 @@ function prefillFrom(p){
 }
 function commitScan(){
   const p=SCANFOUND; if(!p) return;
+  if(SCANMODE==="card"){
+    const q=id=>{ const n=document.getElementById(id); return n? n.value.trim() : ""; };
+    cardSave({operadora:q("cd_o"), produto:q("cd_p"), numero:q("cd_n").replace(/[^0-9]/g,""), validade:q("cd_v"), titular:q("cd_t"), ans:p.ans}, SCANIMG);
+    toast(t("common.saved")); go("progress","exames"); return;
+  }
   if(SCANMODE==="label"){ mealModal({kcal:p.kcal||0,prot:p.prot||0,carb:p.carb||0,fat:p.fat||0,qty:p.portion||100}); return; }
   if(SCANMODE==="scale"||SCANMODE==="tape"){ measureModal(p); return; }
   if(SCANMODE==="exam"){
@@ -3583,6 +4165,9 @@ SCREENS.set = function(){
       '<p class="tiny muted" style="margin:6px 0 0">'+t("st.bgArtSub")+"</p></div>";
     h+='<div class="card">'+cardHead("body", t("st.terms"), t("body.level"))+
       '<div class="optionlist">'+[1,2,3].map(i=>'<button class="opt '+(STATE.termsLevel===i?"on":"")+'" data-lvl="'+i+'"><span class="ibub '+(STATE.termsLevel===i?"":"grey")+'">'+I(i===1?"chat":(i===2?"book":"flask"))+'</span><span><span class="ot">'+t("body.lv"+i)+'</span><br><span class="od">'+t("body.lv"+i+"d")+"</span></span></button>").join("")+"</div></div>";
+    h+=favsCard();
+    h+=vozCard();
+    h+=a11yCard();
   }
   if(v==="avisos"){
     h+=notifCard();
@@ -3597,6 +4182,7 @@ SCREENS.set = function(){
       '<button class="btn ghost" id="switchu">'+I("users")+t("login.switch")+'</button>'+(role()!=="guest"?'<button class="btn line" id="logout">'+I("logout")+t("login.out")+"</button>":"")+"</div></div>";
   }
   if(v==="dados"){
+    h+=privacyScreen();
     h+='<div class="card">'+cardHead("file", t("st.data"), t("st.dataSub"))+'<div class="row"><button class="btn ghost" id="exp">'+I("download")+t("st.export")+'</button>'+
       '<label class="btn ghost" style="cursor:pointer">'+I("upload")+t("st.import")+'<input type="file" accept="application/json,.json" id="imp" style="display:none"></label></div>'+
       '<label class="switch" style="margin-top:12px"><input type="checkbox" id="wbk" '+(s.weeklyBackup?"checked":"")+'><span class="tr"></span><span>'+t("st.autobackup")+"</span></label></div>";
@@ -3658,6 +4244,10 @@ SCREENS.set_after = function(){
   if($("rc_ok")) $("rc_ok").onclick=()=>applyCoachCode($("rc_code").value);
   wireAccountCard();
   wireNotifCard();
+  if(typeof wireFavsCard==="function") wireFavsCard();
+  if(typeof wireVozCard==="function") wireVozCard();
+  if(typeof wireA11yCard==="function") wireA11yCard();
+  if(typeof wirePrivacy==="function") wirePrivacy();
   if($("switchu")) $("switchu").onclick=()=>loginModal();
   const lo=$("logout"); if(lo) lo.onclick=()=>{ ROOT.session=null; saveRoot(); boot(); };
   if($("reset")) $("reset").onclick=()=>confirmBox(t("st.resetC"),()=>{
@@ -4435,7 +5025,7 @@ function routinePause(){
 }
 function routineStep(){
   const v=routineLeft(), r=Math.ceil(v);
-  if(r<=3 && r>0 && r!==RUN.lastBeep){ RUN.lastBeep=r; beep(1); }
+  if(r<=3 && r>0 && r!==RUN.lastBeep){ RUN.lastBeep=r; beep(1); if(typeof sayCount==="function") sayCount(r); }
   if(v<=0.05){
     if(RUN.intro){ RUN.intro=false; RUN.i=0; RUN.lastBeep=-1;
       RUN.left=RUN.list[0].sec; RUN.endAt=Date.now()+RUN.left*1000; beep(2); buildRoutineUI(); return; }
@@ -4452,6 +5042,7 @@ function finishRoutine(){
   STATE.wuLogs.push({id:uid(), date:todayISO(), name:RUN.title, dur, moves:RUN.list.length});
   save();
   if(navigator.vibrate){ try{ navigator.vibrate([200,100,200,100,400]); }catch(e){} }
+  if(typeof sayDone==="function") sayDone();
   if(RUN.el) RUN.el.innerHTML=
     '<div class="rhead"><span class="spacer" style="flex:1"></span><button class="iconbtn" id="rxclose">&times;</button></div>'+
     '<div class="rmid" style="text-align:center"><span class="ibub ok" style="width:76px;height:76px;border-radius:24px"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>'+
@@ -4494,6 +5085,11 @@ function buildRoutineUI(){
   const rm2=q("#rmir"); if(rm2) rm2.onclick=()=>openMirror(mvAnimId(shown.mv), mvName(shown.mv));
   initAnims(RUN.el);
   paintRoutine();
+  /* voz: anuncia o movimento da vez e adianta o proximo */
+  if(typeof sayMove==="function"){
+    if(intro) sayMove(mvName(shown.mv), shown.sec, shown.side);
+    else { sayMove(mvName(shown.mv), shown.sec, shown.side); if(nx) sayNext(mvName(nx.mv)); }
+  }
 }
 function paintRoutine(){
   if(!RUN.el) return;
@@ -4719,7 +5315,7 @@ function eqPart(kind,d,fr){
   if(kind==="polia-alta") g.push('<line class="aeqc" x1="'+W[0]+'" y1="'+W[1]+'" x2="'+(d.anchor?d.anchor[0]:W[0])+'" y2="'+(d.anchor?d.anchor[1]:4)+'"/>'+
       '<line class="aeq" x1="'+(W[0]-10)+'" y1="'+W[1]+'" x2="'+(W[0]+10)+'" y2="'+W[1]+'"/>');
   if(kind==="polia-baixa") g.push('<line class="aeqc" x1="'+W[0]+'" y1="'+W[1]+'" x2="'+(d.anchor?d.anchor[0]:96)+'" y2="'+(d.anchor?d.anchor[1]:92)+'"/>');
-  if(kind==="fixa") g.push('<line class="aeq" x1="14" y1="8" x2="86" y2="8"/>');
+  if(kind==="fixa") g.push('<line class="aeqb" x1="14" y1="8" x2="86" y2="8"/>');
   if(kind==="banco") g.push('<line class="aeqb" x1="12" y1="70" x2="78" y2="70"/><line class="aeqb" x1="20" y1="70" x2="20" y2="92"/><line class="aeqb" x1="70" y1="70" x2="70" y2="92"/>');
   if(kind==="banco-inc") g.push('<line class="aeqb" x1="12" y1="76" x2="74" y2="52"/><line class="aeqb" x1="20" y1="74" x2="20" y2="94"/><line class="aeqb" x1="68" y1="58" x2="68" y2="94"/>');
   if(kind==="maquina") g.push('<rect class="aeqb" x="72" y="30" width="20" height="60" rx="4"/><line class="aeqc" x1="82" y1="34" x2="82" y2="86"/>');
@@ -4742,12 +5338,14 @@ function arrowPath(p1,p2){
 /* ---- SVG de uma animacao ---- */
 function animSVG(id, opts){
   opts=opts||{};
+  /* opts.frame fixa o desenho numa das duas posicoes (0 = inicio, 1 = fim) */
   const d=ANIM[id];
   if(!d) return poseSVG(id);
   const a=d.a, b=d.b;
   const arrows=(d.arw?[d.arw]:[]).concat(d.arw2?[d.arw2]:[])
     .map(j=>(a[j]&&b[j])?arrowPath(a[j],b[j]):"").join("");
-  return '<svg viewBox="0 0 100 110" class="pose anim" data-anim="'+id+'"'+(opts.static?' data-static="1"':"")+'>'+
+  return '<svg viewBox="0 0 100 110" class="pose anim" data-anim="'+id+'"'+(opts.static?' data-static="1"':"")+
+    (opts.frame===0||opts.frame===1?' data-frame="'+opts.frame+'" data-static="1"':"")+'>'+
     '<g class="aeqg">'+eqLayer(d,a)+"</g>"+
     (opts.noArrow?"":arrows)+
     '<g class="askel">'+
@@ -4794,6 +5392,8 @@ function initAnims(root){
     if(sv._reg) return; sv._reg=true; sv._vis=true;
     const d=ANIM[sv.getAttribute("data-anim")]; if(!d) return;
     sv._d=d; sv._t0=performance.now()+Math.random()*600;
+    const fx=sv.getAttribute("data-frame");
+    if(fx!==null){ paintAnimSVG(sv, frameAt(d, fx==="1"?1:0), d); return; }
     paintAnimSVG(sv, frameAt(d,0), d);
     ANIM_LIST.push(sv);
     if(ANIM_OBS) ANIM_OBS.observe(sv);
@@ -5272,7 +5872,8 @@ function openMirror(animId, title){
   d.innerHTML=
     '<div class="mhead"><button class="iconbtn" id="mclose">&times;</button>'+
       '<div style="flex:1;min-width:0"><div class="tiny muted">'+t("mir.title")+'</div><strong style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(MIR.title)+"</strong></div>"+
-      '<button class="iconbtn" id="mflip" title="'+t("sc.switch")+'">'+I("refresh")+'</button></div>'+
+      '<button class="iconbtn" id="mflip" title="'+t("sc.switch")+'">'+I("refresh")+'</button>'+
+    '<button class="iconbtn" id="mcast" title="'+t("tv.title")+'">'+I("cast")+'</button></div>'+
     '<div class="mstage"><video id="mvid" autoplay playsinline muted></video>'+
       '<canvas id="mcv"></canvas>'+
       '<div class="mguide" id="mguide">'+(animId?animSVG(animId):"")+'</div>'+
@@ -5285,6 +5886,8 @@ function openMirror(animId, title){
       '<p class="tiny muted" id="mnote" style="text-align:center;margin:8px 0 0">'+t("mir.note")+"</p></div>";
   d.querySelector("#mclose").onclick=()=>closeMirror();
   d.querySelector("#mflip").onclick=()=>{ MIR.facing=(MIR.facing==="user")?"environment":"user"; startMirrorCam(); };
+  d.querySelector("#mcast").onclick=()=>{ const vd=d.querySelector("video"); if(vd) projectVideo(vd); else tvHelpModal(); };
+  d.querySelector("#mcast").oncontextmenu=e=>{ e.preventDefault(); tvHelpModal(); };
   d.querySelector("#mtg").onclick=e=>{ MIR.guide=!MIR.guide; e.currentTarget.classList.toggle("on",MIR.guide);
     d.querySelector("#mguide").style.display=MIR.guide?"block":"none"; };
   d.querySelector("#mtai").onclick=e=>{
@@ -6101,6 +6704,14 @@ const HELP={
   ["camera","Aparelhos","Machines","Desenho de cada aparelho da academia. Você pode fotografar o da sua academia para reconhecer mais fácil.","A drawing of each gym machine. You can photograph the one at your gym to recognise it more easily."],
   ["plus","Criar exercício","Create exercise","Para exercícios que não estão na lista: nome, músculo principal e aparelho.","For exercises that are not in the list: name, main muscle and equipment."]
  ],
+ fisio:[
+  ["body","Onde dói","Where it hurts","Toque na parte do corpo, na frente ou nas costas, e veja as situações mais comuns daquela região, com alongamentos e exercícios de apoio.","Tap the body part, front or back, and see the most common situations for that area, with supporting stretches and exercises."],
+  ["search","Buscar pelo nome","Search by name","Serve tanto o nome popular (“dor no pescoço”) quanto o nome técnico (“cervicalgia”) ou o código CID (“M54.2”).","Works with the everyday name (“neck pain”), the technical name (“cervicalgia”) or the ICD code (“M54.2”)."],
+  ["play","Fazer os alongamentos","Do the stretches","Monta uma série só daquela região e conduz você movimento a movimento, com tempo e voz.","Builds a series just for that area and guides you movement by movement, with timing and voice."],
+  ["plus","Criar treino da área","Create a workout for the area","Cria um treino com os exercícios de fortalecimento indicados. Ajuste as cargas antes de começar.","Creates a workout with the suggested strengthening exercises. Adjust the loads before starting."],
+  ["book","Tabela de códigos CID","ICD code table","Uma lista de consulta que fica guardada no aparelho e funciona sem internet. Mostra quanto ocupa e pode ser apagada quando quiser.","A reference list stored on the device that works offline. It shows how much space it uses and can be deleted at any time."],
+  ["alert","Isto não é consulta","This is not an appointment","Tudo aqui é orientação geral de apoio e nunca substitui médico, fisioterapeuta ou educador físico. Se doer, pare.","Everything here is general supporting guidance and never replaces a doctor, physiotherapist or trainer. If it hurts, stop."]
+ ],
  body:[
   ["body","Toque no músculo","Tap the muscle","Toque em uma parte do corpo (frente ou costas) para ver os exercícios que trabalham aquela região.","Tap a body part (front or back) to see the exercises that work that area."],
   ["chat","Nomes dos músculos","Muscle names","Escolha como o app fala: <b>Simples</b> (“peito”), <b>Padrão</b> (“peitoral”) ou <b>Técnico</b> (nome anatômico completo).","Choose how the app talks: <b>Simple</b> (“chest”), <b>Standard</b> (“pectorals”) or <b>Technical</b> (full anatomical name)."],
@@ -6437,19 +7048,1534 @@ function updateCard(){
     '<div class="row"><button class="btn" id="up_now">'+I("refresh")+t("up.force")+"</button></div></div>";
 }
 
+/* ---------- 55. VOZ: o app fala (TTS) e escuta (comandos) ---------- */
+/* Por que estas regras: a lista de vozes do Android chega atrasada, muda sozinha e não aceita
+   que o site force uma voz. Então: nunca fixar nome de voz, recarregar a lista várias vezes,
+   e sempre oferecer "Padrão do aparelho" — é isso que faz o Android usar o mecanismo escolhido
+   nas Configurações (Google, Samsung, SherpaTTS, Acapela). */
+const VOZ_DEF={on:false, uri:"", rate:1, pitch:1, vol:1, narraTreino:true, narraRotina:true, contagem:true, comandos:false};
+function vozCfg(){
+  STATE.settings=STATE.settings||{};
+  STATE.settings.voz=Object.assign({}, VOZ_DEF, STATE.settings.voz||{});
+  return STATE.settings.voz;
+}
+let VOICES=[], VOICE_TRIES=0;
+function normLang(l){ return String(l||"").replace(/_/g,"-").toLowerCase(); }
+function isPT(l){ const n=normLang(l); return n.indexOf("pt")===0 || n.indexOf("por")===0; }
+function langWanted(){ return LANG==="pt" ? "pt-BR" : "en-US"; }
+function voiceMatchesLang(v){ return LANG==="pt" ? isPT(v.lang) : normLang(v.lang).indexOf("en")===0; }
+/* nomes que costumam indicar voz mais natural — serve só para marcar com estrela */
+const NAT_RE=/natural|online|neural|enhanced|premium|wavenet|piper|sherpa|coqui|vits|acapela|kokoro|woheller69|ttsengine|-(low|medium|high)$/i;
+function isNatural(v){ return NAT_RE.test(v.name||"") || NAT_RE.test(v.voiceURI||""); }
+function engineOf(v){
+  const s=((v.voiceURI||"")+" "+(v.name||"")).toLowerCase();
+  if(s.indexOf("woheller69")>=0||s.indexOf("sherpa")>=0||s.indexOf("ttsengine")>=0) return "SherpaTTS";
+  if(s.indexOf("acapela")>=0) return "Acapela";
+  if(s.indexOf("samsung")>=0) return "Samsung";
+  if(s.indexOf("google")>=0) return "Google";
+  if(s.indexOf("microsoft")>=0) return "Microsoft";
+  if(s.indexOf("apple")>=0||s.indexOf("com.apple")>=0) return "Apple";
+  if(s.indexOf("espeak")>=0) return "eSpeak";
+  return v.localService? (LANG==="pt"?"do aparelho":"device") : (LANG==="pt"?"da internet":"online");
+}
+function hasTTS(){ return typeof window!=="undefined" && "speechSynthesis" in window; }
+function loadVoices(cb){
+  if(!hasTTS()){ VOICES=[]; if(cb) cb(VOICES); return; }
+  try{ VOICES=window.speechSynthesis.getVoices()||[]; }catch(e){ VOICES=[]; }
+  if(cb) cb(VOICES);
+  if(!VOICES.length && VOICE_TRIES<6){ VOICE_TRIES++; setTimeout(()=>loadVoices(cb), [100,300,900,1800,3000,5000][VOICE_TRIES-1]||3000); }
+}
+if(hasTTS()){
+  try{ window.speechSynthesis.onvoiceschanged=()=>{ loadVoices(); repaintVoiceList(); }; }catch(e){}
+  document.addEventListener("visibilitychange",()=>{ if(!document.hidden){ VOICE_TRIES=0; loadVoices(()=>repaintVoiceList()); } });
+  [100,900,3000].forEach(ms=>setTimeout(()=>loadVoices(), ms));
+}
+function pickVoice(){
+  const c=vozCfg();
+  if(!c.uri) return null;                              /* "Padrão do aparelho": sem voz escolhida */
+  return VOICES.find(v=>v.voiceURI===c.uri) || null;
+}
+/* --- falar --- */
+let SPK={busy:false, queue:[], guard:null, keep:null, last:0};
+function speakStop(){
+  SPK.queue=[]; SPK.busy=false;
+  clearTimeout(SPK.guard); clearInterval(SPK.keep); SPK.keep=null;
+  if(hasTTS()) try{ window.speechSynthesis.cancel(); }catch(e){}
+  document.querySelectorAll(".speaking").forEach(n=>n.classList.remove("speaking"));
+}
+function speak(txt, opts){
+  opts=opts||{};
+  const c=vozCfg();
+  if(!hasTTS() || !txt) return;
+  if(!c.on && !opts.force) return;
+  if(opts.solo!==false) speakStop();
+  SPK.queue.push(String(txt));
+  /* o Chrome derruba um speak colado no cancel: 60 ms de respiro */
+  setTimeout(speakNext, 60);
+}
+function speakQueue(list){
+  if(!hasTTS() || !list || !list.length) return;
+  speakStop();
+  list.forEach(s=>SPK.queue.push(String(s)));
+  setTimeout(speakNext, 60);
+}
+function speakNext(){
+  if(SPK.busy) return;
+  const txt=SPK.queue.shift();
+  if(txt===undefined){ clearInterval(SPK.keep); SPK.keep=null; return; }
+  const c=vozCfg(), v=pickVoice();
+  let u;
+  try{ u=new SpeechSynthesisUtterance(txt); }catch(e){ return; }
+  if(v) u.voice=v;
+  /* o idioma vai sempre completo, mesmo quando a voz veio como pt_BR */
+  u.lang=langWanted();
+  u.rate=Math.max(.5,Math.min(2,+c.rate||1));
+  u.pitch=Math.max(0,Math.min(2,+c.pitch||1));
+  u.volume=Math.max(0,Math.min(1,+c.vol||1));
+  SPK.busy=true;
+  const done=()=>{ if(!SPK.busy) return; SPK.busy=false; clearTimeout(SPK.guard); setTimeout(speakNext,40); };
+  u.onend=done; u.onerror=done;
+  /* vigia: se o motor travar, a fila não pode parar para sempre */
+  clearTimeout(SPK.guard);
+  SPK.guard=setTimeout(done, Math.max(6000, txt.length*120));
+  /* o Chrome do Android para de falar por volta dos 15 s se ninguém cutucar */
+  clearInterval(SPK.keep);
+  SPK.keep=setInterval(()=>{ try{ if(window.speechSynthesis.speaking) window.speechSynthesis.resume(); }catch(e){} }, 9000);
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+  setTimeout(()=>{ try{ window.speechSynthesis.speak(u); }catch(e){ done(); } }, 60);
+}
+/* --- o que o personal fala durante o treino e a rotina --- */
+function sayExercise(nome, series, reps){
+  const c=vozCfg(); if(!c.on || !c.narraTreino) return;
+  let s=nome;
+  if(series && reps) s += LANG==="pt" ? (", "+series+" séries de "+reps+" repetições") : (", "+series+" sets of "+reps+" reps");
+  speak(s);
+}
+function sayMove(nome, seg, lado){
+  const c=vozCfg(); if(!c.on || !c.narraRotina) return;
+  let s=nome;
+  if(lado) s += ", "+t(lado==="L"?"wu.left":"wu.right");
+  if(seg) s += LANG==="pt" ? (", "+seg+" segundos") : (", "+seg+" seconds");
+  speak(s);
+}
+function sayNext(nome){ const c=vozCfg(); if(!c.on || !c.narraRotina) return; speak(t("wu.next")+": "+nome); }
+function sayCount(n){ const c=vozCfg(); if(!c.on || !c.contagem) return; speak(String(n), {solo:false}); }
+function sayRest(seg){ const c=vozCfg(); if(!c.on || !c.narraTreino) return;
+  speak(t("wk.restNow")+", "+seg+(LANG==="pt"?" segundos":" seconds")); }
+function sayDone(){ const c=vozCfg(); if(!c.on) return; speak(t("vz.doneMsg")); }
+
+/* --- escutar: comandos de voz --- */
+const STT_CMDS={
+  pt:{next:["próximo","proximo","próxima","proxima","avançar","avancar","terminei","pronto","feito","acabei"],
+      prev:["anterior","voltar"], pause:["pausar","pausa","parar","espera"], play:["continuar","seguir","play","vai"],
+      finish:["encerrar","finalizar","terminar treino"], repeat:["repetir","de novo"]},
+  en:{next:["next","done","finished","ready","go on"], prev:["previous","back"], pause:["pause","stop","wait"],
+      play:["continue","resume","play","go"], finish:["finish","end workout"], repeat:["repeat","again"]}
+};
+let STT={rec:null, on:false, wanted:false};
+function hasSTT(){ return typeof window!=="undefined" && (window.SpeechRecognition||window.webkitSpeechRecognition); }
+function sttStart(){
+  if(!hasSTT()){ toast(t("vz.noSTT")); return false; }
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  try{ sttStop(); STT.rec=new R(); }catch(e){ toast(t("vz.noSTT")); return false; }
+  STT.rec.lang=langWanted(); STT.rec.continuous=true; STT.rec.interimResults=false;
+  STT.rec.onresult=ev=>{
+    for(let i=ev.resultIndex;i<ev.results.length;i++){
+      const txt=norm(ev.results[i][0].transcript||"");
+      const map=STT_CMDS[LANG]||STT_CMDS.pt;
+      for(const cmd in map){ if(map[cmd].some(w=>txt.indexOf(norm(w))>=0)){ sttDo(cmd); return; } }
+    }
+  };
+  /* o reconhecimento cai sozinho de tempos em tempos; se a pessoa deixou ligado, sobe de novo */
+  STT.rec.onend=()=>{ STT.on=false; if(STT.wanted) setTimeout(()=>{ try{ STT.rec.start(); STT.on=true; }catch(e){} }, 400); };
+  STT.rec.onerror=()=>{ STT.on=false; };
+  try{ STT.rec.start(); STT.on=true; STT.wanted=true; }catch(e){ return false; }
+  return true;
+}
+function sttStop(){ STT.wanted=false; if(STT.rec){ try{ STT.rec.stop(); }catch(e){} } STT.on=false; }
+function sttDo(cmd){
+  const run=!!document.getElementById("routinescreen"), tim=!!document.getElementById("timerscreen");
+  if(cmd==="next"){ if(run) (RUN.intro? routineGo(0) : routineGo(1)); else if(tim) startTimer(); toast("🎙 "+t("wu.skip")); }
+  else if(cmd==="prev"){ if(run && !RUN.intro) routineGo(-1); toast("🎙 "+t("wu.prevm")); }
+  else if(cmd==="pause"){ if(run) routinePause(); else if(tim) pauseTimer(); toast("🎙 "+t("tm.pause")); }
+  else if(cmd==="play"){ if(run) routinePause(); else if(tim) startTimer(); toast("🎙 "+t("tm.resume")); }
+  else if(cmd==="finish"){ if(run) finishRoutine(); toast("🎙 "+t("wu.finish")); }
+  else if(cmd==="repeat"){ if(run) buildRoutineUI(); }
+}
+
+/* --- tela de ajustes da voz + lista de vozes que o navegador realmente enxerga --- */
+function voiceDiag(){
+  const pt=VOICES.filter(voiceMatchesLang), eng={};
+  VOICES.forEach(v=>{ eng[engineOf(v)]=1; });
+  return t("vz.diag").replace("{n}",VOICES.length).replace("{m}",pt.length).replace("{e}", Object.keys(eng).join(", ")||"—");
+}
+function repaintVoiceList(){
+  const box=document.getElementById("vzlist"); if(!box) return;
+  box.innerHTML=voiceListHTML();
+  wireVoiceList();
+  const d=document.getElementById("vzdiag"); if(d) d.textContent=voiceDiag();
+}
+function voiceListHTML(){
+  const c=vozCfg();
+  const mine=VOICES.filter(voiceMatchesLang), others=VOICES.filter(v=>!voiceMatchesLang(v));
+  const row=v=>'<button data-voz="'+esc(v.voiceURI)+'" class="'+(c.uri===v.voiceURI?"on":"")+'">'+
+    (isNatural(v)?"⭐ ":"")+esc(v.name)+'<span class="vl">'+esc(normLang(v.lang))+" · "+esc(engineOf(v))+(v.localService?"":" · "+t("vz.online"))+"</span></button>";
+  let h='<button data-voz="" class="'+(c.uri?"":"on")+'">🔧 '+t("vz.deviceDefault")+'<span class="vl">'+t("vz.deviceDefaultD")+"</span></button>";
+  h+=mine.map(row).join("");
+  if(others.length) h+='<button disabled style="cursor:default;opacity:.6" class="vl">'+t("vz.otherLangs").replace("{n}",others.length)+"</button>"+others.slice(0,40).map(row).join("");
+  return h;
+}
+function wireVoiceList(){
+  document.querySelectorAll("[data-voz]").forEach(b=>b.onclick=()=>{
+    const c=vozCfg(); c.uri=b.getAttribute("data-voz"); save();
+    document.querySelectorAll("[data-voz]").forEach(x=>x.classList.toggle("on", x===b));
+    speak(t("vz.sample"), {force:true});
+  });
+}
+function vozCard(){
+  const c=vozCfg();
+  if(!hasTTS()) return '<div class="card">'+cardHead("speaker", t("vz.title"), "")+'<p class="muted">'+t("vz.noTTS")+"</p></div>";
+  let h='<div class="card">'+cardHead("speaker", t("vz.title"), t("vz.sub"),
+      '<label class="switch"><input type="checkbox" id="vz_on" '+(c.on?"checked":"")+'><span class="tr"></span></label>');
+  h+='<div class="voicebar"><button class="btn" id="vz_test">'+I("play")+t("vz.test")+'</button>'+
+     '<button class="btn line sm" id="vz_stop">'+I("x")+t("vz.stop")+'</button>'+
+     '<button class="btn line sm" id="vz_reload">'+I("refresh")+t("vz.reload")+"</button></div>";
+  h+='<p class="tiny muted">'+t("vz.layerNote")+"</p>";
+  h+='<p class="tiny muted" id="vzdiag" style="margin:10px 0 4px">'+voiceDiag()+"</p>";
+  h+='<div class="vlist" id="vzlist">'+voiceListHTML()+"</div>";
+  h+='<div class="grid g3" style="margin-top:12px">'+
+     '<label class="fld"><span>'+t("vz.rate")+'</span><input type="range" id="vz_rate" min="0.6" max="1.6" step="0.05" value="'+c.rate+'"></label>'+
+     '<label class="fld"><span>'+t("vz.pitch")+'</span><input type="range" id="vz_pitch" min="0.6" max="1.6" step="0.05" value="'+c.pitch+'"></label>'+
+     '<label class="fld"><span>'+t("vz.vol")+'</span><input type="range" id="vz_vol" min="0.1" max="1" step="0.05" value="'+c.vol+'"></label></div>';
+  h+='<div class="sep"></div><span class="kicker">'+t("vz.whenTitle")+'</span><div class="list" style="margin-top:8px">'+
+     [["narraTreino","dumbbell",t("vz.wTreino"),t("vz.wTreinoD")],
+      ["narraRotina","flame",t("vz.wRotina"),t("vz.wRotinaD")],
+      ["contagem","timer",t("vz.wContagem"),t("vz.wContagemD")]]
+     .map(o=>'<div class="item"><span class="ibub grey" style="width:34px;height:34px">'+I(o[1])+'</span><div class="gr"><div class="t">'+o[2]+'</div><div class="s">'+o[3]+'</div></div>'+
+       '<label class="switch"><input type="checkbox" data-vzw="'+o[0]+'" '+(c[o[0]]?"checked":"")+'><span class="tr"></span></label></div>').join("")+"</div>";
+  h+='<div class="sep"></div><button class="btn line sm" id="vz_help">'+I("help")+t("vz.helpBtn")+"</button></div>";
+  /* comandos de voz */
+  h+='<div class="card">'+cardHead("chat", t("vz.sttTitle"), t("vz.sttSub"),
+      '<label class="switch"><input type="checkbox" id="vz_stt" '+(c.comandos?"checked":"")+'><span class="tr"></span></label>');
+  h+= hasSTT()? ('<div class="taglist">'+(STT_CMDS[LANG]||STT_CMDS.pt).next.slice(0,4).concat((STT_CMDS[LANG]||STT_CMDS.pt).pause.slice(0,2)).map(w=>'<span class="pill">"'+esc(w)+'"</span>').join("")+"</div>"+
+       '<p class="tiny muted" style="margin-top:10px">'+t("vz.sttNote")+"</p>")
+     : '<p class="muted">'+t("vz.noSTT")+"</p>";
+  h+="</div>";
+  return h;
+}
+function wireVozCard(){
+  const $=id=>document.getElementById(id), c=vozCfg();
+  if(!$("vz_on")) return;
+  $("vz_on").onchange=e=>{ c.on=e.target.checked; save(); if(c.on) speak(t("vz.sample"),{force:true}); else speakStop(); };
+  $("vz_test").onclick=()=>speak(t("vz.sample"),{force:true});
+  $("vz_stop").onclick=speakStop;
+  $("vz_reload").onclick=()=>{ VOICE_TRIES=0; loadVoices(()=>{ repaintVoiceList(); toast(t("vz.reloaded").replace("{n}",VOICES.length)); }); };
+  ["rate","pitch","vol"].forEach(k=>{ const n=$("vz_"+k); if(n) n.onchange=()=>{ c[k]=parseFloat(n.value); save(); speak(t("vz.sample"),{force:true}); }; });
+  document.querySelectorAll("[data-vzw]").forEach(b=>b.onchange=()=>{ c[b.getAttribute("data-vzw")]=b.checked; save(); });
+  wireVoiceList();
+  $("vz_help").onclick=()=>modal(mh(t("vz.helpBtn"))+'<div class="legalbody">'+t("vz.helpBody")+"</div>"+
+    '<div class="row" style="justify-content:flex-end"><button class="btn" data-close>'+t("common.ok")+"</button></div>",{wide:true});
+  const st=$("vz_stt");
+  if(st) st.onchange=e=>{
+    c.comandos=e.target.checked; save();
+    if(c.comandos){ if(!sttStart()){ c.comandos=false; save(); e.target.checked=false; } else toast(t("vz.sttOn")); }
+    else { sttStop(); }
+  };
+}
+
+/* ---------- 54. ACESSIBILIDADE (WCAG 2.2 AA) ---------- */
+/* Por que: a diretriz manda os controles ficarem na mão de quem usa, iguais em todos os apps.
+   Tudo aqui mexe só em atributos do <html>; o CSS faz o resto, então não custa nada ao aparelho. */
+const A11Y_DEF={fs:0, contrast:0, motion:1, links:0, read:0, speakUI:0};
+function a11y(){
+  ROOT.prefs=ROOT.prefs||{};
+  ROOT.prefs.a11y=Object.assign({}, A11Y_DEF, ROOT.prefs.a11y||{});
+  return ROOT.prefs.a11y;
+}
+function applyA11y(){
+  const a=a11y(), H=document.documentElement;
+  H.setAttribute("data-fs", String(a.fs||0));
+  H.setAttribute("data-contrast", a.contrast?"1":"0");
+  H.setAttribute("data-motion", a.motion?"1":"0");
+  H.setAttribute("data-links", a.links?"1":"0");
+  H.setAttribute("data-read", a.read?"1":"0");
+  saveRoot();
+}
+function setA11y(k,v){ const a=a11y(); a[k]=v; applyA11y(); }
+/* ler a tela em voz alta: junta o texto visível da tela e manda para o motor de voz */
+function readScreenAloud(){
+  const el=document.getElementById("screen"); if(!el) return;
+  const parts=[];
+  el.querySelectorAll("h1,h2,h3,p,.t,.s,.tl,.td,.lb,.vl,li,.empty,.hd").forEach(n=>{
+    if(n.closest(".hidden")) return;
+    const s=(n.textContent||"").replace(/\s+/g," ").trim();
+    if(s && s.length>1 && parts.indexOf(s)<0) parts.push(s);
+  });
+  if(!parts.length){ toast(t("vz.nothing")); return; }
+  speakQueue(parts.slice(0,60));
+}
+function a11yCard(){
+  const a=a11y();
+  const sw=(id,on,label,desc)=>'<div class="item"><span class="ibub grey" style="width:34px;height:34px">'+I(id==="contrast"?"eye":(id==="motion"?"zap":(id==="links"?"globe":"book")))+'</span>'+
+    '<div class="gr"><div class="t">'+esc(label)+'</div><div class="s">'+esc(desc)+'</div></div>'+
+    '<label class="switch"><input type="checkbox" data-a11y="'+id+'" '+(on?"checked":"")+'><span class="tr"></span></label></div>';
+  let h='<div class="card">'+cardHead("accessibility", t("ac.title"), t("ac.sub"));
+  h+='<span class="kicker">'+t("ac.fs")+'</span><div class="a11yrow" style="margin:8px 0 0">'+
+     '<button class="btn ghost" id="fs_less" aria-label="'+t("ac.fsLess")+'">A−</button>'+
+     '<span class="pill acc" id="fs_now">'+["92%","100%","112%","125%","140%"][(a.fs||0)+1]+'</span>'+
+     '<button class="btn ghost" id="fs_more" aria-label="'+t("ac.fsMore")+'">A+</button>'+
+     '<button class="btn line sm" id="fs_reset">'+t("ac.fsReset")+'</button></div>'+
+     '<div class="fssample">'+t("ac.sample")+'</div>';
+  h+='<div class="sep"></div><div class="list">'+
+     sw("contrast", a.contrast, t("ac.contrast"), t("ac.contrastD"))+
+     sw("motion", !a.motion, t("ac.motion"), t("ac.motionD"))+
+     sw("links", a.links, t("ac.links"), t("ac.linksD"))+
+     sw("read", a.read, t("ac.read"), t("ac.readD"))+
+     "</div>";
+  h+='<div class="sep"></div><div class="row"><button class="btn ghost" id="ac_speak">'+I("chat")+t("ac.speak")+'</button>'+
+     '<button class="btn line sm" data-go="set" data-sub="voz">'+I("sliders")+t("vz.settings")+"</button></div>"+
+     '<p class="tiny muted" style="margin-top:8px">'+t("ac.speakD")+"</p></div>";
+  h+='<div class="card soft">'+cardHead("info", t("ac.norm"), "")+'<p class="tiny muted" style="margin:0">'+t("ac.normD")+"</p></div>";
+  return h;
+}
+function wireA11yCard(){
+  const $=id=>document.getElementById(id);
+  const step=d=>{ const a=a11y(); a.fs=Math.max(-1,Math.min(3,(a.fs||0)+d)); applyA11y(); render(); };
+  if($("fs_less")) $("fs_less").onclick=()=>step(-1);
+  if($("fs_more")) $("fs_more").onclick=()=>step(1);
+  if($("fs_reset")) $("fs_reset").onclick=()=>{ a11y().fs=0; applyA11y(); render(); };
+  document.querySelectorAll("[data-a11y]").forEach(b=>b.onchange=()=>{
+    const k=b.getAttribute("data-a11y");
+    setA11y(k, k==="motion" ? (b.checked?0:1) : (b.checked?1:0));
+    render();
+  });
+  if($("ac_speak")) $("ac_speak").onclick=readScreenAloud;
+}
+
+/* ---------- 56. PRIVACIDADE, CONSENTIMENTO E AVISO LEGAL (LGPD / GDPR) ---------- */
+/* Por que: hoje o app não tem servidor — tudo fica no aparelho de quem usa. Mesmo assim, exame,
+   medida e foto são dado sensível de saúde: a pessoa precisa dizer sim para cada finalidade,
+   poder levar seus dados embora e poder apagar tudo. É isso que esta seção faz. */
+const CONSENT_DEF={aceito:false, quando:"", versao:"", fins:{saude:false, camera:false, ia:false, nuvem:false, avisos:false}};
+function consent(){
+  ROOT.consent=Object.assign({}, CONSENT_DEF, ROOT.consent||{});
+  ROOT.consent.fins=Object.assign({}, CONSENT_DEF.fins, ROOT.consent.fins||{});
+  return ROOT.consent;
+}
+function consentOK(fim){ return !!consent().fins[fim]; }
+/* pergunta uma vez por finalidade, no momento em que a finalidade aparece */
+function askConsent(fim, onYes){
+  if(consentOK(fim)){ onYes(); return; }
+  const m=modal('<div class="mh"><div class="row nowrap"><span class="ibub">'+I("lock")+'</span><h3 style="margin:0">'+t("pv.ask")+"</h3></div></div>"+
+    '<p class="muted">'+t("pv.fin."+fim+"D")+"</p>"+
+    '<div class="warnbox" style="margin:12px 0">'+I("info")+"<div>"+t("pv.localOnly")+"</div></div>"+
+    '<div class="row" style="justify-content:flex-end"><button class="btn line" data-close>'+t("common.no")+'</button>'+
+    '<button class="btn" id="cs_yes">'+I("check")+t("pv.allow")+"</button></div>");
+  m.querySelector("#cs_yes").onclick=()=>{ consent().fins[fim]=true; saveRoot(); m.remove(); onYes(); };
+}
+/* aviso de uso: aparece uma vez, antes de tudo, e fica nos Termos */
+function disclaimerModal(force, after){
+  const c=consent();
+  if(c.aceito && c.versao===APP_VERSION && !force) return null;
+  const m=modal('<div class="mh"><div class="row nowrap"><span class="ibub warn">'+I("info")+'</span><div><h2 style="margin:0">'+t("dc.title")+'</h2><small class="muted">'+t("dc.sub")+"</small></div></div></div>"+
+    '<div class="legalbody">'+t("dc.body")+"</div>"+
+    '<div class="sep"></div><div class="row" style="justify-content:space-between"><button class="btn line sm" id="dc_full">'+t("legal.title")+"</button>"+
+    '<button class="btn" id="dc_ok">'+I("check")+t("dc.accept")+"</button></div>", {sticky:true, wide:true});
+  m.querySelector("#dc_full").onclick=()=>legalModal();
+  m.querySelector("#dc_ok").onclick=()=>{
+    const c2=consent(); c2.aceito=true; c2.quando=todayISO(); c2.versao=APP_VERSION; saveRoot();
+    m.remove(); if(typeof after==="function") after();
+  };
+  return m;
+}
+/* --- tela Privacidade e dados --- */
+function privacyScreen(){
+  const c=consent();
+  const fins=[["saude","heart"],["camera","camera"],["ia","sparkles"],["nuvem","cloud"],["avisos","bell"]];
+  let h='<div class="card">'+cardHead("lock", t("pv.title"), t("pv.sub"));
+  h+='<div class="warnbox">'+I("info")+"<div><b>"+t("pv.whereT")+"</b><br>"+t("pv.whereD")+"</div></div>";
+  h+='<div class="sep"></div><span class="kicker">'+t("pv.consentT")+'</span><div class="list consentlist" style="margin-top:8px">'+
+     fins.map(f=>'<div class="item"><span class="ibub grey" style="width:34px;height:34px">'+I(f[1])+'</span>'+
+       '<div class="gr"><div class="t">'+t("pv.fin."+f[0])+'</div><div class="s">'+t("pv.fin."+f[0]+"D")+'</div></div>'+
+       '<label class="switch"><input type="checkbox" data-fim="'+f[0]+'" '+(c.fins[f[0]]?"checked":"")+'><span class="tr"></span></label></div>').join("")+"</div>";
+  h+='<p class="tiny muted" style="margin-top:10px">'+t("pv.consentNote")+"</p></div>";
+  /* direitos */
+  h+='<div class="card">'+cardHead("user", t("pv.rightsT"), t("pv.rightsD"))+
+     '<div class="row"><button class="btn ghost" id="pv_exp">'+I("download")+t("st.export")+'</button>'+
+     '<button class="btn line" id="pv_del">'+I("trash")+t("pv.delPart")+'</button>'+
+     '<button class="btn danger" id="pv_all">'+I("trash")+t("pv.delAll")+"</button></div>"+
+     '<p class="tiny muted" style="margin-top:10px">'+t("pv.rightsNote")+"</p></div>";
+  /* base legal */
+  h+='<div class="card">'+cardHead("file", t("pv.lawT"), t("pv.lawSub"))+
+     '<div class="legalbody">'+t("pv.lawBody")+"</div>"+
+     '<div class="row" style="margin-top:10px"><button class="btn line sm" id="pv_terms">'+t("legal.title")+'</button>'+
+     '<button class="btn line sm" id="pv_dc">'+t("dc.reread")+"</button></div></div>";
+  return h;
+}
+function wirePrivacy(){
+  const $=id=>document.getElementById(id);
+  document.querySelectorAll("[data-fim]").forEach(b=>b.onchange=()=>{
+    consent().fins[b.getAttribute("data-fim")]=b.checked; saveRoot();
+    if(b.getAttribute("data-fim")==="avisos" && b.checked) askNotifPerm();
+  });
+  if($("pv_exp")) $("pv_exp").onclick=exportBackup;
+  if($("pv_terms")) $("pv_terms").onclick=legalModal;
+  if($("pv_dc")) $("pv_dc").onclick=()=>disclaimerModal(true);
+  if($("pv_all")) $("pv_all").onclick=()=>confirmBox(t("st.resetC"),()=>{
+    if(ROOT.session&&ROOT.session.uid) delete ROOT.data[ROOT.session.uid];
+    ROOT.session=null; saveRoot(); sessionStorage.removeItem("riseone.addismiss"); boot(); });
+  if($("pv_del")) $("pv_del").onclick=()=>{
+    const grupos=[["photos","image",t("pg.photos"),()=>STATE.photos.length],
+      ["exams","flask",t("pg.exams"),()=>STATE.exams.length],
+      ["measures","ruler",t("pg.measures"),()=>STATE.measures.length],
+      ["meals","apple",t("dt.meals"),()=>STATE.meals.length],
+      ["logs","history",t("wk.history"),()=>STATE.logs.length],
+      ["checkins","clipboard",t("ck.history"),()=>STATE.checkins.length],
+      ["cards","file",t("pl.cardTitle"),()=>(STATE.cards||[]).length]];
+    const m=modal(mh(t("pv.delPart"))+'<p class="muted">'+t("pv.delPartD")+"</p><div class='list'>"+
+      grupos.map(g=>'<div class="item"><span class="ibub grey" style="width:34px;height:34px">'+I(g[1])+'</span><div class="gr"><div class="t">'+g[2]+'</div><div class="s">'+g[3]()+" "+t("pv.items")+'</div></div>'+
+        '<button class="btn xs danger" data-del="'+g[0]+'">'+t("common.del")+"</button></div>").join("")+"</div>");
+    m.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>confirmBox(t("common.confirmDel"),()=>{
+      const k=b.getAttribute("data-del");
+      if(k==="cards") STATE.cards=[]; else STATE[k]=[];
+      save(); m.remove(); render(); toast(t("common.deleted"));
+    }));
+  };
+}
+/* porta de entrada: o aviso aparece antes de qualquer outra coisa; depois segue o fluxo normal */
+function gateDisclaimer(next){
+  const m=disclaimerModal(false, next);
+  if(!m) next();
+}
+
+/* ---------- 57. DOR & FISIOTERAPIA ---------- */
+/* Por que: a pessoa quase nunca sabe o nome do que tem — ela sabe ONDE dói. Então há três
+   caminhos para a mesma coisa: clicar no desenho do corpo, escrever a dor com as próprias
+   palavras, ou procurar pelo nome/código da condição. Nada aqui é diagnóstico. */
+const ZONES=[
+ {id:"pescoco",   pt:"Pescoço",              en:"Neck"},
+ {id:"ombro",     pt:"Ombro",                en:"Shoulder"},
+ {id:"cotovelo",  pt:"Cotovelo",             en:"Elbow"},
+ {id:"punho",     pt:"Punho e mão",          en:"Wrist and hand"},
+ {id:"toracica",  pt:"Meio das costas",      en:"Mid back"},
+ {id:"lombar",    pt:"Lombar",               en:"Lower back"},
+ {id:"quadril",   pt:"Quadril e glúteo",     en:"Hip and glutes"},
+ {id:"coxa",      pt:"Coxa",                 en:"Thigh"},
+ {id:"joelho",    pt:"Joelho",               en:"Knee"},
+ {id:"panturrilha",pt:"Panturrilha",         en:"Calf"},
+ {id:"tornozelo", pt:"Tornozelo e pé",       en:"Ankle and foot"}
+];
+function zoneName(id){ const z=ZONES.find(x=>x.id===id); return z? (LANG==="pt"?z.pt:z.en) : id; }
+/* condicao: id, cid, nome PT/EN, zona, o que é (linguagem simples), exercicios, alongamentos,
+   cuidado (o que evitar). CID-10 conferido; TUSS fica para a tabela oficial. */
+const CONDS=[];
+function C(id,cid,zona,pt,en,dpt,den,ex,al,cpt,cen){ CONDS.push({id,cid,zona,pt,en,dpt,den,ex:ex.split(","),al:al.split(","),cpt:cpt||"",cen:cen||""}); }
+C("manguito","M75.1","ombro","Lesão do manguito rotador","Rotator cuff syndrome",
+  "Os tendões que seguram a cabeça do ombro no lugar ficam irritados. Dói ao levantar o braço acima do ombro e ao dormir do lado.",
+  "The tendons that hold the shoulder in place get irritated. It hurts to raise the arm overhead and to sleep on that side.",
+  "rotacao-externa-elastico,rotacao-interna-elastico,crucifixo-inverso-elastico,flexao-escapular",
+  "braco-cruzado,peito-batente,passagem-bastao",
+  "Evite por enquanto exercício acima da cabeça com carga (desenvolvimento, elevação frontal alta).",
+  "Avoid loaded overhead work for now (overhead press, high front raise).");
+C("impacto","M75.4","ombro","Síndrome do impacto do ombro","Shoulder impingement",
+  "O espaço por onde o tendão passa fica apertado quando o braço sobe, e isso pinça e dói.",
+  "The space the tendon runs through gets tight as the arm rises, pinching and hurting.",
+  "rotacao-externa-elastico,face-pull,flexao-escapular,remada-elastico",
+  "peito-batente,braco-cruzado,passagem-bastao",
+  "Evite elevação lateral acima da linha do ombro enquanto doer.",
+  "Avoid lateral raises above shoulder height while it hurts.");
+C("congelado","M75.0","ombro","Ombro congelado (capsulite adesiva)","Frozen shoulder (adhesive capsulitis)",
+  "A cápsula do ombro engrossa e o braço perde movimento aos poucos, mesmo sem trauma.",
+  "The shoulder capsule thickens and the arm slowly loses range, even without an injury.",
+  "rotacao-externa-elastico,flexao-escapular",
+  "passagem-bastao,rotacao-ombro-bastao,circulo-bracos,braco-cruzado,dorsal-sentado",
+  "Ganhar movimento vem antes de ganhar força. Constância diária vale mais do que esforço.",
+  "Range comes before strength here. Daily consistency beats effort.");
+C("bursite-ombro","M75.5","ombro","Bursite do ombro","Shoulder bursitis",
+  "A bolsinha que amortece o tendão inflama e o ombro fica dolorido ao movimento e à noite.",
+  "The small cushion under the tendon gets inflamed; the shoulder aches on movement and at night.",
+  "rotacao-externa-elastico,crucifixo-inverso-elastico",
+  "braco-cruzado,peito-batente","Nada de forçar amplitude com dor aguda.","Do not force range through sharp pain.");
+C("tendinite-bicipital","M75.2","ombro","Tendinite do bíceps","Biceps tendinitis",
+  "O tendão longo do bíceps, que passa na frente do ombro, inflama e dói ao pegar peso à frente.",
+  "The long biceps tendon at the front of the shoulder gets inflamed and hurts when lifting in front.",
+  "rotacao-externa-elastico,remada-elastico,flexao-escapular",
+  "peito-batente,braco-cruzado","Reduza rosca direta com carga alta por algumas semanas.","Ease off heavy barbell curls for a few weeks.");
+C("epicondilite-lat","M77.1","cotovelo","Cotovelo de tenista (epicondilite lateral)","Tennis elbow (lateral epicondylitis)",
+  "Os músculos que esticam o punho puxam o lado de fora do cotovelo e inflamam. Dói ao pegar copo ou apertar a mão.",
+  "The muscles that extend the wrist pull on the outer elbow and get inflamed. It hurts to grip or shake hands.",
+  "extensao-punho,farmer","antebraco-along,circulo-punho",
+  "Segure objetos com a palma para cima enquanto doer; evite apertar com força.",
+  "Hold things palm-up while it hurts; avoid hard gripping.");
+C("epicondilite-med","M77.0","cotovelo","Cotovelo de golfista (epicondilite medial)","Golfer's elbow (medial epicondylitis)",
+  "Mesma história do lado de dentro do cotovelo: os músculos que dobram o punho inflamam.",
+  "Same story on the inner elbow: the muscles that flex the wrist get inflamed.",
+  "rosca-punho,farmer","antebraco-along,circulo-punho","",
+  "");
+C("tunel-carpo","G56.0","punho","Síndrome do túnel do carpo","Carpal tunnel syndrome",
+  "Um nervo fica apertado dentro do punho. Dá formigamento nos dedos, principalmente à noite.",
+  "A nerve gets squeezed inside the wrist. It tingles in the fingers, mostly at night.",
+  "extensao-punho","circulo-punho,antebraco-along",
+  "Formigamento constante ou perda de força pede avaliação — não é caso de insistir sozinho.",
+  "Constant tingling or loss of strength needs assessment — this is not one to push through.");
+C("dequervain","M65.4","punho","Tenossinovite de De Quervain","De Quervain's tenosynovitis",
+  "Os tendões do polegar inflamam na beira do punho. Dói ao segurar o celular ou pegar a criança no colo.",
+  "The thumb tendons get inflamed at the edge of the wrist. It hurts to hold a phone or pick up a child.",
+  "extensao-punho","circulo-punho,antebraco-along","","");
+C("cervicalgia","M54.2","pescoco","Dor no pescoço (cervicalgia)","Neck pain (cervicalgia)",
+  "Músculo e articulação do pescoço sobrecarregados, quase sempre por muita hora na mesma posição.",
+  "Neck muscles and joints overloaded, almost always from too long in one position.",
+  "crucifixo-inverso-elastico,flexao-escapular,face-pull",
+  "pescoco-lateral,rotacao-pescoco,inclinacao-lateral,gato-camelo","","");
+C("torcicolo","M43.6","pescoco","Torcicolo","Torticollis",
+  "O pescoço trava de um lado, em geral do nada ao acordar.",
+  "The neck locks on one side, usually out of nowhere on waking.",
+  "flexao-escapular","pescoco-lateral,rotacao-pescoco",
+  "Calor e movimento leve ajudam; não force a virada.","Warmth and gentle movement help; do not force the turn.");
+C("lombalgia","M54.5","lombar","Dor lombar (lombalgia)","Low back pain",
+  "A dor mais comum de todas. Na maioria das vezes é muscular e melhora com movimento, não com cama.",
+  "The most common pain there is. Usually muscular and it gets better with movement, not with bed rest.",
+  "ponte,prancha,superman,hiperextensao","gato-camelo,torcao-deitado,postura-crianca,flexor-quadril",
+  "Dor que desce pela perna com formigamento, febre ou perda de força pede médico.",
+  "Pain running down the leg with tingling, fever or loss of strength needs a doctor.");
+C("hernia-lombar","M51.1","lombar","Hérnia de disco lombar com dor no nervo","Lumbar disc herniation with radiculopathy",
+  "O disco entre as vértebras pressiona a raiz do nervo e a dor desce pela perna.",
+  "The disc between the vertebrae presses a nerve root and pain runs down the leg.",
+  "ponte,prancha,prancha-lateral","gato-camelo,postura-crianca,flexor-quadril",
+  "Evite flexionar a coluna com carga (levantar peso do chão de costas curvadas) e abdominal com tronco enrolado.",
+  "Avoid loading the spine in flexion (lifting from the floor with a rounded back) and crunch-style sit-ups.");
+C("ciatica","M54.3","lombar","Ciática","Sciatica",
+  "O nervo ciático fica irritado e a dor vai da lombar até a perna, às vezes com formigamento.",
+  "The sciatic nerve gets irritated and pain travels from the low back down the leg, sometimes tingling.",
+  "ponte,prancha","gato-camelo,pombo,torcao-deitado,flexor-quadril",
+  "Se piorar ao ficar sentado, alterne posições a cada 30 minutos.",
+  "If sitting makes it worse, change position every 30 minutes.");
+C("hernia-cervical","M50.1","pescoco","Hérnia de disco cervical","Cervical disc herniation",
+  "Disco do pescoço pressionando o nervo: dor que desce pelo braço, às vezes formigando a mão.",
+  "A neck disc pressing a nerve: pain down the arm, sometimes tingling in the hand.",
+  "flexao-escapular,crucifixo-inverso-elastico","pescoco-lateral,gato-camelo",
+  "Nada acima da cabeça com carga enquanto houver formigamento.","No loaded overhead work while there is tingling.");
+C("cifose","M40.0","toracica","Postura curvada (cifose postural)","Postural kyphosis",
+  "As costas altas arredondam e os ombros caem para a frente, de tanto tempo curvado.",
+  "The upper back rounds and the shoulders fall forward, from too long hunched over.",
+  "crucifixo-inverso-elastico,face-pull,remada-elastico,flexao-escapular",
+  "peito-batente,gato-camelo,rotacao-toracica,dorsal-sentado","","");
+C("escoliose","M41","toracica","Escoliose","Scoliosis",
+  "A coluna tem uma curva lateral. Movimento e força ajudam a conviver bem com ela.",
+  "The spine has a sideways curve. Movement and strength help you live well with it.",
+  "prancha-lateral,ponte,remada-elastico","gato-camelo,inclinacao-lateral,rotacao-toracica",
+  "Acompanhamento profissional é regra aqui, não exceção.","Professional follow-up is the rule here, not the exception.");
+C("espondilose","M47","lombar","Desgaste da coluna (espondilose)","Spondylosis",
+  "Desgaste natural das articulações da coluna com a idade. Rigidez de manhã é o sintoma típico.",
+  "Natural wear of the spine's joints with age. Morning stiffness is the typical sign.",
+  "ponte,prancha,hiperextensao","gato-camelo,postura-crianca,flexor-quadril","","");
+C("bursite-trocanterica","M70.6","quadril","Bursite do quadril (trocantérica)","Trochanteric bursitis",
+  "Dói na lateral do quadril, principalmente ao deitar desse lado.",
+  "It hurts on the side of the hip, especially lying on that side.",
+  "abdutora,elastico-lateral,ponte","pombo,flexor-quadril,borboleta",
+  "Evite cruzar as pernas e dormir sobre o lado que dói.","Avoid crossing the legs and sleeping on the painful side.");
+C("coxartrose","M16","quadril","Artrose do quadril","Hip osteoarthritis",
+  "A cartilagem do quadril desgasta. Rigidez ao levantar da cadeira é comum.",
+  "The hip cartilage wears down. Stiffness when getting up from a chair is common.",
+  "ponte,abdutora,bike-cardio,agachamento-livre-peso","borboleta,flexor-quadril,pombo",
+  "Bicicleta e água costumam doer menos que impacto.","Cycling and water usually hurt less than impact.");
+C("gonartrose","M17","joelho","Artrose do joelho","Knee osteoarthritis",
+  "A cartilagem do joelho desgasta. Fortalecer a coxa é o que mais alivia, com evidência forte.",
+  "The knee cartilage wears down. Strengthening the thigh is what relieves it most, with strong evidence.",
+  "extensora,extensora-unilateral,ponte,bike-cardio","quadriceps-pe,panturrilha-parede,borboleta",
+  "Agachamento profundo com carga costuma incomodar; prefira amplitude curta.",
+  "Deep loaded squats usually bother it; prefer a short range.");
+C("condromalacia","M22.4","joelho","Condromalácia patelar","Chondromalacia patellae",
+  "A cartilagem atrás da rótula sofre. Dói ao descer escada e ao ficar muito tempo sentado.",
+  "The cartilage behind the kneecap suffers. It hurts going downstairs and after sitting a long time.",
+  "extensora-unilateral,ponte,abdutora,elastico-lateral","quadriceps-pe,flexor-quadril",
+  "Evite agachar abaixo de 90° com carga enquanto doer.","Avoid loaded squats below 90° while it hurts.");
+C("tendinite-patelar","M76.5","joelho","Tendinite patelar (joelho de saltador)","Patellar tendinitis (jumper's knee)",
+  "O tendão logo abaixo da rótula inflama, típico de quem salta ou corre muito.",
+  "The tendon just below the kneecap gets inflamed, typical of jumping and running.",
+  "extensora,agachamento-livre-peso,ponte","quadriceps-pe,panturrilha-parede",
+  "Descida lenta do movimento é o que trata; salto fica para depois.",
+  "Slow lowering is what treats it; jumping comes later.");
+C("menisco","M23.2","joelho","Lesão de menisco (antiga)","Old meniscus tear",
+  "O amortecedor do joelho rasgou em algum momento. Pode travar, estalar ou inchar depois do esforço.",
+  "The knee's cushion tore at some point. It may lock, click or swell after effort.",
+  "extensora,ponte,abdutora","quadriceps-pe,borboleta",
+  "Joelho que trava de verdade e não destrava pede avaliação.","A knee that truly locks and will not release needs assessment.");
+C("aquiles","M76.6","tornozelo","Tendinite do calcâneo (Aquiles)","Achilles tendinitis",
+  "O tendão do calcanhar inflama. Dói nos primeiros passos da manhã.",
+  "The heel tendon gets inflamed. It hurts on the first steps in the morning.",
+  "panturrilha-parede,panturrilha-pe","panturrilha-parede,flexao-frente",
+  "Descer o calcanhar devagar é o exercício que tem melhor evidência.",
+  "Lowering the heel slowly is the exercise with the best evidence.");
+C("fascite","M72.2","tornozelo","Fascite plantar","Plantar fasciitis",
+  "A sola do pé inflama onde ela prende no calcanhar. Os primeiros passos do dia são os piores.",
+  "The sole inflames where it attaches to the heel. The first steps of the day are the worst.",
+  "panturrilha-parede,panturrilha-pe","panturrilha-parede,flexao-frente",
+  "Alongar a panturrilha antes de pisar no chão de manhã ajuda muito.",
+  "Stretching the calf before standing up in the morning helps a lot.");
+C("fibromialgia","M79.7","lombar","Fibromialgia","Fibromyalgia",
+  "Dor espalhada pelo corpo, com cansaço e sono ruim. Exercício leve e regular é parte do tratamento.",
+  "Widespread pain with fatigue and poor sleep. Light, regular exercise is part of the treatment.",
+  "caminhada,bike-cardio,ponte","postura-crianca,gato-camelo,borboleta,pescoco-lateral",
+  "Comece bem abaixo do que você acha que aguenta e aumente devagar.",
+  "Start well below what you think you can handle and build up slowly.");
+function condName(c){ return LANG==="pt"?c.pt:c.en; }
+function condDesc(c){ return LANG==="pt"?c.dpt:c.den; }
+function condCare(c){ return LANG==="pt"?c.cpt:c.cen; }
+function condsOfZone(z){ return CONDS.filter(c=>c.zona===z); }
+/* desenho do corpo com as regiões clicáveis */
+function painSVG(view, sel){
+  const base='class="bodybase"';
+  const z=(id,shape)=>'<g class="zone'+(sel===id?" sel":"")+'" data-zone="'+id+'" tabindex="0" role="button" aria-label="'+esc(zoneName(id))+'"><title>'+esc(zoneName(id))+"</title>"+shape+"</g>";
+  let g='<ellipse cx="100" cy="30" rx="19" ry="24" '+base+'/><rect x="90" y="48" width="20" height="16" rx="6" '+base+'/>'+
+        '<path d="M60 76 Q100 62 140 76 L143 150 Q141 182 128 200 L72 200 Q59 182 57 150 Z" '+base+'/>'+
+        '<path d="M58 88 Q46 126 42 152 Q39 178 37 196 M142 88 Q154 126 158 152 Q161 178 163 196" class="bodylimb"/>'+
+        '<circle cx="37" cy="202" r="8" '+base+'/><circle cx="163" cy="202" r="8" '+base+'/>'+
+        '<path d="M72 200 Q78 240 80 268 L82 300 M128 200 Q122 240 120 268 L118 300" class="bodylimb"/>'+
+        '<circle cx="82" cy="300" r="9" '+base+'/><circle cx="118" cy="300" r="9" '+base+'/>'+
+        '<path d="M82 310 L80 366 M118 310 L120 366" class="bodylimb"/>'+
+        '<ellipse cx="80" cy="378" rx="11" ry="9" '+base+'/><ellipse cx="120" cy="378" rx="11" ry="9" '+base+'/>';
+  g+=z("pescoco",'<ellipse cx="100" cy="57" rx="15" ry="13"/>');
+  g+=z("ombro",'<ellipse cx="55" cy="90" rx="14" ry="15"/><ellipse cx="145" cy="90" rx="14" ry="15"/>');
+  g+=z("cotovelo",'<ellipse cx="42" cy="150" rx="11" ry="13"/><ellipse cx="158" cy="150" rx="11" ry="13"/>');
+  g+=z("punho",'<ellipse cx="36" cy="196" rx="10" ry="12"/><ellipse cx="164" cy="196" rx="10" ry="12"/>');
+  if(view==="front"){
+    g+=z("quadril",'<ellipse cx="100" cy="196" rx="30" ry="15"/>');
+    g+=z("coxa",'<ellipse cx="81" cy="248" rx="17" ry="40"/><ellipse cx="119" cy="248" rx="17" ry="40"/>');
+    g+=z("joelho",'<ellipse cx="82" cy="300" rx="14" ry="14"/><ellipse cx="118" cy="300" rx="14" ry="14"/>');
+    g+=z("tornozelo",'<ellipse cx="80" cy="368" rx="11" ry="12"/><ellipse cx="120" cy="368" rx="11" ry="12"/>');
+  } else {
+    g+=z("toracica",'<ellipse cx="100" cy="118" rx="22" ry="24"/>');
+    g+=z("lombar",'<ellipse cx="100" cy="160" rx="21" ry="19"/>');
+    g+=z("quadril",'<ellipse cx="100" cy="196" rx="30" ry="16"/>');
+    g+=z("coxa",'<ellipse cx="81" cy="250" rx="17" ry="40"/><ellipse cx="119" cy="250" rx="17" ry="40"/>');
+    g+=z("panturrilha",'<ellipse cx="82" cy="338" rx="14" ry="30"/><ellipse cx="118" cy="338" rx="14" ry="30"/>');
+    g+=z("tornozelo",'<ellipse cx="80" cy="370" rx="11" ry="12"/><ellipse cx="120" cy="370" rx="11" ry="12"/>');
+  }
+  return '<svg viewBox="0 0 200 400" role="img" aria-label="'+(view==="front"?t("body.front"):t("body.back"))+'">'+g+"</svg>";
+}
+/* ---------- 58. TELA: DOR & FISIOTERAPIA ---------- */
+const FIS={view:"front", zone:"", q:"", open:"", cidOpen:false};
+function fisMatch(q){
+  q=q.toLowerCase().trim();
+  if(q.length<2) return [];
+  return CONDS.filter(c=>{
+    const hay=(c.pt+" "+c.en+" "+c.cid+" "+c.dpt+" "+c.den+" "+zoneName(c.zona)).toLowerCase();
+    return hay.indexOf(q)>=0;
+  });
+}
+function fisDisclaimer(){
+  return '<div class="warnbox">'+I("alert")+"<div><b>"+t("fis.warnT")+"</b><br>"+t("fis.warnB")+"</div></div>";
+}
+function condRow(c){
+  return '<button class="condcard'+(FIS.open===c.id?" on":"")+'" data-cond="'+c.id+'">'+
+    '<div class="cn">'+esc(condName(c))+"</div>"+
+    '<div class="tiny muted">'+esc(zoneName(c.zona))+' · <span class="pill xs">CID '+esc(c.cid)+"</span></div>"+
+    '<span class="cc">'+I(FIS.open===c.id?"chevup":"chevdown")+"</span></button>"+
+    (FIS.open===c.id? condDetail(c) : "");
+}
+function condDetail(c){
+  const exs=c.ex.map(id=>EXI[id]).filter(Boolean);
+  const als=c.al.map(id=>MOVI[id]).filter(Boolean);
+  let h='<div class="conddet">';
+  h+='<p class="lead">'+esc(condDesc(c))+"</p>";
+  if(condCare(c)) h+='<div class="carebox">'+I("shield")+"<div><b>"+t("fis.care")+"</b> "+esc(condCare(c))+"</div></div>";
+  h+='<div class="codebox tiny muted">'+t("fis.cid")+": <b>"+esc(c.cid)+"</b> · "+t("fis.tuss")+": <i>"+t("fis.tussNone")+"</i></div>";
+  if(als.length){
+    h+='<span class="kicker">'+t("fis.stretches")+" ("+als.length+")</span><div class='grid gauto' style='margin:6px 0 12px'>"+
+      als.map(m=>'<div class="ex"><div class="eqic">'+mvFigure(m,{static:1})+'</div><div class="nm">'+esc(mvName(m))+"</div>"+
+        '<div class="tiny muted">'+esc(mvTip(m))+"</div></div>").join("")+"</div>";
+  }
+  if(exs.length){
+    h+='<span class="kicker">'+t("fis.strength")+" ("+exs.length+")</span><div class='grid gauto' style='margin:6px 0 12px'>"+
+      exs.map(x=>'<div class="ex"><div class="eqic">'+exFigure(x,{static:1})+'</div><div class="nm">'+esc(exName(x))+"</div>"+
+        '<div class="tiny muted">'+esc(exTip(x))+"</div>"+
+        '<div class="exf"><button class="btn xs ghost" data-vid="'+x.id+'">'+I("play")+t("ex.watch")+"</button></div></div>").join("")+"</div>";
+  }
+  h+='<div class="row">'+
+     (als.length?'<button class="btn" data-fisrun="'+c.id+'">'+I("play")+t("fis.doStretch")+"</button>":"")+
+     (exs.length?'<button class="btn line" data-fiswk="'+c.id+'">'+I("plus")+t("fis.makeWorkout")+"</button>":"")+
+     '<button class="btn ghost" data-fishelp="'+c.id+'">'+I("help")+t("fis.whenPro")+"</button></div>";
+  h+="</div>";
+  return h;
+}
+SCREENS.fisio = function(){
+  let h='<div class="pagehead"><div><h1>'+t("fis.title")+'</h1><small>'+t("fis.sub")+"</small></div></div>";
+  h+=fisDisclaimer();
+  h+='<div class="card tight"><div class="help-q">'+I("search")+'<input type="search" id="fsq" value="'+esc(FIS.q)+'" placeholder="'+t("fis.searchph")+'"></div></div>';
+  const hits=fisMatch(FIS.q);
+  if(FIS.q.trim().length>=2){
+    h+='<div class="card">'+cardHead("search", t("fis.results"), hits.length+" "+t("fis.found"))+
+       (hits.length? hits.map(condRow).join("") : emptyBox("search", t("fis.noHits"), t("fis.noHitsSub")))+"</div>";
+    return h+cidCard();
+  }
+  h+='<div class="card">'+cardHead("body", t("fis.whereT"), t("fis.whereS"))+
+     '<div class="seg" style="max-width:280px;margin:0 auto 10px"><button class="'+(FIS.view==="front"?"on":"")+'" data-fisview="front">'+t("body.front")+'</button><button class="'+(FIS.view==="back"?"on":"")+'" data-fisview="back">'+t("body.back")+"</button></div>"+
+     '<div class="painwrap"><div class="painfig">'+painSVG(FIS.view, FIS.zone)+"</div></div>"+
+     '<span class="kicker">'+t("fis.orPick")+'</span><div class="chips" style="margin:6px 0 0">'+
+     ZONES.map(z=>'<button class="chip '+(FIS.zone===z.id?"on":"")+'" data-fiszone="'+z.id+'">'+esc(zoneName(z.id))+"</button>").join("")+"</div></div>";
+  if(FIS.zone){
+    const list=condsOfZone(FIS.zone);
+    h+='<div class="card">'+cardHead("stretch", zoneName(FIS.zone), list.length+" "+t("fis.conds"))+
+       (list.length? list.map(condRow).join("") : emptyBox("info", t("fis.noneZone"), t("fis.noneZoneSub")))+"</div>";
+  } else {
+    h+='<div class="card soft">'+emptyBox("body", t("fis.pickFirst"), t("fis.pickFirstSub"))+"</div>";
+  }
+  return h+cidCard();
+};
+SCREENS.fisio_after = function(){
+  wireCid();
+  const fold=document.getElementById("cidfold");
+  if(fold){ fold.open=FIS.cidOpen; fold.addEventListener("toggle",()=>{ FIS.cidOpen=fold.open; }); }
+  const q=document.getElementById("fsq");
+  if(q) q.oninput=()=>{ FIS.q=q.value; FIS.open=""; render(); const n=document.getElementById("fsq"); if(n){ n.focus(); n.setSelectionRange(n.value.length,n.value.length); } };
+  document.querySelectorAll("[data-fisview]").forEach(b=>b.onclick=()=>{ FIS.view=b.getAttribute("data-fisview"); render(); });
+  document.querySelectorAll("[data-fiszone]").forEach(b=>b.onclick=()=>{ const z=b.getAttribute("data-fiszone"); FIS.zone=(FIS.zone===z?"":z); FIS.open=""; render(); });
+  document.querySelectorAll("#screen .zone").forEach(g=>{
+    const pick=()=>{ const z=g.getAttribute("data-zone"); FIS.zone=(FIS.zone===z?"":z); FIS.open=""; render(); };
+    g.addEventListener("click", pick);
+    g.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(); } });
+  });
+  document.querySelectorAll("[data-cond]").forEach(b=>b.onclick=()=>{ const id=b.getAttribute("data-cond"); FIS.open=(FIS.open===id?"":id); render(); });
+  document.querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>videoModal(b.getAttribute("data-vid")));
+  document.querySelectorAll("[data-fisrun]").forEach(b=>b.onclick=()=>{
+    const c=CONDS.find(x=>x.id===b.getAttribute("data-fisrun")); if(!c) return;
+    const list=c.al.map(id=>MOVI[id]).filter(Boolean).map(m=>[m.id, m.sec||30]);
+    runRoutine(list, t("fis.serieFor")+" "+condName(c));
+  });
+  document.querySelectorAll("[data-fiswk]").forEach(b=>b.onclick=()=>{
+    const c=CONDS.find(x=>x.id===b.getAttribute("data-fiswk")); if(!c) return;
+    if(GUEST){ toast(t("fis.needAcc")); return; }
+    const nome=(LANG==="pt"?"Fisio — ":"Physio — ")+condName(c);
+    const ja=STATE.workouts.find(w=>w.name===nome);
+    const items=c.ex.filter(id=>EXI[id]).map(id=>({exId:id, sets:3, reps:12, load:0, rest:45}));
+    if(ja){ ja.items=items; } else STATE.workouts.push({id:uid(), name:nome, days:[], items:items});
+    save(); toast(t("fis.workoutMade")); go("workout");
+  });
+  document.querySelectorAll("[data-fishelp]").forEach(b=>b.onclick=()=>{
+    modal('<h3>'+t("fis.whenPro")+"</h3><p>"+t("fis.whenProB")+"</p><ul class='bul'>"+
+      ["fis.red1","fis.red2","fis.red3","fis.red4","fis.red5"].map(k=>"<li>"+t(k)+"</li>").join("")+
+      "</ul><p class='tiny muted'>"+t("fis.warnB")+"</p>");
+  });
+};
+/* ---------- 59. TABELA CID (consulta, offline, com tamanho e limpeza) ---------- */
+/* Por que fica em arquivo separado e em gaveta propria: e uma tabela de consulta, nao um dado da pessoa.
+   Assim da para baixar, medir o quanto ocupa e apagar sem encostar no resto. */
+const CIDKEY="riseone.cid";
+let CIDDB=null;
+function cidRead(){
+  if(CIDDB) return CIDDB;
+  try{ const s=localStorage.getItem(CIDKEY); if(s){ CIDDB=JSON.parse(s); return CIDDB; } }catch(e){}
+  return null;
+}
+function cidBytes(){
+  try{ const s=localStorage.getItem(CIDKEY); return s? s.length*2 : 0; }catch(e){ return 0; }
+}
+function fmtBytes(n){
+  if(!n) return "0 KB";
+  if(n<1024) return n+" B";
+  if(n<1024*1024) return (n/1024).toFixed(1).replace(".",LANG==="pt"?",":".")+" KB";
+  return (n/1048576).toFixed(1).replace(".",LANG==="pt"?",":".")+" MB";
+}
+function cidClear(){
+  try{ localStorage.removeItem(CIDKEY); }catch(e){}
+  CIDDB=null;
+}
+function cidLoad(cb){
+  if(location.protocol==="file:"){ cb(false); return; }
+  fetch("cid.json?ts="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{
+    if(!j||!j.itens){ cb&&cb(false); return; }
+    CIDDB=j;
+    try{ localStorage.setItem(CIDKEY, JSON.stringify(j)); }catch(e){}
+    cb&&cb(true);
+  }).catch(()=>cb&&cb(false));
+}
+function cidSearch(q){
+  const db=cidRead(); if(!db) return [];
+  q=String(q||"").toLowerCase().trim();
+  if(q.length<2) return db.itens.slice(0,25);
+  return db.itens.filter(i=>(i.cid+" "+i.pt+" "+i.en+" "+zoneName(i.zona)).toLowerCase().indexOf(q)>=0).slice(0,60);
+}
+function cidCard(){
+  const db=cidRead();
+  let h='<details class="fold" id="cidfold"><summary>'+I("book")+t("cid.title")+"</summary><div class='fb'>";
+  h+='<p class="tiny muted">'+t("cid.sub")+"</p>";
+  if(!db){
+    h+='<div class="row"><button class="btn line" id="cidget">'+I("download")+t("cid.download")+"</button></div>";
+  } else {
+    h+='<div class="row" style="align-items:center"><span class="pill">'+db.itens.length+" "+t("cid.codes")+'</span><span class="pill">'+fmtBytes(cidBytes())+'</span>'+
+       '<button class="btn xs ghost" id="cidref">'+I("refresh")+t("cid.refresh")+'</button>'+
+       '<button class="btn xs line" id="ciddel">'+I("trash")+t("cid.clear")+"</button></div>";
+    h+='<div class="warnbox tiny" style="margin:10px 0">'+I("alert")+"<div>"+t("cid.check")+"</div></div>";
+    h+='<div class="help-q" style="margin:8px 0">'+I("search")+'<input type="search" id="cidq" placeholder="'+t("cid.searchph")+'"></div>';
+    h+='<div class="cidlist" id="cidlist">'+cidRows(cidSearch(""))+"</div>";
+  }
+  h+="</div></details>";
+  return h;
+}
+function cidRows(list){
+  if(!list.length) return '<p class="tiny muted">'+t("cid.noHits")+"</p>";
+  return list.map(i=>'<div class="cidrow"><b>'+esc(i.cid)+"</b><span>"+esc(LANG==="pt"?i.pt:i.en)+'</span><small class="muted">'+esc(zoneName(i.zona))+" · TUSS: "+(i.tuss?esc(i.tuss):"—")+"</small></div>").join("");
+}
+function wireCid(){
+  const g=document.getElementById("cidget");
+  if(g) g.onclick=()=>{ g.disabled=true; g.textContent=t("cid.loading"); cidLoad(ok=>{ toast(ok?t("cid.ready"):t(location.protocol==="file:"?"cid.fileOnly":"cid.fail")); render(); }); };
+  const r=document.getElementById("cidref");
+  if(r) r.onclick=()=>cidLoad(ok=>{ toast(ok?t("cid.ready"):t("cid.fail")); render(); });
+  const d=document.getElementById("ciddel");
+  if(d) d.onclick=()=>confirmBox(t("cid.clearAsk"),()=>{ cidClear(); toast(t("common.done")); render(); });
+  const q=document.getElementById("cidq");
+  if(q) q.oninput=()=>{ document.getElementById("cidlist").innerHTML=cidRows(cidSearch(q.value)); };
+}
+
+/* ---------- 60. CAMERA: ZOOM, TEMPORIZADOR, PRIVACIDADE E PROJECAO ---------- */
+/* Por que: a foto do rótulo quase sempre sai tremida ou longe demais. Aqui a pessoa aproxima,
+   usa o temporizador para não mexer no aparelho na hora do clique, e pode borrar o fundo antes
+   de fotografar em lugar público. */
+const CAM2={zoom:1, timer:0, privacy:false, track:null, hasZoom:false, zmin:1, zmax:4, host:null, busy:false};
+function camZoomApply(v){
+  CAM2.zoom=Math.max(CAM2.zmin, Math.min(CAM2.zmax, v));
+  const vd=CAM2.host && CAM2.host.querySelector("video");
+  if(CAM2.hasZoom && CAM2.track){
+    try{ CAM2.track.applyConstraints({advanced:[{zoom:CAM2.zoom}]}); if(vd) vd.style.transform=""; return; }catch(e){}
+  }
+  /* sem zoom de verdade no aparelho: aproxima na tela mesmo (a foto sai recortada igual) */
+  if(vd) vd.style.transform="scale("+CAM2.zoom.toFixed(2)+")";
+  paintCamBar();
+}
+function paintCamBar(){
+  const n=CAM2.host && CAM2.host.querySelector("#camzlv");
+  if(n) n.textContent=CAM2.zoom.toFixed(1)+"×";
+  const p=CAM2.host && CAM2.host.querySelector("#campriv");
+  if(p) p.classList.toggle("on", CAM2.privacy);
+  const vd=CAM2.host && CAM2.host.querySelector("video");
+  if(vd) vd.classList.toggle("blur", CAM2.privacy);
+  const tb=CAM2.host && CAM2.host.querySelectorAll("[data-camt]");
+  if(tb) tb.forEach(b=>b.classList.toggle("on", +b.getAttribute("data-camt")===CAM2.timer));
+}
+/* mede o foco da imagem: variancia do Laplaciano. Numero baixo = foto borrada. */
+function sharpness(dataUrl, cb){
+  const im=new Image();
+  im.onload=()=>{
+    const W=320, H=Math.max(1,Math.round(im.height/im.width*W));
+    const cv=document.createElement("canvas"); cv.width=W; cv.height=H;
+    const cx=cv.getContext("2d"); cx.drawImage(im,0,0,W,H);
+    let d;
+    try{ d=cx.getImageData(0,0,W,H).data; }catch(e){ cb(null); return; }
+    const g=new Float32Array(W*H);
+    for(let i=0,j=0;i<d.length;i+=4,j++) g[j]=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+    let sum=0, sum2=0, n=0;
+    for(let y=1;y<H-1;y++) for(let x=1;x<W-1;x++){
+      const k=y*W+x;
+      const L=g[k-W]+g[k+W]+g[k-1]+g[k+1]-4*g[k];
+      sum+=L; sum2+=L*L; n++;
+    }
+    if(!n){ cb(null); return; }
+    const mean=sum/n;
+    cb(sum2/n-mean*mean);
+  };
+  im.onerror=()=>cb(null);
+  im.src=dataUrl;
+}
+const BLUR_MIN=45;   /* abaixo disso a leitura erra muito; valor medido em fotos de rotulo */
+/* tira a foto, confere o foco e so entrega quando estiver boa (ou quando a pessoa insistir) */
+function shootChecked(dataUrl, cb){
+  sharpness(dataUrl, v=>{
+    if(v===null || v>=BLUR_MIN){ cb(dataUrl); return; }
+    const m=modal('<div class="mh"><div class="row nowrap"><span class="ibub warn">'+I("alert")+'</span><div><h3 style="margin:0">'+t("cam.blurT")+'</h3><small class="muted">'+t("cam.blurS")+"</small></div></div></div>"+
+      '<img src="'+dataUrl+'" class="blurshot">'+
+      '<ul class="bul tiny">'+["cam.blur1","cam.blur2","cam.blur3"].map(k=>"<li>"+t(k)+"</li>").join("")+"</ul>"+
+      '<div class="row" style="justify-content:flex-end"><button class="btn line" id="bl_any">'+t("cam.useAnyway")+'</button>'+
+      '<button class="btn" id="bl_new">'+I("camera")+t("cam.again")+"</button></div>");
+    m.querySelector("#bl_any").onclick=()=>{ m.remove(); cb(dataUrl); };
+    m.querySelector("#bl_new").onclick=()=>{ m.remove(); };
+  });
+}
+/* camera completa: usada pelo leitor e por quem precisar de uma foto boa */
+function startCam2(host, cb){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ toast(t("sc.noCam")); return; }
+  CAM2.host=host; CAM2.zoom=1; CAM2.busy=false;
+  host.innerHTML='<div class="camstage"><video class="camprev" autoplay playsinline muted></video><div class="camcount" id="camcount"></div></div>'+
+    '<div class="camctl">'+
+      '<button class="iconbtn" id="camzout" title="'+t("cam.zoomOut")+'">'+I("zoomout")+'</button>'+
+      '<span class="camz" id="camzlv">1.0×</span>'+
+      '<button class="iconbtn" id="camzin" title="'+t("cam.zoomIn")+'">'+I("zoomin")+'</button>'+
+      '<button class="iconbtn" id="camflip" title="'+t("sc.switch")+'">'+I("flip")+'</button>'+
+      '<button class="iconbtn" id="campriv" title="'+t("cam.privacy")+'">'+I("eye")+"</button></div>"+
+    '<div class="chips" style="margin:8px 0"><span class="kicker" style="align-self:center;margin-right:4px">'+t("cam.timer")+"</span>"+
+      [0,3,10].map(n=>'<button class="chip'+(CAM2.timer===n?" on":"")+'" data-camt="'+n+'">'+(n?n+"s":t("cam.noTimer"))+"</button>").join("")+"</div>"+
+    '<div class="row"><button class="btn" id="camshoot">'+I("camera")+t("sc.shoot")+'</button>'+
+    '<button class="btn line" id="camstop">'+t("sc.stop")+"</button></div>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("cam.privacyNote")+"</p>";
+  const v=host.querySelector("video");
+  const open=()=>{
+    stopCam();
+    navigator.mediaDevices.getUserMedia({video:{facingMode:CAMFACING,width:{ideal:1920}},audio:false})
+      .then(s=>{
+        CAMSTREAM=s; v.srcObject=s;
+        CAM2.track=s.getVideoTracks()[0];
+        let cap={};
+        try{ cap=CAM2.track.getCapabilities? CAM2.track.getCapabilities() : {}; }catch(e){}
+        CAM2.hasZoom=!!(cap && cap.zoom);
+        CAM2.zmin=CAM2.hasZoom? (cap.zoom.min||1) : 1;
+        CAM2.zmax=CAM2.hasZoom? (cap.zoom.max||4) : 3;
+        CAM2.zoom=CAM2.zmin; camZoomApply(CAM2.zoom); paintCamBar();
+      })
+      .catch(()=>{ toast(t("sc.denied")); host.innerHTML=""; });
+  };
+  open();
+  const grab=()=>{
+    if(!v.videoWidth){ toast(t("sc.noCam")); return; }
+    const cv=document.createElement("canvas");
+    /* quando o zoom e so na tela, recorta de verdade o pedaco que a pessoa esta vendo */
+    const z=(!CAM2.hasZoom && CAM2.zoom>1)? CAM2.zoom : 1;
+    const sw=v.videoWidth/z, sh=v.videoHeight/z;
+    cv.width=Math.round(sw); cv.height=Math.round(sh);
+    cv.getContext("2d").drawImage(v,(v.videoWidth-sw)/2,(v.videoHeight-sh)/2,sw,sh,0,0,cv.width,cv.height);
+    resizeImage(cv.toDataURL("image/jpeg",0.92),1600, d=>shootChecked(d,cb));
+  };
+  const count=(n)=>{
+    const el=host.querySelector("#camcount");
+    CAM2.busy=true;
+    const tick=()=>{
+      if(n<=0){ el.textContent=""; CAM2.busy=false; try{ beep(2); }catch(e){} grab(); return; }
+      el.textContent=n; try{ beep(1); }catch(e){}
+      n--; setTimeout(tick,1000);
+    };
+    tick();
+  };
+  host.querySelector("#camshoot").onclick=()=>{ if(CAM2.busy) return; CAM2.timer? count(CAM2.timer) : grab(); };
+  host.querySelector("#camstop").onclick=()=>{ stopCam(); host.innerHTML=""; };
+  host.querySelector("#camflip").onclick=()=>{ CAMFACING=(CAMFACING==="environment")?"user":"environment"; open(); };
+  host.querySelector("#camzin").onclick=()=>camZoomApply(CAM2.zoom+(CAM2.hasZoom?(CAM2.zmax-CAM2.zmin)/6:0.25));
+  host.querySelector("#camzout").onclick=()=>camZoomApply(CAM2.zoom-(CAM2.hasZoom?(CAM2.zmax-CAM2.zmin)/6:0.25));
+  host.querySelector("#campriv").onclick=()=>{ CAM2.privacy=!CAM2.privacy; paintCamBar(); };
+  host.querySelectorAll("[data-camt]").forEach(b=>b.onclick=()=>{ CAM2.timer=+b.getAttribute("data-camt"); paintCamBar(); });
+  paintCamBar();
+}
+/* ---- projetar na TV ---- */
+/* O navegador não manda vídeo para a TV por conta própria. O que dá para fazer, de verdade:
+   1) janelinha flutuante (picture-in-picture), que a maioria das TVs pega no espelhamento;
+   2) tela cheia, para quem espelha o celular inteiro;
+   3) Chrome no computador: o próprio menu "Transmitir" da página.
+   Nada aqui inventa conexão com a TV: o app só prepara a imagem. */
+function canPiP(){ return !!(document.pictureInPictureEnabled); }
+function projectVideo(vd){
+  if(!vd){ toast(t("tv.noVideo")); return; }
+  if(canPiP() && vd.requestPictureInPicture){
+    vd.requestPictureInPicture().catch(()=>fullscreenEl(vd.parentElement||vd));
+    return;
+  }
+  fullscreenEl(vd.parentElement||vd);
+}
+function fullscreenEl(el){
+  if(!el) return;
+  const f=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+  if(f) try{ f.call(el); }catch(e){ toast(t("tv.noFull")); }
+  else toast(t("tv.noFull"));
+}
+function tvHelpModal(){
+  modal('<div class="mh"><div class="row nowrap"><span class="ibub">'+I("cast")+'</span><h3 style="margin:0">'+t("tv.title")+"</h3></div></div>"+
+    "<p class='muted'>"+t("tv.body")+"</p><ol class='bul'>"+
+    ["tv.s1","tv.s2","tv.s3"].map(k=>"<li>"+t(k)+"</li>").join("")+"</ol>"+
+    "<p class='tiny muted'>"+t("tv.note")+"</p>");
+}
+
+/* ---------- 61. LEITURA DE ROTULO: INGREDIENTES, ADITIVOS E SEMAFORO ---------- */
+/* Por que: a tabela nutricional sozinha diz pouco. Quem compra quer saber, em dois segundos,
+   se aquilo é comida ou é fórmula — e o que está escondido atrás de "INS 621". */
+/* Aditivos citados com mais frequência nos rótulos brasileiros. A lista é de consulta:
+   [numero INS, nome PT, nome EN, papel]. papel: cor|sabor|adocante|conservante|emulsificante|espessante|acidulante|outro */
+const ADITIVOS=[
+ ["102","Tartrazina (amarelo)","Tartrazine (yellow)","cor"],
+ ["110","Amarelo crepúsculo","Sunset yellow","cor"],
+ ["122","Azorrubina","Azorubine","cor"],
+ ["129","Vermelho 40","Allura red","cor"],
+ ["133","Azul brilhante","Brilliant blue","cor"],
+ ["150d","Caramelo IV","Caramel IV","cor"],
+ ["160","Carotenoides","Carotenoids","cor"],
+ ["202","Sorbato de potássio","Potassium sorbate","conservante"],
+ ["211","Benzoato de sódio","Sodium benzoate","conservante"],
+ ["220","Dióxido de enxofre","Sulphur dioxide","conservante"],
+ ["250","Nitrito de sódio","Sodium nitrite","conservante"],
+ ["251","Nitrato de sódio","Sodium nitrate","conservante"],
+ ["282","Propionato de cálcio","Calcium propionate","conservante"],
+ ["322","Lecitina","Lecithin","emulsificante"],
+ ["330","Ácido cítrico","Citric acid","acidulante"],
+ ["339","Fosfato de sódio","Sodium phosphate","outro"],
+ ["407","Carragena","Carrageenan","espessante"],
+ ["412","Goma guar","Guar gum","espessante"],
+ ["415","Goma xantana","Xanthan gum","espessante"],
+ ["440","Pectina","Pectin","espessante"],
+ ["451","Trifosfatos","Triphosphates","outro"],
+ ["452","Polifosfatos","Polyphosphates","outro"],
+ ["471","Mono e diglicerídeos de ácidos graxos","Mono- and diglycerides","emulsificante"],
+ ["500","Bicarbonato de sódio","Sodium bicarbonate","outro"],
+ ["621","Glutamato monossódico","Monosodium glutamate","sabor"],
+ ["627","Guanilato dissódico","Disodium guanylate","sabor"],
+ ["631","Inosinato dissódico","Disodium inosinate","sabor"],
+ ["950","Acessulfame de potássio","Acesulfame potassium","adocante"],
+ ["951","Aspartame","Aspartame","adocante"],
+ ["952","Ciclamato","Cyclamate","adocante"],
+ ["954","Sacarina","Saccharin","adocante"],
+ ["955","Sucralose","Sucralose","adocante"],
+ ["960","Glicosídeos de esteviol","Steviol glycosides","adocante"]
+];
+const ADIT_IDX={}; ADITIVOS.forEach(a=>ADIT_IDX[a[0]]=a);
+function aditName(a){ return LANG==="pt"?a[1]:a[2]; }
+function papelName(p){ return t("rt.papel."+p); }
+/* palavras que aparecem no rótulo mesmo sem o número INS */
+const ADIT_WORDS=[
+ [/aromatizante|aroma (?:natural|artificial|identico)/,"sabor"],
+ [/corante/,"cor"],
+ [/conservador|conservante/,"conservante"],
+ [/emulsificante|emulsionante/,"emulsificante"],
+ [/espessante|estabilizante/,"espessante"],
+ [/edulcorante|adocante/,"adocante"],
+ [/realcador de sabor/,"sabor"],
+ [/antiumectante|antioxidante|acidulante|regulador de acidez|humectante/,"outro"]
+];
+const DIETAS=[
+ ["diet",   /\bdiet\b/],
+ ["light",  /\blight\b/],
+ ["zero",   /\bzero\b|sem a[cç]ucar|no added sugar|sugar[- ]free/],
+ ["lowcarb",/low ?carb|baixo carboidrato/],
+ ["semlac", /sem lactose|zero lactose|lactose[- ]free/],
+ ["semglu", /sem gluten|gluten[- ]free|nao contem gluten/],
+ ["vegano", /\bvegano\b|\bvegan\b/],
+ ["vegetar",/vegetariano|vegetarian/],
+ ["integr", /\bintegral\b|whole ?grain|whole ?wheat/],
+ ["organ",  /\borganico\b|\borganic\b/]
+];
+function dietaName(k){ return t("rt.dieta."+k); }
+/* limites do rótulo frontal brasileiro (RDC 429/2020 e IN 75/2020, checados em 1/9/2026).
+   Valores por 100 g (sólido) e por 100 ml (líquido). Confira a norma antes de usar como laudo. */
+const ALTO_EM={ solido:{acucar:15, gordSat:6, sodio:600}, liquido:{acucar:7.5, gordSat:3, sodio:300} };
+/* A tabela nutricional so vale a partir do cabecalho dela. Sem isso, "bicarbonato de sodio
+   (INS 500ii)" da lista de ingredientes viraria "500 mg de sodio". */
+function nutriText(raw){
+  const lines=String(raw).split(/\n/);
+  const i=lines.findIndex(l=>/informa[çc][ãa]o nutri|tabela nutricional|nutrition facts|valor energ[ée]tico|por[çc][ãa]o de|serving size/i.test(l));
+  if(i>=0) return lines.slice(i).join("\n");
+  return lines.filter(l=>!/ingredientes?\s*:/i.test(l)).join("\n");
+}
+function parseRotulo(raw){
+  const full=norm(raw).replace(/\s+/g," ");
+  const nt=nutriText(raw);
+  const x=norm(nt).replace(/\s+/g," ");
+  const o=parseLabel(nt) || {};
+  /* embalagem e porção */
+  o.pack   = grab(x,[/conteudo(?: liquido)?[^\d]{0,20}(\d+(?:[.,]\d+)?)\s*(?:g|ml|kg|l)\b/, /peso liquido[^\d]{0,20}(\d+(?:[.,]\d+)?)/, /net (?:weight|content)[^\d]{0,20}(\d+(?:[.,]\d+)?)/]);
+  o.packUnit = (x.match(/conteudo(?: liquido)?[^\d]{0,20}\d+(?:[.,]\d+)?\s*(kg|ml|g|l)\b/)||[])[1]||"";
+  o.portions = grab(x,[/(\d+(?:[.,]\d+)?)\s*por[cç]oes? por embalagem/, /about (\d+) servings/]);
+  o.sugar  = grab(x,[/a[cç]ucares? totai?s?[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /total sugars?[^\d]{0,30}(\d+(?:[.,]\d+)?)/]);
+  o.addSugar=grab(x,[/a[cç]ucares? adicionados?[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /added sugars?[^\d]{0,30}(\d+(?:[.,]\d+)?)/]);
+  o.satFat = grab(x,[/gorduras? saturadas?[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /saturated fat[^\d]{0,30}(\d+(?:[.,]\d+)?)/]);
+  o.transFat=grab(x,[/gorduras? trans[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /trans fat[^\d]{0,30}(\d+(?:[.,]\d+)?)/]);
+  o.liquido = /\bml\b|\blitro\b|\blitros\b/.test(full);
+  /* marca: a primeira linha curta em maiúsculas costuma ser a marca */
+  const lines=String(raw).split(/\n+/).map(l=>l.trim()).filter(l=>l.length>2);
+  const cand=lines.slice(0,6).find(l=>l.length<=28 && /[A-ZÀ-Ý]{3}/.test(l) && l===l.toUpperCase() && !/\d{2,}/.test(l));
+  o.brand = cand || "";
+  /* lista de ingredientes */
+  const mi=full.match(/ingredientes?\s*:?\s*([^]*?)(?:\.|alergicos|contem|pode conter|informa[cç]ao nutri|tabela nutricional|valor energetico|$)/);
+  o.ingRaw = mi? mi[1].trim() : "";
+  o.ings = o.ingRaw? o.ingRaw.split(/,|;/).map(s=>s.trim()).filter(s=>s.length>1&&s.length<60).slice(0,40) : [];
+  /* aditivos: pelo numero INS e pelas palavras do rotulo */
+  const found={};
+  (full.match(/ins\s*[-:]?\s*(\d{3}[a-z]{0,2})/g)||[]).forEach(m=>{
+    const n=(m.match(/(\d{3}[a-z]{0,2})/)||[])[1];
+    if(!n) return;
+    const a=ADIT_IDX[n]||ADIT_IDX[n.replace(/[a-z]+$/,"")];
+    found["ins"+n]={num:n, nome:a?aditName(a):("INS "+n), papel:a?a[3]:"outro"};
+  });
+  ADIT_WORDS.forEach(([re,papel])=>{ if(re.test(full) && !Object.values(found).some(f=>f.papel===papel)) found["w"+papel]={num:"", nome:papelName(papel), papel}; });
+  o.aditivos=Object.values(found);
+  /* selos que a embalagem anuncia */
+  o.dietas=DIETAS.filter(d=>d[1].test(full)).map(d=>d[0]);
+  /* "alto em" pelo limite do rotulo frontal */
+  const lim=o.liquido? ALTO_EM.liquido : ALTO_EM.solido;
+  const p100=v=>{
+    if(v==null) return null;
+    if(!o.portion || o.portion<=0) return v;       /* ja parece ser por 100 */
+    return v/o.portion*100;
+  };
+  o.altoEm=[];
+  const sg=p100(o.addSugar!=null?o.addSugar:o.sugar), sf=p100(o.satFat), sd=o.sodium!=null? p100(o.sodium) : null;
+  if(sg!=null && sg>=lim.acucar) o.altoEm.push("acucar");
+  if(sf!=null && sf>=lim.gordSat) o.altoEm.push("gordSat");
+  if(sd!=null && sd>=lim.sodio) o.altoEm.push("sodio");
+  o.por100={acucar:sg, gordSat:sf, sodio:sd};
+  o.rag=ragRotulo(o);
+  return (o.kcal!=null||o.ings.length||o.aditivos.length)? o : null;
+}
+/* Semáforo. O critério é do app e está escrito na tela — não é classificação oficial.
+   Verde: pouca coisa na lista e nenhum aditivo cosmético.
+   Amarelo: lista média, ou um aditivo cosmético, ou um "alto em".
+   Vermelho: dois ou mais aditivos cosméticos, ou dois ou mais "alto em". */
+const COSMETICO=["cor","sabor","adocante","emulsificante","espessante"];
+function ragRotulo(o){
+  const cos=o.aditivos.filter(a=>COSMETICO.indexOf(a.papel)>=0).length;
+  const alto=(o.altoEm||[]).length;
+  const n=o.ings.length;
+  let pts=0;
+  if(cos>=2) pts+=2; else if(cos===1) pts+=1;
+  if(alto>=2) pts+=2; else if(alto===1) pts+=1;
+  if(n>10) pts+=1;
+  if(o.transFat!=null && o.transFat>0) pts+=1;
+  const cor = pts>=3? "r" : (pts>=1? "a" : "g");
+  return {cor, cos, alto, pts};
+}
+function ragLabel(c){ return t(c==="g"?"rt.ragG":(c==="a"?"rt.ragA":"rt.ragR")); }
+function rotuloCard(o){
+  const r=o.rag||{cor:"a"};
+  let h='<div class="card">'+cardHead("apple", o.brand||t("rt.prod"), t("rt.sub"));
+  h+='<div class="rag '+r.cor+'"><span class="dot"></span><div><b>'+esc(ragLabel(r.cor))+"</b><br><small>"+t("rt.ragWhy")
+     .replace("{c}",r.cos).replace("{a}",r.alto).replace("{i}",o.ings.length)+"</small></div></div>";
+  if((o.altoEm||[]).length){
+    h+='<div class="altoem">'+o.altoEm.map(k=>'<span class="ae">'+t("rt.alto")+" "+t("rt."+k)+"</span>").join("")+"</div>"+
+       '<p class="tiny muted">'+t("rt.altoNote")+"</p>";
+  }
+  const nutri=[["kcal","kcal",""],["prot",t("dt.prot"),"g"],["carb",t("dt.carb"),"g"],["fat",t("dt.fat"),"g"],
+               ["sugar",t("rt.acucar"),"g"],["satFat",t("rt.gordSat"),"g"],["fiber",t("rt.fibra"),"g"],["sodium",t("rt.sodio"),"mg"]];
+  const temNutri=nutri.some(n=>o[n[0]]!=null);
+  if(temNutri){
+    h+='<div class="sep"></div><span class="kicker">'+t("rt.tabela")+(o.portion?" · "+t("rt.porcao")+" "+fmtNum(o.portion,0)+" g":"")+"</span>"+
+       '<div class="grid g4" style="margin-top:8px">'+nutri.filter(n=>o[n[0]]!=null).map(n=>stat(n[1], fmtNum(o[n[0]], n[0]==="kcal"?0:1), n[2],"")).join("")+"</div>";
+  }
+  if(o.pack||o.portions){
+    h+='<p class="tiny muted" style="margin-top:8px">'+
+      (o.pack?t("rt.pack")+": "+fmtNum(o.pack,0)+" "+(o.packUnit||"g"):"")+
+      (o.portions?" · "+t("rt.portions")+": "+fmtNum(o.portions,0):"")+"</p>";
+  }
+  if(o.dietas.length){
+    h+='<div class="sep"></div><span class="kicker">'+t("rt.selos")+'</span><div class="chips" style="margin-top:6px">'+
+      o.dietas.map(d=>'<span class="chip on">'+I("check")+esc(dietaName(d))+"</span>").join("")+"</div>"+
+      '<p class="tiny muted">'+t("rt.selosNote")+"</p>";
+  }
+  if(o.aditivos.length){
+    h+='<div class="sep"></div><span class="kicker">'+t("rt.aditivos")+" ("+o.aditivos.length+")</span>"+
+      '<div class="list" style="margin-top:6px">'+o.aditivos.map(a=>
+        '<div class="item"><span class="pill'+(COSMETICO.indexOf(a.papel)>=0?" warn":"")+'">'+esc(a.num?"INS "+a.num:"—")+'</span>'+
+        '<div class="gr"><div class="t">'+esc(a.nome)+'</div><div class="s">'+esc(papelName(a.papel))+"</div></div></div>").join("")+"</div>";
+  }
+  if(o.ings.length){
+    h+='<details class="fold" style="margin-top:12px"><summary>'+I("file")+t("rt.ings")+' <span class="pill" style="margin-left:6px">'+o.ings.length+"</span></summary><div class='fb'>"+
+      '<ol class="bul tiny">'+o.ings.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ol>"+
+      '<p class="tiny muted">'+t("rt.ingsNote")+"</p></div></details>";
+  }
+  h+='<p class="tiny muted" style="margin-top:12px">'+t("rt.criterio")+"</p>";
+  h+="</div>";
+  return h;
+}
+
+/* ---------- 62. EXAMES: RECONHECER INDICADORES E ACOMPANHAR CADA UM ---------- */
+/* Por que: o papel do laboratório vira número solto. Aqui cada indicador vira uma linha do tempo,
+   para a pessoa ver se está subindo ou descendo e levar isso ao médico. */
+/* Só nomes e unidades, para reconhecer e agrupar. Faixas de referência NÃO ficam aqui:
+   elas mudam de laboratório para laboratório e vêm impressas no seu exame. */
+const INDICADORES=[
+ ["glicose",      ["glicose","glicemia","glucose"],                       "mg/dL"],
+ ["hba1c",        ["hemoglobina glicada","hba1c","a1c","glicada"],        "%"],
+ ["insulina",     ["insulina","insulin"],                                 "µUI/mL"],
+ ["colesterol",   ["colesterol total","cholesterol total","colesterol"],  "mg/dL"],
+ ["hdl",          ["hdl"],                                                "mg/dL"],
+ ["ldl",          ["ldl"],                                                "mg/dL"],
+ ["vldl",         ["vldl"],                                               "mg/dL"],
+ ["triglic",      ["triglicerideos","triglicerides","triglycerides"],     "mg/dL"],
+ ["creatinina",   ["creatinina","creatinine"],                            "mg/dL"],
+ ["ureia",        ["ureia","urea"],                                       "mg/dL"],
+ ["acidourico",   ["acido urico","uric acid"],                            "mg/dL"],
+ ["tgo",          ["tgo","ast","aspartato"],                              "U/L"],
+ ["tgp",          ["tgp","alt","alanina"],                                "U/L"],
+ ["ggt",          ["gama gt","ggt","gama glutamil"],                      "U/L"],
+ ["falcalina",    ["fosfatase alcalina","alkaline phosphatase"],          "U/L"],
+ ["albumina",     ["albumina","albumin"],                                 "g/dL"],
+ ["tsh",          ["tsh"],                                                "µUI/mL"],
+ ["t4l",          ["t4 livre","free t4","tiroxina livre"],                "ng/dL"],
+ ["vitd",         ["vitamina d","25 hidroxi","25-oh"],                    "ng/mL"],
+ ["vitb12",       ["vitamina b12","b12","cobalamina"],                    "pg/mL"],
+ ["ferro",        ["ferro serico","ferro","iron"],                        "µg/dL"],
+ ["ferritina",    ["ferritina","ferritin"],                               "ng/mL"],
+ ["hemoglobina",  ["hemoglobina","hemoglobin","hb"],                      "g/dL"],
+ ["hematocrito",  ["hematocrito","hematocrit"],                           "%"],
+ ["leucocitos",   ["leucocitos","leukocytes","globulos brancos"],         "/mm³"],
+ ["plaquetas",    ["plaquetas","platelets"],                              "/mm³"],
+ ["pcr",          ["proteina c reativa","pcr","crp"],                     "mg/L"],
+ ["testosterona", ["testosterona total","testosterona","testosterone"],   "ng/dL"],
+ ["calcio",       ["calcio","calcium"],                                   "mg/dL"],
+ ["potassio",     ["potassio","potassium"],                               "mEq/L"],
+ ["sodio",        ["sodio","sodium"],                                     "mEq/L"],
+ ["magnesio",     ["magnesio","magnesium"],                               "mg/dL"]
+];
+/* Qual indicador a linha cita. Vale quem aparece PRIMEIRO na linha — senao "HDL colesterol"
+   viraria colesterol total, que e outro exame. Empate: ganha a palavra mais longa. */
+function indOf(nome){
+  const n=norm(nome);
+  let best=null, bestPos=1e9, bestLen=0;
+  INDICADORES.forEach(([id,words,un])=>{
+    words.forEach(w=>{
+      const pos=n.indexOf(norm(w));
+      if(pos<0) return;
+      if(pos<bestPos || (pos===bestPos && w.length>bestLen)){ best={id,unit:un,word:w}; bestPos=pos; bestLen=w.length; }
+    });
+  });
+  return best;
+}
+/* como o indicador aparece na tela (sigla continua sigla) */
+const IND_NOMES={glicose:"Glicose", hba1c:"Hemoglobina glicada (HbA1c)", insulina:"Insulina", colesterol:"Colesterol total", hdl:"HDL", ldl:"LDL", vldl:"VLDL", triglic:"Triglicerídeos", creatinina:"Creatinina", ureia:"Ureia", acidourico:"Ácido úrico", tgo:"TGO (AST)", tgp:"TGP (ALT)", ggt:"Gama GT", falcalina:"Fosfatase alcalina", albumina:"Albumina", tsh:"TSH", t4l:"T4 livre", vitd:"Vitamina D", vitb12:"Vitamina B12", ferro:"Ferro sérico", ferritina:"Ferritina", hemoglobina:"Hemoglobina", hematocrito:"Hematócrito", leucocitos:"Leucócitos", plaquetas:"Plaquetas", pcr:"Proteína C reativa", testosterona:"Testosterona total", calcio:"Cálcio", potassio:"Potássio", sodio:"Sódio", magnesio:"Magnésio"};
+function indName(id){ return IND_NOMES[id] || id; }
+/* leitura do laudo: pega nome, valor, unidade e a faixa que o proprio laboratorio imprimiu */
+function parseExame(raw){
+  const lines=String(raw).split(/\n+/).map(l=>l.trim()).filter(l=>/\d/.test(l)&&l.length>4);
+  const out=[]; const vistos={};
+  lines.forEach(l=>{
+    const ind=indOf(l);
+    const m=l.match(/([A-Za-zÀ-ÿ0-9\s\.\-\/()]{3,44}?)[\s:.\-]{1,6}(\d+(?:[.,]\d+)?)\s*([A-Za-zµ%\/³²]{0,10})/);
+    if(!m && !ind) return;
+    const valor=m? m[2].replace(",",".") : (firstNum(l)!=null? String(firstNum(l)) : "");
+    if(!valor) return;
+    /* faixa impressa no laudo: "70 - 99", "ate 200", "< 150" */
+    let ref="";
+    const rr=l.match(/(\d+(?:[.,]\d+)?)\s*(?:a|-|–|to)\s*(\d+(?:[.,]\d+)?)\s*$/) ||
+             l.match(/(?:ate|menor que|inferior a|<)\s*(\d+(?:[.,]\d+)?)/);
+    if(rr) ref=rr[2]? (rr[1]+" – "+rr[2]) : ("< "+rr[1]);
+    const nome=ind? indName(ind.id) : (m? m[1].trim() : l.slice(0,40));
+    const key=ind? ind.id : norm(nome);
+    if(vistos[key]) return;
+    vistos[key]=1;
+    out.push({ind:ind?ind.id:"", name:nome, value:valor, unit:(m&&m[3]?m[3].trim():"")||(ind?ind.unit:""), ref:ref, line:l});
+  });
+  return out.length? out.slice(0,30) : null;
+}
+/* agrupa o historico por indicador, para virar um grafico por linha */
+function examSeries(){
+  const by={};
+  (STATE.exams||[]).forEach(e=>{
+    const ind=indOf(e.name);
+    const key=ind? ind.id : norm(e.name);
+    const v=parseFloat(String(e.value).replace(",","."));
+    if(isNaN(v)) return;
+    (by[key]=by[key]||{key, name: ind? indName(ind.id) : e.name, unit:e.unit||(ind?ind.unit:""), pts:[]}).pts.push({d:e.date, v, ref:e.ref||""});
+  });
+  return Object.values(by).map(s=>{ s.pts.sort((a,b)=>a.d<b.d?-1:1); return s; })
+    .filter(s=>s.pts.length>0)
+    .sort((a,b)=>b.pts.length-a.pts.length || (a.name<b.name?-1:1));
+}
+function examChart(s){
+  if(s.pts.length<2) return "";
+  const W=320,H=90,P=8;
+  const vs=s.pts.map(p=>p.v), mn=Math.min(...vs), mx=Math.max(...vs);
+  const span=(mx-mn)||1;
+  const x=i=>P+i*(W-2*P)/Math.max(1,s.pts.length-1);
+  const y=v=>H-P-((v-mn)/span)*(H-2*P);
+  const d=s.pts.map((p,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(p.v).toFixed(1)).join(" ");
+  return '<svg class="exchart" viewBox="0 0 '+W+" "+H+'" preserveAspectRatio="none" role="img" aria-label="'+esc(s.name)+'">'+
+    '<path d="'+d+'" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'+
+    s.pts.map((p,i)=>'<circle cx="'+x(i).toFixed(1)+'" cy="'+y(p.v).toFixed(1)+'" r="3" fill="var(--accent)"/>').join("")+"</svg>";
+}
+function examSeriesCard(){
+  const ss=examSeries();
+  if(!ss.length) return "";
+  let h='<div class="card">'+cardHead("chart", t("pg.indTitle"), t("pg.indSub"))+'<div class="grid gauto">';
+  h+=ss.slice(0,12).map(s=>{
+    const last=s.pts[s.pts.length-1], first=s.pts[0];
+    const dif=s.pts.length>1? last.v-first.v : 0;
+    const seta=s.pts.length<2? "" : (dif>0?"▲":(dif<0?"▼":"="));
+    return '<div class="exind"><div class="nm">'+esc(s.name)+'</div>'+
+      '<div class="vl">'+fmtNum(last.v,2)+' <small>'+esc(s.unit||"")+"</small>"+
+      (seta?' <span class="dl '+(dif>0?"up":"dn")+'">'+seta+" "+fmtNum(Math.abs(dif),2)+"</span>":"")+"</div>"+
+      examChart(s)+
+      '<div class="tiny muted">'+fmtDate(first.d)+" → "+fmtDate(last.d)+" · "+s.pts.length+" "+t(s.pts.length===1?"pg.reading1":"pg.readings")+
+      (last.ref?" · "+t("pg.ref")+": "+esc(last.ref):"")+"</div></div>";
+  }).join("");
+  h+='</div><p class="tiny muted" style="margin-top:10px">'+t("pg.indNote")+"</p></div>";
+  return h;
+}
+
+/* ---------- 63. CARTEIRINHA DO PLANO DE SAUDE ---------- */
+/* Por que: na hora do atendimento ninguem acha a carteirinha. Fica no aparelho, com a foto,
+   e o numero grande para ditar no balcao. Nada disso sai do aparelho. */
+function cards(){ STATE.cards=STATE.cards||[]; return STATE.cards; }
+function parseCarteirinha(raw){
+  const x=norm(raw);
+  const o={};
+  /* numero do cartao: a maior sequencia de digitos (aceita espaco e ponto no meio) */
+  const nums=(String(raw).match(/\d[\d\s.\-]{9,25}\d/g)||[]).map(s=>s.replace(/[^\d]/g,""));
+  nums.sort((a,b)=>b.length-a.length);
+  o.numero = nums.length? nums[0] : "";
+  /* validade */
+  const val=x.match(/valid(?:ade|o ate|o até)[^\d]{0,12}(\d{2}[\/\-.]\d{2,4}(?:[\/\-.]\d{2,4})?)/) || x.match(/(\d{2}\/\d{4})/);
+  o.validade = val? val[1] : "";
+  /* operadora e produto: linhas em maiuscula, curtas */
+  const lines=String(raw).split(/\n+/).map(l=>l.trim()).filter(l=>l.length>2 && !/^\d+$/.test(l));
+  const caps=lines.filter(l=>l.length<=34 && l===l.toUpperCase() && /[A-ZÀ-Ý]{3}/.test(l));
+  o.operadora = caps[0]||"";
+  o.produto = (x.match(/(?:plano|produto|acomoda[cç][aã]o)\s*:?\s*([^\n]{3,34})/)||[])[1]||caps[1]||"";
+  /* nome do titular: linha em maiuscula com pelo menos duas palavras e sem numero */
+  o.titular = (caps.find(l=>/\s/.test(l) && !/\d/.test(l) && l.split(/\s+/).length>=2 && l!==o.operadora)||"");
+  o.ans = (x.match(/ans[^\d]{0,10}(\d{5,6})/)||[])[1]||"";
+  return (o.numero||o.operadora)? o : null;
+}
+function cardSave(o, img){
+  const c={id:uid(), date:todayISO(), img:img||"", operadora:o.operadora||"", produto:o.produto||"",
+           numero:o.numero||"", validade:o.validade||"", titular:o.titular||"", ans:o.ans||"", nota:""};
+  cards().push(c); save();
+  return c;
+}
+function cardsCard(){
+  const list=cards();
+  let h='<div class="card">'+cardHead("card", t("pl.cardTitle"), t("pl.sub"),
+    '<button class="btn sm ghost" id="pl_new">'+I("camera")+t("pl.scan")+"</button>");
+  if(!list.length) h+=emptyBox("card", t("pl.none"), t("pl.noneSub"));
+  else h+='<div class="grid gauto">'+list.map(c=>
+    '<div class="plcard">'+(c.img?'<img src="'+c.img+'" alt="">':"")+
+    '<div class="op">'+esc(c.operadora||t("pl.card"))+"</div>"+
+    (c.produto?'<div class="tiny muted">'+esc(c.produto)+"</div>":"")+
+    '<div class="num" id="pln_'+c.id+'">'+esc(fmtCardNum(c.numero))+"</div>"+
+    '<div class="tiny muted">'+(c.titular?esc(c.titular)+" · ":"")+(c.validade?t("pl.until")+" "+esc(c.validade):"")+(c.ans?" · ANS "+esc(c.ans):"")+"</div>"+
+    '<div class="row" style="margin-top:8px"><button class="btn xs line" data-plcopy="'+c.id+'">'+I("file")+t("pl.copy")+'</button>'+
+    '<button class="btn xs ghost" data-plshare="'+c.id+'">'+I("share")+t("common.share")+'</button>'+
+    '<button class="btn xs ghost" data-pldel="'+c.id+'">'+I("trash")+"</button></div></div>").join("")+"</div>";
+  h+='<p class="tiny muted" style="margin-top:10px">'+t("pl.note")+"</p></div>";
+  return h;
+}
+function fmtCardNum(n){ return String(n||"").replace(/(\d{4})(?=\d)/g,"$1 ").trim() || "—"; }
+function wireCards(){
+  const nb=document.getElementById("pl_new");
+  if(nb) nb.onclick=()=>{ askConsent("camera",()=>{ SCANMODE="card"; go("scan"); }); };
+  document.querySelectorAll("[data-plcopy]").forEach(b=>b.onclick=()=>{
+    const c=cards().find(x=>x.id===b.getAttribute("data-plcopy")); if(!c) return;
+    const txt=[c.operadora,c.produto,c.numero,c.titular].filter(Boolean).join(" · ");
+    if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>toast(t("pl.copied")),()=>toast(txt));
+    else toast(txt);
+  });
+  document.querySelectorAll("[data-plshare]").forEach(b=>b.onclick=()=>{
+    const c=cards().find(x=>x.id===b.getAttribute("data-plshare")); if(!c) return;
+    const txt=[c.operadora,c.produto,c.numero,c.titular,c.validade?t("pl.until")+" "+c.validade:""].filter(Boolean).join("\n");
+    if(navigator.share) navigator.share({title:t("pl.cardTitle"), text:txt}).catch(()=>{});
+    else if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>toast(t("pl.copied")));
+    else toast(txt);
+  });
+  document.querySelectorAll("[data-pldel]").forEach(b=>b.onclick=()=>confirmBox(t("pl.delAsk"),()=>{
+    STATE.cards=cards().filter(x=>x.id!==b.getAttribute("data-pldel")); save(); render(); toast(t("common.done"));
+  }));
+}
+
+/* ---------- 64. NOVIDADES: o que mudou em cada versão ---------- */
+/* Por que: a pessoa atualiza e não sabe o que ganhou. A bolinha no botão de ajuda some
+   assim que ela lê — e o que ela já leu fica guardado por versão. */
+let NEWS=null, NEWSTRIED=false;
+function newsSeen(){ return (ROOT.prefs && ROOT.prefs.newsSeen) || ""; }
+function markNewsSeen(v){ ROOT.prefs.newsSeen=v||APP_VERSION; saveRoot(); paintNewsDot(); }
+function loadNews(cb){
+  if(NEWS){ cb(NEWS); return; }
+  if(NEWSTRIED){ cb(null); return; }
+  NEWSTRIED=true;
+  /* aberto solto no computador (file:) o navegador nao deixa ler arquivo vizinho */
+  if(location.protocol==="file:"){ cb(null); return; }
+  fetch("versoes.json?ts="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{
+    NEWS=(j&&j.versoes)?j:null; cb(NEWS); paintNewsDot();
+  }).catch(()=>cb(null));
+}
+function hasNews(){ return !!(NEWS && NEWS.versoes.length && cmpVer(NEWS.versoes[0].v, newsSeen())>0); }
+function paintNewsDot(){
+  const b=document.getElementById("helpbtn"); if(!b) return;
+  let d=b.querySelector(".badge");
+  if(hasNews()){ if(!d){ d=document.createElement("span"); d.className="badge"; b.appendChild(d); } }
+  else if(d) d.remove();
+}
+function newsList(){
+  if(!NEWS) return "";
+  return NEWS.versoes.map(v=>{
+    const novo=cmpVer(v.v, newsSeen())>0;
+    const itens=(LANG==="pt"?v.pt:v.en)||[];
+    return '<div class="verrow'+(novo?" new":"")+'"><h4>'+(novo?'<span class="dot-new"></span>':"")+"v"+esc(v.v)+
+      '<small class="muted" style="font-weight:600">'+(v.data?fmtDate(v.data):"")+"</small></h4>"+
+      "<ul>"+itens.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ul></div>";
+  }).join("");
+}
+function newsScreen(){
+  let h='<div class="card">'+cardHead("sparkles", t("nw.title"), t("nw.sub"),
+    '<span class="pill acc">v'+APP_VERSION+"</span>");
+  h+='<div class="verlist" id="newslist">'+(NEWS? newsList() : '<p class="muted">'+t(location.protocol==="file:"?"nw.fileOnly":"nw.loading")+"</p>")+"</div>";
+  h+='<p class="tiny muted" style="margin-top:10px">'+t("nw.note")+"</p></div>";
+  return h;
+}
+function openNews(){
+  const m=modal('<div class="mh"><div class="row nowrap"><span class="ibub">'+I("sparkles")+'</span><div><h2 style="margin:0">'+t("nw.title")+'</h2><small class="muted">'+t("nw.sub")+"</small></div></div></div>"+
+    '<div class="verlist" id="newsbox">'+(NEWS? newsList() : '<p class="muted">'+t("nw.loading")+"</p>")+"</div>"+
+    '<p class="tiny muted">'+t("nw.note")+"</p>", {wide:true});
+  loadNews(()=>{ const b=m.querySelector("#newsbox");
+    if(b) b.innerHTML = NEWS? newsList() : '<p class="muted">'+t(location.protocol==="file:"?"nw.fileOnly":"nw.none")+"</p>";
+    markNewsSeen(); });
+  if(NEWS) markNewsSeen();
+  return m;
+}
+
+/* ---------- 11b. GAVETA LATERAL (☰) E BARRA DE FAVORITOS ---------- */
+/* Por que: as 5 áreas grandes resolvem o dia a dia, mas quem procura uma função específica
+   não deveria caçar dentro de "Mais". O ☰ mostra tudo de uma vez, agrupado, em qualquer tela.
+   E o rodapé do celular passa a ser só o que a própria pessoa escolheu. */
+const DRAWER_GROUPS=[
+ {k:"nav.train",    ic:"dumbbell", items:["workout","ex","body","fisio","warm"]},
+ {k:"dw.day",       ic:"leaf",     items:["diet","progress","scan"]},
+ {k:"dw.tools",     ic:"grid",     items:["ia","timer","mirror","news"]},
+ {k:"dw.account",   ic:"user",     items:["set:perfil","set:pref","set:avisos","set:conta","set:dados","set:sobre"]},
+ {k:"dw.pro",       ic:"shield",   items:["coach","ads","admin"]}
+];
+/* itens que não são rota: abrem uma janela em vez de mudar de tela */
+const DRAWER_EXTRA={
+  timer:  {ic:"timer",    k:"tm.short",    run:()=>openTimer()},
+  mirror: {ic:"video",    k:"mir.open",    run:()=>openMirror(), feat:"mirror"},
+  news:   {ic:"sparkles", k:"nw.title",    run:()=>openNews(), dot:()=>hasNews()},
+  help:   {ic:"help",     k:"help.title",  run:()=>openHelp("tutorial")}
+};
+const SET_LABEL={perfil:"st.tabProfile", pref:"st.tabPrefs", avisos:"nt.short", conta:"st.tabAccount", dados:"st.tabData", sobre:"st.about"};
+let DRAWER_LAST=null;
+function drawerItemHTML(id){
+  if(id.indexOf("set:")===0){
+    const sub=id.slice(4);
+    return '<button class="ditem" data-go="set" data-sub="'+sub+'">'+I("sliders")+'<span class="dl">'+t(SET_LABEL[sub]||"nav.set")+"</span></button>";
+  }
+  const ex=DRAWER_EXTRA[id];
+  if(ex){
+    if(ex.feat && !canUse(ex.feat)) return "";
+    return '<button class="ditem" data-drun="'+id+'">'+I(ex.ic)+'<span class="dl">'+t(ex.k)+"</span>"+((ex.dot&&ex.dot())?'<span class="dot-new"></span>':"")+"</button>";
+  }
+  const r=routeInfo(id);
+  if(!r || r.roles.indexOf(uiRole())<0) return "";
+  return '<button class="ditem'+(ROUTE===id?" on":"")+'" data-go="'+id+'">'+I(r.ic)+'<span class="dl">'+t(r.k)+"</span>"+(ROUTE_FEAT[id]?lockBadge(ROUTE_FEAT[id]):"")+"</button>";
+}
+function buildDrawer(){
+  const box=document.getElementById("drawerbody"); if(!box) return;
+  let h='<button class="ditem big" data-go="home">'+I("home")+'<span class="dl">'+t("nav.home")+"</span></button>";
+  DRAWER_GROUPS.forEach(g=>{
+    const items=g.items.map(drawerItemHTML).filter(Boolean);
+    if(!items.length) return;
+    h+='<div class="dgroup"><div class="dg">'+I(g.ic)+t(g.k)+"</div>"+items.join("")+"</div>";
+  });
+  h+='<div class="dgroup"><div class="dg">'+I("help")+t("help.title")+"</div>"+
+     drawerItemHTML("help")+
+     '<button class="ditem" data-dlegal="1">'+I("file")+'<span class="dl">'+t("legal.title")+"</span></button></div>";
+  h+='<p class="tiny muted" style="padding:10px 14px 0">RiseONE v'+APP_VERSION+"</p>";
+  box.innerHTML=h;
+  fillIcons(box);
+  box.querySelectorAll("[data-drun]").forEach(b=>b.onclick=()=>{ const ex=DRAWER_EXTRA[b.getAttribute("data-drun")]; closeDrawer(); if(ex) ex.run(); });
+  box.querySelectorAll("[data-dlegal]").forEach(b=>b.onclick=()=>{ closeDrawer(); legalModal(); });
+  box.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>closeDrawer()));
+}
+function openDrawer(){
+  const d=document.getElementById("drawer"), bk=document.getElementById("drawerback"), bt=document.getElementById("menubtn");
+  if(!d) return;
+  DRAWER_LAST=document.activeElement;
+  buildDrawer();
+  bk.classList.remove("hidden"); d.classList.remove("hidden");
+  requestAnimationFrame(()=>{ bk.classList.add("show"); d.classList.add("show"); });
+  if(bt) bt.setAttribute("aria-expanded","true");
+  document.body.classList.add("noscroll");
+  setTimeout(()=>d.focus(),60);
+}
+function closeDrawer(){
+  const d=document.getElementById("drawer"), bk=document.getElementById("drawerback"), bt=document.getElementById("menubtn");
+  if(!d || d.classList.contains("hidden")) return;
+  d.classList.remove("show"); bk.classList.remove("show");
+  if(bt) bt.setAttribute("aria-expanded","false");
+  document.body.classList.remove("noscroll");
+  setTimeout(()=>{ d.classList.add("hidden"); bk.classList.add("hidden"); },220);
+  if(DRAWER_LAST && DRAWER_LAST.focus) try{ DRAWER_LAST.focus(); }catch(e){}
+}
+function toggleDrawer(){ const d=document.getElementById("drawer"); if(d && d.classList.contains("hidden")) openDrawer(); else closeDrawer(); }
+/* --- barra de baixo: só os favoritos da pessoa --- */
+const FAV_DEF=["home","workout","diet","progress","fisio"];
+function favs(){
+  const f=(ROOT.prefs && ROOT.prefs.favs) || null;
+  const list=(f&&f.length? f : FAV_DEF).filter(id=>{ const r=routeInfo(id); return r && r.roles.indexOf(uiRole())>=0; });
+  return list.length? list.slice(0,5) : visibleRoutes().slice(0,5).map(r=>r.id);
+}
+function setFavs(list){ ROOT.prefs.favs=list.slice(0,5); saveRoot(); buildNav(); }
+function favsCard(){
+  const cur=favs();
+  const opts=visibleRoutes().filter(r=>r.id!=="more");
+  let h='<div class="card">'+cardHead("grid", t("fav.title"), t("fav.sub"));
+  h+='<div class="chips">'+opts.map(r=>{
+    const on=cur.indexOf(r.id)>=0;
+    return '<button class="chip '+(on?"on":"")+'" data-fav="'+r.id+'" aria-pressed="'+(on?"true":"false")+'">'+I(r.ic)+t(r.k)+"</button>";
+  }).join("")+"</div>";
+  h+='<p class="tiny muted" style="margin-top:10px">'+t("fav.note")+'</p>';
+  h+='<div class="row"><button class="btn xs ghost" id="favreset">'+I("refresh")+t("fav.reset")+"</button></div></div>";
+  return h;
+}
+function wireFavsCard(){
+  document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{
+    const id=b.getAttribute("data-fav"); const cur=favs().slice();
+    const i=cur.indexOf(id);
+    if(i>=0){ if(cur.length<=1){ toast(t("fav.min")); return; } cur.splice(i,1); }
+    else { if(cur.length>=5){ toast(t("fav.max")); return; } cur.push(id); }
+    setFavs(cur); render();
+  });
+  const r=document.getElementById("favreset");
+  if(r) r.onclick=()=>{ ROOT.prefs.favs=null; saveRoot(); buildNav(); render(); };
+}
+
+/* ---------- 65. DUAS POSIÇÕES E MOVIMENTO GIRANDO ---------- */
+/* Por que: um boneco mexendo ajuda, mas na hora de conferir a postura a pessoa quer parar e olhar.
+   No computador cabem as duas posições lado a lado; no celular cabe uma só, girando, com pausa.
+   OBSERVAÇÃO HONESTA: aqui "duas vistas" são as duas POSIÇÕES do movimento (início e fim).
+   Um desenho de verdade visto de lado exigiria um segundo desenho para cada exercício — não é
+   uma rotação do que já existe, e inventar isso mostraria uma postura errada. Ficou pendente. */
+function viewCell(animId, frame, cap, cls){
+  return '<figure class="vwcell '+cls+'">'+animSVG(animId, frame===null?{}:{frame:frame})+
+    '<figcaption class="viewcap">'+esc(cap)+"</figcaption></figure>";
+}
+function exViewer(animId){
+  if(!animId || !ANIM[animId]) return "";
+  const wide = (typeof window!=="undefined" && window.innerWidth>=820);
+  const mode = wide? "pair" : "move";
+  return '<div class="viewgrid" id="vgrid" data-mode="'+mode+'">'+
+      viewCell(animId, 0, t("vw.start"), "stat")+
+      viewCell(animId, 1, t("vw.end"), "stat")+
+      viewCell(animId, null, t("vw.move"), "mov")+
+    "</div>"+
+    '<div class="viewctl">'+
+      '<div class="seg" style="flex:1;max-width:280px"><button class="'+(mode==="pair"?"on":"")+'" data-vmode="pair">'+I("layers")+t("vw.pair")+'</button>'+
+      '<button class="'+(mode==="move"?"on":"")+'" data-vmode="move">'+I("refresh")+t("vw.rot")+"</button></div>"+
+      '<button class="btn xs line" id="vpause">'+I("pause")+t("tm.pause")+"</button></div>"+
+    '<p class="tiny muted" style="text-align:center;margin:.3em 0 .8em">'+t("vw.note")+"</p>";
+}
+function wireViewer(root){
+  root=root||document;
+  const g=root.querySelector("#vgrid"); if(!g) return;
+  root.querySelectorAll("[data-vmode]").forEach(b=>b.onclick=()=>{
+    g.setAttribute("data-mode", b.getAttribute("data-vmode"));
+    root.querySelectorAll("[data-vmode]").forEach(x=>x.classList.toggle("on", x===b));
+  });
+  const pb=root.querySelector("#vpause");
+  if(pb) pb.onclick=()=>{
+    const sv=g.querySelector(".mov svg.anim"); if(!sv) return;
+    const parado=sv.hasAttribute("data-static");
+    if(parado) sv.removeAttribute("data-static"); else sv.setAttribute("data-static","1");
+    pb.innerHTML=(parado? I("pause")+t("tm.pause") : I("play")+t("tm.resume"));
+    g.setAttribute("data-mode","move");
+    root.querySelectorAll("[data-vmode]").forEach(x=>x.classList.toggle("on", x.getAttribute("data-vmode")==="move"));
+  };
+}
+
 /* ---------- 32. INICIALIZACAO ---------- */
 function boot(){
   loadRoot();
   LANG = ROOT.prefs.lang || "pt";
   applyTheme(ROOT.prefs.theme || "dark");
   applyBg(ROOT.prefs.bg===undefined ? true : !!ROOT.prefs.bg);
+  applyA11y();
   document.documentElement.lang = LANG==="pt"?"pt-BR":"en";
   paintLangBtn();
   document.getElementById("vertxt").textContent = "v"+APP_VERSION;
   document.querySelectorAll("[data-i18n]").forEach(n=>{ n.textContent=t(n.getAttribute("data-i18n")); });
 
   const s=ROOT.session;
-  if(!s){ STATE=defaultState(); GUEST=true; buildNav(); render(); paintAd(); loginModal(); popupBeforeLogin(); return; }
+  if(!s){ STATE=defaultState(); GUEST=true; buildNav(); render(); paintAd();
+          gateDisclaimer(()=>{ loginModal(); popupBeforeLogin(); }); return; }
   if(s.role==="guest"){ GUEST=true; STATE=STATE&&GUEST?STATE:defaultState(t("role.guest")); }
   else { GUEST=false; STATE=Object.assign(defaultState(s.name), ROOT.data[s.uid]||{});
          STATE.anam=Object.assign(defaultAnam(), STATE.anam||{});
@@ -6460,8 +8586,7 @@ function boot(){
          if(!STATE.profile.name) STATE.profile.name=s.name; }
   if(ROUTE!=="home" && visibleRoutes().every(r=>r.id!==ROUTE)) ROUTE="home";
   buildNav(); render(); paintAd(); cloudCaptureToken();
-  maybeWelcome();
-  popupAfterLogin();
+  gateDisclaimer(()=>{ maybeWelcome(); popupAfterLogin(); });
 }
 function paintLangBtn(){ document.querySelectorAll("#langbtn .lg").forEach(n=>n.classList.toggle("on", n.getAttribute("data-lg")===LANG)); }
 
@@ -6473,9 +8598,16 @@ document.getElementById("iabtn").onclick=()=>go("ia");
 document.getElementById("helpbtn").onclick=()=>openHelp(ROUTE==="home"?"tutorial":"tela");
 document.getElementById("whoami").onclick=()=>loginModal();
 document.getElementById("brandbtn").onclick=()=>go("home");
+/* gaveta lateral: abre no ☰, fecha no ×, no Esc, tocando fora e ao escolher o destino */
+document.getElementById("menubtn").onclick=toggleDrawer;
+document.getElementById("drawerclose").onclick=closeDrawer;
+document.getElementById("drawerback").onclick=closeDrawer;
 document.getElementById("legalbtn").onclick=e=>{ e.preventDefault(); legalModal(); };
 window.addEventListener("beforeunload", ()=>{ stopCam(); });
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && TOURST.active) tourEnd(); });
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape" && TOURST.active){ tourEnd(); return; }
+  if(e.key==="Escape"){ closeDrawer(); }
+});
 fillIcons(document);
 checkBgArt(); checkHelpIcon(); checkPhotos();
 
@@ -6498,6 +8630,7 @@ registerSW();
 loadAnuncios();
 loadServicos();
 setTimeout(checkUpdate, 4000);
+loadNews(()=>{});
 /* atalhos do manifesto: index.html#workout, #timer, #scan, #progress */
 (function(){
   const h=(location.hash||"").replace("#","");
@@ -6509,7 +8642,8 @@ boot();
 
 /* API publica e estavel do app: o que outro codigo (ou uma IA) pode chamar sem mexer por dentro.
    pode(recurso) decide permissao; entrar(sessao)/sair() decidem identidade. Com servidor, muda aqui e nada mais. */
-window.RISE={ versao:APP_VERSION, atualizar:forceUpdate, versaoDoSite:siteVersion, pode:canUse, entrar:entrar, sair:sair, idioma:applyLang, tema:applyTheme, ir:go, ajuda:openHelp, tutorial:tourStart, guia:wizRun };
+window.RISE={ versao:APP_VERSION, atualizar:forceUpdate, versaoDoSite:siteVersion, pode:canUse, entrar:entrar, sair:sair, idioma:applyLang, tema:applyTheme, ir:go, ajuda:openHelp, tutorial:tourStart, guia:wizRun, novidades:openNews, menu:toggleDrawer, favoritos:setFavs,
+  falar:speak, calar:()=>speak(""), acessibilidade:setA11y, privacidade:()=>go("set","dados"), aviso:()=>disclaimerModal(true), cid:cidSearch };
 </script>
 </body>
 </html>

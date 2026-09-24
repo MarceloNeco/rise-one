@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RiseONE — teste das diretrizes (v3.0.1)</title>
+<title>RiseONE — teste das diretrizes (v3.1.0)</title>
 <style>
 :root{--bg:#0f1115;--card:#171a20;--card2:#1d222a;--bd:#2a303b;--tx:#f2f4f8;--tx2:#a7b0bf;--ac:#ff7a2f;--ok:#2ecc8f;--no:#ff5d5d;--wr:#ffb020}
 *{box-sizing:border-box}
@@ -43,17 +43,25 @@ code{background:var(--card2);border:1px solid var(--bd);border-radius:6px;paddin
   <h2 style="margin-top:0">Confira na mão, dentro do app</h2>
   <div class="item"><span class="dot">1</span><div><span class="k">Faixa do topo na ordem da diretriz</span><br><small class="mut">[PT | EN] · [IA] · [ANÚNCIO na vertical] · [anúncios rolando para a esquerda] · [×]. O × fecha só os anúncios; o PT | EN continua. Conta Premium vê só PT | EN e IA.</small></div></div>
   <div class="item"><span class="dot">2</span><div><span class="k">Idioma e datas</span><br><small class="mut">Trocar PT | EN muda tudo, inclusive as datas: <code>19/Set/2026</code> em PT e <code>Sep/19/2026</code> em EN.</small></div></div>
-  <div class="item"><span class="dot">3</span><div><span class="k">Cinco áreas</span><br><small class="mut">Início, Treinar (Treino · Exercícios · Corpo · Aquecer & Alongar), Dieta, Evolução (Hoje · Peso · Fotos · Medidas · Exames · Missões) e Mais. No celular vira barra de baixo.</small></div></div>
+  <div class="item"><span class="dot">3</span><div><span class="k">Cinco áreas</span><br><small class="mut">Início, Treinar (Treino · Exercícios · Corpo · Dor e alívio · Aquecer & Alongar), Dieta, Evolução (Hoje · Peso · Fotos · Medidas · Exames · Missões) e Mais.</small></div></div>
+  <div class="item"><span class="dot">3b</span><div><span class="k">Menu ☰ e barra de favoritos</span><br><small class="mut">O ☰ fica no topo, à esquerda do nome do app, em todas as telas: abre a gaveta com <b>todas</b> as funções agrupadas. Fecha no ×, no Esc, tocando fora e ao escolher o destino — e o foco volta para o ☰. A barra de baixo do celular mostra só os favoritos (até 5), escolhidos em Mais › Preferências; não tem ☰ nem "Mais".</small></div></div>
   <div class="item"><span class="dot">4</span><div><span class="k">Botão Ajuda (Assist ONE)</span><br><small class="mut">Um botão só abre: Tutorial (destaque na tela de verdade), Guia passo a passo (Primeiros passos e Ficha de saúde, com pular, salvar e retomar), Buscar por termo e Esta tela. Tudo em PT e EN. Na primeira vez o app oferece o tutorial.</small></div></div>
   <div class="item"><span class="dot">5</span><div><span class="k">Conta com apelido, e-mail e recuperação</span><br><small class="mut">Ao criar a conta aparece um código <code>RISE-XXXX-XXXX</code>. Teste "Esqueci a senha" com ele: ao usar, o app gera um código novo e o antigo deixa de valer. Senha guardada com PBKDF2.</small></div></div>
   <div class="item"><span class="dot">6</span><div><span class="k">Pop-up em dois momentos</span><br><small class="mut">Um antes do login e outro depois (app diferente), com contagem 3-2-1 antes de liberar o X. Deitado no computador, em pé no celular. Botão "Conhecer".</small></div></div>
   <div class="item"><span class="dot">7</span><div><span class="k">Níveis Visitante → Membro → Premium</span><br><small class="mut">Entre como Administrador: marque cada recurso, use "Ver o app como" (tarja amarela de modo de teste) e baixe o <code>servicos.json</code>.</small></div></div>
   <div class="item"><span class="dot">8</span><div><span class="k">Avisos com horário silencioso</span><br><small class="mut">Mais › Avisos: tipos ligados um a um, horário silencioso que segura e solta depois; lembrete marcado como urgente passa.</small></div></div>
   <div class="item"><span class="dot">9</span><div><span class="k">Modelos de treino e fotos</span><br><small class="mut">Treinar › Modelos prontos: quatro treinos de exemplo. Com o arquivo <code>fotos-exercicios.jpg</code> na raiz, alguns exercícios mostram as fotos das posições.</small></div></div>
-  <div class="item"><span class="dot">10</span><div><span class="k">Ler com a câmera (OCR)</span><br><small class="mut">Mais › Ler com a câmera: rótulo, ficha de treino, balança, exame e medidas.</small></div></div>
+  <div class="item"><span class="dot">10</span><div><span class="k">Ler com a câmera (OCR)</span><br><small class="mut">Mais › Ler com a câmera: rótulo, ficha de treino, balança, exame, <b>carteirinha do plano</b> e medidas. A câmera tem zoom, temporizador de 3 e 10 s, inverter e borrar o fundo; foto tremida é recusada antes de tentar ler.</small></div></div>
+  <div class="item"><span class="dot">10b</span><div><span class="k">Rótulo por inteiro</span><br><small class="mut">Fotografe um rótulo: além da tabela, o app separa marca, ingredientes, aditivos com o número INS, selos (diet, light, zero, sem lactose, vegano…), avisos de "alto em" e o semáforo de quanto o produto é processado — com o critério escrito na própria tela.</small></div></div>
+  <div class="item"><span class="dot">10c</span><div><span class="k">Dor e alívio + tabela CID</span><br><small class="mut">Treinar › Dor e alívio: toque no desenho do corpo (frente e costas) ou escreva a dor. Cada situação traz o código CID-10, alongamentos, exercícios e o aviso de que nada substitui profissional. A tabela de códigos baixa uma vez, mostra quanto ocupa e pode ser apagada.</small></div></div>
+  <div class="item"><span class="dot">10d</span><div><span class="k">Voz do treinador</span><br><small class="mut">Mais › Preferências › Voz do treinador: ligue e comece um aquecimento. O app anuncia cada movimento, conta os últimos segundos e avisa o descanso. Em "Responder por voz", fale "próximo", "pausa" ou "voltar". Se não sair som, use a página <a href="TESTE-VOZ-riseone.html">TESTE-VOZ-riseone.html</a>.</small></div></div>
+  <div class="item"><span class="dot">10e</span><div><span class="k">Exames viram gráfico</span><br><small class="mut">Evolução › Exames: cada indicador ganha sua linha do tempo. A faixa de referência mostrada é a impressa no seu laudo — o app não inventa faixa nem diz se o valor é bom.</small></div></div>
   <div class="item"><span class="dot">11</span><div><span class="k">Assistente de IA</span><br><small class="mut">Botão IA da faixa: cole a sua chave (Gemini, OpenAI ou Claude) e pergunte algo.</small></div></div>
   <div class="item"><span class="dot">12</span><div><span class="k">Conferência de versão</span><br><small class="mut">Mais › Sobre mostra a versão deste aparelho e a publicada no site. Se o site estiver mais novo, o Início avisa e o botão "Atualizar agora" limpa o cache e recarrega.</small></div></div>
-  <div class="item"><span class="dot">13</span><div><span class="k">Arte de fundo e tema</span><br><small class="mut">Mais › Preferências: tema escuro/claro e arte de fundo ligada/desligada. No tema claro entra a versão clara da arte.</small></div></div>
+  <div class="item"><span class="dot">13</span><div><span class="k">Acessibilidade</span><br><small class="mut">Mais › Preferências › Acessibilidade: letra maior, alto contraste, reduzir animações, sublinhar links, modo leitura e ler a tela em voz alta. Confira também a 320 px de largura: nada pode rolar para o lado.</small></div></div>
+  <div class="item"><span class="dot">14</span><div><span class="k">Privacidade e aviso legal</span><br><small class="mut">Na primeira abertura aparece o "Estou ciente". Mais › Dados traz a tela de Privacidade: autorização por finalidade, exportar, apagar por grupo e apagar tudo, com a base legal e a data em que foi conferida.</small></div></div>
+  <div class="item"><span class="dot">15</span><div><span class="k">Novidades por versão</span><br><small class="mut">Mais › Novidades lista o que cada versão trouxe, em PT e EN, com selo na entrada nova até você abrir uma vez. Vem do <code>versoes.json</code>.</small></div></div>
+  <div class="item"><span class="dot">16</span><div><span class="k">Arte de fundo e tema</span><br><small class="mut">Mais › Preferências: tema escuro/claro e arte de fundo ligada/desligada. No tema claro entra a versão clara da arte.</small></div></div>
 </div>
 
 <div class="card">
@@ -86,7 +94,24 @@ function run(){
   line(A, !!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia), 'Câmera disponível', 'Usada pelo OCR e pelo espelho.');
   line(A, navigator.onLine, 'Conexão', navigator.onLine? 'online':'offline — o app ainda deve abrir pelo cache');
   line(A, !!window.indexedDB && !!window.localStorage, 'Armazenamento local', 'Onde ficam treinos, fotos e medidas.');
-  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg','anuncios.json','servicos.json','ARQUITETURA.md'].forEach(f=>{
+  const ss = 'speechSynthesis' in window;
+  line(A, ss, 'Navegador fala (voz do treinador)', ss? 'Abra Mais › Preferências › Voz do treinador e toque em Testar.' : 'Este navegador não tem voz. Tente o Chrome ou o Safari atualizado.');
+  line(A, !!(window.SpeechRecognition||window.webkitSpeechRecognition), 'Navegador entende comando de voz', 'Funciona melhor no Chrome do Android.');
+  const csp = !!document.querySelector('meta[http-equiv="Content-Security-Policy"]');
+  fetch('index.html').then(r=>r.text()).then(tx=>{
+    line(A, tx.indexOf('Content-Security-Policy')>=0, 'Política de conteúdo (CSP) no index.html', 'Limita de onde o app pode carregar script e para onde pode falar.');
+    const m = tx.match(/APP_VERSION = "([^"]+)"/);
+    return fetch('sw.js').then(r=>r.text()).then(sw=>{
+      const c = sw.match(/riseone-v([0-9][0-9A-Za-z.\-]*)/);
+      const igual = m && c && m[1]===c[1];
+      line(A, igual, 'index.html e sw.js na mesma versão', m&&c? ('index '+m[1]+' · sw '+c[1]+(igual?'':' — suba o CACHE_VER do sw.js')) : 'não consegui ler as versões');
+      return fetch('versoes.json').then(r=>r.json()).then(j=>{
+        const v=j.versoes&&j.versoes[0]&&j.versoes[0].v;
+        line(A, m && v===m[1], 'versoes.json na mesma versão', v? ('versoes.json '+v+' · index '+(m?m[1]:'?')) : 'sem lista de versões');
+      });
+    });
+  }).catch(()=>line(A,null,'Conferência de versões','só funciona servido por http:// ou https://'));
+  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg','anuncios.json','servicos.json','cid.json','versoes.json','ARQUITETURA.md','CREDITOS.md','LICENSE','TESTE-VOZ-riseone.html'].forEach(f=>{
     fetch(f,{method:'HEAD'}).then(r=>line(F, r.ok, f, r.ok? 'encontrado':'faltando na raiz'))
       .catch(()=>line(F,false,f,'faltando na raiz'));
   });

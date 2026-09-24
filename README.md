@@ -5,6 +5,69 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.1.0 — dor e alívio, voz, câmera e privacidade
+
+**Dor e alívio (Treinar › Dor e alívio)**
+
+- Toque no desenho do corpo, na frente ou nas costas, ou escreva a dor com as suas palavras
+  (*"dor no pescoço"*), o nome técnico (*"cervicalgia"*) ou o código (*"M54.2"*).
+- 27 situações comuns — manguito rotador, cotovelo de tenista, túnel do carpo, lombalgia, hérnia de
+  disco, ciática, artrose de joelho e de quadril, fascite plantar, tendinite de Aquiles, fibromialgia e
+  outras — cada uma com o que é em português claro, o que evitar, os **alongamentos**, os **exercícios de
+  fortalecimento** e o **código CID-10**.
+- Dois botões: **fazer os alongamentos agora** (conduz movimento a movimento, com tempo e voz) e
+  **criar treino desta área** (monta um treino com os exercícios indicados).
+- **Nada disso é consulta.** O aviso fica no alto da tela e há um botão dizendo quando procurar um
+  profissional.
+- **Tabela de códigos CID** para consulta: baixa uma vez, fica guardada no aparelho, funciona sem
+  internet, mostra quanto ocupa e pode ser apagada num botão. Os códigos **TUSS/TISS ficam em branco de
+  propósito** — eles vêm da tabela oficial da ANS e não podem ser inventados.
+
+**Voz do treinador (Mais › Preferências › Voz do treinador)**
+
+- O app fala o exercício, as séries e as repetições, anuncia cada movimento do aquecimento, conta os
+  últimos segundos e avisa quando o descanso acaba. Velocidade, tom e volume ajustáveis.
+- **Responder por voz**: diga "próximo", "pausa", "voltar", "continuar" ou "terminei".
+- Usa a voz do próprio aparelho — sai na hora, sem internet e sem gastar cota de nenhum serviço.
+- Se não sair som, há um botão **"Não estou ouvindo"** com o passo a passo (inclusive o Forçar parada do
+  Android, para o navegador enxergar uma voz recém-instalada) e a página avulsa
+  `TESTE-VOZ-riseone.html`.
+
+**Câmera e leitura**
+
+- Zoom, temporizador de 3 e 10 segundos, inverter câmera e borrar o fundo para fotografar em público.
+- **Foto tremida é recusada antes de tentar ler**, com três dicas para sair melhor.
+- **Rótulo por inteiro**: marca, lista de ingredientes, aditivos com o número INS e para que servem,
+  selos que a embalagem anuncia (diet, light, zero, low carb, sem lactose, sem glúten, vegano,
+  vegetariano, integral, orgânico), avisos de **"alto em"** açúcar, gordura saturada e sódio pelos limites
+  da rotulagem frontal brasileira, e um **semáforo** de quanto o produto é processado — com o critério
+  escrito na própria tela (é um critério do app, não classificação oficial).
+- **Carteirinha do plano de saúde**: fotografe e o app separa operadora, plano, número, titular e
+  validade. Fica só no seu aparelho, com botão de copiar e de compartilhar.
+- **Exames viram gráfico**: o app reconhece 32 indicadores (glicose, HbA1c, colesterol, HDL, LDL,
+  triglicerídeos, TSH, vitamina D, creatinina…) e desenha a linha do tempo de cada um. A faixa de
+  referência mostrada é a **impressa no seu laudo** — o app não inventa faixa nem diz se o valor é bom.
+
+**Navegação, acessibilidade e privacidade**
+
+- **Menu ☰ no topo**, em todas as telas, com **todas** as funções agrupadas. Fecha no ×, no Esc, tocando
+  fora ou ao escolher o destino.
+- **Barra de baixo do celular com os seus favoritos** (até 5), escolhidos em Mais › Preferências.
+- **Filtro por aparelhos disponíveis**, com o desenho de cada um e a opção "só o corpo". Dá para marcar
+  vários ao mesmo tempo.
+- **Desenhos coloridos**: pessoa em laranja, aparelho e banco em azul, halteres e anilhas em branco.
+- **Duas posições do movimento**: ao abrir um exercício, o computador mostra a posição inicial e a final
+  lado a lado; o celular mostra uma só, girando, com botão de pausa para olhar com calma. *Ainda não
+  existe um desenho visto de lado para cada exercício — isso exigiria redesenhar os 60 movimentos, e
+  girar o desenho atual mostraria uma postura errada.*
+- **Acessibilidade**: letra maior, alto contraste, reduzir animações, sublinhar links, modo leitura e ler
+  a tela em voz alta.
+- **"Estou ciente" na primeira abertura** e tela de **Privacidade e dados** (Mais › Dados): autorização
+  separada por finalidade, exportar tudo, apagar por grupo e apagar tudo, com a base legal e a data em
+  que ela foi conferida.
+- **Novidades** (Mais › Novidades): o que cada versão trouxe, com selo na entrada nova.
+- `LICENSE`, `CREDITOS.md` e política de conteúdo (CSP) no `index.html`.
+
 ## Novo na versão 3.0.1 — aviso de versão
 
 - **O app confere sozinho se está atualizado.** Em Mais › Sobre aparecem duas linhas: a versão neste
@@ -112,8 +175,15 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
 ## Privacidade
 
 Os dados ficam no próprio aparelho (armazenamento do navegador). Nada é enviado para servidores
-do app. O backup é um arquivo `.json` que fica com o usuário. A ligação opcional com Google Drive
-ou OneDrive só funciona quando o próprio usuário informa a chave (Client ID) do serviço dele.
+do app — não existe servidor do RiseONE. O backup é um arquivo `.json` que fica com o usuário. A ligação
+opcional com Google Drive ou OneDrive só funciona quando o próprio usuário informa a chave (Client ID)
+do serviço dele.
+
+A partir da versão 3.1.0 há uma tela própria em **Mais › Dados › Privacidade e dados**: autorização
+separada por finalidade (dados de saúde, câmera, assistente de IA, cópia na nuvem, avisos), exportar
+tudo, apagar por grupo (fotos, exames, medidas, refeições, treinos feitos, registros do dia,
+carteirinhas) e apagar tudo. A mesma tela traz a base legal considerada (LGPD, GDPR, Marco Civil),
+a data em que foi conferida e onde reconferir.
 
 ## Arquivos do pacote
 
@@ -129,8 +199,15 @@ Todos vão soltos na **raiz** do repositório:
 | `fundo-claro.jpg`, `fundo-claro-celular.jpg` | a mesma arte na versão do tema claro |
 | `anuncios.json` | lista de anúncios da faixa e do pop-up (editável) |
 | `servicos.json` | quem pode usar cada recurso (Visitante / Membro / Premium); o admin gera dentro do app |
+| `cid.json` | lista de consulta de códigos CID-10 (musculoesquelético). **Lista inicial** — confira na tabela oficial |
+| `versoes.json` | o que mudou em cada versão; o app desenha a tela "Novidades" a partir dele |
 | `fotos-exercicios.jpg` | opcional: fotos das posições de alguns exercícios |
 | `TESTE-riseone.html` | página de conferência das diretrizes |
+| `TESTE-VOZ-riseone.html` | página avulsa para testar voz e comando de voz no aparelho |
+| `ABRIR-TESTE-riseone.command` | atalho do Mac/Linux: serve a pasta em `http://localhost:8123` e abre a página de teste |
+| `ABRIR-TESTE-riseone.bat` | o mesmo atalho para Windows |
+| `LICENSE` | licença MIT e o aviso de que o app é orientativo |
+| `CREDITOS.md` | de onde vem cada coisa de fora e sob qual licença |
 | `ARQUITETURA.md` | como o app é feito por dentro (leia antes de mexer) |
 
 A pasta `.github` (com `workflows/static.yml`) já está no repositório e **não pode ser apagada** —
@@ -138,15 +215,41 @@ A pasta `.github` (com `workflows/static.yml`) já está no repositório e **nã
 
 ## Como publicar (GitHub Pages)
 
-1. Crie um repositório público chamado `rise-one`.
-2. Envie todos os arquivos do pacote para a raiz do repositório (sem pastas): **Add file › Upload files**, arraste, **Commit changes**.
-3. Em **Settings › Pages**, escolha a branch `main` e a pasta `/ (root)`.
-4. Aguarde alguns minutos e abra `https://marceloneco.github.io/rise-one/`.
+1. Abra `https://github.com/MarceloNeco/rise-one` (o repositório já existe).
+2. Clique em **Add file › Upload files**.
+3. **Importante: não arraste o `index.html` para a janela.** O arquivo tem quase 700 KB e arrastar
+   derruba a aba do Chrome no meio do envio ("Aw, Snap!"), deixando o commit pela metade — foi exatamente
+   isso que segurou a versão 3.0.0 no ar. Clique no link **"choose your files"** e escolha os arquivos
+   pela janela do computador.
+4. Selecione **todos** os arquivos do pacote de uma vez (Ctrl+A na pasta, ou Command+A no Mac) e confirme.
+5. Espere as barrinhas de envio terminarem — o `index.html` é o mais demorado. Só então clique em
+   **Commit changes**.
+6. Espere de 1 a 3 minutos e abra `https://marceloneco.github.io/rise-one/`.
+7. **Confira**: o rodapé precisa mostrar `v3.1.0`. Se mostrar um número antigo, abra Mais › Sobre: o app
+   diz qual versão está publicada no site e oferece **Atualizar agora**.
+
+Se o envio falhar de novo, abra uma janela anônima (Ctrl+Shift+N) e repita — extensões do navegador são
+a outra causa comum de o envio morrer no meio.
+
+### Conferir depois de publicar
+
+Abra `https://marceloneco.github.io/rise-one/TESTE-riseone.html`. A página confere sozinha se todos os
+arquivos chegaram, se o `index.html`, o `sw.js` e o `versoes.json` estão na mesma versão, e lista o que
+conferir na mão dentro do app.
+
+Para testar no computador antes de publicar, dê dois cliques em `ABRIR-TESTE-riseone.command` (Mac ou
+Linux) ou `ABRIR-TESTE-riseone.bat` (Windows): ele serve a pasta em `http://localhost:8123` e abre a
+página de teste. Abrir o `index.html` com dois cliques também funciona, mas a câmera, o service worker
+e os arquivos `.json` só funcionam por `http://` ou `https://`.
 
 ## Aviso
 
-Uso pessoal e para fins de estudo e pesquisa. As informações sobre exercícios, alimentação e
-saúde são informativas e não substituem profissional de educação física, nutricionista ou médico.
+Uso pessoal e para fins de estudo e pesquisa. Treinos, séries, alongamentos, sugestões de dieta e
+leituras de rótulo ou de exame são **meramente orientativos** e **nunca** substituem médico,
+fisioterapeuta, educador físico ou nutricionista. Se sentir dor, falta de ar, tontura ou mal-estar
+durante um exercício, pare na hora e procure atendimento.
+
+O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.0.1
+Versão 3.1.0

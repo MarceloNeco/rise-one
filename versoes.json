@@ -1,0 +1,74 @@
+{
+ "_leia_me": "O que mudou em cada versão do RiseONE. O app lê este arquivo e mostra em Mais › Novidades.",
+ "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
+ "versoes": [
+  {
+   "v": "3.1.0",
+   "data": "2026-09-24",
+   "pt": [
+    "Menu ☰ no topo, em todas as telas: abre uma gaveta lateral com todas as funções agrupadas. Fecha no ×, no Esc, tocando fora ou ao escolher o destino.",
+    "A barra de baixo do celular passa a mostrar só os seus favoritos (até 5), escolhidos em Mais › Preferências.",
+    "Nova área “Dor e alívio”: toque no desenho do corpo, ou escreva a dor, e veja alongamentos e exercícios de apoio, com o código CID-10 de cada situação.",
+    "Tabela de códigos CID para consulta, que fica guardada no aparelho e funciona sem internet — com o tamanho que ocupa e um botão para apagar.",
+    "Voz do treinador: o app fala o exercício, as séries, a contagem e o descanso. Dá para responder por voz: “próximo”, “pausa”, “voltar”.",
+    "Filtro por aparelhos disponíveis, com desenho de cada um e a opção “só o corpo”.",
+    "Desenhos coloridos: pessoa em laranja, aparelho e banco em azul, halteres e anilhas em branco.",
+    "Leitura de rótulo completa: ingredientes, marca, aditivos com o número INS, selos (diet, light, zero, sem lactose, vegano…) e um semáforo de quanto o produto é processado.",
+    "Aviso quando a foto sai tremida, antes de tentar ler.",
+    "Câmera com zoom, temporizador de 3 e 10 segundos, inverter e borrar o fundo.",
+    "Carteirinha do plano de saúde: fotografe e tenha o número sempre à mão.",
+    "Exames viram gráfico: cada indicador com sua linha do tempo.",
+    "Tela de Privacidade e dados, com autorização por finalidade, exportar e apagar.",
+    "Ajustes de acessibilidade: letra maior, mais contraste, desligar animações, sublinhar links e ler a tela em voz alta.",
+    "Aviso de uso na entrada, com o “Estou ciente”.",
+    "Licença, créditos das fontes e política de conteúdo (CSP) no repositório.",
+    "Ao abrir um exercício, o computador mostra a posição inicial e a final lado a lado; o celular mostra uma só, girando, com botão de pausa."
+   ],
+   "en": [
+    "☰ menu at the top, on every screen: it opens a side drawer with every function, grouped. It closes on ×, on Esc, by tapping outside or by choosing a destination.",
+    "The phone's bottom bar now shows only your favourites (up to 5), chosen under More › Preferences.",
+    "New “Pain relief” area: tap the body drawing, or type the pain, and see supporting stretches and exercises, with the ICD-10 code for each situation.",
+    "ICD code reference table, stored on the device and working offline — showing its size and a button to delete it.",
+    "Trainer voice: the app says the exercise, the sets, the countdown and the rest. You can answer by voice: “next”, “pause”, “back”.",
+    "Filter by available equipment, with a drawing of each one and a “bodyweight only” option.",
+    "Coloured drawings: person in orange, machine and bench in blue, dumbbells and plates in white.",
+    "Full label reading: ingredients, brand, additives with their INS number, claims (diet, light, zero, lactose-free, vegan…) and a traffic light for how processed the product is.",
+    "A warning when the photo comes out blurry, before trying to read it.",
+    "Camera with zoom, 3 and 10 second timer, flip and background blur.",
+    "Health insurance card: photograph it and have the number always at hand.",
+    "Lab results become charts: each indicator with its own timeline.",
+    "Privacy and data screen, with consent per purpose, export and delete.",
+    "Accessibility settings: bigger text, higher contrast, animations off, underlined links and read the screen aloud.",
+    "A usage notice on entry, with the “I understand” button.",
+    "Licence, source credits and a content security policy (CSP) in the repository.",
+    "When you open an exercise, the computer shows the starting and end positions side by side; the phone shows a single looping one, with a pause button."
+   ]
+  },
+  {
+   "v": "3.0.1",
+   "data": "2026-09-19",
+   "pt": [
+    "O app pergunta ao site qual versão está publicada e oferece “Atualizar agora”, que limpa o cache e recarrega."
+   ],
+   "en": [
+    "The app asks the site which version is published and offers “Update now”, which clears the cache and reloads."
+   ]
+  },
+  {
+   "v": "3.0.0",
+   "data": "2026-09-19",
+   "pt": [
+    "Navegação refeita em 5 áreas grandes, no lugar de treze abas.",
+    "Central de ajuda com tutorial guiado, guias passo a passo, busca e ajuda por tela.",
+    "Ícones desenhados no lugar de emoji, em todo o app.",
+    "Senha guardada com PBKDF2 e código de recuperação."
+   ],
+   "en": [
+    "Navigation rebuilt into 5 big areas instead of thirteen tabs.",
+    "Help centre with a guided tour, step-by-step guides, search and per-screen help.",
+    "Drawn icons instead of emoji, across the whole app.",
+    "Passwords stored with PBKDF2 and a recovery code."
+   ]
+  }
+ ]
+}
