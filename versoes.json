@@ -3,6 +3,24 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.5.2",
+   "data": "2026-09-25",
+   "pt": [
+    "Correção da tela preta ao abrir o site. O RiseONE guarda uma cópia de si mesmo no navegador para abrir sem internet. Quando a publicação no GitHub ainda está no meio do caminho, o servidor pode devolver a página vazia ou cortada — e essa cópia vazia era aceita e guardada, deixando o app preto nas próximas aberturas.",
+    "Agora o app só aceita a página se ela vier inteira; se vier vazia, cortada ou com erro, ele usa a última cópia boa que tem guardada.",
+    "Rede de segurança nova: se em 9 segundos nada tiver aparecido na tela, o app mostra um aviso explicando o que houve, com um botão que apaga a cópia guardada e abre de novo. Seus treinos, fotos e medidas não são apagados.",
+    "O .zip da entrega voltou a vir com os arquivos soltos na raiz, sem pasta por fora.",
+    "Teste novo (t20): finge uma publicação vazia, uma com erro do servidor, uma que devolve algo que não é página e um script principal quebrado — e reprova se qualquer uma delas deixar a tela preta."
+   ],
+   "en": [
+    "Fix for the black screen when opening the site. RiseONE keeps a copy of itself in the browser so it can open offline. While a GitHub publish is still in flight the server can return the page empty or truncated — and that empty copy was being accepted and stored, leaving the app black on later openings.",
+    "The app now only accepts the page if it arrives whole; if it comes back empty, truncated or with an error, it uses the last good copy it has stored.",
+    "New safety net: if nothing has appeared on screen after 9 seconds, the app shows a notice explaining what happened, with a button that clears the stored copy and opens again. Your workouts, photos and measurements are not erased.",
+    "The delivered .zip has its files loose at the root again, with no wrapping folder.",
+    "A new test (t20) fakes an empty publish, a server error, a response that is not a page, and a broken main script — and fails if any of them leaves the screen black."
+   ]
+  },
+  {
    "v": "3.5.1",
    "data": "2026-09-25",
    "pt": [

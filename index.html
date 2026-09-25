@@ -786,6 +786,59 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
 </style>
 </head>
 <body>
+<script>
+/* ---------- SOCORRO: a tela nunca fica preta sem saida ----------
+   Se em 9 segundos nada tiver sido desenhado — script que nao carregou, atualizacao
+   publicada pela metade, arquivo guardado pelo navegador que veio corrompido — este
+   trecho (que e' o primeiro a rodar e nao depende de mais nada) mostra um aviso de
+   verdade, com um botao que apaga o que o navegador guardou e recarrega. */
+(function () {
+  var pronto = false, mostrado = false, erro = "";
+  window.RISE_OK = function () { pronto = true; };
+  window.addEventListener("error", function (e) { if (!erro) erro = (e && e.message) || "erro no script"; });
+  function ok() {
+    if (pronto) return true;
+    var s = document.getElementById("screen");
+    return !!(s && s.children.length);
+  }
+  function limpar(botao) {
+    botao.disabled = true; botao.textContent = "Limpando…";
+    var fim = function () { location.reload(); };
+    var ps = [];
+    try { if (window.caches && caches.keys) ps.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })); } catch (e) {}
+    try { if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) ps.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); })); } catch (e) {}
+    if (!ps.length) return fim();
+    Promise.all(ps).then(fim, fim);
+    setTimeout(fim, 4000);
+  }
+  function socorro() {
+    if (mostrado || ok()) return;
+    mostrado = true;
+    var d = document.createElement("div");
+    d.setAttribute("role", "alert");
+    d.style.cssText = "position:fixed;inset:0;z-index:2147483647;background:#0f1115;color:#f3f5f8;"
+      + "font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;display:flex;align-items:center;"
+      + "justify-content:center;padding:24px;box-sizing:border-box;text-align:center";
+    d.innerHTML = '<div style="max-width:440px">'
+      + '<div style="font-size:1.5rem;font-weight:800;margin-bottom:10px">Rise<span style="color:#ff7a2f">ONE</span></div>'
+      + '<p style="margin:0 0 6px"><b>O app não abriu nesta tentativa.</b></p>'
+      + '<p style="margin:0 0 18px;color:#aab2bf;font-size:.92rem">Quase sempre é a cópia que o navegador guardou, '
+      + 'que ficou desencontrada com a versão publicada. O botão abaixo apaga essa cópia e carrega de novo. '
+      + 'Seus treinos, fotos e medidas não são apagados.</p>'
+      + '<button id="rs_limpa" style="background:#ff7a2f;color:#12141a;border:0;border-radius:12px;padding:13px 22px;'
+      + 'font-size:1rem;font-weight:800;cursor:pointer">Limpar e abrir de novo</button>'
+      + '<p style="margin:16px 0 0;color:#7a8493;font-size:.8rem">Se continuar assim, feche e abra o navegador, '
+      + 'ou segure Ctrl (⌘ no Mac) e clique em recarregar.</p>'
+      + (erro ? '<p style="margin:10px 0 0;color:#7a8493;font-size:.72rem;word-break:break-word">' + String(erro).slice(0, 180) + '</p>' : "")
+      + "</div>";
+    (document.body || document.documentElement).appendChild(d);
+    var b = d.querySelector("#rs_limpa");
+    b.onclick = function () { limpar(b); };
+  }
+  setTimeout(socorro, 9000);
+  window.addEventListener("error", function () { setTimeout(socorro, 2500); });
+})();
+</script>
 <div id="bgart" aria-hidden="true"></div>
 
 <!-- ===== FAIXA DO TOPO: [PT|EN] · [IA] · [ANÚNCIO] · [carrossel] · [×] ===== -->
@@ -849,7 +902,7 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.5.1";
+const APP_VERSION = "3.5.2";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2711,6 +2764,7 @@ function render(){
   }
   const fn=SCREENS[ROUTE]||SCREENS.home;
   el.innerHTML = top+fn();
+  if(window.RISE_OK) RISE_OK();
   (SCREENS[ROUTE+"_after"]||function(){})();
   initAnims(el);
   refreshWho(); paintTarja();

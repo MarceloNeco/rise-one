@@ -5,6 +5,28 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.5.2 — a tela preta ao abrir o site
+
+O RiseONE guarda uma cópia de si mesmo no navegador (é o que faz o app abrir sem internet). Enquanto
+a publicação no GitHub ainda está a caminho, o servidor pode devolver o `index.html` **vazio ou pela
+metade** — e o app aceitava essa resposta, guardava, e passava a abrir preto. Reproduzi o caso aqui:
+servidor devolvendo `200 text/html` com corpo vazio dá exatamente a tela preta.
+
+- **O app agora só aceita a página se ela vier inteira** (tamanho mínimo e a tela principal dentro
+  dela). Vindo vazia, cortada, com erro 500 ou com algo que não é página, ele serve a última cópia boa
+  que tem guardada em vez de uma tela em branco.
+- **Rede de segurança:** se em 9 segundos nada tiver sido desenhado — por qualquer motivo, inclusive
+  um erro de JavaScript — aparece um aviso explicando o que houve, com o botão **"Limpar e abrir de
+  novo"**, que apaga o que o navegador guardou, desinstala o service worker e recarrega. Treinos,
+  fotos e medidas ficam intactos: eles moram em outro lugar do navegador, que esse botão não toca.
+- **Teste novo (`t20`)**: sobe o app numa subpasta (`/rise-one/`, como no GitHub Pages), com o service
+  worker ativo, e finge quatro desastres — publicação vazia, erro 500, resposta que não é página, e o
+  script principal quebrado. Reprova se qualquer um deles deixar a tela preta, e confere que o botão
+  de limpar traz o app de volta.
+
+**Se acontecer de novo antes de atualizar:** segure `Ctrl` (`⌘` no Mac) e clique em recarregar, ou
+abra o site numa aba anônima para confirmar que a publicação está boa.
+
 ## Novo na versão 3.5.1 — o play dos alongamentos abria uma tela preta
 
 Em **Dor e alívio**, o botão "Fazer os alongamentos agora" abria o player em preto. A lista de
@@ -421,4 +443,4 @@ durante um exercício, pare na hora e procure atendimento.
 O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.5.1
+Versão 3.5.2
