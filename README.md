@@ -5,6 +5,20 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.5.1 — o play dos alongamentos abria uma tela preta
+
+Em **Dor e alívio**, o botão "Fazer os alongamentos agora" abria o player em preto. A lista de
+alongamentos da situação era montada como `[código, segundos]` e entregue crua ao player, que espera
+`{movimento, segundos}` — então ele abria em tela cheia e desenhava o nada, sem cronômetro e sem
+botão de fechar. Faltava passar a lista pelo `expandRoutine`, que é o que os outros botões de play já
+faziam.
+
+- **Corrigido**, e o player agora **recusa uma lista malformada com um aviso** em vez de abrir uma
+  tela cheia vazia — isso protege todos os botões de play do app, não só esse.
+- **Teste novo (`t19`)**: percorre todas as situações de Dor e alívio, monta a série de cada uma e
+  reprova se alguma abrir o player sem desenho, sem barra de tempo ou sem botão de fechar. Ele
+  reprova no build antigo e passa no novo.
+
 ## Novo na versão 3.5.0 — o aparelho passou a seguir o corpo
 
 O problema estava no desenho do aparelho, não no boneco. Banco, máquina, halter e cabo eram
@@ -407,4 +421,4 @@ durante um exercício, pare na hora e procure atendimento.
 O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.5.0
+Versão 3.5.1

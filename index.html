@@ -849,7 +849,7 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.5.0";
+const APP_VERSION = "3.5.1";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -5357,6 +5357,11 @@ function previewRoutine(list, title){
 const RUN={list:[],i:0,left:0,endAt:0,running:false,tick:null,el:null,title:"",started:0,intro:false,lastBeep:-1,done:false};
 function runRoutine(list,title){
   if(!list||!list.length){ toast(t("wu.noMoves")); return; }
+  /* cada item tem de ser {mv, sec}. Se vier cru ([id, segundos]), expande aqui;
+     se ainda assim nao der, avisa em vez de abrir uma tela cheia vazia. */
+  list=list.map(it=>(it && it.mv)? it : null).some(x=>!x)? expandRoutine(list.map(it=>(it&&it.mv)?[it.mv.id,it.sec]:it)) : list;
+  list=list.filter(it=>it && it.mv && it.sec>0);
+  if(!list.length){ toast(t("wu.noMoves")); return; }
   closeRoutine(true);
   RUN.list=list; RUN.i=0; RUN.title=title||t("wu.title"); RUN.started=Date.now(); RUN.done=false;
   RUN.intro=true; RUN.left=6; RUN.endAt=Date.now()+6000; RUN.running=true; RUN.lastBeep=-1;
@@ -8724,8 +8729,10 @@ SCREENS.fisio_after = function(){
   document.querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>videoModal(b.getAttribute("data-vid")));
   document.querySelectorAll("[data-fisrun]").forEach(b=>b.onclick=()=>{
     const c=CONDS.find(x=>x.id===b.getAttribute("data-fisrun")); if(!c) return;
+    /* expandRoutine transforma [id, segundos] no formato que o player usa ({mv, sec, side});
+       sem ele a tela abria em preto, porque nenhum item tinha o movimento dentro. */
     const list=c.al.map(id=>MOVI[id]).filter(Boolean).map(m=>[m.id, m.sec||30]);
-    runRoutine(list, t("fis.serieFor")+" "+condName(c));
+    runRoutine(expandRoutine(list), t("fis.serieFor")+" "+condName(c));
   });
   document.querySelectorAll("[data-fiswk]").forEach(b=>b.onclick=()=>{
     const c=CONDS.find(x=>x.id===b.getAttribute("data-fiswk")); if(!c) return;

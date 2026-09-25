@@ -3,6 +3,20 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.5.1",
+   "data": "2026-09-25",
+   "pt": [
+    "Correção: em Dor e alívio, o botão “Fazer os alongamentos agora” abria uma tela preta. A lista de alongamentos ia para o player no formato errado — só com o código do movimento, sem o movimento em si — e o player desenhava o nada.",
+    "O player de rotina agora recusa uma lista malformada com um aviso, em vez de abrir uma tela cheia vazia. Isso vale para todos os botões de play do app.",
+    "Teste novo (t19): percorre todas as situações de Dor e alívio, monta a série de cada uma e reprova se alguma abrir o player sem desenho, sem cronômetro ou sem botão de fechar."
+   ],
+   "en": [
+    "Fix: under Pain and relief, the “Do the stretches now” button opened a black screen. The stretch list reached the player in the wrong shape — only the movement's code, not the movement itself — and the player drew nothing.",
+    "The routine player now refuses a malformed list with a warning instead of opening an empty full screen. This covers every play button in the app.",
+    "A new test (t19) walks every Pain and relief situation, builds each one's series, and fails if any opens the player with no drawing, no timer or no close button."
+   ]
+  },
+  {
    "v": "3.5.0",
    "data": "2026-09-25",
    "pt": [
