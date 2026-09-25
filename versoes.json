@@ -3,6 +3,28 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.6.0",
+   "data": "2026-09-25",
+   "pt": [
+    "O leitor de laudo foi refeito depois de rodar em laudos de verdade. O de antes lia \"TGP\" dentro de \"Altura\", chamava Eritrócitos de Plaquetas, pegava a coluna errada quando a linha tinha várias, e chegou a guardar o número de registro de quem assinou o laudo como se fosse ferritina.",
+    "Agora o nome do exame tem de estar no começo da linha e é comparado por palavra inteira; o valor escolhido é o da unidade do próprio exame; nome que o app não conhece só entra se tiver unidade de laboratório e faixa impressa. Nome quebrado em duas linhas (\"Contagem de\" / \"Plaquetas\") é juntado.",
+    "A faixa de referência passa a ser guardada como está escrita no seu laudo (\"13,0 a 17,0 g/dL\"), sem conversão. E a data do exame passa a vir do próprio papel, não do relógio do aparelho.",
+    "Mais de 60 exames reconhecidos, incluindo o hemograma inteiro, coagulação, hormônios, bilirrubinas e perfil lipídico.",
+    "Laudos descritivos (ultrassom, ecocardiograma, tomografia, teste ergométrico) ganharam lugar próprio: o app guarda o texto do laudo com a data e o nome do exame, e mostra em Evolução › Exames. O app não interpreta, não classifica e não diz se está bom ou ruim.",
+    "Botão de importar e exportar exames em Evolução › Exames. Importar ACRESCENTA ao que já existe: não apaga nada e não repete o que já está guardado (diferente de Restaurar backup, que troca tudo).",
+    "Teste novo (t21) com trechos de laudo reais, sem dado pessoal: confere que \"Altura: 170 cm\" não vira exame, que o número do CRBM não vira ferritina, que o ultrassom não vira tabela, e que importar duas vezes não duplica."
+   ],
+   "en": [
+    "The report reader was rebuilt after being run against real reports. The old one found \"TGP\" inside \"Altura\" (height), called red cells platelets, picked the wrong column on multi-column lines, and once stored the signing technician's registration number as ferritin.",
+    "Now the exam name must start the line and is matched whole-word; the value chosen is the one in the exam's own unit; a name the app does not know only gets in with a lab unit and a printed range. A name split across two lines is joined back together.",
+    "The reference range is now stored exactly as printed on your report (\"13,0 a 17,0 g/dL\"), with no conversion. And the exam date now comes from the report itself, not from the device clock.",
+    "Over 60 recognised analytes, including the full blood count, coagulation, hormones, bilirubins and the lipid panel.",
+    "Written reports (ultrasound, echocardiogram, CT, stress test) got a place of their own: the app stores the report text with the date and exam name, and shows it under Progress › Exams. The app does not interpret, classify or say whether anything is good or bad.",
+    "Import and export buttons under Progress › Exams. Import ADDS to what is already there: it erases nothing and does not duplicate what is stored (unlike Restore backup, which replaces everything).",
+    "A new test (t21) built from real report excerpts, with no personal data: it checks that \"Altura: 170 cm\" does not become an exam, that a registration number does not become ferritin, that an ultrasound does not become a table, and that importing twice does not duplicate."
+   ]
+  },
+  {
    "v": "3.5.2",
    "data": "2026-09-25",
    "pt": [

@@ -5,6 +5,33 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.6.0 — o leitor de laudo refeito, e lugar para laudo descritivo
+
+O leitor de exame foi rodado contra laudos de laboratório de verdade pela primeira vez, e errava
+feio: achava "TGP" dentro de **"Altura"**, chamava Eritrócitos de Plaquetas, pegava a coluna errada
+quando a linha tinha várias (`Leucócitos 100 % 6.260 /µL` virava 100 %), e chegou a guardar o
+**número de registro de quem assinou o laudo** como se fosse ferritina.
+
+- **Regras novas, todas por causa de erro que aconteceu:** o nome do exame tem de estar no começo da
+  linha e sem número dentro; a comparação com o dicionário é por **palavra inteira**; o valor
+  escolhido é o da **unidade do próprio exame**; e um nome que o app não conhece só entra se tiver
+  unidade de laboratório **e** faixa impressa. Nome quebrado em duas linhas ("Contagem de" /
+  "Plaquetas", "Hormônio" / "Tireoestimulante") é juntado de volta.
+- **A faixa fica como está escrita no seu laudo** — "13,0 a 17,0 g/dL", "Inferior a 34 U/L" — sem
+  conversão nem normalização. **A data do exame vem do próprio papel**, não do relógio do aparelho.
+- **Mais de 60 exames reconhecidos**: hemograma completo, coagulação, hormônios, bilirrubinas,
+  perfil lipídico, ferro e vitaminas.
+- **Laudo descritivo ganhou lugar.** Ultrassom, ecocardiograma, tomografia e teste ergométrico não
+  são tabela de valores — antes viravam linhas sem sentido ("O rim direito mede 10,5"). Agora o app
+  identifica que é laudo, guarda **o texto como está escrito**, com a data e o nome do exame, e mostra
+  em Evolução › Exames. **O app não interpreta, não classifica e não diz se está bom ou ruim.**
+- **Importar e exportar exames** em Evolução › Exames. Importar **acrescenta** ao que já existe: não
+  apaga nada e não repete o que já está guardado — diferente de "Restaurar backup", que troca tudo.
+- **Teste novo (`t21`)**, feito com trechos de laudo reais e sem dado pessoal de ninguém: confere que
+  "Altura: 170 cm" não vira exame, que o número do CRBM não vira ferritina, que a linha de método não
+  vira exame, que o ultrassom não vira tabela, que o rodapé não entra no texto do laudo, e que
+  importar o mesmo arquivo duas vezes não duplica nada.
+
 ## Novo na versão 3.5.2 — a tela preta ao abrir o site
 
 O RiseONE guarda uma cópia de si mesmo no navegador (é o que faz o app abrir sem internet). Enquanto
@@ -443,4 +470,4 @@ durante um exercício, pare na hora e procure atendimento.
 O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.5.2
+Versão 3.6.0

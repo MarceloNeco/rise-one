@@ -35,7 +35,8 @@ lugar nenhum além do serviço escolhido.
 | `musicas.json` | Links públicos de playlist, escolhidos por quem publica o site | Só **links**. O RiseONE não hospeda, não redistribui e não tem vínculo com o Spotify nem com nenhum serviço de música |
 | Segunda vista dos movimentos | Gerada a partir do desenho que já existia, por regra geométrica | Girar o observador 90° não muda a altura de nenhuma articulação: os `y` são exatamente os do desenho original |
 | Desenhos dos movimentos | Feitos para o RiseONE, vetor (SVG) desenhado pelo próprio app | Não são foto, GIF nem vídeo: são traços calculados na hora e animados entre a posição de início e a de fim |
-| Faixas de referência de exame | **Não preenchidas** | São do laboratório de cada pessoa e vêm impressas no resultado |
+| Faixas de referência de exame | **Não preenchidas pelo app** | São do laboratório de cada pessoa. O app copia a faixa como está impressa no seu laudo e não converte |
+| Laudo descritivo (ultrassom, eco, tomografia, ergometria) | Texto do próprio laudo | Guardado como está escrito. O app não interpreta, não classifica e não diz se está bom ou ruim |
 | `fotos-exercicios.jpg` | Fotos fornecidas pelo dono do app | Verifique autorização de imagem de quem aparece antes de publicar |
 | Arte de fundo e ícones do app | Fornecidos pelo dono do app | — |
 

@@ -777,6 +777,9 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
 .pose .aeqw{fill:var(--eq-weight);stroke:var(--eq-weight-edge);stroke-width:1.2;stroke-linejoin:round}
 .pose .aeqwd{fill:var(--eq-weight-edge);stroke:none}
 [data-contrast="1"] .pose .aeqf,[data-contrast="1"] .pose .aeqfb{stroke-width:2}
+/* texto do laudo */
+.laudotxt{white-space:pre-wrap;word-break:break-word;font:inherit;font-size:.92rem;line-height:1.55;margin:0 0 12px;
+  background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;max-height:52vh;overflow:auto}
 /* faixa do modo visitante */
 .gvbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-color:var(--warn);background:var(--warn-soft)}
 .gvbar .ic{flex:none;color:var(--warn)}
@@ -902,7 +905,7 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.5.2";
+const APP_VERSION = "3.6.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2323,7 +2326,28 @@ Object.assign(L,{
 "pg.pastNote":["Dá para registrar um dia que já passou: troque a data acima.","You can log a day that has already passed: change the date above."],
 "pg.future":["Ainda não dá para registrar um dia que não chegou.","A day that has not arrived yet cannot be logged."],
 "pg.editingDay":["Registro de","Log for"],
-"pg.openDay":["Abrir este dia","Open this day"]
+"pg.openDay":["Abrir este dia","Open this day"],
+/* --- laudos descritivos --- */
+"ld.title":["Laudos","Reports"],
+"ld.sub":["Ultrassom, ecocardiograma, tomografia, teste ergométrico: o texto do laudo, como está escrito.","Ultrasound, echocardiogram, CT, stress test: the report text, exactly as written."],
+"ld.add":["Guardar um laudo","Save a report"],
+"ld.open":["Abrir","Open"],
+"ld.none":["Nenhum laudo guardado","No report saved"],
+"ld.noneSub":["Leia o PDF do laudo em Ler com a câmera, ou digite o texto aqui.","Read the report PDF under Read with camera, or type the text here."],
+"ld.note":["O RiseONE guarda e mostra o texto do laudo. Ele não interpreta, não classifica e não diz se está bom ou ruim — quem lê é o seu médico.","RiseONE stores and shows the report text. It does not interpret, classify or say whether it is good or bad — your doctor reads it."],
+"ld.name":["Exame","Exam"],
+"ld.ph":["Ex.: Ultrassonografia do abdome total","E.g.: Abdominal ultrasound"],
+"ld.text":["Texto do laudo","Report text"],
+"ld.sem":["Laudo","Report"],
+"ld.needText":["Cole ou digite o texto do laudo.","Paste or type the report text."],
+"ld.typeNote":["Cole o texto do laudo. Nada é enviado para fora: fica só neste aparelho.","Paste the report text. Nothing is sent anywhere: it stays on this device."],
+"ld.scanNote":["Este papel é um laudo descrito, não uma tabela de valores. O RiseONE vai guardar o texto como está, com a data e o nome do exame.","This is a written report, not a table of values. RiseONE will store the text as it is, with the date and the exam name."],
+"ex.import":["Importar","Import"],
+"ex.export":["Exportar","Export"],
+"ex.imBad":["Não consegui ler esse arquivo.","Could not read that file."],
+"ex.imEmpty":["O arquivo não tem exame nem laudo dentro.","The file has no exam and no report in it."],
+"ex.imOk":["Pronto: {e} exames e {l} laudos acrescentados.","Done: {e} exams and {l} reports added."],
+"ex.imNote":["Importar ACRESCENTA ao que já existe; não apaga nada e não repete o que já está guardado.","Import ADDS to what is already there; it erases nothing and does not duplicate what is already stored."]
 });
 
 /* ---------- 2. MUSCULOS (3 niveis de nome) ---------- */
@@ -2539,7 +2563,7 @@ function defaultState(name){
       {id:uid(), title:{pt:"Dormir 7 horas",en:"Sleep 7 hours"}, icon:"😴", days:[0,1,2,3,4,5,6]}
     ],
     reminders:[], checkins:[], workouts:[], logs:[], measures:[], photos:[], meals:[], wuLogs:[],
-    equipPhotos:{}, customEx:[], exams:[], students:[],
+    equipPhotos:{}, customEx:[], exams:[], laudos:[], students:[],
     diet:{kcal:0,prot:0,carb:0,fat:0,water:0,restKcal:0},
     settings:{units:"metric", cloud:{provider:"", clientId:"", connected:false}, notif:false, weeklyBackup:false}
   };
@@ -4141,12 +4165,16 @@ SCREENS.progress = function(){
   if(v==="exames"){
     h+=guestBanner();
     h+='<div class="card">'+cardHead("flask", t("pg.exams"), t("pg.examNote"),
-       '<div class="row nowrap"><button class="btn sm line" id="scanexam">'+I("scan")+t("sc.short")+'</button><button class="btn sm" id="addex2">'+I("plus")+t("pg.addExam")+"</button></div>");
+       '<div class="row nowrap"><button class="btn sm line" id="scanexam">'+I("scan")+t("sc.short")+'</button>'+
+       '<label class="btn sm line" style="cursor:pointer">'+I("upload")+t("ex.import")+'<input type="file" accept="application/json,.json" id="eximp" style="display:none"></label>'+
+       '<button class="btn sm line" id="exexp">'+I("download")+t("ex.export")+'</button>'+
+       '<button class="btn sm" id="addex2">'+I("plus")+t("pg.addExam")+"</button></div>");
     h+= STATE.exams.length? '<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>'+t("common.date")+"</th><th>"+t("pg.examName")+'</th><th class="num">'+t("pg.value")+"</th><th>"+t("pg.ref")+"</th><th></th></tr></thead><tbody>"+
         STATE.exams.slice().sort((a,b)=>a.date<b.date?1:-1).map(x=>"<tr><td>"+fmtDate(x.date)+"</td><td>"+esc(x.name)+'</td><td class="num">'+esc(x.value)+" "+esc(x.unit||"")+"</td><td>"+esc(x.ref||"—")+"</td>"+
         '<td class="num"><button class="btn xs line" data-delex="'+x.id+'">&times;</button></td></tr>').join("")+"</tbody></table></div>"
       : emptyBox("flask", t("pg.noExams"), t("pg.noExamsSub"));
     h+="</div>";
+    h+=laudoCard();
     h+=examSeriesCard();
     h+=cardsCard();
   }
@@ -4216,6 +4244,9 @@ SCREENS.progress_after = function(){
     STATE.measures=STATE.measures.filter(x=>x.id!==b.getAttribute("data-delms")); save(); render(); });
   /* exames */
   if($("addex2")) $("addex2").onclick=()=>{ if(precisaConta()) examModal(); };
+  wireLaudoCard();
+  if($("eximp")) $("eximp").onchange=e=>{ const f=e.target.files[0]; if(f) exImportar(f); e.target.value=""; };
+  if($("exexp")) $("exexp").onclick=exExportar;
   if($("scanexam")) $("scanexam").onclick=()=>{ SCANMODE="exam"; go("scan"); };
   document.querySelectorAll("[data-delex]").forEach(b=>b.onclick=()=>{
     STATE.exams=STATE.exams.filter(x=>x.id!==b.getAttribute("data-delex")); save(); render(); });
@@ -4486,7 +4517,11 @@ function paintScan(){
   else if(SCANMODE==="scale") parsed=parseScale(SCANTEXT);
   else if(SCANMODE==="tape") parsed=parseTape(SCANTEXT);
   else if(SCANMODE==="sheet") parsed=parseSheet(SCANTEXT);
-  else if(SCANMODE==="exam") parsed=parseExame(SCANTEXT);
+  else if(SCANMODE==="exam"){
+    parsed=parseExame(SCANTEXT);
+    /* papel de imagem (ultrassom, eco, tomografia, ergometria) nao e' tabela: vira laudo */
+    if(!parsed || parsed.length<5){ const ld=parseLaudo(SCANTEXT); if(ld) parsed=ld; }
+  }
   SCANFOUND=parsed;
   if(SCANMODE==="label" && parsed){
     body="";
@@ -4537,8 +4572,16 @@ function commitScan(){
   if(SCANMODE==="label"){ mealModal({kcal:p.kcal||0,prot:p.prot||0,carb:p.carb||0,fat:p.fat||0,qty:p.portion||100}); return; }
   if(SCANMODE==="scale"||SCANMODE==="tape"){ measureModal(p); return; }
   if(SCANMODE==="exam"){
-    p.forEach(e=>STATE.exams.push({id:uid(),date:todayISO(),name:e.name,value:e.value,unit:e.unit,ref:""}));
-    save(); toast(t("common.saved")); go("progress"); return;
+    if(typeof precisaConta==="function" && !precisaConta()) return;
+    if(p.tipo==="laudo"){
+      const q=id=>{ const n=document.getElementById(id); return n? n.value.trim() : ""; };
+      laudoSave({data:q("sl_d")||p.data, titulo:q("sl_t")||p.titulo, texto:p.texto});
+      save(); toast(t("common.saved")); go("progress","exames"); return;
+    }
+    /* a data e a faixa saem do proprio laudo, nao do relogio do aparelho */
+    const dia=exData(SCANTEXT)||todayISO();
+    p.forEach(e=>STATE.exams.push({id:uid(),date:dia,name:e.name,value:e.value,unit:e.unit,ref:e.ref||""}));
+    save(); toast(t("common.saved")); go("progress","exames"); return;
   }
   if(SCANMODE==="sheet"){
     const w={id:uid(), name:(LANG==="pt"?"Treino da ficha ":"Sheet workout ")+fmtShort(todayISO()), days:[],
@@ -9214,140 +9257,396 @@ function rotuloCard(o){
   return h;
 }
 
+/* ---------- 62b. LAUDOS DESCRITIVOS ---------- */
+/* Por que: ultrassom, ecocardiograma, tomografia e teste ergométrico não são tabela de valores
+   — são texto. Antes o app tentava tirar números deles e produzia linhas sem sentido ("O rim
+   direito mede 10,5"). Agora o laudo é guardado como está escrito, com a data e o nome do exame.
+   O app não interpreta, não classifica e não diz se está bom ou ruim: ele guarda e mostra. */
+function laudos(){ STATE.laudos=STATE.laudos||[]; return STATE.laudos; }
+function laudoSave(l){
+  const lista=laudos();
+  const novo={id:uid(), date:l.data||todayISO(), titulo:(l.titulo||t("ld.sem")).slice(0,90), texto:(l.texto||"").slice(0,4000)};
+  const ja=lista.find(x=>x.date===novo.date && norm(x.titulo)===norm(novo.titulo));
+  if(ja){ ja.texto=novo.texto; return ja; }
+  lista.push(novo); return novo;
+}
+function laudoCard(){
+  const lista=laudos().slice().sort((a,b)=>a.date<b.date?1:-1);
+  let h='<div class="card">'+cardHead("file", t("ld.title"), t("ld.sub"),
+    '<button class="btn sm" id="addld">'+I("plus")+t("ld.add")+"</button>");
+  h+= lista.length? '<div class="list">'+lista.map(l=>
+      '<div class="item"><div class="gr"><div class="t">'+esc(l.titulo)+'</div><div class="s">'+fmtDate(l.date)+"</div></div>"+
+      '<button class="btn xs line" data-verld="'+l.id+'">'+t("ld.open")+'</button>'+
+      '<button class="btn xs line" data-delld="'+l.id+'">&times;</button></div>').join("")+"</div>"
+    : emptyBox("file", t("ld.none"), t("ld.noneSub"));
+  h+='<p class="tiny muted" style="margin:10px 0 0">'+t("ld.note")+"</p></div>";
+  return h;
+}
+function wireLaudoCard(){
+  const a=document.getElementById("addld");
+  if(a) a.onclick=()=>{ if(typeof precisaConta==="function" && !precisaConta()) return; laudoModal(); };
+  document.querySelectorAll("[data-verld]").forEach(b=>b.onclick=()=>{
+    const l=laudos().find(x=>x.id===b.getAttribute("data-verld")); if(!l) return;
+    modal(mh(l.titulo)+'<p class="tiny muted" style="margin-top:-6px">'+fmtDate(l.date)+"</p>"+
+      '<pre class="laudotxt">'+esc(l.texto)+"</pre>"+
+      '<p class="tiny muted">'+t("ld.note")+"</p>",{wide:true});
+  });
+  document.querySelectorAll("[data-delld]").forEach(b=>b.onclick=()=>confirmBox(t("common.confirmDel"),()=>{
+    STATE.laudos=laudos().filter(x=>x.id!==b.getAttribute("data-delld")); save(); render(); }));
+}
+function laudoModal(pre){
+  pre=pre||{};
+  const m=modal(mh(t("ld.add"))+
+    '<div class="grid g2 collapse"><label class="fld"><span>'+t("common.date")+'</span><input type="date" id="ld_d" value="'+(pre.data||todayISO())+'" max="'+todayISO()+'"></label>'+
+    '<label class="fld"><span>'+t("ld.name")+'</span><input type="text" id="ld_t" value="'+esc(pre.titulo||"")+'" placeholder="'+t("ld.ph")+'"></label></div>'+
+    '<label class="fld"><span>'+t("ld.text")+'</span><textarea id="ld_x" rows="10">'+esc(pre.texto||"")+"</textarea></label>"+
+    '<p class="tiny muted">'+t("ld.typeNote")+"</p>"+
+    '<div class="row"><button class="btn" id="ld_ok">'+t("common.save")+"</button></div>",{wide:true});
+  m.querySelector("#ld_ok").onclick=()=>{
+    const d=m.querySelector("#ld_d").value, ti=m.querySelector("#ld_t").value.trim(), tx=m.querySelector("#ld_x").value.trim();
+    if(!tx){ toast(t("ld.needText")); return; }
+    laudoSave({data:d, titulo:ti, texto:tx});
+    const gravou=save(); m.remove(); render();
+    if(gravou) toast(t("common.saved")); else if(typeof precisaConta==="function") precisaConta();
+  };
+}
+/* ---------- IMPORTAR EXAMES DE UM ARQUIVO ----------
+   Diferente de "Restaurar backup", que troca tudo: aqui os exames e laudos do arquivo são
+   ACRESCENTADOS ao que já existe. Nada é apagado, e repetido não entra duas vezes. */
+function exImportar(file){
+  const r=new FileReader();
+  r.onload=()=>{
+    let d; try{ d=JSON.parse(r.result); }catch(e){ toast(t("ex.imBad")); return; }
+    const exames=d.exames||d.exams||[], lista=d.laudos||[];
+    if(!exames.length && !lista.length){ toast(t("ex.imEmpty")); return; }
+    if(typeof precisaConta==="function" && !precisaConta()) return;
+    STATE.exams=STATE.exams||[]; STATE.laudos=STATE.laudos||[];
+    const chave=e=>[e.date,norm(e.name||""),String(e.value)].join("|");
+    const ja={}; STATE.exams.forEach(e=>ja[chave(e)]=1);
+    let nEx=0, nLd=0;
+    exames.forEach(e=>{
+      if(!e || !e.date || !e.name || e.value===undefined) return;
+      const k=chave(e); if(ja[k]) return; ja[k]=1;
+      STATE.exams.push({id:uid(), date:e.date, name:String(e.name).slice(0,60), value:String(e.value),
+                        unit:String(e.unit||"").slice(0,16), ref:String(e.ref||"").slice(0,40)});
+      nEx++;
+    });
+    lista.forEach(l=>{
+      if(!l || !l.texto) return;
+      const antes=STATE.laudos.length;
+      laudoSave({data:l.data||l.date, titulo:l.titulo, texto:l.texto});
+      if(STATE.laudos.length>antes) nLd++;
+    });
+    save(); render();
+    toast(t("ex.imOk").replace("{e}",nEx).replace("{l}",nLd));
+  };
+  r.readAsText(file);
+}
+function exExportar(){
+  const d={app:"RiseONE", versao:APP_VERSION, gerado:todayISO(),
+           exames:(STATE.exams||[]).map(e=>({date:e.date,name:e.name,value:e.value,unit:e.unit,ref:e.ref})),
+           laudos:(STATE.laudos||[]).map(l=>({data:l.date,titulo:l.titulo,texto:l.texto}))};
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,1)],{type:"application/json"}));
+  a.download="riseone-exames-"+todayISO()+".json";
+  a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
 /* ---------- 62. EXAMES: RECONHECER INDICADORES E ACOMPANHAR CADA UM ---------- */
 /* Por que: o papel do laboratório vira número solto. Aqui cada indicador vira uma linha do tempo,
    para a pessoa ver se está subindo ou descendo e levar isso ao médico. */
 /* Só nomes e unidades, para reconhecer e agrupar. Faixas de referência NÃO ficam aqui:
    elas mudam de laboratório para laboratório e vêm impressas no seu exame. */
 const INDICADORES=[
- ["glicose",      ["glicose","glicemia","glucose"],                       "mg/dL"],
- ["hba1c",        ["hemoglobina glicada","hba1c","a1c","glicada"],        "%"],
- ["insulina",     ["insulina","insulin"],                                 "µUI/mL"],
- ["colesterol",   ["colesterol total","cholesterol total","colesterol"],  "mg/dL"],
- ["hdl",          ["hdl"],                                                "mg/dL"],
- ["ldl",          ["ldl"],                                                "mg/dL"],
- ["vldl",         ["vldl"],                                               "mg/dL"],
- ["triglic",      ["triglicerideos","triglicerides","triglycerides"],     "mg/dL"],
- ["creatinina",   ["creatinina","creatinine"],                            "mg/dL"],
- ["ureia",        ["ureia","urea"],                                       "mg/dL"],
- ["acidourico",   ["acido urico","uric acid"],                            "mg/dL"],
- ["tgo",          ["tgo","ast","aspartato"],                              "U/L"],
- ["tgp",          ["tgp","alt","alanina"],                                "U/L"],
- ["ggt",          ["gama gt","ggt","gama glutamil"],                      "U/L"],
- ["falcalina",    ["fosfatase alcalina","alkaline phosphatase"],          "U/L"],
- ["albumina",     ["albumina","albumin"],                                 "g/dL"],
- ["tsh",          ["tsh"],                                                "µUI/mL"],
- ["t4l",          ["t4 livre","free t4","tiroxina livre"],                "ng/dL"],
- ["vitd",         ["vitamina d","25 hidroxi","25-oh"],                    "ng/mL"],
- ["vitb12",       ["vitamina b12","b12","cobalamina"],                    "pg/mL"],
- ["ferro",        ["ferro serico","ferro","iron"],                        "µg/dL"],
- ["ferritina",    ["ferritina","ferritin"],                               "ng/mL"],
- ["hemoglobina",  ["hemoglobina","hemoglobin","hb"],                      "g/dL"],
- ["hematocrito",  ["hematocrito","hematocrit"],                           "%"],
- ["leucocitos",   ["leucocitos","leukocytes","globulos brancos"],         "/mm³"],
- ["plaquetas",    ["plaquetas","platelets"],                              "/mm³"],
- ["pcr",          ["proteina c reativa","pcr","crp"],                     "mg/L"],
- ["testosterona", ["testosterona total","testosterona","testosterone"],   "ng/dL"],
- ["calcio",       ["calcio","calcium"],                                   "mg/dL"],
- ["potassio",     ["potassio","potassium"],                               "mEq/L"],
- ["sodio",        ["sodio","sodium"],                                     "mEq/L"],
- ["magnesio",     ["magnesio","magnesium"],                               "mg/dL"]
+ ["glicose",      ["glicose","glicemia","glucose"],                              "mg/dL"],
+ ["gme",          ["glicose media estimada","gme"],                              "mg/dL"],
+ ["hba1c",        ["hemoglobina glicada","hba1c","a1c"],                         "%"],
+ ["insulina",     ["insulina","insulin"],                                        "µUI/mL"],
+ ["colesterol",   ["colesterol total","colesterol"],                             "mg/dL"],
+ ["hdl",          ["hdl","hdl colesterol"],                                      "mg/dL"],
+ ["naohdl",       ["nao hdl","nao hdl colesterol"],                              "mg/dL"],
+ ["ldl",          ["ldl","ldl colesterol"],                                      "mg/dL"],
+ ["vldl",         ["vldl","vldl colesterol"],                                    "mg/dL"],
+ ["triglic",      ["triglicerideos","triglicerides","triglycerides"],            "mg/dL"],
+ ["creatinina",   ["creatinina","creatinine"],                                   "mg/dL"],
+ ["ureia",        ["ureia","urea"],                                              "mg/dL"],
+ ["acidourico",   ["acido urico","uric acid"],                                   "mg/dL"],
+ ["tgo",          ["tgo","ast","transaminase oxalacetica","aspartato aminotransferase"], "U/L"],
+ ["tgp",          ["tgp","alt","transaminase piruvica","alanina aminotransferase"],      "U/L"],
+ ["ggt",          ["ggt","gama gt","gama glutamil","gama glutamil transferase"],  "U/L"],
+ ["falcalina",    ["fosfatase alcalina"],                                        "U/L"],
+ ["albumina",     ["albumina","albumin"],                                        "g/dL"],
+ ["bilitotal",    ["bilirrubina total"],                                         "mg/dL"],
+ ["bilidireta",   ["bilirrubina direta"],                                        "mg/dL"],
+ ["biliindireta", ["bilirrubina indireta"],                                      "mg/dL"],
+ ["tsh",          ["tsh","hormonio tireoestimulante"],                           "µUI/mL"],
+ ["t4l",          ["t4 livre","tiroxina livre","free t4"],                        "ng/dL"],
+ ["vitd",         ["vitamina d","25 hidroxivitamina d","25 oh vitamina d"],      "ng/mL"],
+ ["vitb12",       ["vitamina b12","cobalamina"],                                 "pg/mL"],
+ ["folico",       ["acido folico","folato"],                                     "ng/mL"],
+ ["ferro",        ["ferro serico","ferro","iron"],                               "µg/dL"],
+ ["ferritina",    ["ferritina","ferritin"],                                      "ng/mL"],
+ ["hemoglobina",  ["hemoglobina","hemoglobin"],                                  "g/dL"],
+ ["hematocrito",  ["hematocrito","hematocrit"],                                  "%"],
+ ["eritrocitos",  ["eritrocitos","hemacias"],                                    "10^6/µL"],
+ ["vcm",          ["vcm"],                                                       "fL"],
+ ["hcm",          ["hcm"],                                                       "pg"],
+ ["chcm",         ["chcm"],                                                      "g/dL"],
+ ["rdw",          ["rdw"],                                                       "%"],
+ ["leucocitos",   ["leucocitos","leukocytes","globulos brancos"],                "/µL"],
+ ["neutrofilos",  ["neutrofilos","segmentados"],                                 "%"],
+ ["linfocitos",   ["linfocitos"],                                                "%"],
+ ["monocitos",    ["monocitos"],                                                 "%"],
+ ["eosinofilos",  ["eosinofilos"],                                               "%"],
+ ["basofilos",    ["basofilos"],                                                 "%"],
+ ["plaquetas",    ["plaquetas","contagem de plaquetas","platelets"],             "/µL"],
+ ["vpm",          ["vpm"],                                                       "fL"],
+ ["inr",          ["inr","razao normatizada"],                                   ""],
+ ["fibrinogenio", ["fibrinogenio"],                                              "mg/dL"],
+ ["pcr",          ["proteina c reativa","pcr ultra sensivel"],                   "mg/L"],
+ ["homocisteina", ["homocisteina"],                                              "µmol/L"],
+ ["testosterona", ["testosterona total"],                                        "ng/dL"],
+ ["testolivre",   ["testosterona livre"],                                        "ng/dL"],
+ ["testobio",     ["testosterona biodisponivel"],                                "ng/dL"],
+ ["shbg",         ["shbg"],                                                      "nmol/L"],
+ ["estradiol",    ["estradiol"],                                                 "pg/mL"],
+ ["lh",           ["lh","hormonio luteinizante"],                                "mUI/mL"],
+ ["fsh",          ["fsh","hormonio foliculo estimulante"],                       "mUI/mL"],
+ ["prolactina",   ["prolactina"],                                                "ng/mL"],
+ ["psa",          ["psa","psa total"],                                           "ng/mL"],
+ ["pth",          ["pth","paratormonio"],                                        "pg/mL"],
+ ["igf1",         ["igf 1","somatomedina c"],                                    "ng/mL"],
+ ["calcio",       ["calcio","calcium"],                                          "mg/dL"],
+ ["potassio",     ["potassio","potassium"],                                      "mmol/L"],
+ ["sodio",        ["sodio","sodium"],                                            "mmol/L"],
+ ["magnesio",     ["magnesio","magnesium"],                                      "mg/dL"]
 ];
-/* Qual indicador a linha cita. Vale quem aparece PRIMEIRO na linha — senao "HDL colesterol"
-   viraria colesterol total, que e outro exame. Empate: ganha a palavra mais longa. */
+/* Qual indicador a linha cita. A comparacao e' com o NOME do exame, ancorada em palavra
+   inteira — do contrario "Altura" viraria TGP (por causa do "alt") e "CAD-RADS" viraria
+   calcio. Empate: ganha a palavra mais longa, senao "HDL - Colesterol" viraria colesterol. */
+function palavraInteira(hay, needle){
+  const i=hay.indexOf(needle);
+  if(i<0) return -1;
+  const antes=i? hay[i-1] : " ", depois=hay[i+needle.length] || " ";
+  const letra=/[a-z0-9]/;
+  return (letra.test(antes) || letra.test(depois))? -1 : i;
+}
 function indOf(nome){
-  const n=norm(nome);
-  let best=null, bestPos=1e9, bestLen=0;
+  const n=" "+norm(nome).replace(/[^a-z0-9]+/g," ").trim()+" ";
+  let best=null, bestLen=0;
   INDICADORES.forEach(([id,words,un])=>{
     words.forEach(w=>{
-      const pos=n.indexOf(norm(w));
-      if(pos<0) return;
-      if(pos<bestPos || (pos===bestPos && w.length>bestLen)){ best={id,unit:un,word:w}; bestPos=pos; bestLen=w.length; }
+      const ww=" "+norm(w).replace(/[^a-z0-9]+/g," ").trim()+" ";
+      if(n.indexOf(ww)<0) return;
+      if(ww.length>bestLen){ best={id,unit:un,word:w}; bestLen=ww.length; }
     });
   });
   return best;
 }
-/* como o indicador aparece na tela (sigla continua sigla) */
-const IND_NOMES={glicose:"Glicose", hba1c:"Hemoglobina glicada (HbA1c)", insulina:"Insulina", colesterol:"Colesterol total", hdl:"HDL", ldl:"LDL", vldl:"VLDL", triglic:"Triglicerídeos", creatinina:"Creatinina", ureia:"Ureia", acidourico:"Ácido úrico", tgo:"TGO (AST)", tgp:"TGP (ALT)", ggt:"Gama GT", falcalina:"Fosfatase alcalina", albumina:"Albumina", tsh:"TSH", t4l:"T4 livre", vitd:"Vitamina D", vitb12:"Vitamina B12", ferro:"Ferro sérico", ferritina:"Ferritina", hemoglobina:"Hemoglobina", hematocrito:"Hematócrito", leucocitos:"Leucócitos", plaquetas:"Plaquetas", pcr:"Proteína C reativa", testosterona:"Testosterona total", calcio:"Cálcio", potassio:"Potássio", sodio:"Sódio", magnesio:"Magnésio"};
+const IND_NOMES={glicose:"Glicose", gme:"Glicose média estimada", hba1c:"Hemoglobina glicada (HbA1c)", insulina:"Insulina",
+ colesterol:"Colesterol total", hdl:"HDL", naohdl:"Não HDL", ldl:"LDL", vldl:"VLDL", triglic:"Triglicerídeos",
+ creatinina:"Creatinina", ureia:"Ureia", acidourico:"Ácido úrico", tgo:"TGO (AST)", tgp:"TGP (ALT)", ggt:"Gama GT",
+ falcalina:"Fosfatase alcalina", albumina:"Albumina", bilitotal:"Bilirrubina total", bilidireta:"Bilirrubina direta",
+ biliindireta:"Bilirrubina indireta", tsh:"TSH", t4l:"T4 livre", vitd:"Vitamina D", vitb12:"Vitamina B12",
+ folico:"Ácido fólico", ferro:"Ferro sérico", ferritina:"Ferritina", hemoglobina:"Hemoglobina", hematocrito:"Hematócrito",
+ eritrocitos:"Eritrócitos", vcm:"VCM", hcm:"HCM", chcm:"CHCM", rdw:"RDW", leucocitos:"Leucócitos", neutrofilos:"Neutrófilos",
+ linfocitos:"Linfócitos", monocitos:"Monócitos", eosinofilos:"Eosinófilos", basofilos:"Basófilos", plaquetas:"Plaquetas",
+ vpm:"VPM", inr:"INR", fibrinogenio:"Fibrinogênio", pcr:"Proteína C reativa", homocisteina:"Homocisteína",
+ testosterona:"Testosterona total", testolivre:"Testosterona livre", testobio:"Testosterona biodisponível", shbg:"SHBG",
+ estradiol:"Estradiol", lh:"LH", fsh:"FSH", prolactina:"Prolactina", psa:"PSA total", pth:"Paratormônio (PTH)",
+ igf1:"IGF-1", calcio:"Cálcio", potassio:"Potássio", sodio:"Sódio", magnesio:"Magnésio"};
 function indName(id){ return IND_NOMES[id] || id; }
-/* Leitura do laudo. O laudo de verdade não vem numa linha só: o nome do exame fica numa linha,
-   "Resultado: 96 mg/dL" na seguinte e "Valores de referência: 70 a 99" na outra. Por isso a leitura
-   é por BLOCO, e não por linha solta. Três cuidados que evitam erro grosseiro:
-     1) linha de cabeçalho (paciente, data da coleta, laboratório) é descartada;
-     2) número grudado em letra não é valor — o "1" de HbA1c, o "12" de B12, o "4" de T4;
-     3) linha de referência nunca vira valor: ela só preenche a faixa do exame aberto.
-   Nada é inventado: valor e faixa saem escritos do próprio laudo. */
-const EX_IGNORAR=/paciente|data da coleta|data de nasc|nascimento|convenio|conv[eê]nio|requisitante|solicitante|m[eé]dico|crm|protocolo|amostra|material|m[eé]todo|metodo|liberado|p[aá]gina|pagina|laborat[oó]rio|laboratorio|cnpj|endere[cç]o|telefone|assinatura|\bcpf\b|\brg\b|respons[aá]vel/i;
-const EX_REFLINE=/valor(es)?\s+de\s+refer|refer[eê]ncia|referencia|desej[aá]vel|desejavel|normal\s*:|\bvr\s*:|intervalo/i;
-function exLimpa(l){
-  return String(l)
-    .replace(/\([^)]*\)/g," ")                              /* (HbA1c), (25-OH), (AST) */
-    .replace(/\d{1,2}[\/.]\d{1,2}[\/.]\d{2,4}/g," ")        /* datas */
-    .replace(/\d{1,2}:\d{2}/g," ");                         /* horas */
-}
-function exNums(str){
-  const out=[], re=/(?:^|[\s:>=<(])(-?\d+(?:[.,]\d+)?)(?!\d*[A-Za-zÀ-ÿ])/g;
-  let m; while((m=re.exec(str))) out.push({v:m[1], i:m.index+m[0].length-m[1].length});
-  return out;
-}
-function exFaixa(str){
-  let m=str.match(/(\d+(?:[.,]\d+)?)\s*(?:a|à|-|–|at[ée]|to)\s+(\d+(?:[.,]\d+)?)/i);
-  if(m) return m[1].replace(",",".")+" – "+m[2].replace(",",".");
-  m=str.match(/(?:at[eé]|menor que|inferior a|<)\s*(\d+(?:[.,]\d+)?)/i);
-  if(m) return "< "+m[1].replace(",",".");
-  m=str.match(/(?:maior que|superior a|>)\s*(\d+(?:[.,]\d+)?)/i);
-  if(m) return "> "+m[1].replace(",",".");
+
+/* ---------- LEITURA DO LAUDO ----------
+   O laudo de laboratorio e' uma tabela: NOME ....... VALOR UNIDADE ....... FAIXA.
+   A leitura respeita tres regras, e todas existem por causa de erro que ja aconteceu:
+     1) o nome vem no COMECO da linha e nao tem numero dentro. Assim "2- Teste ergometrico"
+        e "hidronefrose. O rim direito mede 10,5 cm" nunca viram exame;
+     2) o nome casa com o dicionario por palavra inteira. Assim "Altura" nao vira TGP;
+     3) nome desconhecido so' entra se a unidade for de laboratorio E houver faixa impressa.
+        Assim o numero do CRBM de quem assinou nao vira ferritina.
+   A faixa e' guardada como esta' escrita no papel — o app nao converte nem interpreta. */
+const EX_IGNORAR=/^\s*(nome|unidade|idade|sexo|g[eê]nero|prontu[aá]rio|exame|convênio|data|hora|peso|altura)\s*:|paciente|data (da )?coleta|data de nasc|nascimento|\bdn\b|convenio|conv[eê]nio|requisitante|solicitante|assinado eletronicamente|\bcrm\b|\bcrbm\b|\bcrf\b|protocolo|amostra|material\s*:|m[eé]todo|metodo|liberado|p[aá]gina|laborat[oó]rio|cnpj|endere[cç]o|telefone|assinatura|\bcpf\b|\brg\b|\bfap\b|respons[aá]vel|atendimento ao|intervalo de refer[eê]ncia\s*$|legenda|resultado\s*$|observa[cç]/i;
+/* unidades que existem em laudo de laboratorio */
+const EX_UNID=/^(mg\/dl|g\/dl|g\/l|%|u\/l|ui\/l|mui\/ml|mui\/l|µui\/ml|uui\/ml|ui\/ml|meq\/l|mmol\/l|µmol\/l|umol\/l|nmol\/l|ng\/ml|ng\/dl|pg\/ml|pg|µg\/dl|ug\/dl|µg\/l|ug\/l|mg\/l|fl|s|seg|ml\/min(\/1[,.]73m2)?|mm\/h|mm3|\/mm³|\/µl|\/ul|10\^\d+\/µl|10\^\d+\/ul|x10\^\d+\/µl)$/i;
+function exUnidOk(u){ return EX_UNID.test(String(u).replace(/\s/g,"")); }
+function exNum(v){ return String(v).replace(/\.(?=\d{3}\b)/g,"").replace(",","."); }
+function exNumOk(v){ const n=exNum(v); return /^-?\d+(\.\d+)?$/.test(n) && isFinite(parseFloat(n)); }
+/* a faixa fica como esta' impressa: "13,0 a 17,0 g/dL", "< 190 mg/dL", "até 1,00" */
+function exFaixa(resto){
+  const r=String(resto).replace(/\s+/g," ").trim();
+  let m=r.match(/(-?\d+(?:[.,]\d+)?\s*(?:a|à|at[ée]|-|–|to)\s*-?\d+(?:[.,]\d+)?(?:\s*[^\s,;)]{1,12}(?:\s[A-Za-zµμ]{1,3}\b)?)?)/i);
+  if(m) return m[1].trim();
+  m=r.match(/((?:at[eé]|menor que|inferior a|<|≤)\s*-?\d+(?:[.,]\d+)?(?:\s*[^\s,;)]{1,12})?)/i);
+  if(m) return m[1].trim();
+  m=r.match(/((?:maior que|superior a|>|≥)\s*-?\d+(?:[.,]\d+)?(?:\s*[^\s,;)]{1,12})?)/i);
+  if(m) return m[1].trim();
   return "";
 }
-function exUnidade(resto){
-  const m=String(resto).match(/^\s*\/?\s*([A-Za-zµμ%]{1,6}(?:\/[A-Za-z0-9³²µμ]{1,6})?)/);
+/* data do laudo, do proprio cabecalho */
+function exData(raw){
+  const t=String(raw);
+  let m=t.match(/data\s*(?:da\s*)?(?:coleta|do exame|de realiza[cç][aã]o)[^\d]{0,20}(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})/i)
+      || t.match(/coleta\/recebimento\s*:?\s*(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})/i)
+      || t.match(/(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})/);
   if(!m) return "";
-  const u=m[1];
-  return /^(a|at|to|de|e|ou|desejavel|normal|refer)$/i.test(u)? "" : u;
+  const d=("0"+m[1]).slice(-2), mo=("0"+m[2]).slice(-2);
+  return m[3]+"-"+mo+"-"+d;
 }
+/* No PDF o nome do exame as vezes quebra em duas linhas: "Contagem de" numa, "Plaquetas"
+   na seguinte. Sem juntar, o exame entra com nome pela metade e vira outro exame. */
+const EX_CONECTOR=/\s(de|da|do|dos|das|e|em|com|por|-|–)$/i;
+function exNomeCompleto(nome, proxima){
+  const p=String(proxima||"").trim().replace(/[:\s]+$/,"");
+  /* a continuacao e' uma linha curta so' de letras, sem valor nenhum */
+  if(!p || /\d/.test(p) || p.length>34 || !/^[A-Za-zÀ-ÿ]/.test(p)) return nome;
+  if(EX_IGNORAR.test(p)) return nome;
+  const junto=(nome+" "+p).trim();
+  const a=indOf(nome), b=indOf(junto);
+  /* junta quando o nome inteiro e' reconhecido (ou melhor reconhecido) que a metade,
+     ou quando a metade termina em conector ("Contagem de", "Atividade de") */
+  if(b && (!a || b.word.length>a.word.length)) return junto;
+  if(!a && EX_CONECTOR.test(" "+nome)) return junto;
+  return nome;
+}
+/* todos os pares "numero + unidade" de um pedaco de linha, na ordem em que aparecem */
+function exPares(str){
+  const out=[], re=/(-?\d[\d.]*(?:,\d+)?)\s*([^\s]{0,14})/g;
+  let m; while((m=re.exec(str))) out.push({v:m[1], u:(m[2]||"").replace(/[.,;:)]+$/,""), fim:re.lastIndex});
+  return out;
+}
+/* Qual numero da linha e' o resultado. Uma linha de laudo costuma ter varios:
+   "Leucócitos 100 % 6.260 /µL 100 % 4.000 a 10.000 /µL". Ganha, nesta ordem:
+   o que esta' na unidade do proprio exame, depois o primeiro com unidade de laboratorio,
+   depois o primeiro de todos. */
+function exEscolhe(pares, unidEsperada){
+  if(!pares.length) return null;
+  if(unidEsperada){
+    const alvo=norm(unidEsperada).replace(/\s/g,"");
+    const bate=pares.find(q=>norm(q.u).replace(/\s/g,"")===alvo);
+    if(bate) return bate;
+  }
+  return pares.find(q=>exUnidOk(q.u)) || pares[0];
+}
+/* Alguns laudos escrevem em bloco: o nome do exame numa linha, "Resultado: 96 mg/dL" na
+   seguinte e "Valores de referência: 70 a 99" na outra. O bloco so' abre quando a linha e'
+   SO' o nome de um exame conhecido, e so' fecha na primeira linha que traz um valor. */
+const EX_REFLINE=/^\s*(valor(es)?\s+de\s+refer|refer[eê]ncias?|desej[aá]vel|desejavel|normal\s*:|\bvr\s*:|intervalo)/i;
+const EX_SOVALOR=/^\s*(resultado|valor|result)?\s*:?\s*(-?\d.*)$/i;
 function parseExame(raw){
-  const linhas=String(raw).split(/\r?\n/).map(l=>l.trim()).filter(l=>l.length>1);
+  const linhas=String(raw).split(/\r?\n/);
   const out=[], vistos={};
-  let ctx=null, ultimo=null;
-  linhas.forEach(l=>{
-    if(EX_IGNORAR.test(l)) return;
-    const limpo=exLimpa(l);
-    const ind=indOf(limpo);
-    const nums=exNums(limpo);
-    /* "Desejável: < 190" no fim de uma linha de resultado é faixa; no começo, a linha inteira é faixa */
-    const posRef=limpo.search(EX_REFLINE);
-    if(posRef>=0 && (!nums.length || posRef < nums[0].i)){
-      const f=exFaixa(limpo.slice(posRef));
+  let ctx=null, ultimo=null, ctxIdade=0;
+  linhas.forEach((l,idx)=>{
+    if(!l || l.trim().length<4) return;
+    /* linha de referencia: nunca vira exame, so' preenche a faixa do ultimo */
+    if(EX_REFLINE.test(l)){
+      const f=exFaixa(l.replace(EX_REFLINE,""));
       if(f && ultimo && !ultimo.ref) ultimo.ref=f;
       return;
     }
-    if(ind && !nums.length){ ctx=ind; return; }      /* só o nome do exame: abre o bloco */
-    if(!nums.length) return;
-    const alvo = ind || ctx;
-    if(!alvo) return;                                 /* número solto sem dono: não inventa */
-    const key=alvo.id;
-    if(vistos[key]){ if(!ind) ctx=null; return; }
-    const primeiro=nums[0];
-    const resto=limpo.slice(primeiro.i+primeiro.v.length);
-    const item={ind:alvo.id, name:indName(alvo.id), value:primeiro.v.replace(",","."),
-                 unit:exUnidade(resto)||alvo.unit||"", ref:exFaixa(resto), line:l};
-    out.push(item); vistos[key]=1; ultimo=item; ctx=null;
+    if(EX_IGNORAR.test(l)) return;
+    /* linha que e' so' o nome de um exame conhecido: abre o bloco */
+    /* "HEMOGLOBINA GLICADA (HbA1c)" e' so' nome: o numero esta' dentro do parenteses do nome */
+    const semPar=l.replace(/\([^)]*\)/g," ");
+    if(!/(^|[\s:])-?\d/.test(semPar) && l.trim().length<=60){
+      const so=indOf(l.trim());
+      if(so){ ctx=so; ctxIdade=0; return; }
+      if(ctx && ++ctxIdade>3) ctx=null;
+      return;
+    }
+    /* dentro de um bloco aberto, "Resultado: 96 mg/dL" pertence ao exame do bloco */
+    if(ctx && ++ctxIdade<=3){
+      const mv=l.match(EX_SOVALOR);
+      if(mv){
+        const pares=exPares(mv[2]).filter(q=>exNumOk(q.v));
+        const esc=exEscolhe(pares, ctx.unit);
+        if(esc && !vistos[ctx.id]){
+          vistos[ctx.id]=1;
+          const it={ind:ctx.id, name:indName(ctx.id), value:exNum(esc.v),
+                    unit:exUnidOk(esc.u)? esc.u : ctx.unit||"", ref:exFaixa(mv[2].slice(esc.fim)), line:l.trim()};
+          out.push(it); ultimo=it;
+        }
+        ctx=null; return;
+      }
+    } else ctx=null;
+    /* Duas diagramacoes: a do PDF, com colunas separadas por 2 ou mais espacos ou ":",
+       e a da foto lida pela camera, onde as colunas viram um espaco so'. A segunda so'
+       vale quando o nome e' um exame conhecido — senao qualquer frase viraria exame. */
+    let m=l.match(/^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\s\-\.\/\(\)]{2,54}?)(?:\s{2,}|\s*:\s*)(-?\d.*)$/);
+    let frouxo=false;
+    if(!m){ m=l.match(/^\s*([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ\s\-\.\/\(\)0-9]{2,54}?)\s+(-?\d.*)$/); frouxo=true; }
+    if(!m) return;
+    let nome=m[1].trim().replace(/[\s:\.]+$/,"");
+    nome=exNomeCompleto(nome, linhas[idx+1]).replace(/[\s:\-\.]+$/,"");
+    if((nome.match(/[A-Za-zÀ-ÿ]/g)||[]).length<3) return;
+    const ind=indOf(nome);
+    if(frouxo && !ind) return;
+    const pares=exPares(m[2]).filter(q=>exNumOk(q.v));
+    const esc=exEscolhe(pares, ind? ind.unit : "");
+    if(!esc) return;
+    const valor=esc.v;
+    const unid=exUnidOk(esc.u)? esc.u : "";
+    const resto=m[2].slice(esc.fim);
+    const faixa=exFaixa(resto);
+    /* nome que o dicionario nao conhece so' entra com unidade de laboratorio E faixa impressa */
+    if(!ind && !(unid && faixa)) return;
+    const key=ind? ind.id : "x"+norm(nome);
+    if(vistos[key]) return;
+    vistos[key]=1;
+    const it={ind:ind?ind.id:"", name:ind? indName(ind.id) : nome,
+              value:exNum(valor), unit:unid||(ind?ind.unit:""), ref:faixa, line:l.trim()};
+    out.push(it); ultimo=it; ctx=null;
   });
-  /* linhas soltas que não são de indicador conhecido, para a pessoa não perder nada */
-  if(out.length<3){
-    linhas.forEach(l=>{
-      if(EX_IGNORAR.test(l)||EX_REFLINE.test(l)) return;
-      const limpo=exLimpa(l);
-      if(indOf(limpo)) return;
-      const m=limpo.match(/^([A-Za-zÀ-ÿ\s\.\-\/]{4,40}?)[\s:.\-]{1,6}(\d+(?:[.,]\d+)?)\s*([A-Za-zµμ%\/]{0,8})/);
-      if(!m) return;
-      const nome=m[1].trim();
-      if(vistos["x"+norm(nome)]) return;
-      vistos["x"+norm(nome)]=1;
-      out.push({ind:"", name:nome, value:m[2].replace(",","."), unit:(m[3]||"").trim(), ref:"", line:l});
-    });
+  return out.length? out.slice(0,60) : null;
+}
+/* ---------- LAUDO DESCRITIVO (ultrassom, eco, tomografia, ergometria) ----------
+   Nao e' tabela de valores: e' texto. O app guarda o texto como esta' escrito, com a data
+   e o nome do exame, e nao interpreta nada. */
+const LAUDO_TITULOS=/(ultrassonografia|ultrassom|ecocardiograma|eletrocardiograma|tomografia|angio[\s-]?tc|resson[aâ]ncia|radiografia|raio[\s-]?x|densitometria|teste ergom[eé]trico|ergometria|endoscopia|colonoscopia|mamografia|doppler|cintilografia)/i;
+const LAUDO_SECAO=/^\s*(conclus(?:[aã]o|[oõ]es)(?:\s+e\s+coment[aá]rios?)?|impress[aã]o(?:\s+diagn[oó]stica)?|opini[aã]o|coment[aá]rios?|sum[aá]rio|an[aá]lise|parecer)\s*:?\s*$/i;
+/* o texto da conclusao para quando chega no rodape ou numa secao que nao e' conclusao */
+const LAUDO_FIM=/^\s*(observa[cç][oõ]es?|nota\s*:|refer[eê]ncias?|laudado por|assinado|respons[aá]vel t[eé]cnico|m[eé]dico\s|dr\(a\)|crm)/i;
+/* no texto do laudo o filtro e' mais leve: la' "protocolo" e "metodo" fazem parte da frase */
+const LAUDO_IGNORAR=/^\s*(nome|unidade|idade|sexo|g[eê]nero|prontu[aá]rio|conv[eê]nio|data|hora|peso|altura|m[eé]dico|solicitante|requisitante|paciente)\s*:|^\s*p[aá]gina\b|cnpj|\bcrm\b|assinado eletronicamente/i;
+function parseLaudo(raw){
+  const t=String(raw);
+  /* se o papel e' uma tabela de laboratorio, ele nao e' laudo descritivo: a mencao de
+     "colonoscopia" no meio de uma lista de exames nao transforma um hemograma em laudo */
+  const tab=parseExame(t);
+  if(tab && tab.length>=5) return null;
+  const mt=t.match(LAUDO_TITULOS);
+  if(!mt) return null;
+  const linhas=t.split(/\r?\n/).map(l=>l.replace(/\s+/g," ").trim());
+  /* titulo: a linha mais parecida com nome de exame */
+  let titulo="";
+  for(const l of linhas){ if(l.length>6 && l.length<90 && LAUDO_TITULOS.test(l)){ titulo=l; break; } }
+  if(!titulo) titulo=mt[1];
+  /* conclusao: o bloco depois de "CONCLUSÃO"/"IMPRESSÃO" */
+  let i=-1;
+  for(let k=0;k<linhas.length;k++){
+    if(LAUDO_SECAO.test(linhas[k])){ i=k+1; break; }
+    const inline=linhas[k].match(/^(conclus[aã]o|impress[aã]o(?: diagn[oó]stica)?|opini[aã]o)\s*:\s*(.+)$/i);
+    if(inline){ i=k; break; }
   }
-  return out.length? out.slice(0,40) : null;
+  let texto="";
+  if(i>=0){
+    const bloco=[];
+    const inline=linhas[i].match(/^(conclus[aã]o|impress[aã]o(?: diagn[oó]stica)?|opini[aã]o)\s*:\s*(.+)$/i);
+    if(inline) bloco.push(inline[2]);
+    for(let k=inline?i+1:i; k<linhas.length && bloco.join(" ").length<1200; k++){
+      const l=linhas[k];
+      if(!l) { if(bloco.length) break; else continue; }
+      if(LAUDO_FIM.test(l)) break;
+      if(LAUDO_IGNORAR.test(l)) continue;
+      bloco.push(l);
+    }
+    texto=bloco.join("\n").trim();
+  }
+  if(!texto){
+    texto=linhas.filter(l=>l.length>25 && !LAUDO_IGNORAR.test(l)).slice(0,14).join("\n");
+  }
+  if(!texto) return null;
+  return {tipo:"laudo", titulo:titulo.slice(0,90), data:exData(t), texto:texto.slice(0,2500)};
 }
 /* agrupa o historico por indicador, para virar um grafico por linha */
 function examSeries(){

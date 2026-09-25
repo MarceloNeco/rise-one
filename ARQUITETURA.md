@@ -126,6 +126,14 @@ Procure pelo número para ir direto ao assunto.
 5. Endereço externo novo (script, API) precisa entrar na `Content-Security-Policy` do `index.html`,
    senão o navegador bloqueia em silêncio.
 
+- **62 e 62b. Exames e laudos** — `parseExame(texto)` lê a tabela do laboratório: nome no começo da
+  linha, comparação com o dicionário `INDICADORES` por palavra inteira, valor escolhido pela unidade
+  do próprio exame (`exEscolhe`), nome quebrado em duas linhas juntado por `exNomeCompleto`, e faixa
+  guardada como está impressa (`exFaixa`). Nome fora do dicionário só entra com unidade de
+  laboratório **e** faixa. `parseLaudo(texto)` cuida do laudo descritivo (ultrassom, eco, tomografia,
+  ergometria): acha o título, a data e o bloco de conclusão, e guarda o texto sem interpretar.
+  `exImportar`/`exExportar` acrescentam e levam embora exames e laudos sem mexer no resto dos dados.
+
 ## O que ficou pendente de propósito
 
 | Assunto | Situação |
