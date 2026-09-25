@@ -5,6 +5,25 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.7.0 — importar o PDF direto, e a faixa do laudo no gráfico
+
+- **Importar agora aceita o PDF do laudo.** Antes o botão só abria `.json`, então quem tinha o PDF
+  na mão não descobria que a leitura morava na tela da câmera. Agora é o mesmo botão: PDF, foto ou o
+  `.json` que o app exporta. O app lê, **mostra o que encontrou numa tabela** e só guarda depois do
+  seu "sim" — a data e a faixa saem do próprio papel.
+- **As setas de Importar e Exportar estavam trocadas.** Corrigido: importar aponta para dentro,
+  exportar para fora.
+- **Cada resultado é comparado com a faixa que o SEU laboratório imprimiu ao lado dele**: dentro da
+  faixa, **na borda** (nos 5% finais de uma das pontas), abaixo ou acima. Onde o laudo não imprimiu
+  faixa, o app não diz nada — e isso acontece de propósito no LDL e no Não HDL, onde o próprio laudo
+  diz que o alvo depende do risco cardiovascular estimado **pelo médico**.
+- **O gráfico de cada indicador desenha a faixa do laudo**, e o ponto que saiu dela fica marcado.
+  Quem saiu da faixa vem primeiro na lista, e o limite subiu de 12 para 40 gráficos.
+- **Resumo do último exame** no topo da aba Exames — quantos dentro, na borda, fora e sem faixa — com
+  botão de **imprimir ou salvar em PDF** para levar ao médico.
+- **O aviso fica junto**, na mesma tela: isto é comparação com a faixa do próprio laudo, não é
+  diagnóstico, não considera histórico, remédios nem contexto clínico, e não substitui o médico.
+
 ## Novo na versão 3.6.0 — o leitor de laudo refeito, e lugar para laudo descritivo
 
 O leitor de exame foi rodado contra laudos de laboratório de verdade pela primeira vez, e errava
@@ -470,4 +489,4 @@ durante um exercício, pare na hora e procure atendimento.
 O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.6.0
+Versão 3.7.0

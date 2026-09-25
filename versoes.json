@@ -3,6 +3,26 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.7.0",
+   "data": "2026-09-25",
+   "pt": [
+    "O botão Importar agora aceita o PDF do laudo direto, além de foto e do arquivo .json. Antes ele só abria .json, e quem tinha o PDF na mão não descobria que isso morava na tela da câmera. O app lê, mostra o que encontrou e só guarda depois do seu \"sim\".",
+    "As setas de Importar e Exportar estavam trocadas. Corrigido.",
+    "Cada resultado passa a ser comparado com a faixa que o SEU laboratório imprimiu ao lado dele: dentro da faixa, na borda (nos 5% finais de uma ponta), abaixo ou acima. Sem faixa impressa, o app não diz nada.",
+    "O gráfico de cada indicador agora desenha a faixa de referência do laudo, e o ponto que saiu dela aparece marcado. Os indicadores que saíram da faixa vêm primeiro na lista, e passaram de 12 para 40 gráficos.",
+    "Resumo do último exame no topo da aba Exames: quantos dentro, na borda, fora e sem faixa — com botão de imprimir ou salvar em PDF para levar ao médico.",
+    "Isso não é diagnóstico: é comparação com a faixa do próprio laudo. Não considera histórico, remédios nem contexto clínico, e não substitui a leitura do médico. O aviso está na tela, junto da legenda."
+   ],
+   "en": [
+    "The Import button now takes the report PDF directly, as well as a photo and the .json file. It used to accept .json only, and anyone holding the PDF never found out that lived on the camera screen. The app reads it, shows what it found, and only saves after your yes.",
+    "The Import and Export arrows were the wrong way round. Fixed.",
+    "Every result is now compared with the range YOUR lab printed next to it: within range, at the edge (the last 5% of an end), below or above. With no printed range, the app says nothing.",
+    "Each indicator's chart now draws the report's reference range, and a point that fell outside it is marked. Indicators that left the range come first, and the list went from 12 to 40 charts.",
+    "A summary of the latest exam at the top of the Exams tab: how many within, at the edge, outside and without a range — with a button to print or save as PDF to take to your doctor.",
+    "This is not a diagnosis: it is a comparison with the range on your own report. It ignores history, medication and clinical context, and does not replace your doctor reading it. The notice is on screen, next to the legend."
+   ]
+  },
+  {
    "v": "3.6.0",
    "data": "2026-09-25",
    "pt": [

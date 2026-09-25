@@ -777,6 +777,26 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
 .pose .aeqw{fill:var(--eq-weight);stroke:var(--eq-weight-edge);stroke-width:1.2;stroke-linejoin:round}
 .pose .aeqwd{fill:var(--eq-weight-edge);stroke:none}
 [data-contrast="1"] .pose .aeqf,[data-contrast="1"] .pose .aeqfb{stroke-width:2}
+.exresgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.exres{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;text-align:center}
+.exres b{display:block;font-size:1.5rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.exres span{display:block;font-size:.76rem;color:var(--text2);margin-top:2px}
+.exres.ok{border-color:var(--ok)} .exres.ok b{color:var(--ok)}
+.exres.warn{border-color:var(--warn)} .exres.warn b{color:var(--warn)}
+.exres.bad{border-color:var(--bad)} .exres.bad b{color:var(--bad)}
+@media print{
+  .exres,.exind,.card{break-inside:avoid}
+  .segbar,.pagehead .row,#eximprimir,#eximp,#exexp,#addex2,#scanexam,#addld{display:none!important}
+}
+/* faixa de referencia no grafico do exame */
+.pose-none{}
+.exchart .exband{fill:var(--ok);opacity:.14}
+.exchart .exlim{stroke:var(--ok);stroke-width:1;stroke-dasharray:4 3;opacity:.7;vector-effect:non-scaling-stroke}
+.exchart .expt{fill:var(--accent)}
+.exchart .expt.abaixo,.exchart .expt.acima{fill:var(--bad);stroke:var(--surface);stroke-width:1.2}
+.exchart .expt.borda{fill:var(--warn)}
+.exleg{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.exleg .tiny{flex:1;min-width:200px}
 /* texto do laudo */
 .laudotxt{white-space:pre-wrap;word-break:break-word;font:inherit;font-size:.92rem;line-height:1.55;margin:0 0 12px;
   background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;max-height:52vh;overflow:auto}
@@ -905,7 +925,7 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.6.0";
+const APP_VERSION = "3.7.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2347,7 +2367,30 @@ Object.assign(L,{
 "ex.imBad":["Não consegui ler esse arquivo.","Could not read that file."],
 "ex.imEmpty":["O arquivo não tem exame nem laudo dentro.","The file has no exam and no report in it."],
 "ex.imOk":["Pronto: {e} exames e {l} laudos acrescentados.","Done: {e} exams and {l} reports added."],
-"ex.imNote":["Importar ACRESCENTA ao que já existe; não apaga nada e não repete o que já está guardado.","Import ADDS to what is already there; it erases nothing and does not duplicate what is already stored."]
+"ex.imNote":["Importar ACRESCENTA ao que já existe; não apaga nada e não repete o que já está guardado.","Import ADDS to what is already there; it erases nothing and does not duplicate what is already stored."],
+/* --- comparar com a faixa do proprio laudo --- */
+"ex.st_dentro":["dentro da faixa","within range"],
+"ex.st_borda":["na borda","at the edge"],
+"ex.st_abaixo":["abaixo da faixa","below range"],
+"ex.st_acima":["acima da faixa","above range"],
+"ex.stTitle":["Comparado com a faixa impressa no seu próprio laudo","Compared with the range printed on your own report"],
+"ex.legenda":["Comparação com a faixa que o SEU laboratório imprimiu ao lado do resultado. Não é diagnóstico: não considera o seu histórico, seus remédios nem o contexto clínico, e não substitui a leitura do médico.","Comparison with the range YOUR lab printed next to the result. Not a diagnosis: it ignores your history, your medication and the clinical context, and does not replace your doctor reading it."],
+"ex.resumo":["Resumo do último exame","Latest exam summary"],
+"ex.resumoSub":["Comparado com a faixa impressa no laudo de {d}.","Compared with the range printed on the {d} report."],
+"ex.resFora":["fora da faixa","outside range"],
+"ex.resSem":["sem faixa no laudo","no range on the report"],
+"ex.print":["Imprimir / PDF","Print / PDF"],
+"ex.printErr":["Não consegui abrir a impressão neste navegador.","Could not open printing in this browser."],
+"ex.import":["Importar laudo","Import report"],
+"ex.export":["Exportar","Export"],
+"ex.imTipo":["Mande o PDF do laudo, uma foto dele, ou o arquivo .json que o app exporta.","Send the report PDF, a photo of it, or the .json the app exports."],
+"ex.lendo":["Lendo o laudo","Reading the report"],
+"ex.imScan":["Esse PDF é uma imagem escaneada. Vou abrir a leitura com a câmera para reconhecer o texto.","That PDF is a scanned image. Opening camera reading to recognise the text."],
+"ex.imNada":["Não encontrei exame nem laudo nesse arquivo.","Found no exam and no report in that file."],
+"ex.imTitulo":["Confira antes de guardar","Check before saving"],
+"ex.imAchei":["Encontrei {n} resultados neste laudo.","Found {n} results in this report."],
+"ex.imConfere":["Confira com o papel antes de guardar. A faixa vai como está impressa no seu laudo.","Check against the paper before saving. The range goes in exactly as printed on your report."],
+"ex.imGuardar":["Guardar","Save"]
 });
 
 /* ---------- 2. MUSCULOS (3 niveis de nome) ---------- */
@@ -4166,14 +4209,15 @@ SCREENS.progress = function(){
     h+=guestBanner();
     h+='<div class="card">'+cardHead("flask", t("pg.exams"), t("pg.examNote"),
        '<div class="row nowrap"><button class="btn sm line" id="scanexam">'+I("scan")+t("sc.short")+'</button>'+
-       '<label class="btn sm line" style="cursor:pointer">'+I("upload")+t("ex.import")+'<input type="file" accept="application/json,.json" id="eximp" style="display:none"></label>'+
-       '<button class="btn sm line" id="exexp">'+I("download")+t("ex.export")+'</button>'+
+       '<label class="btn sm line" style="cursor:pointer">'+I("download")+t("ex.import")+'<input type="file" accept="application/pdf,.pdf,application/json,.json,image/*" id="eximp" style="display:none"></label>'+
+       '<button class="btn sm line" id="exexp">'+I("upload")+t("ex.export")+'</button>'+
        '<button class="btn sm" id="addex2">'+I("plus")+t("pg.addExam")+"</button></div>");
     h+= STATE.exams.length? '<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>'+t("common.date")+"</th><th>"+t("pg.examName")+'</th><th class="num">'+t("pg.value")+"</th><th>"+t("pg.ref")+"</th><th></th></tr></thead><tbody>"+
-        STATE.exams.slice().sort((a,b)=>a.date<b.date?1:-1).map(x=>"<tr><td>"+fmtDate(x.date)+"</td><td>"+esc(x.name)+'</td><td class="num">'+esc(x.value)+" "+esc(x.unit||"")+"</td><td>"+esc(x.ref||"—")+"</td>"+
+        STATE.exams.slice().sort((a,b)=>a.date<b.date?1:-1).map(x=>"<tr><td>"+fmtDate(x.date)+"</td><td>"+esc(x.name)+'</td><td class="num">'+esc(x.value)+" "+esc(x.unit||"")+"</td><td>"+esc(x.ref||"—")+" "+exStatusPill(x.value,x.ref)+"</td>"+
         '<td class="num"><button class="btn xs line" data-delex="'+x.id+'">&times;</button></td></tr>').join("")+"</tbody></table></div>"
       : emptyBox("flask", t("pg.noExams"), t("pg.noExamsSub"));
     h+="</div>";
+    h+=exResumoCard();
     h+=laudoCard();
     h+=examSeriesCard();
     h+=cardsCard();
@@ -4245,7 +4289,8 @@ SCREENS.progress_after = function(){
   /* exames */
   if($("addex2")) $("addex2").onclick=()=>{ if(precisaConta()) examModal(); };
   wireLaudoCard();
-  if($("eximp")) $("eximp").onchange=e=>{ const f=e.target.files[0]; if(f) exImportar(f); e.target.value=""; };
+  if($("eximprimir")) $("eximprimir").onclick=()=>{ try{ window.print(); }catch(e){ toast(t("ex.printErr")); } };
+  if($("eximp")) $("eximp").onchange=e=>{ const f=e.target.files[0]; if(f) exArquivo(f); e.target.value=""; };
   if($("exexp")) $("exexp").onclick=exExportar;
   if($("scanexam")) $("scanexam").onclick=()=>{ SCANMODE="exam"; go("scan"); };
   document.querySelectorAll("[data-delex]").forEach(b=>b.onclick=()=>{
@@ -9313,6 +9358,74 @@ function laudoModal(pre){
 /* ---------- IMPORTAR EXAMES DE UM ARQUIVO ----------
    Diferente de "Restaurar backup", que troca tudo: aqui os exames e laudos do arquivo são
    ACRESCENTADOS ao que já existe. Nada é apagado, e repetido não entra duas vezes. */
+/* ---------- IMPORTAR O ARQUIVO DO LAUDO ----------
+   Entrada única: PDF do laboratório, foto do papel ou o .json que o app exporta.
+   O botão decide o caminho sozinho — quem chega com o PDF na mão não precisa
+   descobrir que isso mora na tela da câmera. */
+function exArquivo(file){
+  if(!file) return;
+  const nome=(file.name||"").toLowerCase(), tipo=(file.type||"").toLowerCase();
+  if(/\.json$/.test(nome) || /json/.test(tipo)) return exImportar(file);
+  if(/\.pdf$/.test(nome) || /pdf/.test(tipo))   return exArquivoPDF(file);
+  if(/^image\//.test(tipo) || /\.(jpe?g|png|webp|heic|bmp)$/.test(nome)){
+    /* foto do papel: a tela da câmera já tem o leitor e a pré-visualização */
+    SCANMODE="exam"; go("scan");
+    setTimeout(()=>{ try{ lerArquivoExame(file); }catch(e){ toast(t("ex.imBad")); } },400);
+    return;
+  }
+  toast(t("ex.imTipo"));
+}
+function exArquivoPDF(file){
+  if(typeof precisaConta==="function" && !precisaConta()) return;
+  const m=modal(mh(t("ex.lendo"))+'<p id="ex_st" class="muted">'+t("pdf.opening")+"</p>"+
+    '<div class="bar"><i id="ex_bar" style="width:8%"></i></div>',{sticky:true});
+  const passo=(txt,pc)=>{ const a=m.querySelector("#ex_st"), b=m.querySelector("#ex_bar");
+    if(a) a.textContent=txt; if(b) b.style.width=pc+"%"; };
+  file.arrayBuffer()
+    .then(buf=>pdfExtrair(buf,(i,n)=>passo(t("pdf.reading").replace("{i}",i).replace("{n}",n), Math.round(i/n*85))))
+    .then(r=>{
+      if(r.escaneado){ m.remove(); toast(t("ex.imScan")); SCANMODE="exam"; go("scan"); return; }
+      m.remove(); exConfirmaTexto(r.texto, file.name||"");
+    })
+    .catch(()=>{ m.remove(); toast(t("pdf.fail")); });
+}
+/* mostra o que foi lido e só guarda depois do "sim" */
+function exConfirmaTexto(texto, arquivo){
+  const itens=parseExame(texto)||[];
+  const laudo=(itens.length<5)? parseLaudo(texto) : null;
+  const dia=exData(texto)||todayISO();
+  if(!itens.length && !laudo){ toast(t("ex.imNada")); return; }
+  let corpo='<p class="tiny muted">'+esc(arquivo)+"</p>";
+  if(laudo){
+    corpo+='<div class="grid g2 collapse"><label class="fld"><span>'+t("ld.name")+'</span><input type="text" id="ec_t" value="'+esc(laudo.titulo)+'"></label>'+
+      '<label class="fld"><span>'+t("common.date")+'</span><input type="date" id="ec_d" value="'+(laudo.data||dia)+'" max="'+todayISO()+'"></label></div>'+
+      '<span class="kicker">'+t("ld.text")+'</span><pre class="laudotxt">'+esc(laudo.texto)+"</pre>"+
+      '<p class="tiny muted">'+t("ld.scanNote")+"</p>";
+  } else {
+    corpo+='<label class="fld"><span>'+t("common.date")+'</span><input type="date" id="ec_d" value="'+dia+'" max="'+todayISO()+'"></label>'+
+      '<p class="tiny muted">'+t("ex.imAchei").replace("{n}",itens.length)+"</p>"+
+      '<div class="tabwrap" style="max-height:44vh;overflow:auto"><table class="tbl"><thead><tr><th>'+t("pg.examName")+'</th><th class="num">'+t("pg.value")+'</th><th>'+t("pg.ref")+"</th></tr></thead><tbody>"+
+      itens.map(i=>"<tr><td>"+esc(i.name)+'</td><td class="num">'+esc(i.value)+" "+esc(i.unit||"")+"</td><td>"+esc(i.ref||"—")+"</td></tr>").join("")+
+      "</tbody></table></div>"+
+      '<p class="tiny muted">'+t("ex.imConfere")+"</p>";
+  }
+  corpo+='<div class="row"><button class="btn" id="ec_ok">'+I("check")+t("ex.imGuardar")+'</button><button class="btn line" data-close>'+t("common.cancel")+"</button></div>";
+  const m=modal(mh(t("ex.imTitulo"))+corpo,{wide:true});
+  m.querySelector("#ec_ok").onclick=()=>{
+    const d=(m.querySelector("#ec_d")||{}).value || dia;
+    if(laudo){
+      laudoSave({data:d, titulo:(m.querySelector("#ec_t")||{}).value||laudo.titulo, texto:laudo.texto});
+    } else {
+      STATE.exams=STATE.exams||[];
+      const chave=e=>[e.date,norm(e.name||""),String(e.value)].join("|");
+      const ja={}; STATE.exams.forEach(e=>ja[chave(e)]=1);
+      itens.forEach(i=>{ const e={id:uid(),date:d,name:i.name,value:i.value,unit:i.unit,ref:i.ref||""};
+        if(!ja[chave(e)]) STATE.exams.push(e); });
+    }
+    const gravou=save(); m.remove(); render();
+    if(gravou) toast(t("common.saved")); else if(typeof precisaConta==="function") precisaConta();
+  };
+}
 function exImportar(file){
   const r=new FileReader();
   r.onload=()=>{
@@ -9532,7 +9645,33 @@ function exEscolhe(pares, unidEsperada){
    SO' o nome de um exame conhecido, e so' fecha na primeira linha que traz um valor. */
 const EX_REFLINE=/^\s*(valor(es)?\s+de\s+refer|refer[eê]ncias?|desej[aá]vel|desejavel|normal\s*:|\bvr\s*:|intervalo)/i;
 const EX_SOVALOR=/^\s*(resultado|valor|result)?\s*:?\s*(-?\d.*)$/i;
+/* Alguns laudos escrevem "(Vide Intervalo de Referência Abaixo)" na linha do resultado e
+   colocam a faixa numa "Tabela de Referência - <exame>" mais adiante. Isso lê essas tabelas.
+   So' entram as linhas de faixa NEUTRA ("Com jejum:", "Normal:", "Desejável:"). Tabela de
+   risco ou de meta ("Baixo Risco:", "Extremo:", "Meta") fica de fora de proposito: ali o
+   numero depende do risco de cada pessoa, e quem define isso e' o medico, nao o app. */
+const EX_TAB_NEUTRA=/^\s*(com jejum|sem jejum|normal|desej[aá]vel|[oó]timo|refer[eê]ncia|valores? de refer)\s*:/i;
+function exTabelasRef(raw){
+  const linhas=String(raw).split(/\r?\n/);
+  const mapa={};
+  linhas.forEach((l,i)=>{
+    const m=l.match(/tabela de refer[eê]ncia\s*[-–:]\s*(.{3,60})$/i);
+    if(!m) return;
+    const ind=indOf(m[1].trim());
+    if(!ind || mapa[ind.id]) return;
+    for(let k=i+1;k<Math.min(i+8,linhas.length);k++){
+      const l2=linhas[k].trim();
+      if(!l2) continue;
+      if(/gr[aá]fico|hist[oó]rico/i.test(l2)) break;
+      if(!EX_TAB_NEUTRA.test(l2)) continue;
+      const f=exFaixa(l2.replace(EX_TAB_NEUTRA,""));
+      if(f){ mapa[ind.id]=f; break; }
+    }
+  });
+  return mapa;
+}
 function parseExame(raw){
+  const tabelas=exTabelasRef(raw);
   const linhas=String(raw).split(/\r?\n/);
   const out=[], vistos={};
   let ctx=null, ultimo=null, ctxIdade=0;
@@ -9597,6 +9736,8 @@ function parseExame(raw){
               value:exNum(valor), unit:unid||(ind?ind.unit:""), ref:faixa, line:l.trim()};
     out.push(it); ultimo=it; ctx=null;
   });
+  /* faixa que ficou vazia e existe numa "Tabela de Referência" do mesmo laudo */
+  out.forEach(it=>{ if(!it.ref && it.ind && tabelas[it.ind]) it.ref=tabelas[it.ind]; });
   return out.length? out.slice(0,60) : null;
 }
 /* ---------- LAUDO DESCRITIVO (ultrassom, eco, tomografia, ergometria) ----------
@@ -9649,6 +9790,42 @@ function parseLaudo(raw){
   return {tipo:"laudo", titulo:titulo.slice(0,90), data:exData(t), texto:texto.slice(0,2500)};
 }
 /* agrupa o historico por indicador, para virar um grafico por linha */
+/* ---------- COMPARAR COM A FAIXA DO PRÓPRIO LAUDO ----------
+   O RiseONE não classifica exame. O que ele faz aqui é aritmética: pega a faixa que o SEU
+   laboratório imprimiu ao lado do resultado e diz se o número caiu dentro, fora ou na beira
+   dela — que é a mesma legenda que o laudo já traz. Sem faixa impressa, não diz nada.
+   Isso não é diagnóstico, não considera o seu histórico nem os seus remédios, e não
+   substitui a leitura do médico. */
+function exFaixaNum(ref){
+  const r=String(ref||"").replace(/\s+/g," ").trim();
+  if(!r) return null;
+  const n=x=>parseFloat(exNum(x));
+  let m=r.match(/(-?\d[\d.]*(?:,\d+)?)\s*(?:a|à|at[ée]|-|–|to)\s*(-?\d[\d.]*(?:,\d+)?)/i);
+  if(m){ const lo=n(m[1]), hi=n(m[2]); if(isFinite(lo)&&isFinite(hi)&&hi>lo) return {min:lo,max:hi}; }
+  m=r.match(/(?:inferior a|menor que|abaixo de|at[ée]|<|≤)\s*(-?\d[\d.]*(?:,\d+)?)/i);
+  if(m){ const hi=n(m[1]); if(isFinite(hi)) return {max:hi}; }
+  m=r.match(/(?:superior a|maior que|acima de|>|≥)\s*(-?\d[\d.]*(?:,\d+)?)/i);
+  if(m){ const lo=n(m[1]); if(isFinite(lo)) return {min:lo}; }
+  return null;
+}
+/* "" = sem faixa impressa · dentro · borda · abaixo · acima */
+function exStatus(valor, ref){
+  const f=exFaixaNum(ref); if(!f) return "";
+  const v=parseFloat(String(valor).replace(",",".")); if(!isFinite(v)) return "";
+  if(f.min!=null && v<f.min) return "abaixo";
+  if(f.max!=null && v>f.max) return "acima";
+  /* "na borda" = dentro da faixa, mas nos 5% finais de cada ponta */
+  const larg=(f.min!=null&&f.max!=null)? (f.max-f.min) : Math.abs(f.max!=null?f.max:f.min);
+  const m=larg*0.05;
+  if(f.min!=null && v<=f.min+m) return "borda";
+  if(f.max!=null && v>=f.max-m) return "borda";
+  return "dentro";
+}
+const EX_ST_CLS={dentro:"ok", borda:"warn", abaixo:"bad", acima:"bad"};
+function exStatusPill(valor, ref){
+  const st=exStatus(valor, ref); if(!st) return "";
+  return '<span class="pill xs '+EX_ST_CLS[st]+'" title="'+esc(t("ex.stTitle"))+'">'+t("ex.st_"+st)+"</span>";
+}
 function examSeries(){
   const by={};
   (STATE.exams||[]).forEach(e=>{
@@ -9658,41 +9835,91 @@ function examSeries(){
     if(isNaN(v)) return;
     (by[key]=by[key]||{key, name: ind? indName(ind.id) : e.name, unit:e.unit||(ind?ind.unit:""), pts:[]}).pts.push({d:e.date, v, ref:e.ref||""});
   });
-  return Object.values(by).map(s=>{ s.pts.sort((a,b)=>a.d<b.d?-1:1); return s; })
+  const peso={acima:0, abaixo:0, borda:1, dentro:2, "":3};
+  return Object.values(by).map(s=>{
+      s.pts.sort((a,b)=>a.d<b.d?-1:1);
+      const u=s.pts[s.pts.length-1];
+      s.st=exStatus(u.v, u.ref);
+      return s; })
     .filter(s=>s.pts.length>0)
-    .sort((a,b)=>b.pts.length-a.pts.length || (a.name<b.name?-1:1));
+    /* quem saiu da faixa vem primeiro, depois quem tem mais leituras */
+    .sort((a,b)=>(peso[a.st]-peso[b.st]) || (b.pts.length-a.pts.length) || (a.name<b.name?-1:1));
 }
 function examChart(s){
   if(s.pts.length<2) return "";
-  const W=320,H=90,P=8;
-  const vs=s.pts.map(p=>p.v), mn=Math.min(...vs), mx=Math.max(...vs);
+  const W=320,H=90,P=10;
+  const ultima=s.pts[s.pts.length-1];
+  const f=exFaixaNum(ultima.ref) || exFaixaNum((s.pts.find(p=>p.ref)||{}).ref);
+  const vs=s.pts.map(p=>p.v).slice();
+  /* a faixa entra na escala, para dar para ver o quanto o ponto ficou fora dela */
+  if(f){ if(f.min!=null) vs.push(f.min); if(f.max!=null) vs.push(f.max); }
+  let mn=Math.min.apply(null,vs), mx=Math.max.apply(null,vs);
+  const folga=((mx-mn)||Math.abs(mx)||1)*0.12; mn-=folga; mx+=folga;
   const span=(mx-mn)||1;
   const x=i=>P+i*(W-2*P)/Math.max(1,s.pts.length-1);
   const y=v=>H-P-((v-mn)/span)*(H-2*P);
   const d=s.pts.map((p,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(p.v).toFixed(1)).join(" ");
+  let faixa="";
+  if(f){
+    const yTopo=(f.max!=null)? y(f.max) : 0;
+    const yBase=(f.min!=null)? y(f.min) : H;
+    faixa='<rect class="exband" x="0" y="'+Math.min(yTopo,yBase).toFixed(1)+'" width="'+W+'" height="'+Math.abs(yBase-yTopo).toFixed(1)+'"/>';
+    if(f.max!=null) faixa+='<line class="exlim" x1="0" y1="'+y(f.max).toFixed(1)+'" x2="'+W+'" y2="'+y(f.max).toFixed(1)+'"/>';
+    if(f.min!=null) faixa+='<line class="exlim" x1="0" y1="'+y(f.min).toFixed(1)+'" x2="'+W+'" y2="'+y(f.min).toFixed(1)+'"/>';
+  }
   return '<svg class="exchart" viewBox="0 0 '+W+" "+H+'" preserveAspectRatio="none" role="img" aria-label="'+esc(s.name)+'">'+
+    faixa+
     '<path d="'+d+'" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'+
-    s.pts.map((p,i)=>'<circle cx="'+x(i).toFixed(1)+'" cy="'+y(p.v).toFixed(1)+'" r="3" fill="var(--accent)"/>').join("")+"</svg>";
+    s.pts.map((p,i)=>{
+      const st=exStatus(p.v, p.ref||ultima.ref);
+      return '<circle class="expt '+(st||"")+'" cx="'+x(i).toFixed(1)+'" cy="'+y(p.v).toFixed(1)+'" r="'+((st==="abaixo"||st==="acima")?4.2:3)+'"/>';
+    }).join("")+"</svg>";
 }
 function examSeriesCard(){
   const ss=examSeries();
   if(!ss.length) return "";
   let h='<div class="card">'+cardHead("chart", t("pg.indTitle"), t("pg.indSub"))+'<div class="grid gauto">';
-  h+=ss.slice(0,12).map(s=>{
+  const comLinha=ss.filter(s=>s.pts.length>1), soUm=ss.filter(s=>s.pts.length<2);
+  h+=comLinha.concat(soUm).slice(0,40).map(s=>{
     const last=s.pts[s.pts.length-1], first=s.pts[0];
     const dif=s.pts.length>1? last.v-first.v : 0;
     const seta=s.pts.length<2? "" : (dif>0?"▲":(dif<0?"▼":"="));
     return '<div class="exind"><div class="nm">'+esc(s.name)+'</div>'+
-      '<div class="vl">'+fmtNum(last.v,2)+' <small>'+esc(s.unit||"")+"</small>"+
-      (seta?' <span class="dl '+(dif>0?"up":"dn")+'">'+seta+" "+fmtNum(Math.abs(dif),2)+"</span>":"")+"</div>"+
+      '<div class="vl">'+fmtNum(last.v,exDec(last.v))+' <small>'+esc(s.unit||"")+"</small>"+
+      (seta?' <span class="dl '+(dif>0?"up":"dn")+'">'+seta+" "+fmtNum(Math.abs(dif),exDec(dif))+"</span>":"")+
+      " "+exStatusPill(last.v, last.ref)+"</div>"+
       examChart(s)+
       '<div class="tiny muted">'+fmtDate(first.d)+" → "+fmtDate(last.d)+" · "+s.pts.length+" "+t(s.pts.length===1?"pg.reading1":"pg.readings")+
       (last.ref?" · "+t("pg.ref")+": "+esc(last.ref):"")+"</div></div>";
   }).join("");
-  h+='</div><p class="tiny muted" style="margin-top:10px">'+t("pg.indNote")+"</p></div>";
+  h+="</div>"+exLegenda()+'<p class="tiny muted" style="margin-top:10px">'+t("pg.indNote")+"</p></div>";
   return h;
 }
 
+/* resumo do exame mais recente: quantos dentro, na borda, fora e sem faixa impressa */
+function exResumoCard(){
+  const lista=(STATE.exams||[]).filter(e=>e.date);
+  if(!lista.length) return "";
+  const dias=[...new Set(lista.map(e=>e.date))].sort();
+  const ult=dias[dias.length-1];
+  const doDia=lista.filter(e=>e.date===ult);
+  const c={dentro:0,borda:0,fora:0,sem:0};
+  doDia.forEach(e=>{ const st=exStatus(e.value,e.ref);
+    c[st==="acima"||st==="abaixo"? "fora" : (st||"sem")]++; });
+  const bloco=(k,rot,cls)=>'<div class="exres '+cls+'"><b>'+c[k]+"</b><span>"+t(rot)+"</span></div>";
+  return '<div class="card">'+cardHead("chart", t("ex.resumo"), t("ex.resumoSub").replace("{d}",fmtDate(ult)),
+      '<button class="btn sm line" id="eximprimir">'+I("file")+t("ex.print")+"</button>")+
+    '<div class="exresgrid">'+bloco("dentro","ex.st_dentro","ok")+bloco("borda","ex.st_borda","warn")+
+      bloco("fora","ex.resFora","bad")+bloco("sem","ex.resSem","none")+"</div>"+
+    exLegenda()+"</div>";
+}
+/* numero grande nao precisa de casa decimal; numero pequeno precisa de duas */
+function exDec(v){ const a=Math.abs(v); return a>=1000? 0 : (a>=10? 1 : 2); }
+function exLegenda(){
+  return '<div class="exleg">'+
+    ["dentro","borda","abaixo","acima"].map(k=>'<span class="pill xs '+EX_ST_CLS[k]+'">'+t("ex.st_"+k)+"</span>").join("")+
+    '<span class="tiny muted">'+t("ex.legenda")+"</span></div>";
+}
 /* ---------- 63. CARTEIRINHA DO PLANO DE SAUDE ---------- */
 /* Por que: na hora do atendimento ninguem acha a carteirinha. Fica no aparelho, com a foto,
    e o numero grande para ditar no balcao. Nada disso sai do aparelho. */
