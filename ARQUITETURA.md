@@ -46,6 +46,24 @@ Procure pelo número para ir direto ao assunto.
 - **31. Conta** — `entrar(sessao)` e `sair()` são as únicas funções que mudam quem está logado. Senha com PBKDF2.
 - **39. Ficha de saúde** — os 4 passos da anamnese, usados também pelo guia "Primeiros passos".
 - **40 a 43. Animações e espelho** — bonecos articulados e câmera com detecção de postura.
+  Os 80 movimentos vivem em `ANIM[id] = {a, b, v2, eq, plano, ...}`: `a` é a posição de início, `b` a de
+  fim, e `v2` guarda as mesmas duas posições vistas de lado. `A(id, a, b)` cria o desenho e
+  `AV(id, plano, a, b)` acrescenta a segunda vista. Cada posição é um mapa de juntas
+  (`h` cabeça, `n` pescoço, `s` ombro, `e`/`w` cotovelo e punho, `p` quadril, `k`/`f` joelho e pé, mais
+  `e2`/`w2`/`k2`/`f2` do outro lado). `frameAt(d, t, vista)` interpola entre as duas, e
+  `animSVG(id, {view, frame, static})` devolve o SVG. O desenho é feito pela tabela de ossos `OSSOS`,
+  que dá a espessura de cada segmento: o traço é pintado duas vezes (uma borda mais grossa por baixo,
+  o corpo por cima), mais a cabeça com aro, os tênis e a sombra de contato.
+  **Regra da segunda vista:** andar 90° ao redor de alguém não muda a altura de nenhuma junta, só troca
+  esquerda/direita por frente/trás. Por isso a vista de lado copia os `y` da vista de frente e recalcula
+  só o `x` — nenhuma altura é inventada, e um teste automático compara os dois desenhos junta por junta.
+  Isso vale para quem está **em pé**. Deitado, reclinado ou sentado no chão, a segunda vista é vista da
+  cabeça ou dos pés: o eixo de cima-embaixo do desenho passa a ser a largura do corpo, e esses foram
+  desenhados um a um (o teste `t18` cobra a regra só onde ela se aplica).
+  **Os aparelhos** (`js_equip.txt`) são calculados a partir das mesmas juntas, não em coordenadas
+  fixas: `eqBanco` nasce da linha ombro→quadril, `eqAssento` do quadril, `eqPeso` da direção do
+  antebraço, `eqPolia` liga a mão (ou o tornozelo, via `cabo`) à roldana. O desenho sai em duas
+  camadas: o aparelho atrás do corpo (`.aeqg`) e o peso na mão à frente dele (`.aeqf2`).
 - **44 e 45. Avisos** — tipos de aviso, horário silencioso (segura e solta depois), instalação.
 - **46. Anúncios** — faixa em rolagem e pop-up, conforme a diretriz do portfólio.
 - **47 e 48. Níveis e administrador** — `canUse(recurso)` decide se a pessoa pode usar algo; `servicos.json`; "ver o app como".
@@ -116,7 +134,7 @@ Procure pelo número para ir direto ao assunto.
 | Tabela TUSS 19 (OPME) | Mais de um milhão de linhas: não cabe no armazenamento do navegador. Só a de procedimentos entra |
 | Lista `videos.json` preenchida | Vem vazia. Adivinhar código de vídeo do YouTube daria vídeo errado ou apagado |
 | Faixas de referência de exame | Em branco. São do laboratório de cada pessoa, impressas no resultado — o app só copia a que está escrita no laudo |
-| Segunda vista de 24 movimentos | Deitado, de bruços, de quatro apoios ou só no plano de frente: girar 90° daria um desenho encolhido e sem informação. Ficam com uma vista, e o app diz isso na tela |
+| Segunda vista de 1 movimento | Só sobrou a inclinação lateral do tronco: de lado ela vira uma linha reta, sem informação nenhuma. Fica com uma vista, e o app diz isso na tela. Os outros 79 ganharam as duas vistas na 3.4.0 |
 | Motor de OCR hospedado no repositório | Hoje vem do cdnjs, com jsdelivr de reserva (o pdf.js também). A diretriz pede hospedar os ~11 MB no próprio repositório; enquanto isso, não há `integrity` nesses `<script>` |
 | App de relógio (Wear OS / watchOS) | Um site no GitHub Pages não vira app de relógio. O que dá é ler cinta peitoral ou pulseira por Web Bluetooth (Chrome do Android; no iPhone nenhum navegador tem Bluetooth para sites) |
 | Controlar o Spotify | Nenhum site troca faixa ou dá pause no app de música. O RiseONE abre a playlist num toque e a voz do treinador toca por cima, sem parar a música |

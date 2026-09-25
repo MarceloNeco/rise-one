@@ -5,6 +5,71 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.5.0 — o aparelho passou a seguir o corpo
+
+O problema estava no desenho do aparelho, não no boneco. Banco, máquina, halter e cabo eram
+desenhados em coordenadas fixas, sempre no mesmo canto, enquanto o boneco se mexia por cima. Por
+isso o **supino inclinado** parecia alguém deitado numa trave atravessada nas costas, e o
+**mergulho** não tinha barra nem braço.
+
+- **Cada peça agora nasce das juntas do boneco.** O banco embaixo do tronco, o assento embaixo do
+  quadril, o encosto na linha das costas, o halter na mão e virado junto com o antebraço, o cabo
+  saindo da mão até a roldana, a plataforma encostada na sola do pé. Muda a pose, o aparelho segue.
+- **Halteres e barras com anilha de verdade**, no lugar dos tracinhos brancos. Quando o peso aponta
+  para quem olha, ele vira a anilha vista de ponta — um quadrado curto, e não um halter espremido
+  (dois deles lado a lado viravam um cinto branco na cintura).
+- **O peso vem na frente do corpo**; o aparelho, atrás. Antes tudo ficava atrás do boneco.
+- **Supino inclinado refeito do zero** a partir da foto de referência: reclinado no banco, quadril no
+  assento, joelho dobrado à frente, pé no chão, halter descendo até o peito — nas duas vistas.
+- **Mergulho** ganhou as barras paralelas e os braços, que antes sumiam dentro do tronco.
+  **Hiperextensão** ganhou o banco romano com almofada de quadril e rolo de tornozelo. **Peck deck**,
+  **mesa flexora**, **rosca Scott** e **elevação de quadril** foram refeitos com o aparelho certo.
+  **A bicicleta agora tem bicicleta.**
+- **Teste novo (`t18`)**: percorre os 80 movimentos e reprova se algum tem aparelho declarado e não
+  desenha nada, se o peso não acompanha a mão quando a mão se move, ou se a segunda vista de um
+  movimento **em pé** mudou a altura de alguma junta.
+
+**Uma correção de honestidade sobre a 3.4.0:** ali ficou escrito que nenhuma altura muda entre as
+duas vistas. Isso vale para quem está **em pé** — andar 90 graus em volta de alguém em pé não muda a
+altura de nenhuma articulação. Para quem está deitado, reclinado ou sentado no chão, a segunda vista
+é vista da cabeça ou dos pés: o eixo de cima-embaixo do desenho passa a ser a largura do corpo, e
+esses 23 foram desenhados um a um, à mão. O teste agora cobra a regra só onde ela se aplica.
+
+## Novo na versão 3.4.1 — o Salvar conta a verdade, e dá para registrar dia passado
+
+- **O botão "Salvar registro" agora avisa quando não guardou.** No modo visitante o RiseONE não
+  grava nada no aparelho — isso sempre foi assim, mas o app não dizia: a linha aparecia em "Últimos
+  registros" e sumia no carregamento seguinte. Agora, ao salvar como visitante, abre uma explicação
+  na hora, com o botão para criar o acesso (que leva menos de um minuto e não precisa de internet).
+- **Faixa de aviso no topo de Evolução, Dieta e Treinar** enquanto você estiver como visitante, para
+  ninguém descobrir tarde demais.
+- **Registro de dias passados.** O "Registro do dia" ganhou um **campo de data** (travado em hoje —
+  dia futuro é recusado com aviso) e um botão **Hoje** para voltar. Peso, humor, missões cumpridas e
+  anotações entram na data escolhida.
+- **Cada linha de "Últimos registros" abre aquele dia** para conferir ou corrigir.
+
+## Novo na versão 3.4.0 — os 80 desenhos refeitos, com volume e as duas vistas
+
+Os bonequinhos dos exercícios são **vetores desenhados pelo próprio app** (SVG) e animados por
+interpolação entre a posição de início e a de fim — não são GIF, não são vídeo e não são foto. Por
+isso eles são leves, nítidos em qualquer tela e mudam de cor junto com o tema.
+
+- **Os 80 desenhos foram refeitos do zero, agora com volume.** Braço, antebraço, coxa, perna e tronco
+  têm espessura própria (o tronco é mais grosso que o braço, como no corpo), a cabeça é cheia com um
+  aro mais escuro, os pés ganharam **tênis**, e há uma **sombra de contato** no chão. O estilo
+  continua o mesmo — traço simples, sem rosto — só que agora dá para ver o corpo.
+- **79 dos 80 movimentos têm as duas vistas.** A pessoa **de frente** e a mesma pessoa **de lado**,
+  como se você desse 90 graus ao redor dela. Cada exercício mostra **4 desenhos parados** (início e
+  fim, de frente e de lado) e **2 bonecos se mexendo lado a lado**.
+- **Nada de altura foi inventado.** Andar ao redor de alguém muda o que fica na sua frente, não a
+  altura do ombro: a vista de lado reaproveita exatamente as alturas da vista de frente e só recalcula
+  o que é esquerda/direita virando frente/trás. Um teste automático confere isso desenho por desenho.
+- **O equipamento acompanha a vista**: a barra aparece deitada na vista de frente e como a ponta
+  redonda do lado na vista de lado; halteres, faixa, banco e bola idem.
+- **Projetar na TV** manda as duas vistas com o mesmo desenho novo.
+- Sobrou **um** movimento com vista única (inclinação lateral do tronco): de lado ele viraria uma
+  linha reta, sem informação. O app diz isso na tela, em vez de fingir um segundo desenho.
+
 ## Novo na versão 3.3.0 — lupa de busca, playlists e versões nas Configurações
 
 - **Lupa no cabeçalho**, em todas as telas. Ela procura em tudo ao mesmo tempo: exercícios,
@@ -342,4 +407,4 @@ durante um exercício, pare na hora e procure atendimento.
 O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.3.0
+Versão 3.5.0

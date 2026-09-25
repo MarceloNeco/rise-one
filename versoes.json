@@ -3,6 +3,68 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.5.0",
+   "data": "2026-09-25",
+   "pt": [
+    "Os aparelhos passaram a ser desenhados em volta do corpo, e não num canto fixo. Antes o banco, a máquina e o halter ficavam sempre no mesmo lugar enquanto o boneco se mexia — por isso o supino inclinado parecia alguém deitado numa trave. Agora cada peça nasce das juntas: o banco embaixo do tronco, o assento embaixo do quadril, o halter na mão e virado junto com o antebraço, o cabo saindo da mão até a roldana.",
+    "Halteres e barras com anilha de verdade, e não mais uns tracinhos brancos. Quando o peso aponta para quem olha, ele vira a anilha vista de ponta, no tamanho certo.",
+    "Supino inclinado refeito do zero: reclinado no banco, quadril no assento, joelho dobrado e pé no chão, nas duas vistas — igual à foto de referência.",
+    "Mergulho ganhou as barras paralelas e os braços (que sumiam dentro do tronco).",
+    "Hiperextensão ganhou o banco romano com almofada de quadril e rolo de tornozelo; o peck deck, a mesa flexora, a rosca Scott e a elevação de quadril também foram refeitos com o aparelho certo.",
+    "A bicicleta agora tem bicicleta: rodas, quadro, selim e guidão.",
+    "O peso agora aparece na frente do corpo, não atrás dele.",
+    "Teste novo (t18) confere, movimento por movimento, se o aparelho é desenhado nas duas vistas e se acompanha a mão quando o peso se move."
+   ],
+   "en": [
+    "Equipment is now drawn around the body instead of in a fixed corner. The bench, machine and dumbbell used to sit in the same spot while the figure moved — which is why the incline press looked like someone lying on a beam. Now every piece comes from the joints: the bench under the torso, the seat under the hips, the dumbbell in the hand and turned with the forearm, the cable running from the hand to the pulley.",
+    "Dumbbells and barbells with real plates instead of little white dashes. When the weight points at the viewer it becomes the plate seen end-on, at the right size.",
+    "Incline press redrawn from scratch: reclined on the bench, hips on the seat, knees bent and feet on the floor, in both views — matching the reference photo.",
+    "Dips gained the parallel bars and the arms (which used to disappear inside the torso).",
+    "Back extension gained the roman chair with hip pad and ankle roller; the pec deck, lying leg curl, preacher curl and hip thrust were also redrawn with the right equipment.",
+    "The bike now has a bike: wheels, frame, saddle and handlebar.",
+    "The weight now appears in front of the body instead of behind it.",
+    "A new test (t18) checks, movement by movement, that the equipment is drawn in both views and follows the hand when the weight moves."
+   ]
+  },
+  {
+   "v": "3.4.1",
+   "data": "2026-09-25",
+   "pt": [
+    "O botão Salvar registro agora conta a verdade. No modo visitante o app não grava nada no aparelho — antes o registro aparecia na lista e sumia no próximo carregamento, sem aviso. Agora abre uma explicação na hora, com o caminho para criar o acesso.",
+    "Faixa de aviso do modo visitante no topo de Evolução, Dieta e Treinar, para ninguém descobrir tarde demais.",
+    "Dá para registrar um dia que já passou: campo de data no Registro do dia, com botão para voltar para hoje. Peso, humor, missões e anotações entram na data escolhida.",
+    "Cada linha de Últimos registros abre aquele dia para conferir ou corrigir.",
+    "Dia futuro é barrado, com aviso."
+   ],
+   "en": [
+    "The Save log button now tells the truth. In guest mode the app writes nothing to the device — the entry used to appear in the list and vanish on the next load, with no warning. Now an explanation opens right away, with the path to create an access.",
+    "A guest-mode warning strip at the top of Progress, Diet and Train, so nobody finds out too late.",
+    "You can log a day that has already passed: a date field in the daily log, with a button back to today. Weight, mood, missions and notes go to the chosen date.",
+    "Every row in Latest logs opens that day to check or correct it.",
+    "A future date is refused, with a warning."
+   ]
+  },
+  {
+   "v": "3.4.0",
+   "data": "2026-09-25",
+   "pt": [
+    "Os 80 desenhos de movimento foram refeitos do zero, com volume: braços e pernas com espessura, cabeça cheia, tênis nos pés e uma sombra de contato no chão. O traço continua o mesmo estilo, só que agora dá para ver o corpo.",
+    "Quase todos os movimentos (79 dos 80) ganharam a segunda vista: a pessoa vista de frente e a mesma pessoa vista de lado, como se você andasse 90 graus ao redor dela.",
+    "Cada exercício mostra 4 paradas (início e fim, de frente e de lado) e 2 figuras se mexendo, uma ao lado da outra.",
+    "As alturas na vista de lado são exatamente as mesmas da vista de frente — nada foi inventado: andar ao redor de alguém muda o que fica na frente, não a altura do ombro.",
+    "A barra e os halteres acompanham a vista: a barra aparece deitada de frente e como ponta redonda de lado.",
+    "Projetar na TV manda as duas vistas com o mesmo desenho novo."
+   ],
+   "en": [
+    "All 80 movement drawings were redrawn from scratch, with volume: arms and legs have thickness, a full head, shoes on the feet and a contact shadow on the ground. Same style, but now you can see the body.",
+    "Almost every movement (79 of 80) gained a second view: the person seen head-on and the same person seen from the side, as if you walked 90 degrees around them.",
+    "Each exercise shows 4 stills (start and end, front and side) and 2 moving figures, side by side.",
+    "The heights in the side view are exactly the ones from the front view — nothing was invented: walking around someone changes what faces you, not how high their shoulder is.",
+    "Barbells and dumbbells follow the view: the bar shows as a line head-on and as a round bar end from the side.",
+    "Casting to the TV sends both views with the same new drawing."
+   ]
+  },
+  {
    "v": "3.3.0",
    "data": "2026-09-25",
    "pt": [

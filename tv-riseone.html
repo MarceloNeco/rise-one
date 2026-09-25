@@ -6,7 +6,7 @@
 <title>RiseONE na TV</title>
 <style>
 :root{--bg:#0e1014;--sf:#15181e;--sf2:#1b1f26;--bd:rgba(255,255,255,.1);
- --tx:#f3f5f8;--tx2:#aab2bf;--tx3:#7a8493;--ac:#ff7a2f;--eq-machine:#5aa9ff;--eq-weight:#fff}
+ --tx:#f3f5f8;--tx2:#aab2bf;--tx3:#7a8493;--ac:#ff7a2f;--eq-machine:#5aa9ff; --eq-machine-dk:#3f7fc4; --eq-machine-edge:#1d4f86; --eq-weight-edge:#7d8796;--eq-weight:#fff}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--tx);overflow:hidden;
@@ -33,12 +33,22 @@ figcaption{text-align:center;color:var(--ac);font-size:2.2vh;font-weight:800;
 .espera b{color:var(--tx);font-size:4vh}
 .logo{width:14vh;height:14vh}
 /* mesmo traço do app: pessoa laranja, aparelho azul, peso branco */
-svg .pl{fill:none;stroke:var(--ac);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+svg .aout line{stroke:#a8430c;fill:none}
+svg .abody line{stroke:var(--ac);fill:none}
+svg .phb{fill:#a8430c}
 svg .ph{fill:var(--ac)}
+svg .ashoe line{stroke:#8fa0b6}
+svg .asom{fill:#000;opacity:.3}
+svg .pl{fill:none;stroke:var(--ac);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
 svg .aeq{stroke:var(--eq-weight);stroke-width:4.2;stroke-linecap:round;fill:none}
 svg .aeqp{stroke:var(--eq-weight);stroke-width:5.4;stroke-linecap:round;fill:none}
 svg .aeqb{stroke:var(--eq-machine);stroke-width:3.4;fill:none;stroke-linecap:round}
 svg .aeqc{stroke:var(--eq-machine);stroke-width:1.8;stroke-dasharray:3 3;fill:none}
+svg .aeqf{fill:var(--eq-machine);stroke:var(--eq-machine-edge);stroke-width:1.2;stroke-linejoin:round}
+svg .aeqfb{fill:var(--eq-machine-dk);stroke:var(--eq-machine-edge);stroke-width:1.2;stroke-linejoin:round}
+svg .aeqo{fill:none;stroke:var(--eq-machine);stroke-width:3}
+svg .aeqw{fill:var(--eq-weight);stroke:var(--eq-weight-edge);stroke-width:1.2;stroke-linejoin:round}
+svg .aeqwd{fill:var(--eq-weight-edge);stroke:none}
 svg .agr{stroke:var(--tx3);stroke-width:2.5;stroke-linecap:round;opacity:.45}
 svg .aar{fill:none;stroke:#ffb020;stroke-width:2.6;stroke-linecap:round}
 svg .aarh{fill:#ffb020;stroke:none}

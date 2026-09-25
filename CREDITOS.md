@@ -33,11 +33,8 @@ lugar nenhum além do serviço escolhido.
 | `tuss.json` | Terminologia Unificada da Saúde Suplementar (ANS) | **Vem vazio.** O administrador importa o arquivo oficial da ANS dentro do app. O RiseONE não redistribui a tabela |
 | `videos.json` | Links escolhidos por quem usa o app | **Vem vazio.** O app não adivinha código de vídeo do YouTube |
 | `musicas.json` | Links públicos de playlist, escolhidos por quem publica o site | Só **links**. O RiseONE não hospeda, não redistribui e não tem vínculo com o Spotify nem com nenhum serviço de música |
-| `musicas.json` | Links públicos de playlist, escolhidos por quem publica o site | Só **links**. O RiseONE não hospeda, não redistribui e não tem vínculo com o Spotify nem com nenhum serviço de música |
 | Segunda vista dos movimentos | Gerada a partir do desenho que já existia, por regra geométrica | Girar o observador 90° não muda a altura de nenhuma articulação: os `y` são exatamente os do desenho original |
-| `tuss.json` | Terminologia Unificada da Saúde Suplementar (ANS) | **Vem vazio.** O administrador importa o arquivo oficial da ANS dentro do app. O RiseONE não redistribui a tabela |
-| `videos.json` | Links escolhidos por quem usa o app | **Vem vazio.** O app não adivinha código de vídeo |
-| Segunda vista dos movimentos | Gerada a partir do desenho original, por regra geométrica | Girar o observador 90° não muda a altura de nenhuma articulação: os `y` são os mesmos do desenho já existente |
+| Desenhos dos movimentos | Feitos para o RiseONE, vetor (SVG) desenhado pelo próprio app | Não são foto, GIF nem vídeo: são traços calculados na hora e animados entre a posição de início e a de fim |
 | Faixas de referência de exame | **Não preenchidas** | São do laboratório de cada pessoa e vêm impressas no resultado |
 | `fotos-exercicios.jpg` | Fotos fornecidas pelo dono do app | Verifique autorização de imagem de quem aparece antes de publicar |
 | Arte de fundo e ícones do app | Fornecidos pelo dono do app | — |

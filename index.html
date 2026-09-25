@@ -457,8 +457,8 @@ table.tbl td.num,table.tbl th.num{text-align:right;font-variant-numeric:tabular-
 .mvcard .mvpose{width:78px;align-self:center;color:var(--accent)}
 .mvcard .nm{font-weight:800;font-size:.9rem;line-height:1.25}
 .pose{width:100%;height:auto;display:block}
-.pose .pl{fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
-.pose .ph{fill:currentColor}
+.pose .pl{fill:none;stroke:var(--eq-person);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+.pose .ph{fill:var(--eq-person)}
 .pose .pg{fill:none;stroke:var(--text3);stroke-width:2.5;stroke-linecap:round;opacity:.5}
 .pose .aeq{stroke:var(--text2);stroke-width:4;stroke-linecap:round;fill:none}
 .pose .aeqp{stroke:var(--text2);stroke-width:5;stroke-linecap:round;fill:none}
@@ -759,7 +759,30 @@ html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none
 .musrow small{display:block;font-size:.72rem;color:var(--text2)}
 .musplayer{margin-top:10px;border-radius:12px;overflow:hidden;background:var(--surface3)}
 .musplayer iframe{width:100%;height:152px;border:0;display:block}
+/* ---- boneco com volume: contorno por baixo, corpo por cima, tênis e sombra ---- */
+:root{--eq-shoe:#8fa0b6; --eq-shoe-edge:#5d6b7e; --eq-edge:#a8430c; --eq-machine-dk:#3f7fc4; --eq-machine-edge:#1d4f86; --eq-weight-edge:#7d8796}
+html[data-theme="light"]{--eq-shoe:#6c7c92; --eq-shoe-edge:#48566a; --eq-edge:#8a3406; --eq-machine-dk:#15568f; --eq-machine-edge:#0c3358; --eq-weight-edge:#3c4453}
+.pose .aout line{stroke:var(--eq-edge);fill:none}
+.pose .abody line{stroke:var(--eq-person);fill:none}
+.pose .phb{fill:var(--eq-edge)}
+.pose .ph{fill:var(--eq-person)}
+.pose .ashoe line{stroke:var(--eq-shoe);paint-order:stroke;stroke-linejoin:round}
+.pose .asom{fill:#000;opacity:.3}
+html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stroke:#000;fill:#000}
 @media print{ #topbar,header.app,#bottombar,footer.app,#timermini{display:none} }
+/* aparelhos: peca cheia (azul) e peso (branco) */
+.pose .aeqf{fill:var(--eq-machine);stroke:var(--eq-machine-edge);stroke-width:1.2;stroke-linejoin:round}
+.pose .aeqfb{fill:var(--eq-machine-dk);stroke:var(--eq-machine-edge);stroke-width:1.2;stroke-linejoin:round}
+.pose .aeqo{fill:none;stroke:var(--eq-machine);stroke-width:3}
+.pose .aeqw{fill:var(--eq-weight);stroke:var(--eq-weight-edge);stroke-width:1.2;stroke-linejoin:round}
+.pose .aeqwd{fill:var(--eq-weight-edge);stroke:none}
+[data-contrast="1"] .pose .aeqf,[data-contrast="1"] .pose .aeqfb{stroke-width:2}
+/* faixa do modo visitante */
+.gvbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-color:var(--warn);background:var(--warn-soft)}
+.gvbar .ic{flex:none;color:var(--warn)}
+.gvbar .gr{flex:1;min-width:180px;font-size:.88rem}
+.gvbar .row{margin:0}
+[data-contrast="1"] .gvbar{background:var(--surface);border-width:2px}
 </style>
 </head>
 <body>
@@ -826,7 +849,7 @@ html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.3.0";
+const APP_VERSION = "3.5.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2230,7 +2253,24 @@ Object.assign(L,{
 "mu.admDownload":["Baixar musicas.json","Download musicas.json"],
 /* --- créditos --- */
 "st.credits":["Créditos e fontes","Credits and sources"],
-"st.creditsBody":["<p>O RiseONE não embute nenhuma biblioteca. Três serviços são carregados só quando você usa a função: <b>Tesseract.js</b> (ler o texto das fotos), <b>MediaPipe</b> (postura no espelho) e <b>pdf.js</b> (ler o PDF do laboratório) — todos com licença Apache-2.0.</p><p>Vídeo e música abrem no YouTube e no app de música que você escolher: o RiseONE guarda apenas o link e não hospeda nem redistribui conteúdo.</p><p><b>CID-10</b>: redação resumida, lista inicial de consulta. <b>TUSS</b>: tabela da ANS, importada por quem publica o site. <b>Limites de “alto em”</b>: RDC 429/2020 e IN 75/2020. O arquivo <code>CREDITOS.md</code>, publicado junto com o app, traz a lista completa com licença e origem de cada coisa.</p>","<p>RiseONE embeds no library. Three services load only when you use the feature: <b>Tesseract.js</b> (reading text from photos), <b>MediaPipe</b> (posture in the mirror) and <b>pdf.js</b> (reading the lab PDF) — all Apache-2.0.</p><p>Video and music open in YouTube and in the music app you choose: RiseONE stores only the link and hosts or redistributes nothing.</p><p><b>ICD-10</b>: shortened wording, an initial reference list. <b>TUSS</b>: the ANS table, imported by whoever publishes the site. <b>“High in” limits</b>: Brazilian RDC 429/2020 and IN 75/2020. The <code>CREDITOS.md</code> file, published with the app, has the full list with each item's licence and origin.</p>"]
+"st.creditsBody":["<p>O RiseONE não embute nenhuma biblioteca. Três serviços são carregados só quando você usa a função: <b>Tesseract.js</b> (ler o texto das fotos), <b>MediaPipe</b> (postura no espelho) e <b>pdf.js</b> (ler o PDF do laboratório) — todos com licença Apache-2.0.</p><p>Vídeo e música abrem no YouTube e no app de música que você escolher: o RiseONE guarda apenas o link e não hospeda nem redistribui conteúdo.</p><p><b>CID-10</b>: redação resumida, lista inicial de consulta. <b>TUSS</b>: tabela da ANS, importada por quem publica o site. <b>Limites de “alto em”</b>: RDC 429/2020 e IN 75/2020. O arquivo <code>CREDITOS.md</code>, publicado junto com o app, traz a lista completa com licença e origem de cada coisa.</p>","<p>RiseONE embeds no library. Three services load only when you use the feature: <b>Tesseract.js</b> (reading text from photos), <b>MediaPipe</b> (posture in the mirror) and <b>pdf.js</b> (reading the lab PDF) — all Apache-2.0.</p><p>Video and music open in YouTube and in the music app you choose: RiseONE stores only the link and hosts or redistributes nothing.</p><p><b>ICD-10</b>: shortened wording, an initial reference list. <b>TUSS</b>: the ANS table, imported by whoever publishes the site. <b>“High in” limits</b>: Brazilian RDC 429/2020 and IN 75/2020. The <code>CREDITOS.md</code> file, published with the app, has the full list with each item's licence and origin.</p>"],
+/* --- visitante: o app avisa que nada fica guardado --- */
+"gv.title":["Você está como visitante","You are browsing as a guest"],
+"gv.p1":["O botão salvou na tela, mas <b>não gravou no aparelho</b>: no modo visitante o RiseONE não guarda nada. Ao fechar ou recarregar a página, o registro some.","The button saved on screen, but <b>nothing was written to the device</b>: in guest mode RiseONE keeps nothing. Close or reload the page and the entry is gone."],
+"gv.p2":["Para guardar o seu histórico, crie um acesso. Leva menos de um minuto e não precisa de internet.","To keep your history, create an access. It takes under a minute and needs no internet."],
+"gv.b1":["O acesso fica só neste aparelho, neste navegador. Nada vai para servidor nenhum.","The access lives only on this device, in this browser. Nothing goes to any server."],
+"gv.b2":["Você escolhe apelido, e-mail e senha. O e-mail não é conferido nem enviado para ninguém.","You pick a nickname, an e-mail and a password. The e-mail is never checked nor sent to anyone."],
+"gv.b3":["Guarde o código de recuperação que aparece no fim: é o único jeito de trocar a senha depois.","Keep the recovery code shown at the end: it is the only way to change the password later."],
+"gv.stay":["Continuar sem guardar","Carry on without saving"],
+"gv.banner":["Modo visitante: nada do que você registrar aqui fica guardado.","Guest mode: nothing you log here is kept."],
+"gv.why":["Por que não fica guardado?","Why is nothing kept?"],
+/* --- registro de dias passados --- */
+"pg.day":["Dia do registro","Log date"],
+"pg.today":["Hoje","Today"],
+"pg.pastNote":["Dá para registrar um dia que já passou: troque a data acima.","You can log a day that has already passed: change the date above."],
+"pg.future":["Ainda não dá para registrar um dia que não chegou.","A day that has not arrived yet cannot be logged."],
+"pg.editingDay":["Registro de","Log for"],
+"pg.openDay":["Abrir este dia","Open this day"]
 });
 
 /* ---------- 2. MUSCULOS (3 niveis de nome) ---------- */
@@ -2458,7 +2498,7 @@ function loadRoot(){
   return ROOT;
 }
 function saveRoot(){ try{ localStorage.setItem(LSKEY, JSON.stringify(ROOT)); }catch(e){ toast(LANG==="pt"?"Sem espaço para salvar. Apague fotos antigas.":"No space to save. Delete old photos."); } }
-function save(){ if(!GUEST && ROOT.session && ROOT.session.uid){ ROOT.data[ROOT.session.uid]=STATE; saveRoot(); } }
+function save(){ if(!GUEST && ROOT.session && ROOT.session.uid){ ROOT.data[ROOT.session.uid]=STATE; saveRoot(); return true; } return false; }
 function hashPass(s){ let h=5381; const str="rise"+s; for(let i=0;i<str.length;i++) h=((h<<5)+h+str.charCodeAt(i))>>>0; return h.toString(36); }
 
 /* ---------- 8. TOAST / MODAL ---------- */
@@ -3062,6 +3102,7 @@ function startCam(host, cb){
 /* ---------- 19. TELA: TREINO ---------- */
 SCREENS.workout = function(){
   let h='<div class="pagehead"><div><h1>'+t("wk.title")+'</h1><small>'+t("wk.sub")+'</small></div><div class="row nowrap"><button class="btn ghost sm" id="timerbtn2">'+I("timer")+t("tm.short")+'</button><button class="btn" id="newwk">'+I("plus")+t("wk.new")+"</button></div></div>";
+  h+=guestBanner();
   if(!STATE.workouts.length) h+='<div class="card">'+emptyBox("dumbbell", t("wk.none"), t("wk.noneSub"))+"</div>";
   STATE.workouts.forEach(w=>{
     const days=(w.days||[]).map(d=>weekdayName(d)).join(" · ");
@@ -3092,6 +3133,7 @@ SCREENS.workout = function(){
   return h;
 };
 SCREENS.workout_after = function(){
+  wireGuestBanner();
   document.getElementById("newwk").onclick=()=>editWorkout(null);
   const tb=document.getElementById("timerbtn2"); if(tb) tb.onclick=()=>openTimer();
   document.querySelectorAll("[data-editwk]").forEach(b=>b.onclick=()=>editWorkout(b.getAttribute("data-editwk")));
@@ -3756,6 +3798,7 @@ SCREENS.diet = function(){
   const isTrain=!!workoutToday(); const kcalTarget=(isTrain||!d.restKcal)?d.kcal:d.restKcal;
   let h='<div class="pagehead"><div><h1>'+t("dt.title")+'</h1><small>'+fmtDate(iso)+" · "+(isTrain?t("dt.trainDay"):t("dt.restDay"))+"</small></div>"+
     '<div class="row nowrap"><button class="btn ghost sm" id="scanlbl">'+I("scan")+t("dt.scanLabel")+'</button><button class="btn" id="addmeal">'+I("plus")+t("dt.addMeal")+"</button></div></div>";
+  h+=guestBanner();
   /* metas + anel */
   h+='<div class="card">'+cardHead("target", t("dt.targets"), d.kcal?t("dt.planSub"):t("dt.noTargets"), '<button class="btn sm ghost" id="calcd">'+I("zap")+t("dt.calc")+"</button>");
   h+='<div class="row" style="align-items:center;gap:18px">'+
@@ -3808,6 +3851,7 @@ function macroBar(lb,v,total,col){
     '<div class="bar"><i style="width:'+p+'%;background:'+col+'"></i></div></div>';
 }
 SCREENS.diet_after = function(){
+  wireGuestBanner();
   document.getElementById("addmeal").onclick=()=>mealModal();
   document.getElementById("scanlbl").onclick=()=>{ SCANMODE="label"; go("scan"); };
   document.getElementById("calcd").onclick=calcDiet;
@@ -3944,22 +3988,67 @@ function barChart(cv, pts, opts){
 }
 
 /* ---------- 26. TELA: EVOLUCAO ---------- */
+/* ---------- 25b. VISITANTE: O APP AVISA QUE NADA FICA GUARDADO ---------- */
+/* Por que: no modo visitante o save() nao grava nada. Antes o botao "Salvar registro"
+   parecia funcionar (a linha aparecia em "Ultimos registros") e sumia no proximo
+   carregamento, sem ninguem avisar. Agora avisa na hora, explica o motivo e mostra
+   o caminho para criar o acesso. Nenhum dado e' perdido em silencio. */
+function precisaConta(){
+  if(!GUEST) return true;
+  contaModal();
+  return false;
+}
+function contaModal(){
+  document.querySelectorAll(".modal.conta").forEach(n=>n.remove());
+  const m=modal(mh(t("gv.title"))+
+    '<p style="margin-top:0">'+t("gv.p1")+"</p>"+
+    "<p>"+t("gv.p2")+"</p>"+
+    '<ul class="tiny muted" style="margin:0 0 14px;padding-left:18px">'+
+      "<li>"+t("gv.b1")+"</li><li>"+t("gv.b2")+"</li><li>"+t("gv.b3")+"</li></ul>"+
+    '<div class="row"><button class="btn" id="gv_go">'+I("user")+t("guest.upgrade")+"</button>"+
+    '<button class="btn line sm" data-close>'+t("gv.stay")+"</button></div>");
+  m.classList.add("conta");
+  fillIcons(m);
+  m.querySelector("#gv_go").onclick=()=>{ m.remove(); loginModal("student"); };
+  return m;
+}
+/* faixa fixa nas telas que guardam dado, para a pessoa nao descobrir tarde demais */
+function guestBanner(){
+  if(!GUEST) return "";
+  return '<div class="card tight gvbar">'+I("alert")+
+    '<div class="gr"><b>'+t("gv.banner")+"</b></div>"+
+    '<div class="row nowrap"><button class="btn xs line" id="gv_why">'+t("gv.why")+"</button>"+
+    '<button class="btn xs" id="gv_up">'+t("guest.upgradeShort")+"</button></div></div>";
+}
+function wireGuestBanner(){
+  const w=document.getElementById("gv_why"); if(w) w.onclick=contaModal;
+  const u=document.getElementById("gv_up");  if(u) u.onclick=()=>loginModal("student");
+}
 /* ---------- 26. TELA: EVOLUCAO (subtelas: hoje, peso, fotos, medidas, exames, missões) ---------- */
 /* Por que: antes tudo ficava numa tela só, longa e cansativa. Agora cada assunto tem a sua aba. */
 const PG_TABS=()=>[["hoje",t("pg.tabToday"),"clipboard"],["peso",t("pg.tabWeight"),"chart"],["fotos",t("pg.tabPhotos"),"image"],["medidas",t("pg.tabMeasures"),"ruler"],["exames",t("pg.tabExams"),"flask"],["missoes",t("pg.tabMissions"),"listcheck"]];
 function pgView(){ return SUB.progress || "hoje"; }
+/* Dia que o registro esta editando. Vazio = hoje. Por que: peso e missao de um dia
+   que ja passou so entravam mexendo no relogio do aparelho. */
+let PG_DIA="";
+function pgDia(){ const h=todayISO(); if(!PG_DIA || PG_DIA>h) return h; return PG_DIA; }
+function pgEhHoje(){ return pgDia()===todayISO(); }
 SCREENS.progress = function(){
-  const iso=todayISO(), c=ci(iso)||{}, ms=missionsToday(), v=pgView();
+  const iso=pgDia(), c=ci(iso)||{}, ms=missionsToday(iso), v=pgView();
   let h='<div class="pagehead"><div><h1>'+t("pg.title")+'</h1><small>'+t("pg.sub")+"</small></div></div>"+segBar("progress", PG_TABS());
   if(v==="hoje"){
-    h+='<div class="card">'+cardHead("clipboard", t("ck.title"), t("ck.sub"))+
-      '<div class="grid g2 collapse"><label class="fld"><span>'+t("ck.weight")+' (kg)</span><input type="number" step="0.1" id="ck_w" value="'+(c.weight||"")+'"></label>'+
+    h+=guestBanner();
+    h+='<div class="card">'+cardHead("clipboard", t("ck.title"), pgEhHoje()? t("ck.sub") : t("pg.editingDay")+" "+fmtDate(iso))+
+      '<div class="grid g2 collapse"><label class="fld"><span>'+t("pg.day")+'</span><div class="row nowrap"><input type="date" id="ck_d" value="'+iso+'" max="'+todayISO()+'">'+
+      (pgEhHoje()?"":'<button class="btn sm line" id="ck_hoje">'+t("pg.today")+"</button>")+"</div></label>"+
+      '<label class="fld"><span>'+t("ck.weight")+' (kg)</span><input type="number" step="0.1" id="ck_w" value="'+(c.weight||"")+'"></label>'+
       '<label class="fld"><span>'+t("ck.mood")+'</span><div class="chips" id="ck_m">'+[1,2,3].map(i=>'<button type="button" class="chip '+((c.mood||2)===i?"on":"")+'" data-mood="'+i+'">'+["😣","🙂","💪"][i-1]+" "+t("ck.mood"+i)+"</button>").join("")+"</div></label></div>"+
       '<span class="kicker">'+t("ck.missions")+'</span><div class="list" style="margin:6px 0 12px">'+ms.map(m=>'<div class="item mission'+((c.done||[]).indexOf(m.id)>=0?" done":"")+'" data-mission="'+m.id+'"><span class="bx">✓</span><div class="gr"><div class="t">'+esc(m.icon||"")+" "+esc(mTitle(m))+"</div></div></div>").join("")+"</div>"+
       '<label class="fld"><span>'+t("ck.notes")+'</span><textarea id="ck_n">'+esc(c.notes||"")+"</textarea></label>"+
-      '<button class="btn wide" id="ck_s">'+I("check")+t("ck.save")+"</button></div>";
+      '<button class="btn wide" id="ck_s">'+I("check")+t("ck.save")+"</button>"+
+      '<p class="tiny muted" style="margin:8px 0 0;text-align:center">'+t("pg.pastNote")+"</p></div>";
     const last=STATE.checkins.slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,7);
-    if(last.length) h+='<div class="card">'+cardHead("history", t("ck.history"), "")+'<div class="list">'+last.map(x=>'<div class="item"><div class="gr"><div class="t">'+fmtDate(x.date)+'</div><div class="s">'+(x.weight?fmtNum(x.weight,1)+" kg · ":"")+(x.done||[]).length+" "+t("ck.missions").toLowerCase()+(x.notes?" · "+esc(x.notes):"")+"</div></div>"+
+    if(last.length) h+='<div class="card">'+cardHead("history", t("ck.history"), "")+'<div class="list">'+last.map(x=>'<div class="item'+(x.date===iso?" done":"")+'" data-godia="'+x.date+'" title="'+t("pg.openDay")+'"><div class="gr"><div class="t">'+fmtDate(x.date)+'</div><div class="s">'+(x.weight?fmtNum(x.weight,1)+" kg · ":"")+(x.done||[]).length+" "+t("ck.missions").toLowerCase()+(x.notes?" · "+esc(x.notes):"")+"</div></div>"+
       '<span class="pill">'+["😣","🙂","💪"][(x.mood||2)-1]+"</span></div>").join("")+"</div></div>";
   }
   if(v==="peso"){
@@ -3974,6 +4063,7 @@ SCREENS.progress = function(){
     h+='<div class="card tight"><div class="row"><button class="btn ghost sm" id="shprog">'+I("share")+t("share.progress")+"</button></div></div>";
   }
   if(v==="fotos"){
+    h+=guestBanner();
     h+='<div class="card">'+cardHead("image", t("pg.photos"), t("pg.photoNote"),
        '<div class="row nowrap"><button class="btn sm ghost" id="cmp">'+t("pg.compare")+'</button><button class="btn sm" id="addph">'+I("plus")+t("pg.addPhoto")+"</button></div>");
     h+= STATE.photos.length ? '<div class="grid gauto">'+STATE.photos.slice().sort((a,b)=>a.date<b.date?1:-1).map(p=>
@@ -3982,6 +4072,7 @@ SCREENS.progress = function(){
     h+="</div>";
   }
   if(v==="medidas"){
+    h+=guestBanner();
     h+='<div class="card">'+cardHead("ruler", t("pg.measures"), t("pg.measuresSub"),
        '<div class="row nowrap"><button class="btn sm line" id="scanmeas">'+I("scan")+t("sc.short")+'</button><button class="btn sm" id="addms">'+I("plus")+t("pg.addMeasure")+"</button></div>");
     if(STATE.measures.length){
@@ -3994,6 +4085,7 @@ SCREENS.progress = function(){
     h+="</div>";
   }
   if(v==="exames"){
+    h+=guestBanner();
     h+='<div class="card">'+cardHead("flask", t("pg.exams"), t("pg.examNote"),
        '<div class="row nowrap"><button class="btn sm line" id="scanexam">'+I("scan")+t("sc.short")+'</button><button class="btn sm" id="addex2">'+I("plus")+t("pg.addExam")+"</button></div>");
     h+= STATE.exams.length? '<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>'+t("common.date")+"</th><th>"+t("pg.examName")+'</th><th class="num">'+t("pg.value")+"</th><th>"+t("pg.ref")+"</th><th></th></tr></thead><tbody>"+
@@ -4005,6 +4097,7 @@ SCREENS.progress = function(){
     h+=cardsCard();
   }
   if(v==="missoes"){
+    h+=guestBanner();
     h+='<div class="grid g2 collapse"><div class="card">'+cardHead("listcheck", t("ck.missions"), t("pg.missionsSub"), '<button class="btn sm ghost" id="addmi">'+I("plus")+t("ck.newMission")+"</button>")+'<div class="list">'+
        (STATE.missions.length?STATE.missions.map(m=>'<div class="item"><div class="gr"><div class="t">'+esc(m.icon||"")+" "+esc(mTitle(m))+'</div><div class="s">'+((m.days||[]).length===7?t("ck.everyday"):(m.days||[]).map(d=>weekdayName(d)).join(" ")||t("ck.everyday"))+'</div></div><button class="btn xs line" data-delmi="'+m.id+'">&times;</button></div>').join(""):emptyBox("listcheck","",t("common.empty")))+"</div></div>";
     h+='<div class="card">'+cardHead("alarm", t("ck.reminders"), t("ck.remNote"), '<button class="btn sm ghost" id="addrm">'+I("plus")+t("ck.newReminder")+"</button>")+'<div class="list">'+
@@ -4016,19 +4109,31 @@ SCREENS.progress = function(){
 SCREENS.progress_after = function(){
   if(typeof wireCards==="function") wireCards();
   const $=id=>document.getElementById(id);
+  wireGuestBanner();
+  if($("ck_d")) $("ck_d").onchange=()=>{
+    const v=$("ck_d").value;
+    if(v && v>todayISO()){ toast(t("pg.future")); $("ck_d").value=pgDia(); return; }
+    PG_DIA=v||""; render();
+  };
+  if($("ck_hoje")) $("ck_hoje").onclick=()=>{ PG_DIA=""; render(); };
+  document.querySelectorAll("[data-godia]").forEach(n=>n.onclick=()=>{
+    PG_DIA=n.getAttribute("data-godia"); go("progress","hoje");
+  });
   /* check-in */
   document.querySelectorAll("[data-mood]").forEach(b=>b.onclick=()=>{
     document.querySelectorAll("[data-mood]").forEach(x=>x.classList.remove("on")); b.classList.add("on"); });
   document.querySelectorAll("[data-mission]").forEach(n=>n.onclick=()=>{
-    const c=ensureCi(todayISO()), id=n.getAttribute("data-mission"), i=c.done.indexOf(id);
+    const c=ensureCi(pgDia()), id=n.getAttribute("data-mission"), i=c.done.indexOf(id);
     if(i>=0) c.done.splice(i,1); else c.done.push(id);
     n.classList.toggle("done"); save(); });
   if($("ck_s")) $("ck_s").onclick=()=>{
-    const c=ensureCi(todayISO());
+    const dia=pgDia(), c=ensureCi(dia);
     c.weight=num($("ck_w").value,null)||null;
     const mo=document.querySelector("[data-mood].on"); c.mood=mo?+mo.getAttribute("data-mood"):2;
     c.notes=$("ck_n").value;
-    save(); render(); toast(t("ck.saved"));
+    const gravou=save();
+    render();
+    if(gravou) toast(t("ck.saved")+" \u00b7 "+fmtDate(dia)); else precisaConta();
   };
   /* graficos */
   if($("cw")){
@@ -4046,17 +4151,17 @@ SCREENS.progress_after = function(){
     if($("shprog")) $("shprog").onclick=shareProgress;
   }
   /* fotos */
-  if($("addph")) $("addph").onclick=()=>photoModal();
+  if($("addph")) $("addph").onclick=()=>{ if(precisaConta()) photoModal(); };
   if($("cmp")) $("cmp").onclick=compareModal;
   document.querySelectorAll("[data-delph]").forEach(b=>b.onclick=()=>confirmBox(t("common.confirmDel"),()=>{
     STATE.photos=STATE.photos.filter(p=>p.id!==b.getAttribute("data-delph")); save(); render(); }));
   /* medidas */
-  if($("addms")) $("addms").onclick=()=>measureModal();
+  if($("addms")) $("addms").onclick=()=>{ if(precisaConta()) measureModal(); };
   if($("scanmeas")) $("scanmeas").onclick=()=>{ SCANMODE="tape"; go("scan"); };
   document.querySelectorAll("[data-delms]").forEach(b=>b.onclick=()=>{
     STATE.measures=STATE.measures.filter(x=>x.id!==b.getAttribute("data-delms")); save(); render(); });
   /* exames */
-  if($("addex2")) $("addex2").onclick=()=>examModal();
+  if($("addex2")) $("addex2").onclick=()=>{ if(precisaConta()) examModal(); };
   if($("scanexam")) $("scanexam").onclick=()=>{ SCANMODE="exam"; go("scan"); };
   document.querySelectorAll("[data-delex]").forEach(b=>b.onclick=()=>{
     STATE.exams=STATE.exams.filter(x=>x.id!==b.getAttribute("data-delex")); save(); render(); });
@@ -5559,35 +5664,301 @@ const B_PRONE={h:[84,74],n:[76,76],s:[72,78],e:[70,90],w:[68,99],p:[40,82],k:[26
 
 /* ---- desenho dos aparelhos ---- */
 function eqLayer(d,fr,vista){
-  let g=eqPart(d.eq,d,fr,vista);
-  if(d.eq2) g+=eqPart(d.eq2,d,fr,vista);
+  /* o aparelho muda de cara conforme o angulo: de lado a barra aponta para quem olha */
+  const plano=(vista==="alt")? ((d.plano==="frente")?"lado":"frente") : (d.plano||"lado");
+  /* maquina ja desenha o assento: nao repetir quando o exercicio lista os dois */
+  const ASSENTO={maquina:1,sela:1};
+  let g=eqPart(d.eq,d,fr,plano);
+  if(d.eq2 && !(ASSENTO[d.eq] && ASSENTO[d.eq2])) g+=eqPart(d.eq2,d,fr,plano);
   if(d.ground!==false) g+='<line class="agr" x1="8" y1="104" x2="92" y2="104"/>';
   return g;
 }
-function eqPart(kind,d,fr,vista){
-  const g=[];
-  const W=fr.w, W2=fr.w2||fr.w, P=fr.p, F2=fr.f;
-  /* visto de lado a barra aponta para o observador: vira a ponta da barra, nao uma linha comprida */
-  if(vista==="alt" && (kind==="barra"||kind==="halter")){
-    const r=(kind==="barra")?5:3.4;
-    return '<circle class="aeq" cx="'+W[0]+'" cy="'+W[1]+'" r="'+r+'" fill="none"/>'+
-      (kind==="barra"?'<circle class="aeqp" cx="'+W[0]+'" cy="'+W[1]+'" r="1.6"/>':"");
+/* ---------- 40c. APARELHOS DESENHADOS EM VOLTA DO CORPO ---------- */
+/* Por que: antes cada aparelho era um desenho fixo, sempre no mesmo canto, e o boneco
+   ficava ao lado dele em vez de em cima. Agora cada peca nasce das juntas: o banco
+   embaixo do tronco, o assento embaixo do quadril, o halter na mao e virado junto com
+   o antebraco, o cabo saindo da mao ate a roldana. O aparelho segue o corpo em qualquer
+   quadro da animacao e nas duas vistas. */
+const EQ_CHAO=100;
+function qq(v){ return Math.round(v*10)/10; }
+function eqL(x1,y1,x2,y2,cls){ return '<line class="'+(cls||"aeqb")+'" x1="'+qq(x1)+'" y1="'+qq(y1)+'" x2="'+qq(x2)+'" y2="'+qq(y2)+'"/>'; }
+function eqR(x,y,w,h,r,cls){ return '<rect class="'+(cls||"aeqf")+'" x="'+qq(x)+'" y="'+qq(y)+'" width="'+qq(w)+'" height="'+qq(h)+'" rx="'+(r||2)+'"/>'; }
+function eqC(x,y,r,cls){ return '<circle class="'+(cls||"aeqf")+'" cx="'+qq(x)+'" cy="'+qq(y)+'" r="'+qq(r)+'"/>'; }
+function eqPg(pts,cls){ return '<polygon class="'+(cls||"aeqf")+'" points="'+pts.map(p=>qq(p[0])+","+qq(p[1])).join(" ")+'"/>'; }
+function eqU(a,b){ const dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy)||1; return [dx/L,dy/L,L]; }
+function eqAnd(p,u,d){ return [p[0]+u[0]*d, p[1]+u[1]*d]; }
+function eqPerp(u){ return [-u[1],u[0]]; }
+/* barra deitada no chao do desenho, com a espessura de uma trave */
+function eqTrave(a,b,esp,cls){
+  const u=eqU(a,b), n=eqPerp(u);
+  const q=[eqAnd(a,n,-esp/2), eqAnd(b,n,-esp/2), eqAnd(b,n,esp/2), eqAnd(a,n,esp/2)];
+  return eqPg(q,cls||"aeqf");
+}
+
+/* ---- peso livre: halter e barra, sempre na mao e virados com o antebraco ---- */
+/* Peso pendurado ao lado do corpo (caminhada do fazendeiro, encolhimento, panturrilha):
+   ali o cabo do halter aponta para a frente e para tras, entao quem ve de frente enxerga
+   so a ponta, e quem ve de lado enxerga o halter inteiro. Nos outros casos e' o contrario. */
+function eqPendurado(fr,mao){
+  if(!fr.s) return false;
+  return mao[1] > fr.s[1]+12;      /* mao bem abaixo do ombro = braco pendurado */
+}
+function eqPeso(mao, cotov, meio, anilha, plano, pendurado){
+  /* o cabo do peso fica perpendicular ao antebraco; de lado ele aponta para quem
+     olha, entao encolhe, mas continua sendo um halter e nao uma bolinha */
+  let u=eqU(cotov||[mao[0],mao[1]+8], mao); if(!u[2]) u=[0,-1,1];
+  let ax=eqPerp(u);
+  if(Math.abs(ax[1])>0.92){ ax=[ax[0],ax[1]]; }        /* barra de pe continua de pe */
+  const bracoDePe = Math.abs(u[1])>0.7;
+  const pend = pendurado && bracoDePe;
+  const curto = pend ? (plano==="frente") : (plano==="lado");
+  if(curto){
+    /* de ponta o halter vira so a anilha: um quadrado curto, nao um halter encolhido
+       (dois halteres encolhidos lado a lado viravam um cinto branco na cintura) */
+    const r=anilha*1.15;
+    return eqTrave(eqAnd(mao,ax,-r), eqAnd(mao,ax,r), r*2, "aeqw");
   }
-  const d2={eq:kind,anchor:d.anchor};
-  if(kind==="barra") g.push('<line class="aeq" x1="'+(W[0]-17)+'" y1="'+W[1]+'" x2="'+(W[0]+17)+'" y2="'+W[1]+'"/>'+
-      '<line class="aeqp" x1="'+(W[0]-15)+'" y1="'+(W[1]-6)+'" x2="'+(W[0]-15)+'" y2="'+(W[1]+6)+'"/>'+
-      '<line class="aeqp" x1="'+(W[0]+15)+'" y1="'+(W[1]-6)+'" x2="'+(W[0]+15)+'" y2="'+(W[1]+6)+'"/>');
-  if(kind==="halter"){ [W,W2].forEach(q=>g.push('<line class="aeq" x1="'+(q[0]-7)+'" y1="'+q[1]+'" x2="'+(q[0]+7)+'" y2="'+q[1]+'"/>')); }
-  if(kind==="polia-alta") g.push('<line class="aeqc" x1="'+W[0]+'" y1="'+W[1]+'" x2="'+(d.anchor?d.anchor[0]:W[0])+'" y2="'+(d.anchor?d.anchor[1]:4)+'"/>'+
-      '<line class="aeq" x1="'+(W[0]-10)+'" y1="'+W[1]+'" x2="'+(W[0]+10)+'" y2="'+W[1]+'"/>');
-  if(kind==="polia-baixa") g.push('<line class="aeqc" x1="'+W[0]+'" y1="'+W[1]+'" x2="'+(d.anchor?d.anchor[0]:96)+'" y2="'+(d.anchor?d.anchor[1]:92)+'"/>');
-  if(kind==="fixa") g.push('<line class="aeqb" x1="14" y1="8" x2="86" y2="8"/>');
-  if(kind==="banco") g.push('<line class="aeqb" x1="12" y1="70" x2="78" y2="70"/><line class="aeqb" x1="20" y1="70" x2="20" y2="92"/><line class="aeqb" x1="70" y1="70" x2="70" y2="92"/>');
-  if(kind==="banco-inc") g.push('<line class="aeqb" x1="12" y1="76" x2="74" y2="52"/><line class="aeqb" x1="20" y1="74" x2="20" y2="94"/><line class="aeqb" x1="68" y1="58" x2="68" y2="94"/>');
-  if(kind==="maquina") g.push('<rect class="aeqb" x="72" y="30" width="20" height="60" rx="4"/><line class="aeqc" x1="82" y1="34" x2="82" y2="86"/>');
-  if(kind==="sela") g.push('<line class="aeqb" x1="24" y1="70" x2="56" y2="70"/><line class="aeqb" x1="30" y1="70" x2="30" y2="96"/>');
-  if(kind==="plataforma") g.push('<line class="aeq" x1="'+(F2[0]-4)+'" y1="'+(F2[1]-14)+'" x2="'+(F2[0]+12)+'" y2="'+(F2[1]+4)+'"/>');
-  return g.join("");
+  const m = meio;
+  const a=eqAnd(mao,ax,-m), b=eqAnd(mao,ax,m);
+  let g=eqTrave(a,b,3.2,"aeqw");
+  [[-1],[1]].forEach(s=>{
+    const c=eqAnd(mao,ax,s[0]*(m-anilha*0.55));
+    g+=eqTrave(eqAnd(c,u,-anilha), eqAnd(c,u,anilha), anilha*1.5,"aeqw");
+  });
+  return g;
+}
+function eqHalter(fr,plano){
+  let g=eqPeso(fr.w, fr.e, 7.4, 3.2, plano, eqPendurado(fr,fr.w));
+  if(fr.w2 && (fr.w2[0]!==fr.w[0] || fr.w2[1]!==fr.w[1])) g+=eqPeso(fr.w2, fr.e2, 7.4, 3.2, plano, eqPendurado(fr,fr.w2));
+  return g;
+}
+function eqBarra(fr,plano,d){
+  const jj=(d&&d.barraEm)||"w"; const pw=fr[jj]||fr.w;
+  if(plano==="lado"){
+    /* de lado a barra vem na direcao de quem olha: aparece a ponta, com a anilha */
+    return eqC(pw[0],pw[1],6.2,"aeqw")+eqC(pw[0],pw[1],2.2,"aeqwd");
+  }
+  const j=(d&&d.barraEm)||"w";
+  const w=fr[j]||fr.w, w2=(d&&d.barraEm)? w : (fr.w2||fr.w);
+  const meio=Math.max(20, Math.abs(w2[0]-w[0])/2+13);
+  const c=[(w[0]+w2[0])/2,(w[1]+w2[1])/2];
+  let u=eqU(w,w2); if(u[2]<2) u=[1,0,1];
+  const a=eqAnd(c,u,-meio), b=eqAnd(c,u,meio);
+  let g=eqTrave(a,b,3.2,"aeqw");
+  const n=eqPerp(u);
+  [[-1],[1]].forEach(s=>{
+    const p=eqAnd(c,u,s[0]*(meio-3));
+    g+=eqTrave(eqAnd(p,n,-5.5), eqAnd(p,n,5.5), 4.6,"aeqw");
+    const p2=eqAnd(c,u,s[0]*(meio-8.5));
+    g+=eqTrave(eqAnd(p2,n,-4.2), eqAnd(p2,n,4.2), 3.4,"aeqw");
+  });
+  return g;
+}
+
+/* ---- bancos: nascem embaixo do tronco ---- */
+function eqBanco(fr,plano){
+  const s=fr.s, p=fr.p;
+  if(plano==="frente"){
+    /* de frente o banco aparece atras do corpo: uma faixa estreita */
+    const x=(s[0]+p[0])/2;
+    return eqR(x-11, s[1]-6, 22, (p[1]-s[1])+26, 5,"aeqf")+
+      eqL(x-8,EQ_CHAO,x+8,EQ_CHAO,"aeqb");
+  }
+  let u=eqU(s,p); if(u[2]<3) u=[1,0,1];
+  let n=eqPerp(u); if(n[1]<0) n=[-n[0],-n[1]];         /* a face de apoio fica por baixo */
+  const a=eqAnd(eqAnd(s,u,-16),n,7.5), b=eqAnd(eqAnd(p,u,10),n,7.5);
+  let g=eqTrave(a,b,5,"aeqf");
+  [a,b].forEach(q=>{ g+=eqL(q[0],q[1]+1,q[0],EQ_CHAO,"aeqb"); });
+  g+=eqL(a[0]-5,EQ_CHAO,a[0]+5,EQ_CHAO,"aeqb")+eqL(b[0]-5,EQ_CHAO,b[0]+5,EQ_CHAO,"aeqb");
+  return g;
+}
+function eqBancoInc(fr,plano){
+  const s=fr.s, p=fr.p;
+  if(plano==="frente"){
+    const x=(s[0]+p[0])/2;
+    return eqR(x-17, s[1]-12, 34, (p[1]-s[1])+22, 8,"aeqf")+
+      eqR(x-19, p[1]+2, 38, 8, 4,"aeqf")+
+      eqL(x,p[1]+10,x,EQ_CHAO,"aeqb")+eqL(x-10,EQ_CHAO,x+10,EQ_CHAO,"aeqb");
+  }
+  let u=eqU(s,p); if(u[2]<3) u=[1,0,1];                /* do ombro para o quadril */
+  let n=eqPerp(u); if(n[1]<0) n=[-n[0],-n[1]];
+  const topo=eqAnd(eqAnd(s,u,-15),n,8);                /* alto do encosto, atras da cabeca */
+  const quadril=eqAnd(p,n,8);
+  let g=eqTrave(topo,quadril,5.5,"aeqf");              /* encosto */
+  const dir=(p[0]>=s[0])?1:-1;
+  const fim=[quadril[0]+dir*15, quadril[1]+2];
+  g+=eqTrave(quadril,fim,5,"aeqf");                    /* assento */
+  g+=eqL(topo[0]+dir*2,topo[1]+2,topo[0]+dir*5,EQ_CHAO,"aeqb");   /* pe de tras */
+  g+=eqL(fim[0]-dir*3,fim[1],fim[0]-dir*3,EQ_CHAO,"aeqb");        /* pe da frente */
+  g+=eqL(topo[0]+dir*1,EQ_CHAO,fim[0],EQ_CHAO,"aeqb");
+  return g;
+}
+/* ---- assento de aparelho: banquinho embaixo do quadril + encosto atras ---- */
+function eqAssento(fr,plano,comEncosto){
+  const p=fr.p, s=fr.s;
+  const dir=(fr.k && fr.k[0]>=p[0])?1:-1;              /* as coxas apontam para a frente */
+  if(plano==="frente"){
+    let g=eqR(p[0]-16,p[1]+4,32,6,3,"aeqf");
+    if(comEncosto) g+=eqR(p[0]-13,s[1]-8,26,(p[1]-s[1])+12,6,"aeqfb");
+    g+=eqL(p[0],p[1]+10,p[0],EQ_CHAO,"aeqb")+eqL(p[0]-8,EQ_CHAO,p[0]+8,EQ_CHAO,"aeqb");
+    return g;
+  }
+  const y=p[1]+6;
+  let g=eqTrave([p[0]-dir*12,y],[p[0]+dir*13,y],5,"aeqf");
+  if(comEncosto){
+    const topo=[s[0]-dir*8, s[1]-9];
+    g+=eqTrave([p[0]-dir*11,y-2],topo,5,"aeqf");
+  }
+  g+=eqL(p[0],y+2,p[0],EQ_CHAO,"aeqb")+eqL(p[0]-7,EQ_CHAO,p[0]+7,EQ_CHAO,"aeqb");
+  return g;
+}
+/* ---- pilha de peso, atras do aparelho ---- */
+function eqPilha(x){
+  let g=eqR(x-8,26,16,58,3,"aeqfb");
+  for(let i=0;i<5;i++) g+=eqL(x-6,34+i*10,x+6,34+i*10,"aeqb");
+  return g;
+}
+/* ---- polias: cabo de verdade, da mao ate a roldana ---- */
+function eqPolia(fr,d,plano,alta){
+  const w=fr[d.cabo||"w"]||fr.w, w2=(d.cabo? null : fr.w2);
+  const anc=d.anchor || (alta? [w[0], 8] : [Math.min(92,w[0]+30), 92]);
+  let g=eqL(anc[0]-9,anc[1],anc[0]+9,anc[1],"aeqb");   /* trave da roldana */
+  g+=eqC(anc[0],anc[1]+3,3,"aeqfb");
+  const maos=[w].concat((w2 && (w2[0]!==w[0]||w2[1]!==w[1]))?[w2]:[]);
+  maos.forEach(q=>{ g+=eqL(anc[0],anc[1]+3,q[0],q[1],"aeqc"); });
+  if(alta) g+=eqPilha(anc[0]>50?92:8);
+  return g;
+}
+function eqPoliaMao(fr,d,plano){
+  const w=fr[(d&&d.cabo)||"w"]||fr.w, w2=((d&&d.cabo)? null : fr.w2);
+  const maos=[w].concat((w2 && (w2[0]!==w[0]||w2[1]!==w[1]))?[w2]:[]);
+  const c=[(maos[0][0]+maos[maos.length-1][0])/2,(maos[0][1]+maos[maos.length-1][1])/2];
+  let u=eqU(maos[0],maos[maos.length-1]); if(u[2]<3) u=[1,0,1];
+  const meio=Math.max(7,u[2]/2+4)*((plano==="lado")?0.62:1);
+  return eqTrave(eqAnd(c,u,-meio), eqAnd(c,u,meio), 3.4,"aeqw");
+}
+/* ---- barra fixa ---- */
+function eqFixa(fr,plano){
+  const y=Math.min(fr.w[1], (fr.w2||fr.w)[1])-1;
+  let g=eqTrave([12,y],[88,y],4.2,"aeqf");
+  g+=eqL(16,y+2,16,EQ_CHAO,"aeqb")+eqL(84,y+2,84,EQ_CHAO,"aeqb");
+  return g;
+}
+/* ---- plataforma do leg press, encostada na sola ---- */
+function eqPlataforma(fr,plano){
+  const f=fr.f, k=fr.k;
+  let u=eqU(k,f); if(u[2]<3) u=[0,1,1];
+  const n=eqPerp(u);
+  const c=eqAnd(f,u,3);
+  let g=eqTrave(eqAnd(c,n,-15), eqAnd(c,n,15), 5,"aeqf");
+  g+=eqTrave(eqAnd(eqAnd(c,u,5),n,-9), eqAnd(eqAnd(c,u,5),n,9), 7,"aeqfb");
+  return g;
+}
+/* ---- bicicleta ---- */
+function eqBike(fr,plano){
+  const p=fr.p, f=fr.f, w=fr.w;
+  if(plano==="frente"){
+    let g=eqC(p[0],EQ_CHAO-9,9,"aeqo");
+    g+=eqL(p[0],p[1]+6,p[0],EQ_CHAO-16,"aeqb");
+    g+=eqTrave([w[0]-14,w[1]],[w[0]+14,w[1]],4,"aeqf");
+    return g+eqTrave([p[0]-10,p[1]+6],[p[0]+10,p[1]+6],5,"aeqf");
+  }
+  const tras=[p[0]-14,EQ_CHAO-10], frente=[p[0]+24,EQ_CHAO-10];
+  let g=eqC(tras[0],tras[1],10,"aeqo")+eqC(frente[0],frente[1],10,"aeqo");
+  g+=eqL(tras[0],tras[1],p[0],p[1]+7,"aeqb");          /* selim */
+  g+=eqL(tras[0],tras[1],p[0]+6,p[1]+22,"aeqb");       /* pedal */
+  g+=eqL(p[0]+6,p[1]+22,frente[0],frente[1],"aeqb");
+  g+=eqL(p[0],p[1]+7,w[0],w[1]+3,"aeqb");              /* guidao */
+  g+=eqTrave([w[0]-7,w[1]+3],[w[0]+7,w[1]+3],4,"aeqf");
+  g+=eqTrave([p[0]-8,p[1]+7],[p[0]+7,p[1]+7],5,"aeqf");
+  return g;
+}
+
+/* ---- barras paralelas do mergulho ---- */
+function eqParalelas(fr,plano){
+  const maos=[fr.w].concat((fr.w2 && (fr.w2[0]!==fr.w[0]||fr.w2[1]!==fr.w[1]))?[fr.w2]:[]);
+  let g="";
+  maos.forEach(q=>{
+    if(plano==="frente"){
+      g+=eqTrave([q[0]-9,q[1]+3],[q[0]+9,q[1]+3],4.2,"aeqf");
+      g+=eqL(q[0]+(q[0]<50?-7:7),q[1]+5,q[0]+(q[0]<50?-7:7),EQ_CHAO,"aeqb");
+    } else {
+      g+=eqTrave([q[0]-20,q[1]+3],[q[0]+16,q[1]+3],4.2,"aeqf");
+      g+=eqL(q[0]-16,q[1]+5,q[0]-16,EQ_CHAO,"aeqb");
+      g+=eqL(q[0]+12,q[1]+5,q[0]+12,EQ_CHAO,"aeqb");
+    }
+  });
+  return g;
+}
+/* ---- banco romano: apoio no quadril e rolo no tornozelo ---- */
+function eqRomano(fr,plano){
+  const p=fr.p, f=fr.f;
+  const dir=(f[0]>=p[0])?1:-1;
+  let g=eqTrave([p[0]-dir*12,p[1]+9],[p[0]+dir*12,p[1]+6],9,"aeqf");   /* almofada do quadril */
+  g+=eqL(p[0],p[1]+10,p[0]+dir*6,EQ_CHAO,"aeqb");
+  g+=eqC(f[0]+dir*2, f[1]+2, 4.5,"aeqfb");                              /* rolo do tornozelo */
+  g+=eqL(f[0]+dir*2,f[1]+6,f[0]+dir*2,EQ_CHAO,"aeqb");
+  g+=eqL(p[0]-dir*4,EQ_CHAO,f[0]+dir*6,EQ_CHAO,"aeqb");
+  return g;
+}
+/* ---- banco so' embaixo das costas (elevacao de quadril) ---- */
+function eqBancoAlto(fr,plano){
+  const s=fr.s, p=fr.p;
+  const dir=(p[0]>=s[0])?1:-1;
+  const y=s[1]+9;
+  if(plano==="frente") return eqR(s[0]-15,y,30,6,3,"aeqf")+eqL(s[0],y+6,s[0],EQ_CHAO,"aeqb");
+  let g=eqTrave([s[0]-dir*22,y],[s[0]+dir*9,y],5,"aeqf");
+  g+=eqL(s[0]-dir*18,y+2,s[0]-dir*18,EQ_CHAO,"aeqb");
+  g+=eqL(s[0]+dir*5,y+2,s[0]+dir*5,EQ_CHAO,"aeqb");
+  return g;
+}
+/* ---- apoio inclinado da rosca Scott ---- */
+function eqScott(fr,plano){
+  const s=fr.s, e=fr.e;
+  const dir=(e[0]>=s[0])?1:-1;
+  if(plano==="frente") return eqR(s[0]-16,s[1]+6,32,14,4,"aeqf")+eqL(s[0],s[1]+20,s[0],EQ_CHAO,"aeqb");
+  const topo=[s[0]+dir*7,s[1]+6], base=[e[0]+dir*7,e[1]+9];
+  let g=eqTrave(topo,base,9,"aeqf");
+  g+=eqL(base[0]-dir*2,base[1]+4,base[0]-dir*2,EQ_CHAO,"aeqb");
+  g+=eqL(base[0]-dir*9,EQ_CHAO,base[0]+dir*5,EQ_CHAO,"aeqb");
+  return g;
+}
+
+/* o que fica NA FRENTE do boneco: o peso na mao. O resto (banco, maquina, cabo) fica atras. */
+const EQ_NA_FRENTE={halter:1, barra:1, "polia-alta":1, "polia-baixa":1};
+function eqPartFrente(kind,d,fr,plano){
+  plano=plano||"lado";
+  if(kind==="halter") return eqHalter(fr,plano);
+  if(kind==="barra")  return eqBarra(fr,plano,d);
+  if(kind==="polia-alta"||kind==="polia-baixa") return eqPoliaMao(fr,d,plano);
+  return "";
+}
+function eqLayerFrente(d,fr,vista){
+  const plano=(vista==="alt")? ((d.plano==="frente")?"lado":"frente") : (d.plano||"lado");
+  let g="";
+  if(d.eq && EQ_NA_FRENTE[d.eq]) g+=eqPartFrente(d.eq,d,fr,plano);
+  if(d.eq2 && EQ_NA_FRENTE[d.eq2]) g+=eqPartFrente(d.eq2,d,fr,plano);
+  return g;
+}
+function eqPart(kind,d,fr,plano){
+  plano=plano||"lado";
+  if(kind==="halter")      return "";
+  if(kind==="barra")       return "";
+  if(kind==="banco")       return eqBanco(fr,plano);
+  if(kind==="banco-inc")   return eqBancoInc(fr,plano);
+  if(kind==="sela")        return eqAssento(fr,plano,false);
+  if(kind==="maquina")     return eqAssento(fr,plano,true)+eqPilha(d.pilha||((fr.k&&fr.k[0]>=fr.p[0])?10:90));
+  if(kind==="polia-alta")  return eqPolia(fr,d,plano,true);
+  if(kind==="polia-baixa") return eqPolia(fr,d,plano,false);
+  if(kind==="fixa")        return eqFixa(fr,plano);
+  if(kind==="plataforma")  return eqPlataforma(fr,plano);
+  if(kind==="bike")        return eqBike(fr,plano);
+  if(kind==="paralelas")   return eqParalelas(fr,plano);
+  if(kind==="banco-romano")return eqRomano(fr,plano);
+  if(kind==="banco-alto")  return eqBancoAlto(fr,plano);
+  if(kind==="scott")       return eqScott(fr,plano);
+  if(kind==="pilha")       return eqPilha(d.pilha||((fr.k&&fr.k[0]>=fr.p[0])?10:90));
+  return "";
 }
 /* ---- seta de direcao ---- */
 function arrowPath(p1,p2){
@@ -5615,16 +5986,11 @@ function animSVG(id, opts){
   return '<svg viewBox="0 0 100 110" class="pose anim" data-anim="'+id+'"'+(opts.static?' data-static="1"':"")+
     ' data-view="'+vista+'"'+
     (opts.frame===0||opts.frame===1?' data-frame="'+opts.frame+'" data-static="1"':"")+'>'+
+    sombraHTML()+
     '<g class="aeqg">'+eqLayer(d,a,vista)+"</g>"+
     (opts.noArrow?"":arrows)+
-    '<g class="askel">'+
-      '<circle class="ph" cx="'+a.h[0]+'" cy="'+a.h[1]+'" r="8"/>'+
-      '<polyline class="pl" data-j="torso" points=""/>'+
-      '<polyline class="pl" data-j="arm" points=""/>'+
-      '<polyline class="pl" data-j="arm2" points=""/>'+
-      '<polyline class="pl" data-j="leg" points=""/>'+
-      '<polyline class="pl" data-j="leg2" points=""/>'+
-    "</g></svg>";
+    '<g class="askel">'+skelHTML()+"</g>"+
+    '<g class="aeqf2">'+eqLayerFrente(d,a,vista)+"</g></svg>";
 }
 function lerpPt(p1,p2,t){ return [p1[0]+(p2[0]-p1[0])*t, p1[1]+(p2[1]-p1[1])*t]; }
 function frameAt(d,t,vista){
@@ -5635,19 +6001,6 @@ function frameAt(d,t,vista){
     else if(a[j]) o[j]=a[j];
   });
   return o;
-}
-function paintAnimSVG(svg, fr, d, vista){
-  const pts=(arr)=>arr.filter(Boolean).map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
-  const hd=svg.querySelector("circle.ph");
-  if(hd){ hd.setAttribute("cx",fr.h[0].toFixed(1)); hd.setAttribute("cy",fr.h[1].toFixed(1)); }
-  const set=(name,arr)=>{ const n=svg.querySelector('[data-j="'+name+'"]'); if(n) n.setAttribute("points",pts(arr)); };
-  set("torso",[fr.n,fr.s,fr.p]);
-  set("arm",[fr.s,fr.e,fr.w]);
-  set("arm2", fr.e2? [fr.s,fr.e2,fr.w2||fr.e2] : []);
-  set("leg",[fr.p,fr.k,fr.f]);
-  set("leg2", fr.k2? [fr.p,fr.k2,fr.f2||fr.k2] : []);
-  const eq=svg.querySelector(".aeqg");
-  if(eq && d && d.eq) eq.innerHTML=eqLayer(d,fr,vista);
 }
 /* ---- ticker unico ---- */
 let ANIM_LIST=[], ANIM_RAF=null, ANIM_OBS=null;
@@ -5829,7 +6182,7 @@ A("glute-bridge",
 A("kickback",
  {h:[42,20],n:[44,30],s:[45,38],e:[42,52],w:[40,64],p:[44,64],k:[42,84],f:[40,102],k2:[54,80],f2:[60,92]},
  {h:[42,20],n:[44,30],s:[45,38],e:[42,52],w:[40,64],p:[44,64],k:[42,84],f:[40,102],k2:[62,74],f2:[84,80]},
- {eq:"polia-baixa",anchor:[92,96],arw:"f2"});
+ {eq:"polia-baixa",anchor:[92,96],cabo:"f2",arw:"f2"});
 A("hinge",
  {h:[46,16],n:[48,26],s:[48,34],e:[50,50],w:[50,64],p:[48,62],k:[46,84],f:[44,102],e2:[46,50],w2:[46,64],k2:[54,84],f2:[56,102]},
  {h:[74,42],n:[64,46],s:[58,50],e:[56,62],w:[56,76],p:[40,58],k:[38,82],f:[34,102],e2:[54,62],w2:[54,76],k2:[46,82],f2:[48,102]},
@@ -5899,7 +6252,7 @@ A("rope",
 A("bike",
  {h:[36,22],n:[38,32],s:[40,38],e:[54,46],w:[68,50],p:[40,64],k:[62,66],f:[68,86],k2:[58,74],f2:[50,90]},
  {h:[36,22],n:[38,32],s:[40,38],e:[54,46],w:[68,50],p:[40,64],k:[58,74],f:[50,90],k2:[62,66],f2:[68,86]},
- {arw:"f",dur:1.4});
+ {eq:"bike",arw:"f",dur:1.4});
 A("burpee",
  {h:[50,14],n:[50,25],s:[50,34],e:[40,20],w:[36,8],p:[48,60],k:[44,82],f:[42,100],e2:[60,20],w2:[64,8],k2:[54,82],f2:[58,100]},
  {h:[84,74],n:[76,76],s:[72,78],e:[70,88],w:[72,99],p:[42,84],k:[26,90],f:[12,98]},
@@ -7224,27 +7577,27 @@ A("int-rot",
  {h:[46,16],n:[48,26],s:[48,35],e:[57,52],w:[78,50],p:[48,62],k:[45,84],f:[43,102],k2:[53,84],f2:[56,102]},
  {h:[46,16],n:[48,26],s:[48,35],e:[57,52],w:[44,50],p:[48,62],k:[45,84],f:[43,102],k2:[53,84],f2:[56,102]},
  {eq:"polia-baixa",anchor:[96,50],arw:"w"});
-/* ---------- 41b. SEGUNDA VISTA DE CADA MOVIMENTO ---------- */
+/* ---------- 41b. SEGUNDA VISTA DE CADA MOVIMENTO (gerada) ---------- */
 /* Gerado a partir do desenho que ja existia. A regra e geometrica: girar o observador
    90 graus em torno do eixo da pessoa NAO muda a ALTURA de nenhuma articulacao — so muda
    o que era esquerda/direita, que vira frente/tras. Por isso cada quadro aqui reaproveita
    exatamente os mesmos y do quadro original; nenhuma altura foi inventada.
-   AV(id, plano_do_desenho_original, quadro_inicial, quadro_final).
-   Movimento sem segunda vista (deitado, de bruços, de quatro apoios, ou que so acontece no
-   plano de frente) fica de fora de proposito: girar daria um desenho encolhido e sem informacao. */
+   Uma licenca de desenho, so uma: visto de lado, o braco que fica abaixo do ombro e trazido
+   um pouco a frente do tronco. Encostado na coluna ele sumiria dentro do corpo, que tem largura.
+   AV(id, plano_do_desenho_original, quadro_inicial, quadro_final). */
 function AV(id, plano, a, b){ const d=ANIM[id]; if(!d) return; d.plano=plano; d.v2={a:a,b:b}; }
 AV("abduction","lado",
  {h:[48,22],n:[48,32],s:[48,38],e:[40,50],w:[38,56],e2:[56,50],w2:[58,56],p:[48,66],k:[43,70],f:[40,96],k2:[53,70],f2:[56,96]},
  {h:[48,22],n:[48,32],s:[48,38],e:[40,50],w:[38,56],e2:[56,50],w2:[58,56],p:[48,66],k:[32,58],f:[24,82],k2:[64,58],f2:[72,82]});
 AV("calf","frente",
- {h:[49,18],n:[48,28],s:[48,36],e:[49,52],w:[49,68],p:[47,64],k:[48,84],f:[50,102]},
- {h:[49,8],n:[48,18],s:[48,26],e:[49,42],w:[49,58],p:[47,54],k:[48,76],f:[50,98]});
+ {h:[49,18],n:[48,28],s:[48,36],e:[54.5,52],w:[55.5,68],p:[47,64],k:[48,84],f:[50,102]},
+ {h:[49,8],n:[48,18],s:[48,26],e:[54.5,42],w:[55.5,58],p:[47,54],k:[48,76],f:[50,98]});
 AV("carry","frente",
- {h:[49,16],n:[48,26],s:[48,36],e:[49,54],w:[49,72],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,14],n:[48,24],s:[48,34],e:[49,52],w:[49,70],p:[47,60],k:[51,82],f:[54,100],k2:[44,82],f2:[40,102]});
+ {h:[49,16],n:[48,26],s:[48,36],e:[54.5,54],w:[55.5,72],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,14],n:[48,24],s:[48,34],e:[54.5,52],w:[55.5,70],p:[47,60],k:[51,82],f:[54,100],k2:[44,82],f2:[40,102]});
 AV("curl","frente",
- {h:[49,16],n:[48,26],s:[48,36],e:[50,54],w:[52,72],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,26],s:[48,36],e:[50,54],w:[60,40],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,26],s:[48,36],e:[54.5,54],w:[55.5,72],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,36],e:[54.5,54],w:[60,40],p:[47,62],k:[48,84],f:[50,102]});
 AV("curl-preacher","lado",
  {h:[48,24],n:[48,34],s:[48,40],e:[42,56],w:[42,62],e2:[54,56],w2:[54,62],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]},
  {h:[48,24],n:[48,34],s:[48,40],e:[42,56],w:[42,38],e2:[54,56],w2:[54,38],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]});
@@ -7252,32 +7605,32 @@ AV("deadlift","lado",
  {h:[48,44],n:[48,48],s:[48,52],e:[43,68],w:[43,84],e2:[53,68],w2:[53,84],p:[48,62],k:[42,82],f:[39,101],k2:[54,82],f2:[57,101]},
  {h:[48,16],n:[48,26],s:[48,34],e:[44,52],w:[44,70],e2:[52,52],w2:[52,70],p:[48,62],k:[43,84],f:[40,101],k2:[53,84],f2:[56,101]});
 AV("dip","frente",
- {h:[51,26],n:[50,36],s:[50,42],e:[45,54],w:[51,66],p:[49,64],k:[56,82],f:[50,94]},
- {h:[51,14],n:[50,24],s:[50,30],e:[43,44],w:[51,66],p:[49,52],k:[56,70],f:[50,84]});
+ {h:[51,26],n:[50,36],s:[50,42],e:[43.5,54],w:[57.5,66],p:[49,64],k:[56,82],f:[50,94]},
+ {h:[51,14],n:[50,24],s:[50,30],e:[43,44],w:[57.5,66],p:[49,52],k:[56,70],f:[50,84]});
 AV("ext-rot","frente",
- {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[60,50],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[52,50],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,52],w:[60,50],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,52],w:[55.5,50],p:[47,62],k:[48,84],f:[50,102]});
 AV("fly-machine","frente",
  {h:[49,22],n:[48,32],s:[48,40],e:[55,42],w:[61,48],p:[47,64],k:[48,84],f:[50,102]},
  {h:[49,22],n:[48,32],s:[48,40],e:[56,44],w:[65,52],p:[47,64],k:[48,84],f:[50,102]});
 AV("heel-kick","frente",
- {h:[51,14],n:[50,25],s:[50,34],e:[53,44],w:[56,56],p:[49,60],k:[50,82],f:[52,101],k2:[46,80],f2:[40,62]},
- {h:[51,14],n:[50,25],s:[50,34],e:[47,44],w:[44,56],p:[49,60],k:[46,80],f:[40,62],k2:[50,82],f2:[52,101]});
+ {h:[51,14],n:[50,25],s:[50,34],e:[56.5,44],w:[57.5,56],p:[49,60],k:[50,82],f:[52,101],k2:[46,80],f2:[40,62]},
+ {h:[51,14],n:[50,25],s:[50,34],e:[43.5,44],w:[42.5,56],p:[49,60],k:[46,80],f:[40,62],k2:[50,82],f2:[52,101]});
 AV("hinge","frente",
- {h:[49,16],n:[48,26],s:[48,34],e:[50,50],w:[51,64],p:[47,62],k:[48,84],f:[50,102]},
- {h:[64,42],n:[61,46],s:[59,50],e:[62,62],w:[64,76],p:[50,58],k:[58,82],f:[60,102]});
+ {h:[49,16],n:[48,26],s:[48,34],e:[54.5,50],w:[55.5,64],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[64,42],n:[61,46],s:[59,50],e:[64.5,62],w:[65.5,76],p:[50,58],k:[58,82],f:[60,102]});
 AV("int-rot","frente",
- {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[52,50],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[60,50],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,52],w:[55.5,50],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,52],w:[60,50],p:[47,62],k:[48,84],f:[50,102]});
 AV("jack","frente",
- {h:[51,14],n:[50,25],s:[50,34],e:[52,48],w:[53,64],p:[49,60],k:[50,82],f:[52,101]},
+ {h:[51,14],n:[50,25],s:[50,34],e:[56.5,48],w:[57.5,64],p:[49,60],k:[50,82],f:[52,101]},
  {h:[51,12],n:[50,23],s:[50,32],e:[51,18],w:[51,8],p:[49,58],k:[50,80],f:[52,100]});
 AV("kickback","frente",
- {h:[46,20],n:[45,30],s:[45,38],e:[47,52],w:[48,64],p:[44,64],k:[45,84],f:[47,102],k2:[41,80],f2:[35,92]},
- {h:[46,20],n:[45,30],s:[45,38],e:[47,52],w:[48,64],p:[44,64],k:[45,84],f:[47,102],k2:[33,74],f2:[19,80]});
+ {h:[46,20],n:[45,30],s:[45,38],e:[51.5,52],w:[52.5,64],p:[44,64],k:[45,84],f:[47,102],k2:[41,80],f2:[35,92]},
+ {h:[46,20],n:[45,30],s:[45,38],e:[51.5,52],w:[52.5,64],p:[44,64],k:[45,84],f:[47,102],k2:[33,74],f2:[19,80]});
 AV("knee-high","frente",
- {h:[51,14],n:[50,25],s:[50,34],e:[53,44],w:[56,56],p:[49,60],k:[50,82],f:[52,101],k2:[58,58],f2:[62,76]},
- {h:[51,14],n:[50,25],s:[50,34],e:[47,44],w:[44,56],p:[49,60],k:[58,58],f:[62,76],k2:[50,82],f2:[52,101]});
+ {h:[51,14],n:[50,25],s:[50,34],e:[56.5,44],w:[57.5,56],p:[49,60],k:[50,82],f:[52,101],k2:[58,58],f2:[62,76]},
+ {h:[51,14],n:[50,25],s:[50,34],e:[43.5,44],w:[42.5,56],p:[49,60],k:[58,58],f:[62,76],k2:[50,82],f2:[52,101]});
 AV("leg-curl-sit","lado",
  {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,62],k2:[53,68],f2:[54,62]},
  {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,96],k2:[53,68],f2:[54,96]});
@@ -7285,29 +7638,29 @@ AV("leg-ext","lado",
  {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,96],k2:[53,68],f2:[54,96]},
  {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,64],k2:[53,68],f2:[54,64]});
 AV("lunge","frente",
- {h:[49,16],n:[48,26],s:[48,34],e:[50,50],w:[50,66],p:[47,62],k:[48,84],f:[50,102]},
- {h:[46,26],n:[45,36],s:[45,44],e:[47,58],w:[47,74],p:[44,70],k:[55,80],f:[59,102],k2:[33,92],f2:[25,102]});
+ {h:[49,16],n:[48,26],s:[48,34],e:[54.5,50],w:[55.5,66],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[46,26],n:[45,36],s:[45,44],e:[51.5,58],w:[52.5,74],p:[44,70],k:[55,80],f:[59,102],k2:[33,92],f2:[25,102]});
 AV("m-armcircle","frente",
  {h:[49,16],n:[48,26],s:[48,35],e:[50,26],w:[50,14],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,26],s:[48,35],e:[51,46],w:[52,58],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,46],w:[55.5,58],p:[47,62],k:[48,84],f:[50,102]});
 AV("m-armswing","frente",
- {h:[49,16],n:[48,26],s:[48,35],e:[45,38],w:[42,40],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[41.5,38],w:[40.5,40],p:[47,62],k:[48,84],f:[50,102]},
  {h:[49,16],n:[48,26],s:[48,35],e:[54,38],w:[63,36],p:[47,62],k:[48,84],f:[50,102]});
 AV("m-hipcircle","frente",
- {h:[47,16],n:[46,26],s:[46,35],e:[48,48],w:[49,60],p:[48,62],k:[46,84],f:[48,102]},
- {h:[51,16],n:[50,26],s:[50,35],e:[52,48],w:[53,60],p:[46,62],k:[50,84],f:[52,102]});
+ {h:[47,16],n:[46,26],s:[46,35],e:[52.5,48],w:[53.5,60],p:[48,62],k:[46,84],f:[48,102]},
+ {h:[51,16],n:[50,26],s:[50,35],e:[56.5,48],w:[57.5,60],p:[46,62],k:[50,84],f:[52,102]});
 AV("m-legswing","frente",
- {h:[49,16],n:[48,26],s:[48,35],e:[50,42],w:[54,46],p:[47,62],k:[48,84],f:[50,102],k2:[40,78],f2:[30,88]},
- {h:[49,16],n:[48,26],s:[48,35],e:[50,42],w:[54,46],p:[47,62],k:[48,84],f:[50,102],k2:[62,72],f2:[76,64]});
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,42],w:[55.5,46],p:[47,62],k:[48,84],f:[50,102],k2:[40,78],f2:[30,88]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,42],w:[55.5,46],p:[47,62],k:[48,84],f:[50,102],k2:[62,72],f2:[76,64]});
 AV("m-neckroll","frente",
- {h:[49,16],n:[48,28],s:[48,36],e:[49,52],w:[49,68],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,28],s:[48,36],e:[49,52],w:[49,68],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,28],s:[48,36],e:[54.5,52],w:[55.5,68],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,28],s:[48,36],e:[54.5,52],w:[55.5,68],p:[47,62],k:[48,84],f:[50,102]});
 AV("m-trunkrot","frente",
  {h:[49,16],n:[48,26],s:[48,36],e:[56,38],w:[64,42],p:[47,62],k:[48,84],f:[50,102]},
  {h:[49,16],n:[48,26],s:[48,36],e:[40,38],w:[32,42],p:[47,62],k:[48,84],f:[50,102]});
 AV("m-wrist","frente",
- {h:[39,20],n:[38,30],s:[38,38],e:[44,50],w:[50,44],p:[37,64],k:[38,84],f:[40,102]},
- {h:[39,20],n:[38,30],s:[38,38],e:[44,50],w:[50,58],p:[37,64],k:[38,84],f:[40,102]});
+ {h:[39,20],n:[38,30],s:[38,38],e:[44.5,50],w:[50,44],p:[37,64],k:[38,84],f:[40,102]},
+ {h:[39,20],n:[38,30],s:[38,38],e:[44.5,50],w:[50,58],p:[37,64],k:[38,84],f:[40,102]});
 AV("nordic","lado",
  {h:[48,30],n:[48,40],s:[48,46],e:[42,58],w:[39,68],e2:[54,58],w2:[57,68],p:[48,70],k:[43,92],f:[41,98],k2:[53,92],f2:[55,98]},
  {h:[48,54],n:[48,58],s:[48,62],e:[42,72],w:[39,80],e2:[54,72],w2:[57,80],p:[48,72],k:[43,92],f:[41,98],k2:[53,92],f2:[55,98]});
@@ -7319,39 +7672,39 @@ AV("pulldown","frente",
  {h:[49,28],n:[48,38],s:[48,44],e:[45,44],w:[51,34],p:[47,68],k:[62,72],f:[64,98]});
 AV("pullover","frente",
  {h:[49,20],n:[48,30],s:[48,38],e:[54,24],w:[58,10],p:[47,64],k:[48,84],f:[50,102]},
- {h:[49,20],n:[48,30],s:[48,38],e:[52,50],w:[57,64],p:[47,64],k:[48,84],f:[50,102]});
+ {h:[49,20],n:[48,30],s:[48,38],e:[54.5,50],w:[57,64],p:[47,64],k:[48,84],f:[50,102]});
 AV("pullup","frente",
  {h:[51,40],n:[50,50],s:[50,56],e:[52,34],w:[50,10],p:[49,74],k:[54,92],f:[48,100]},
  {h:[51,24],n:[50,34],s:[50,40],e:[47,26],w:[50,10],p:[49,58],k:[54,76],f:[48,86]});
 AV("pushdown","frente",
  {h:[49,16],n:[48,26],s:[48,36],e:[51,50],w:[54,36],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,26],s:[48,36],e:[51,50],w:[52,66],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,26],s:[48,36],e:[54.5,50],w:[55.5,66],p:[47,62],k:[48,84],f:[50,102]});
 AV("raise-front","frente",
- {h:[48,16],n:[47,26],s:[47,35],e:[50,52],w:[52,68],p:[46,62],k:[47,84],f:[49,102]},
+ {h:[48,16],n:[47,26],s:[47,35],e:[53.5,52],w:[54.5,68],p:[46,62],k:[47,84],f:[49,102]},
  {h:[48,16],n:[47,26],s:[47,35],e:[61,32],w:[77,30],p:[46,62],k:[47,84],f:[49,102]});
 AV("raise-lat","frente",
- {h:[49,16],n:[48,26],s:[48,35],e:[51,50],w:[53,66],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,50],w:[55.5,66],p:[47,62],k:[48,84],f:[50,102]},
  {h:[49,16],n:[48,26],s:[48,35],e:[52,36],w:[54,36],p:[47,62],k:[48,84],f:[50,102]});
 AV("rear-fly","frente",
- {h:[58,32],n:[55,36],s:[53,40],e:[55,54],w:[56,68],p:[46,52],k:[52,78],f:[54,100]},
- {h:[58,32],n:[55,36],s:[53,40],e:[51,44],w:[49,46],p:[46,52],k:[52,78],f:[54,100]});
+ {h:[58,32],n:[55,36],s:[53,40],e:[58.5,54],w:[59.5,68],p:[46,52],k:[52,78],f:[54,100]},
+ {h:[58,32],n:[55,36],s:[53,40],e:[45.5,44],w:[44.5,46],p:[46,52],k:[52,78],f:[54,100]});
 AV("rope","frente",
- {h:[51,16],n:[50,27],s:[50,35],e:[54,44],w:[59,56],p:[49,62],k:[50,82],f:[52,99]},
- {h:[51,8],n:[50,19],s:[50,27],e:[54,36],w:[59,48],p:[49,54],k:[50,74],f:[52,90]});
+ {h:[51,16],n:[50,27],s:[50,35],e:[56.5,44],w:[59,56],p:[49,62],k:[50,82],f:[52,99]},
+ {h:[51,8],n:[50,19],s:[50,27],e:[56.5,36],w:[59,48],p:[49,54],k:[50,74],f:[52,90]});
 AV("row-bent","frente",
- {h:[61,34],n:[58,38],s:[55,42],e:[56,58],w:[57,74],p:[48,54],k:[54,78],f:[56,100]},
- {h:[61,34],n:[58,38],s:[55,42],e:[47,50],w:[55,52],p:[48,54],k:[54,78],f:[56,100]});
+ {h:[61,34],n:[58,38],s:[55,42],e:[60.5,58],w:[61.5,74],p:[48,54],k:[54,78],f:[56,100]},
+ {h:[61,34],n:[58,38],s:[55,42],e:[47,50],w:[61.5,52],p:[48,54],k:[54,78],f:[56,100]});
 AV("row-seated","lado",
  {h:[48,24],n:[48,34],s:[48,40],e:[41,44],w:[36,48],e2:[55,44],w2:[60,48],p:[48,66],k:[43,68],f:[41,94],k2:[53,68],f2:[55,94]},
  {h:[48,24],n:[48,34],s:[48,40],e:[39,48],w:[43,50],e2:[57,48],w2:[53,50],p:[48,66],k:[43,68],f:[41,94],k2:[53,68],f2:[55,94]});
 AV("run","frente",
- {h:[51,14],n:[50,25],s:[50,34],e:[54,42],w:[59,54],p:[49,60],k:[46,80],f:[40,98],k2:[58,74],f2:[64,62]},
+ {h:[51,14],n:[50,25],s:[50,34],e:[56.5,42],w:[59,54],p:[49,60],k:[46,80],f:[40,98],k2:[58,74],f2:[64,62]},
  {h:[51,14],n:[50,25],s:[50,34],e:[46,42],w:[41,34],p:[49,60],k:[58,78],f:[64,64],k2:[46,80],f2:[40,98]});
 AV("shrug","frente",
- {h:[49,16],n:[48,27],s:[48,37],e:[49,54],w:[49,72],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,14],n:[48,24],s:[48,31],e:[49,48],w:[49,66],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,27],s:[48,37],e:[54.5,54],w:[55.5,72],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,14],n:[48,24],s:[48,31],e:[54.5,48],w:[55.5,66],p:[47,62],k:[48,84],f:[50,102]});
 AV("squat","frente",
- {h:[49,16],n:[48,26],s:[48,34],e:[51,50],w:[53,66],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,34],e:[54.5,50],w:[55.5,66],p:[47,62],k:[48,84],f:[50,102]},
  {h:[47,32],n:[46,42],s:[46,50],e:[54,58],w:[63,60],p:[39,74],k:[54,82],f:[48,102]});
 AV("squat-bar","frente",
  {h:[49,16],n:[48,26],s:[48,34],e:[44,36],w:[40,34],p:[47,62],k:[48,84],f:[50,102]},
@@ -7360,8 +7713,8 @@ AV("st-backseat","lado",
  {h:[48,30],n:[48,40],s:[48,46],e:[42,50],w:[38,54],e2:[54,50],w2:[58,54],p:[48,70],k:[43,72],f:[41,96],k2:[53,72],f2:[55,96]},
  {h:[48,36],n:[48,44],s:[48,50],e:[42,54],w:[38,58],e2:[54,54],w2:[58,58],p:[48,70],k:[43,72],f:[41,96],k2:[53,72],f2:[55,96]});
 AV("st-butterfly","frente",
- {h:[49,22],n:[48,34],s:[48,42],e:[54,60],w:[60,76],p:[47,68],k:[60,78],f:[68,86]},
- {h:[49,26],n:[48,38],s:[48,46],e:[54,64],w:[60,82],p:[47,70],k:[60,86],f:[68,90]});
+ {h:[49,22],n:[48,34],s:[48,42],e:[54.5,60],w:[60,76],p:[47,68],k:[60,78],f:[68,86]},
+ {h:[49,26],n:[48,38],s:[48,46],e:[54.5,64],w:[60,82],p:[47,70],k:[60,86],f:[68,90]});
 AV("st-calf","frente",
  {h:[39,20],n:[38,30],s:[38,36],e:[48,30],w:[60,26],p:[37,62],k:[44,80],f:[48,98],k2:[28,82],f2:[16,100]},
  {h:[37,22],n:[36,32],s:[36,38],e:[46,32],w:[58,28],p:[35,64],k:[42,82],f:[46,100],k2:[26,84],f2:[14,102]});
@@ -7369,11 +7722,11 @@ AV("st-chest","frente",
  {h:[48,18],n:[47,28],s:[47,36],e:[43,30],w:[37,24],p:[46,62],k:[47,84],f:[49,102]},
  {h:[44,18],n:[43,28],s:[43,36],e:[39,30],w:[33,24],p:[42,62],k:[43,84],f:[45,102]});
 AV("st-crossarm","frente",
- {h:[49,16],n:[48,26],s:[48,35],e:[52,40],w:[50,44],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,26],s:[48,35],e:[53,40],w:[50,42],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,40],w:[55.5,44],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,40],w:[55.5,42],p:[47,62],k:[48,84],f:[50,102]});
 AV("st-fold","frente",
- {h:[64,62],n:[61,56],s:[58,52],e:[58,70],w:[58,88],p:[51,48],k:[56,76],f:[58,102]},
- {h:[66,72],n:[63,64],s:[60,58],e:[60,78],w:[60,96],p:[53,48],k:[58,76],f:[60,102]});
+ {h:[64,62],n:[61,56],s:[58,52],e:[62.5,70],w:[63.5,88],p:[51,48],k:[56,76],f:[58,102]},
+ {h:[66,72],n:[63,64],s:[60,58],e:[64.5,78],w:[65.5,96],p:[53,48],k:[58,76],f:[60,102]});
 AV("st-forearm","frente",
  {h:[39,20],n:[38,30],s:[38,38],e:[46,54],w:[54,60],p:[37,64],k:[38,84],f:[40,102]},
  {h:[39,20],n:[38,30],s:[38,38],e:[46,54],w:[54,68],p:[37,64],k:[38,84],f:[40,102]});
@@ -7381,14 +7734,14 @@ AV("st-hang","frente",
  {h:[51,36],n:[50,46],s:[50,52],e:[51,30],w:[50,10],p:[49,72],k:[50,90],f:[52,104]},
  {h:[51,40],n:[50,50],s:[50,56],e:[51,32],w:[50,10],p:[49,76],k:[50,94],f:[52,106]});
 AV("st-hipflex","frente",
- {h:[39,20],n:[38,32],s:[38,40],e:[40,56],w:[41,70],p:[37,64],k:[50,66],f:[54,100],k2:[28,86],f2:[16,98]},
- {h:[35,20],n:[34,32],s:[34,40],e:[36,56],w:[37,70],p:[33,66],k:[46,68],f:[50,100],k2:[24,88],f2:[12,100]});
+ {h:[39,20],n:[38,32],s:[38,40],e:[44.5,56],w:[45.5,70],p:[37,64],k:[50,66],f:[54,100],k2:[28,86],f2:[16,98]},
+ {h:[35,20],n:[34,32],s:[34,40],e:[40.5,56],w:[41.5,70],p:[33,66],k:[46,68],f:[50,100],k2:[24,88],f2:[12,100]});
 AV("st-neck","frente",
  {h:[49,16],n:[48,28],s:[48,36],e:[51,22],w:[49,10],p:[47,62],k:[48,84],f:[50,102]},
  {h:[49,18],n:[48,28],s:[48,36],e:[51,22],w:[49,12],p:[47,62],k:[48,84],f:[50,102]});
 AV("st-quad","frente",
- {h:[47,16],n:[46,26],s:[46,35],e:[48,52],w:[50,68],p:[45,62],k:[46,84],f:[48,102],k2:[40,80],f2:[32,66]},
- {h:[47,16],n:[46,26],s:[46,35],e:[48,52],w:[50,64],p:[45,62],k:[46,82],f:[48,102],k2:[40,78],f2:[32,60]});
+ {h:[47,16],n:[46,26],s:[46,35],e:[52.5,52],w:[53.5,68],p:[45,62],k:[46,84],f:[48,102],k2:[40,80],f2:[32,66]},
+ {h:[47,16],n:[46,26],s:[46,35],e:[52.5,52],w:[53.5,64],p:[45,62],k:[46,82],f:[48,102],k2:[40,78],f2:[32,60]});
 AV("st-triceps","frente",
  {h:[49,18],n:[48,28],s:[48,37],e:[46,14],w:[42,22],p:[47,64],k:[48,84],f:[50,102]},
  {h:[49,18],n:[48,28],s:[48,37],e:[45,12],w:[40,18],p:[47,64],k:[48,84],f:[50,102]});
@@ -7396,11 +7749,175 @@ AV("tri-over","frente",
  {h:[49,18],n:[48,28],s:[48,37],e:[47,18],w:[41,26],p:[47,64],k:[48,84],f:[50,102]},
  {h:[49,18],n:[48,28],s:[48,37],e:[47,18],w:[49,6],p:[47,64],k:[48,84],f:[50,102]});
 AV("upright-row","frente",
- {h:[49,16],n:[48,26],s:[48,35],e:[50,52],w:[50,68],p:[47,62],k:[48,84],f:[50,102]},
- {h:[49,16],n:[48,26],s:[48,35],e:[52,38],w:[50,42],p:[47,62],k:[48,84],f:[50,102]});
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,52],w:[55.5,68],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[54.5,38],w:[55.5,42],p:[47,62],k:[48,84],f:[50,102]});
 AV("wrist","lado",
  {h:[48,24],n:[48,34],s:[48,40],e:[42,58],w:[40,66],e2:[54,58],w2:[56,66],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]},
  {h:[48,24],n:[48,34],s:[48,40],e:[42,58],w:[40,54],e2:[54,58],w2:[56,54],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]});
+
+/* ---------- 41c. A VISTA QUE FALTAVA: movimentos deitados, de bruços e de quatro apoios ---------- */
+/* Aqui o observador anda 90 graus e passa a olhar PELO EIXO DO CORPO — da cabeça para os pés.
+   É a vista que mostra o que a de lado esconde: a abertura das mãos, o cotovelo abrindo para fora,
+   os joelhos juntos ou afastados. O corpo aparece encurtado de propósito: é assim que se vê.
+   Desenhado à mão, um por um, a partir de como o movimento acontece de verdade. */
+AV("pushup","lado",
+ {h:[50,74],n:[50,80],s:[50,80],e:[33,86],w:[27,98],e2:[67,86],w2:[73,98],p:[50,84],k:[45,90],f:[45,97],k2:[55,90],f2:[55,97]},
+ {h:[50,86],n:[50,90],s:[50,90],e:[23,88],w:[27,98],e2:[77,88],w2:[73,98],p:[50,92],k:[45,94],f:[45,98],k2:[55,94],f2:[55,98]});
+AV("plank","lado",
+ {h:[50,78],n:[50,84],s:[50,84],e:[36,92],w:[33,99],e2:[64,92],w2:[67,99],p:[50,88],k:[45,92],f:[45,98],k2:[55,92],f2:[55,98]},
+ {h:[50,79],n:[50,85],s:[50,85],e:[36,93],w:[33,99],e2:[64,93],w2:[67,99],p:[50,89],k:[45,93],f:[45,99],k2:[55,93],f2:[55,99]});
+AV("side-plank","lado",
+ {h:[50,64],n:[50,70],s:[50,72],e:[44,86],w:[40,99],e2:[58,60],w2:[64,48],p:[50,84],k:[48,92],f:[46,99]},
+ {h:[50,66],n:[50,72],s:[50,74],e:[44,87],w:[40,99],e2:[58,62],w2:[64,50],p:[50,86],k:[48,93],f:[46,99]});
+AV("mountain","lado",
+ {h:[50,78],n:[50,84],s:[50,84],e:[36,92],w:[33,99],e2:[64,92],w2:[67,99],p:[50,88],k:[45,92],f:[45,98],k2:[55,92],f2:[55,98]},
+ {h:[50,78],n:[50,84],s:[50,84],e:[36,92],w:[33,99],e2:[64,92],w2:[67,99],p:[50,88],k:[42,78],f:[42,88],k2:[55,92],f2:[55,98]});
+AV("m-walkout","lado",
+ {h:[50,40],n:[50,46],s:[50,48],e:[42,66],w:[40,92],e2:[58,66],w2:[60,92],p:[50,58],k:[45,76],f:[44,99],k2:[55,76],f2:[56,99]},
+ {h:[50,78],n:[50,84],s:[50,84],e:[36,92],w:[33,99],e2:[64,92],w2:[67,99],p:[50,88],k:[45,92],f:[45,98],k2:[55,92],f2:[55,98]});
+AV("burpee","lado",
+ {h:[50,16],n:[50,26],s:[50,34],e:[38,20],w:[34,8],e2:[62,20],w2:[66,8],p:[50,60],k:[44,82],f:[42,100],k2:[56,82],f2:[58,100]},
+ {h:[50,78],n:[50,84],s:[50,84],e:[36,92],w:[33,99],e2:[64,92],w2:[67,99],p:[50,88],k:[45,92],f:[45,98],k2:[55,92],f2:[55,98]});
+AV("crunch","lado",
+ {h:[50,80],n:[50,84],s:[50,84],e:[40,88],w:[36,94],e2:[60,88],w2:[64,94],p:[50,88],k:[42,74],f:[40,96],k2:[58,74],f2:[60,96]},
+ {h:[50,68],n:[50,74],s:[50,76],e:[40,78],w:[38,70],e2:[60,78],w2:[62,70],p:[50,88],k:[42,74],f:[40,96],k2:[58,74],f2:[60,96]});
+AV("leg-raise","lado",
+ {h:[50,84],n:[50,88],s:[50,88],e:[40,92],w:[36,98],e2:[60,92],w2:[64,98],p:[50,90],k:[46,92],f:[46,97],k2:[54,92],f2:[54,97]},
+ {h:[50,84],n:[50,88],s:[50,88],e:[40,92],w:[36,98],e2:[60,92],w2:[64,98],p:[50,90],k:[46,64],f:[46,44],k2:[54,64],f2:[54,44]});
+AV("glute-bridge","lado",
+ {h:[50,88],n:[50,90],s:[50,90],e:[40,94],w:[36,99],e2:[60,94],w2:[64,99],p:[50,92],k:[42,78],f:[40,98],k2:[58,78],f2:[60,98]},
+ {h:[50,88],n:[50,90],s:[50,90],e:[40,94],w:[36,99],e2:[60,94],w2:[64,99],p:[50,70],k:[42,72],f:[40,98],k2:[58,72],f2:[60,98]});
+AV("hip-thrust","lado",
+ {h:[50,66],n:[50,70],s:[50,72],e:[40,76],w:[36,84],e2:[60,76],w2:[64,84],p:[50,88],k:[42,80],f:[40,98],k2:[58,80],f2:[60,98]},
+ {h:[50,66],n:[50,70],s:[50,72],e:[40,76],w:[36,84],e2:[60,76],w2:[64,84],p:[50,68],k:[42,70],f:[40,98],k2:[58,70],f2:[60,98]});
+AV("press-flat","lado",
+ {h:[50,66],n:[50,62],s:[50,60],e:[26,60],w:[34,50],e2:[74,60],w2:[66,50],p:[50,64],k:[42,76],f:[40,96],k2:[58,76],f2:[60,96]},
+ {h:[50,66],n:[50,62],s:[50,60],e:[40,46],w:[42,30],e2:[60,46],w2:[58,30],p:[50,64],k:[42,76],f:[40,96],k2:[58,76],f2:[60,96]});
+AV("press-incline","lado",
+ {h:[50,54],n:[50,58],s:[50,60],e:[26,64],w:[34,54],e2:[74,64],w2:[66,54],p:[50,70],k:[42,82],f:[40,98],k2:[58,82],f2:[60,98]},
+ {h:[50,54],n:[50,58],s:[50,60],e:[40,50],w:[42,32],e2:[60,50],w2:[58,32],p:[50,70],k:[42,82],f:[40,98],k2:[58,82],f2:[60,98]});
+AV("skull","lado",
+ {h:[50,66],n:[50,62],s:[50,60],e:[42,44],w:[44,56],e2:[58,44],w2:[56,56],p:[50,64],k:[42,76],f:[40,96],k2:[58,76],f2:[60,96]},
+ {h:[50,66],n:[50,62],s:[50,60],e:[42,44],w:[44,34],e2:[58,44],w2:[56,34],p:[50,64],k:[42,76],f:[40,96],k2:[58,76],f2:[60,96]});
+AV("fly-bench","lado",
+ {h:[50,66],n:[50,62],s:[50,60],e:[30,52],w:[20,58],e2:[70,52],w2:[80,58],p:[50,64],k:[42,76],f:[40,96],k2:[58,76],f2:[60,96]},
+ {h:[50,66],n:[50,62],s:[50,60],e:[42,44],w:[44,34],e2:[58,44],w2:[56,34],p:[50,64],k:[42,76],f:[40,96],k2:[58,76],f2:[60,96]});
+AV("leg-curl-lie","lado",
+ {h:[50,80],n:[50,84],s:[50,84],e:[38,88],w:[34,96],e2:[62,88],w2:[66,96],p:[50,88],k:[45,90],f:[45,96],k2:[55,90],f2:[55,96]},
+ {h:[50,80],n:[50,84],s:[50,84],e:[38,88],w:[34,96],e2:[62,88],w2:[66,96],p:[50,88],k:[45,90],f:[45,68],k2:[55,90],f2:[55,68]});
+AV("leg-press","lado",
+ {h:[50,60],n:[50,64],s:[50,66],e:[38,72],w:[34,80],e2:[62,72],w2:[66,80],p:[50,74],k:[38,56],f:[36,42],k2:[62,56],f2:[64,42]},
+ {h:[50,60],n:[50,64],s:[50,66],e:[38,72],w:[34,80],e2:[62,72],w2:[66,80],p:[50,74],k:[43,64],f:[42,54],k2:[57,64],f2:[58,54]});
+AV("back-ext","lado",
+ {h:[50,86],n:[50,82],s:[50,80],e:[40,84],w:[36,90],e2:[60,84],w2:[64,90],p:[50,76],k:[45,82],f:[45,94],k2:[55,82],f2:[55,94]},
+ {h:[50,62],n:[50,66],s:[50,68],e:[40,72],w:[36,78],e2:[60,72],w2:[64,78],p:[50,76],k:[45,82],f:[45,94],k2:[55,82],f2:[55,94]});
+AV("m-catcow","lado",
+ {h:[50,70],n:[50,74],s:[50,74],e:[36,84],w:[34,98],e2:[64,84],w2:[66,98],p:[50,70],k:[42,86],f:[42,98],k2:[58,86],f2:[58,98]},
+ {h:[50,76],n:[50,68],s:[50,64],e:[36,80],w:[34,98],e2:[64,80],w2:[66,98],p:[50,62],k:[42,84],f:[42,98],k2:[58,84],f2:[58,98]});
+AV("st-child","lado",
+ {h:[50,86],n:[50,84],s:[50,82],e:[40,88],w:[34,98],e2:[60,88],w2:[66,98],p:[50,76],k:[42,86],f:[42,96],k2:[58,86],f2:[58,96]},
+ {h:[50,90],n:[50,88],s:[50,86],e:[40,91],w:[34,99],e2:[60,91],w2:[66,99],p:[50,80],k:[42,88],f:[42,97],k2:[58,88],f2:[58,97]});
+AV("st-twist","lado",
+ {h:[50,80],n:[50,84],s:[50,84],e:[34,86],w:[24,88],e2:[66,86],w2:[76,88],p:[50,88],k:[40,82],f:[38,92],k2:[44,84],f2:[42,94]},
+ {h:[50,80],n:[50,84],s:[50,84],e:[34,86],w:[24,88],e2:[66,86],w2:[76,88],p:[50,88],k:[28,84],f:[24,94],k2:[33,86],f2:[29,96]});
+AV("twist","lado",
+ {h:[50,30],n:[50,38],s:[50,44],e:[40,56],w:[32,62],e2:[60,56],w2:[68,62],p:[50,72],k:[42,66],f:[40,90],k2:[58,66],f2:[60,90]},
+ {h:[50,30],n:[50,38],s:[50,44],e:[58,54],w:[70,58],e2:[62,56],w2:[74,60],p:[50,72],k:[42,66],f:[40,90],k2:[58,66],f2:[60,90]});
+AV("bike","lado",
+ {h:[50,22],n:[50,32],s:[50,38],e:[38,46],w:[32,54],e2:[62,46],w2:[68,54],p:[50,64],k:[42,58],f:[40,74],k2:[58,70],f2:[60,86]},
+ {h:[50,22],n:[50,32],s:[50,38],e:[38,46],w:[32,54],e2:[62,46],w2:[68,54],p:[50,64],k:[42,70],f:[40,86],k2:[58,58],f2:[60,74]});
+AV("st-pigeon","lado",
+ {h:[50,26],n:[50,36],s:[50,44],e:[38,56],w:[34,66],e2:[62,56],w2:[66,66],p:[50,70],k:[36,66],f:[58,72],k2:[62,74],f2:[64,92]},
+ {h:[50,30],n:[50,40],s:[50,48],e:[38,60],w:[34,70],e2:[62,60],w2:[66,70],p:[50,72],k:[34,62],f:[58,68],k2:[62,76],f2:[64,94]});
+
+/* ---------- 41c. POSES REFEITAS ---------- */
+/* Por que: alguns movimentos estavam desenhados com o corpo fora do aparelho — o supino
+   inclinado parecia alguem deitado numa trave, o mergulho nao tinha barras nem bracos,
+   a hiperextensao ficava no ar. Aqui cada um foi redesenhado a partir da posicao real:
+   onde o quadril senta, onde o joelho dobra, onde a mao segura. */
+
+/* --- supino inclinado: reclinado no banco, quadril no assento, joelho dobrado, pe no chao --- */
+A("press-incline",
+ {h:[27,44],n:[33,50],s:[37,55],e:[32,66],w:[44,62],p:[58,76],k:[74,74],f:[78,99]},
+ {h:[27,44],n:[33,50],s:[37,55],e:[46,46],w:[54,36],p:[58,76],k:[74,74],f:[78,99]},
+ {eq:"halter",eq2:"banco-inc",arw:"w",plano:"lado"});
+AV("press-incline","lado",
+ {h:[50,44],n:[50,50],s:[50,55],e:[34,66],w:[28,62],e2:[66,66],w2:[72,62],p:[50,76],k:[42,74],f:[40,99],k2:[58,74],f2:[60,99]},
+ {h:[50,44],n:[50,50],s:[50,55],e:[42,46],w:[38,36],e2:[58,46],w2:[62,36],p:[50,76],k:[42,74],f:[40,99],k2:[58,74],f2:[60,99]});
+
+/* --- mergulho: maos paradas nas barras, corpo desce e sobe --- */
+A("dip",
+ {h:[50,20],n:[50,30],s:[50,37],e:[36,48],w:[34,60],e2:[64,48],w2:[66,60],p:[50,60],k:[46,76],f:[44,92],k2:[54,76],f2:[56,92]},
+ {h:[50,30],n:[50,40],s:[50,47],e:[31,57],w:[34,60],e2:[69,57],w2:[66,60],p:[50,70],k:[46,86],f:[44,100],k2:[54,86],f2:[56,100]},
+ {eq:"paralelas",arw:"h",plano:"frente",ground:false});
+AV("dip","frente",
+ {h:[46,20],n:[46,30],s:[46,37],e:[52,48],w:[54,60],p:[48,60],k:[60,76],f:[50,92]},
+ {h:[46,30],n:[46,40],s:[46,47],e:[58,57],w:[54,60],p:[48,70],k:[60,86],f:[50,100]});
+
+/* --- hiperextensao: quadril na almofada, tornozelo no rolo, tronco desce e alinha --- */
+A("back-ext",
+ {h:[20,84],n:[28,80],s:[32,77],e:[30,84],w:[36,86],p:[52,62],k:[64,72],f:[76,86]},
+ {h:[18,52],n:[26,56],s:[30,59],e:[28,66],w:[34,68],p:[52,62],k:[64,72],f:[76,86]},
+ {eq:"banco-romano",arw:"h",plano:"lado"});
+AV("back-ext","lado",
+ {h:[50,84],n:[50,80],s:[50,77],e:[40,84],w:[46,86],e2:[60,84],w2:[54,86],p:[50,62],k:[44,72],f:[43,86],k2:[56,72],f2:[57,86]},
+ {h:[50,52],n:[50,56],s:[50,59],e:[40,66],w:[46,68],e2:[60,66],w2:[54,68],p:[50,62],k:[44,72],f:[43,86],k2:[56,72],f2:[57,86]});
+
+/* --- peck deck: sentado na maquina, bracos fecham na frente do peito --- */
+A("fly-machine",
+ {h:[50,24],n:[50,33],s:[50,41],e:[30,44],w:[18,50],e2:[70,44],w2:[82,50],p:[50,68],k:[40,72],f:[38,96],k2:[60,72],f2:[62,96]},
+ {h:[50,24],n:[50,33],s:[50,41],e:[38,46],w:[42,54],e2:[62,46],w2:[58,54],p:[50,68],k:[40,72],f:[38,96],k2:[60,72],f2:[62,96]},
+ {eq:"maquina",arw:"w",plano:"frente"});
+AV("fly-machine","frente",
+ {h:[44,24],n:[45,33],s:[46,41],e:[54,44],w:[60,50],p:[46,68],k:[64,72],f:[68,96]},
+ {h:[44,24],n:[45,33],s:[46,41],e:[52,46],w:[56,54],p:[46,68],k:[64,72],f:[68,96]});
+
+/* --- mesa flexora: deitado de bruços no banco, calcanhar sobe --- */
+A("leg-curl-lie",
+ {h:[84,76],n:[76,78],s:[72,80],e:[74,90],w:[76,99],p:[40,82],k:[24,86],f:[10,92]},
+ {h:[84,76],n:[76,78],s:[72,80],e:[74,90],w:[76,99],p:[40,82],k:[24,86],f:[26,56]},
+ {eq:"banco",eq2:"pilha",pilha:8,arw:"f",plano:"lado"});
+
+/* --- rosca Scott: braço apoiado no apoio inclinado --- */
+A("curl-preacher",
+ {h:[36,24],n:[38,34],s:[40,40],e:[58,56],w:[76,62],p:[38,66],k:[62,70],f:[64,96]},
+ {h:[36,24],n:[38,34],s:[40,40],e:[58,56],w:[58,38],p:[38,66],k:[62,70],f:[64,96]},
+ {eq:"halter",eq2:"scott",arw:"w",plano:"lado"});
+
+/* --- elevacao de quadril: so' as costas no banco --- */
+A("hip-thrust",
+ {h:[16,60],n:[24,62],s:[30,64],e:[28,76],w:[22,84],p:[56,84],k:[74,80],f:[80,101]},
+ {h:[16,58],n:[24,60],s:[30,62],e:[28,74],w:[22,82],p:[58,62],k:[76,72],f:[80,101]},
+ {eq:"banco-alto",arw:"p",plano:"lado"});
+AV("hip-thrust","lado",
+ {h:[50,66],n:[50,70],s:[50,72],e:[40,76],w:[36,84],e2:[60,76],w2:[64,84],p:[50,88],k:[42,80],f:[40,98],k2:[58,80],f2:[60,98]},
+ {h:[50,66],n:[50,70],s:[50,72],e:[40,76],w:[36,84],e2:[60,76],w2:[64,84],p:[50,68],k:[42,70],f:[40,98],k2:[58,70],f2:[60,98]});
+AV("leg-curl-lie","lado",
+ {h:[50,80],n:[50,84],s:[50,84],e:[38,88],w:[34,96],e2:[62,88],w2:[66,96],p:[50,88],k:[45,90],f:[45,96],k2:[55,90],f2:[55,96]},
+ {h:[50,80],n:[50,84],s:[50,84],e:[38,88],w:[34,96],e2:[62,88],w2:[66,96],p:[50,88],k:[45,90],f:[45,68],k2:[55,90],f2:[55,68]});
+AV("curl-preacher","lado",
+ {h:[48,24],n:[48,34],s:[48,40],e:[42,56],w:[42,62],e2:[54,56],w2:[54,62],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]},
+ {h:[48,24],n:[48,34],s:[48,40],e:[42,56],w:[42,38],e2:[54,56],w2:[54,38],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]});
+
+/* --- bicicleta: a vista de frente reaproveita as alturas da de lado --- */
+AV("bike","lado",
+ {h:[50,22],n:[50,32],s:[50,38],e:[38,46],w:[32,50],e2:[62,46],w2:[68,50],p:[50,64],k:[42,66],f:[40,86],k2:[58,74],f2:[60,90]},
+ {h:[50,22],n:[50,32],s:[50,38],e:[38,46],w:[32,50],e2:[62,46],w2:[68,50],p:[50,64],k:[42,74],f:[40,90],k2:[58,66],f2:[60,86]});
+
+/* --- cadeira abdutora: de lado quase nao se ve o movimento (a perna abre para os lados),
+       entao de lado ela so' desliza um pouco; quem mostra o exercicio e' a vista de frente --- */
+A("abduction",
+ {h:[34,22],n:[36,32],s:[38,38],e:[46,50],w:[54,56],p:[38,66],k:[56,70],f:[58,96],k2:[58,72],f2:[62,98]},
+ {h:[34,22],n:[36,32],s:[38,38],e:[46,50],w:[54,56],p:[38,66],k:[54,70],f:[54,96],k2:[60,72],f2:[66,98]},
+ {eq:"maquina",eq2:"sela",arw:"f2",plano:"lado"});
+AV("abduction","lado",
+ {h:[48,22],n:[48,32],s:[48,38],e:[40,50],w:[38,56],e2:[56,50],w2:[58,56],p:[48,66],k:[43,70],f:[40,96],k2:[53,72],f2:[56,98]},
+ {h:[48,22],n:[48,32],s:[48,38],e:[40,50],w:[38,56],e2:[56,50],w2:[58,56],p:[48,66],k:[32,70],f:[24,96],k2:[64,72],f2:[72,98]});
+
+/* --- burpee: a cabeca da vista de frente estava 2 pontos fora da altura da de lado --- */
+AV("burpee","lado",
+ {h:[50,14],n:[50,25],s:[50,34],e:[38,20],w:[34,8],e2:[62,20],w2:[66,8],p:[50,60],k:[44,82],f:[42,100],k2:[56,82],f2:[58,100]},
+ {h:[50,78],n:[50,84],s:[50,84],e:[36,92],w:[33,99],e2:[64,92],w2:[67,99],p:[50,88],k:[45,92],f:[45,98],k2:[55,92],f2:[55,98]});
 
 Object.assign(EX2ANIM,{"flexao-escapular":"plank","remada-baixa-triangulo":"row-seated","supino-maquina":"press-flat","panturrilha-parede":"calf",
   "rotacao-externa-elastico":"ext-rot","rotacao-interna-elastico":"int-rot","crucifixo-inverso-elastico":"rear-fly","extensao-punho":"wrist",
@@ -9566,16 +10083,41 @@ function tvManda(msg){
 function tvFigura(id, vista){
   const d=ANIM[id]; if(!d) return "";
   const src=(vista==="alt" && d.v2)? d.v2 : d;
-  const P=arr=>arr.filter(Boolean).map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+  const plano=(vista==="alt")? ((d.plano==="frente")?"lado":"frente") : (d.plano||"lado");
   const quadro=fr=>{
-    let g='<g class="aeqg">'+(d.eq? eqLayer(d,fr,vista) : "")+"</g>";
-    if(d.ground!==false) g+='<line class="agr" x1="8" y1="104" x2="92" y2="104"/>';
-    g+='<circle class="ph" cx="'+fr.h[0].toFixed(1)+'" cy="'+fr.h[1].toFixed(1)+'" r="6"/>';
-    g+='<polyline class="pl" points="'+P([fr.n,fr.s,fr.p])+'"/>';
-    g+='<polyline class="pl" points="'+P([fr.s,fr.e,fr.w])+'"/>';
-    if(fr.e2) g+='<polyline class="pl" points="'+P([fr.s,fr.e2,fr.w2||fr.e2])+'"/>';
-    g+='<polyline class="pl" points="'+P([fr.p,fr.k,fr.f])+'"/>';
-    if(fr.k2) g+='<polyline class="pl" points="'+P([fr.p,fr.k2,fr.f2||fr.k2])+'"/>';
+    const L=(cls,w,a,b)=>(a&&b)? '<line class="'+cls+'" stroke-width="'+w+'" stroke-linecap="round" x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'"/>' : "";
+    let g="";
+    if(d.ground!==false){
+      const pts=["f","f2","k","k2","p"].map(j=>fr[j]).filter(Boolean);
+      if(pts.length){
+        const xs=pts.map(pp=>pp[0]);
+        const cx=(Math.min.apply(null,xs)+Math.max.apply(null,xs))/2;
+        const larg=Math.max(13,(Math.max.apply(null,xs)-Math.min.apply(null,xs))*0.62+9);
+        g+='<ellipse class="asom" cx="'+cx.toFixed(1)+'" cy="104.5" rx="'+larg.toFixed(1)+'" ry="2.6"/>';
+      }
+      g+='<line class="agr" x1="8" y1="104" x2="92" y2="104"/>';
+    }
+    g+='<g class="aeqg">'+(d.eq? eqLayer(d,fr,vista) : "")+"</g>";
+    g+='<g class="aout">'+OSSOS.map(o=>L("bo",(o[2]+OSSO_BORDA).toFixed(1),fr[o[0]],fr[o[1]])).join("")+"</g>";
+    g+='<g class="abody">'+OSSOS.map(o=>L("bi",o[2].toFixed(1),fr[o[0]],fr[o[1]])).join("")+"</g>";
+    /* tenis: mesmo criterio do app */
+    g+='<g class="ashoe">'+[[fr.k,fr.f],[fr.k2,fr.f2]].map(par=>{
+      const k=par[0], f=par[1]; if(!k||!f) return "";
+      const dx=f[0]-k[0], dy=f[1]-k[1], M=Math.hypot(dx,dy)||1, ux=dx/M, uy=dy/M;
+      const h=fr.h||[50,0];
+      const fora=(Math.abs(f[0]-h[0])<3)? 1 : (f[0]<h[0]? -1 : 1);
+      let px,py,comp,gr;
+      if(plano==="frente"){ px=0; py=1; comp=2.4; gr=9.6; }
+      else if(f[1]>92 && Math.abs(ux)>0.25){ px=fora; py=0.22; comp=6.0; gr=7.4; }
+      else { const s1=-uy,t1=ux, sg=(Math.abs(s1)<0.05)?1:(s1*fora>0?1:-1);
+             px=s1*sg+ux*0.25; py=t1*sg+uy*0.25; comp=6.2; gr=7.6; }
+      const nl=Math.hypot(px,py)||1;
+      return '<line class="sh" stroke-width="'+gr+'" stroke-linecap="round" x1="'+(f[0]-ux).toFixed(1)+'" y1="'+(f[1]-uy).toFixed(1)+'" x2="'+(f[0]+px/nl*comp).toFixed(1)+'" y2="'+(f[1]+py/nl*comp).toFixed(1)+'"/>';
+    }).join("")+"</g>";
+    if(fr.h) g+='<circle class="phb" cx="'+fr.h[0].toFixed(1)+'" cy="'+fr.h[1].toFixed(1)+'" r="'+(CABECA_R+1.3)+'"/>'+
+                '<circle class="ph" cx="'+fr.h[0].toFixed(1)+'" cy="'+fr.h[1].toFixed(1)+'" r="'+CABECA_R+'"/>';
+    /* o peso na mao vem por cima do corpo, igual ao app */
+    if(d.eq) g+='<g class="aeqg">'+eqLayerFrente(d,fr,vista)+"</g>";
     return g;
   };
   const a=quadro(src.a), b=quadro(src.b);
@@ -9988,6 +10530,105 @@ function openBusca(inicial){
   setTimeout(()=>inp.focus(), 60);
   pinta();
   return m;
+}
+
+/* ---------- 40b. O DESENHO DO BONECO (traço com volume) ---------- */
+/* Não é GIF nem vídeo: é um desenho vetorial. O app guarda só a posição das articulações em duas
+   poses e desenha o traço na hora, passando de uma para a outra. Por isso ocupa alguns bytes em vez
+   de megabytes, fica nítido em qualquer tela e acompanha a cor do tema.
+   Aqui ficam a espessura de cada osso, o contorno que dá volume, o tênis e a sombra no chão. */
+/* [de, para, espessura] — a ordem importa: o que vem depois fica por cima */
+const OSSOS=[
+  ["h","n",  7.6],   /* pescoço */
+  ["n","s", 12.4],   /* tronco alto */
+  ["s","p", 12.4],   /* tronco baixo */
+  ["p","k", 10.2],   /* coxa */
+  ["k","f",  8.4],   /* perna */
+  ["p","k2",10.2],
+  ["k2","f2", 8.4],
+  ["s","e",  8.2],   /* braço */
+  ["e","w",  6.8],   /* antebraço */
+  ["s","e2", 8.2],
+  ["e2","w2",6.8]
+];
+const OSSO_BORDA=2.8;      /* o contorno é o mesmo traço, um pouco mais grosso, por baixo */
+const CABECA_R=8.6;
+/* monta os elementos uma vez; depois só mexemos nas coordenadas a cada quadro */
+function skelHTML(){
+  const linha=(cls,i)=>'<line class="'+cls+'" data-o="'+i+'" stroke-linecap="round"/>';
+  let h='<g class="aout">'+OSSOS.map((o,i)=>linha("bo",i)).join("")+"</g>";
+  h+='<g class="abody">'+OSSOS.map((o,i)=>linha("bi",i)).join("")+"</g>";
+  h+='<g class="ashoe"><line class="sh" data-pe="0" stroke-linecap="round"/><line class="sh" data-pe="1" stroke-linecap="round"/></g>';
+  h+='<circle class="phb" r="'+(CABECA_R+1.3)+'"/><circle class="ph" r="'+CABECA_R+'"/>';
+  return h;
+}
+function sombraHTML(){ return '<ellipse class="asom" rx="0" ry="0"/>'; }
+/* desenha um quadro: só atualiza atributos, nunca recria elementos (é o que roda 60 vezes por segundo) */
+function paintAnimSVG(svg, fr, d, vista){
+  const set=(n,a,b)=>{
+    if(!a||!b){ n.setAttribute("visibility","hidden"); return; }
+    n.removeAttribute("visibility");
+    n.setAttribute("x1",a[0].toFixed(1)); n.setAttribute("y1",a[1].toFixed(1));
+    n.setAttribute("x2",b[0].toFixed(1)); n.setAttribute("y2",b[1].toFixed(1));
+  };
+  const out=svg.querySelectorAll(".aout line"), body=svg.querySelectorAll(".abody line");
+  OSSOS.forEach((o,i)=>{
+    const a=fr[o[0]], b=fr[o[1]];
+    if(out[i]){ out[i].setAttribute("stroke-width",(o[2]+OSSO_BORDA).toFixed(1)); set(out[i],a,b); }
+    if(body[i]){ body[i].setAttribute("stroke-width",o[2].toFixed(1)); set(body[i],a,b); }
+  });
+  const hd=svg.querySelector("circle.ph"), hb=svg.querySelector("circle.phb");
+  [hd,hb].forEach(c=>{ if(c && fr.h){ c.setAttribute("cx",fr.h[0].toFixed(1)); c.setAttribute("cy",fr.h[1].toFixed(1)); } });
+  /* tênis: um traço curto perpendicular à canela, apontando para onde o pé aponta.
+     Visto de frente o pé vem na direção de quem olha, então vira um calço curtinho. */
+  const plano = (vista==="alt") ? ((d.plano==="frente")?"lado":"frente") : (d.plano||"lado");
+  const dir = (d.pe===undefined? 1 : d.pe);
+  const sapatos=svg.querySelectorAll(".ashoe line");
+  [[fr.k,fr.f],[fr.k2,fr.f2]].forEach((par,i)=>{
+    const n=sapatos[i]; if(!n) return;
+    const k=par[0], f=par[1];
+    if(!k||!f){ n.setAttribute("visibility","hidden"); return; }
+    n.removeAttribute("visibility");
+    const dx=f[0]-k[0], dy=f[1]-k[1], L=Math.hypot(dx,dy)||1;
+    const ux=dx/L, uy=dy/L;
+    /* para que lado aponta a ponta do pé: para longe da cabeça; empatou, usa o padrão do desenho */
+    const h=fr.h||[50,0];
+    const fora = (Math.abs(f[0]-h[0])<3)? dir : (f[0]<h[0]? -1 : 1);
+    let px, py, comp, grossura;
+    if(plano==="frente"){ px=0; py=1; comp=2.4; grossura=9.6; }       /* de frente o pé vem na direção de quem olha */
+    else if(f[1]>92 && Math.abs(ux)>0.25){ px=fora; py=0.22; comp=6.0; grossura=7.4; }  /* pé apoiado no chão */
+    else {
+      const s1=-uy, t1=ux;                                            /* perpendicular à canela */
+      const sg=(Math.abs(s1)<0.05)? dir : (s1*fora>0? 1 : -1);
+      px=s1*sg+ux*0.25; py=t1*sg+uy*0.25; comp=6.2; grossura=7.6;
+    }
+    const nl=Math.hypot(px,py)||1;
+    n.setAttribute("stroke-width", grossura.toFixed(1));
+    n.setAttribute("x1",(f[0]-ux*1.0).toFixed(1)); n.setAttribute("y1",(f[1]-uy*1.0).toFixed(1));
+    n.setAttribute("x2",(f[0]+px/nl*comp).toFixed(1)); n.setAttribute("y2",(f[1]+py/nl*comp).toFixed(1));
+  });
+  /* sombra: uma elipse no chão, embaixo do ponto mais baixo do corpo */
+  const som=svg.querySelector(".asom");
+  if(som){
+    if(d && d.ground===false){ som.setAttribute("rx","0"); }
+    else {
+      const pts=["f","f2","k","k2","w","w2","p"].map(j=>fr[j]).filter(Boolean);
+      if(!pts.length){ som.setAttribute("rx","0"); }
+      else{
+        const xs=pts.map(p=>p[0]);
+        const cx=(Math.min.apply(null,xs)+Math.max.apply(null,xs))/2;
+        const larg=Math.max(13, (Math.max.apply(null,xs)-Math.min.apply(null,xs))*0.62+9);
+        som.setAttribute("cx",cx.toFixed(1)); som.setAttribute("cy","104.5");
+        som.setAttribute("rx",larg.toFixed(1)); som.setAttribute("ry","2.6");
+      }
+    }
+  }
+  const eq=svg.querySelector(".aeqg");
+  if(eq && d && d.eq){
+    eq.innerHTML=eqLayer(d,fr,vista);
+    const ef=svg.querySelector(".aeqf2");
+    if(ef) ef.innerHTML=eqLayerFrente(d,fr,vista);
+  }
 }
 
 /* ---------- 32. INICIALIZACAO ---------- */
