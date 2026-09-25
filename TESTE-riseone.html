@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RiseONE — teste das diretrizes (v3.1.0)</title>
+<title>RiseONE — teste das diretrizes (v3.2.0)</title>
 <style>
 :root{--bg:#0f1115;--card:#171a20;--card2:#1d222a;--bd:#2a303b;--tx:#f2f4f8;--tx2:#a7b0bf;--ac:#ff7a2f;--ok:#2ecc8f;--no:#ff5d5d;--wr:#ffb020}
 *{box-sizing:border-box}
@@ -52,10 +52,15 @@ code{background:var(--card2);border:1px solid var(--bd);border-radius:6px;paddin
   <div class="item"><span class="dot">8</span><div><span class="k">Avisos com horário silencioso</span><br><small class="mut">Mais › Avisos: tipos ligados um a um, horário silencioso que segura e solta depois; lembrete marcado como urgente passa.</small></div></div>
   <div class="item"><span class="dot">9</span><div><span class="k">Modelos de treino e fotos</span><br><small class="mut">Treinar › Modelos prontos: quatro treinos de exemplo. Com o arquivo <code>fotos-exercicios.jpg</code> na raiz, alguns exercícios mostram as fotos das posições.</small></div></div>
   <div class="item"><span class="dot">10</span><div><span class="k">Ler com a câmera (OCR)</span><br><small class="mut">Mais › Ler com a câmera: rótulo, ficha de treino, balança, exame, <b>carteirinha do plano</b> e medidas. A câmera tem zoom, temporizador de 3 e 10 s, inverter e borrar o fundo; foto tremida é recusada antes de tentar ler.</small></div></div>
+  <div class="item"><span class="dot">10a</span><div><span class="k">Duas vistas do movimento</span><br><small class="mut">Abra um exercício na Biblioteca: devem aparecer <b>quatro</b> desenhos parados (de frente início/fim e de lado início/fim) e <b>dois</b> bonecos se mexendo lado a lado. As alturas têm de bater entre as duas vistas. Movimento deitado (supino, prancha, abdominal) mostra uma vista só, com a explicação escrita.</small></div></div>
+  <div class="item"><span class="dot">10a2</span><div><span class="k">Foto e vídeo separados</span><br><small class="mut">Em exercícios com foto (desenvolvimento, elevação lateral), a foto <b>não</b> pode aparecer no lugar do boneco: ela fica num painel próprio, ao lado no computador e abaixo no celular, com todas as fotos. O vídeo abre com "Buscar no YouTube" ou colando um link; o administrador monta o <code>videos.json</code> em Administrador › Vídeos.</small></div></div>
   <div class="item"><span class="dot">10b</span><div><span class="k">Rótulo por inteiro</span><br><small class="mut">Fotografe um rótulo: além da tabela, o app separa marca, ingredientes, aditivos com o número INS, selos (diet, light, zero, sem lactose, vegano…), avisos de "alto em" e o semáforo de quanto o produto é processado — com o critério escrito na própria tela.</small></div></div>
   <div class="item"><span class="dot">10c</span><div><span class="k">Dor e alívio + tabela CID</span><br><small class="mut">Treinar › Dor e alívio: toque no desenho do corpo (frente e costas) ou escreva a dor. Cada situação traz o código CID-10, alongamentos, exercícios e o aviso de que nada substitui profissional. A tabela de códigos baixa uma vez, mostra quanto ocupa e pode ser apagada.</small></div></div>
   <div class="item"><span class="dot">10d</span><div><span class="k">Voz do treinador</span><br><small class="mut">Mais › Preferências › Voz do treinador: ligue e comece um aquecimento. O app anuncia cada movimento, conta os últimos segundos e avisa o descanso. Em "Responder por voz", fale "próximo", "pausa" ou "voltar". Se não sair som, use a página <a href="TESTE-VOZ-riseone.html">TESTE-VOZ-riseone.html</a>.</small></div></div>
   <div class="item"><span class="dot">10e</span><div><span class="k">Exames viram gráfico</span><br><small class="mut">Evolução › Exames: cada indicador ganha sua linha do tempo. A faixa de referência mostrada é a impressa no seu laudo — o app não inventa faixa nem diz se o valor é bom.</small></div></div>
+  <div class="item"><span class="dot">10f</span><div><span class="k">Laudo em PDF</span><br><small class="mut">Mais › Ler com a câmera › Exame › Enviar arquivo: mande o PDF que o laboratório enviou. O app lê o texto de dentro do PDF, sem foto. Confira se glicose, HDL, LDL e triglicérides saíram com o valor certo e com a faixa impressa no laudo.</small></div></div>
+  <div class="item"><span class="dot">10g</span><div><span class="k">Tabela TUSS</span><br><small class="mut">Treinar › Dor e alívio › Tabela TUSS/TISS. Vem vazia de propósito. Como administrador: baixe a tabela de procedimentos da ANS em CSV, importe, confira na busca e baixe o <code>tuss.json</code> para publicar. Teste também o “só baixar no Wi-Fi”.</small></div></div>
+  <div class="item"><span class="dot">10h</span><div><span class="k">Música, batimento e TV</span><br><small class="mut">Mais › Preferências: cole o link da playlist e veja o botão aparecer no treino (a voz não pode parar a música). Com uma cinta ou pulseira Bluetooth, toque em Conectar e confira o batimento ao vivo. Com Chromecast ou Google TV no mesmo Wi-Fi, toque no botão TV durante o treino: a TV deve abrir sozinha com o exercício em letra grande.</small></div></div>
   <div class="item"><span class="dot">11</span><div><span class="k">Assistente de IA</span><br><small class="mut">Botão IA da faixa: cole a sua chave (Gemini, OpenAI ou Claude) e pergunte algo.</small></div></div>
   <div class="item"><span class="dot">12</span><div><span class="k">Conferência de versão</span><br><small class="mut">Mais › Sobre mostra a versão deste aparelho e a publicada no site. Se o site estiver mais novo, o Início avisa e o botão "Atualizar agora" limpa o cache e recarrega.</small></div></div>
   <div class="item"><span class="dot">13</span><div><span class="k">Acessibilidade</span><br><small class="mut">Mais › Preferências › Acessibilidade: letra maior, alto contraste, reduzir animações, sublinhar links, modo leitura e ler a tela em voz alta. Confira também a 320 px de largura: nada pode rolar para o lado.</small></div></div>
@@ -97,6 +102,10 @@ function run(){
   const ss = 'speechSynthesis' in window;
   line(A, ss, 'Navegador fala (voz do treinador)', ss? 'Abra Mais › Preferências › Voz do treinador e toque em Testar.' : 'Este navegador não tem voz. Tente o Chrome ou o Safari atualizado.');
   line(A, !!(window.SpeechRecognition||window.webkitSpeechRecognition), 'Navegador entende comando de voz', 'Funciona melhor no Chrome do Android.');
+  line(A, !!(navigator.bluetooth&&navigator.bluetooth.requestDevice), 'Bluetooth para cinta de batimento', 'Chrome do Android e do computador. No iPhone nenhum navegador tem.');
+  line(A, typeof PresentationRequest!=='undefined', 'Transmitir para Chromecast / Google TV', typeof PresentationRequest!=='undefined'? 'A TV abre a página tv-riseone.html sozinha.' : 'Sem isso, o app cai para janelinha flutuante ou tela cheia.');
+  const con=navigator.connection||navigator.mozConnection;
+  line(A, !!con, 'O navegador informa o tipo de conexão', con? ('tipo: '+(con.type||'—')+' · '+(con.effectiveType||'—')+(con.saveData?' · economia de dados':'')) : 'sem isso, o “só no Wi-Fi” não consegue segurar downloads');
   const csp = !!document.querySelector('meta[http-equiv="Content-Security-Policy"]');
   fetch('index.html').then(r=>r.text()).then(tx=>{
     line(A, tx.indexOf('Content-Security-Policy')>=0, 'Política de conteúdo (CSP) no index.html', 'Limita de onde o app pode carregar script e para onde pode falar.');
@@ -111,7 +120,7 @@ function run(){
       });
     });
   }).catch(()=>line(A,null,'Conferência de versões','só funciona servido por http:// ou https://'));
-  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg','anuncios.json','servicos.json','cid.json','versoes.json','ARQUITETURA.md','CREDITOS.md','LICENSE','TESTE-VOZ-riseone.html'].forEach(f=>{
+  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg','anuncios.json','servicos.json','cid.json','versoes.json','tuss.json','videos.json','tv-riseone.html','ARQUITETURA.md','CREDITOS.md','LICENSE','TESTE-VOZ-riseone.html'].forEach(f=>{
     fetch(f,{method:'HEAD'}).then(r=>line(F, r.ok, f, r.ok? 'encontrado':'faltando na raiz'))
       .catch(()=>line(F,false,f,'faltando na raiz'));
   });

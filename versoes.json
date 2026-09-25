@@ -3,6 +3,34 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.2.0",
+   "data": "2026-09-25",
+   "pt": [
+    "Cada exercício agora tem QUATRO desenhos parados — de frente no início e no fim, de lado no início e no fim — e dois bonecos se mexendo lado a lado, um de frente e outro de lado. Girar em volta da pessoa não muda a altura de nenhuma articulação, então as duas vistas têm exatamente as mesmas alturas.",
+    "Movimento deitado, de bruços, de quatro apoios ou que só acontece no plano de frente continua com uma vista só, e o app explica por quê em vez de inventar um desenho.",
+    "A foto nunca mais substitui o boneco: ela passou a ter um espaço próprio, ao lado no computador e abaixo no celular, mostrando todas as fotos do exercício.",
+    "O vídeo voltou a funcionar. O quadro antigo usava a busca embutida do YouTube, que o próprio YouTube desligou em 2020 — daí o “Este vídeo não está disponível”. Agora dá para colar o link do vídeo que você gostou, e o administrador monta a lista videos.json que vale para todo mundo.",
+    "Tabela TUSS/TISS: arquivo próprio, com número da tabela, versão e data de referência da ANS, botão de sincronizar que só baixa no Wi-Fi (se você quiser) e importador do arquivo oficial da ANS. O app não cria código nenhum.",
+    "Cada situação de Dor e alívio pode receber um código TUSS escolhido por você.",
+    "Laudo de laboratório em PDF: o app lê o texto do PDF direto, sem foto e sem OCR. Leitura por bloco, do jeito que o laudo é escrito de verdade — nome numa linha, resultado na outra, referência na terceira.",
+    "Música do treino: cole o link da sua playlist (Spotify, YouTube Music, Deezer, Apple Music) e um botão abre ela direto do treino. A voz do treinador não para a música.",
+    "Batimento ao vivo por Bluetooth, de cinta peitoral ou pulseira, com zona de esforço durante o treino e o máximo guardado junto com o treino.",
+    "Projetar na TV de verdade: a própria TV abre uma página do app (tv-riseone.html) e o celular manda o que ela deve mostrar — exercício, os dois bonecos e o cronômetro em letra grande. Com Chromecast ou Google TV, sem espelhar o celular."
+   ],
+   "en": [
+    "Every exercise now has FOUR still drawings — front at the start and end, side at the start and end — and two figures moving side by side, one from the front and one from the side. Walking around the person does not change the height of any joint, so both views have exactly the same heights.",
+    "Movements done lying, face down, on all fours or purely in the frontal plane keep a single view, and the app explains why instead of inventing a drawing.",
+    "Photos no longer replace the figure: they have their own space, beside it on a computer and below it on a phone, showing every photo of the exercise.",
+    "Video works again. The old frame used YouTube's embedded search, which YouTube itself switched off in 2020 — hence “This video is unavailable”. You can now paste the link of a video you liked, and the administrator builds the videos.json list that applies to everyone.",
+    "TUSS/TISS table: its own file, with the ANS table number, version and reference date, a sync button that only downloads on Wi-Fi (if you want) and an importer for the official ANS file. The app creates no codes.",
+    "Each Pain relief situation can be given a TUSS code that you choose.",
+    "Lab reports as PDF: the app reads the PDF text directly, with no photo and no OCR. Block-by-block reading, the way reports are actually written — name on one line, result on the next, reference on the third.",
+    "Workout music: paste your playlist link (Spotify, YouTube Music, Deezer, Apple Music) and a button opens it straight from the workout. The trainer voice does not stop the music.",
+    "Live heart rate over Bluetooth, from a chest strap or band, with the effort zone during the workout and the peak stored with the session.",
+    "Real casting to the TV: the TV itself opens one of the app's pages (tv-riseone.html) and the phone sends it what to show — exercise, both figures and the countdown in large type. With Chromecast or Google TV, no phone mirroring needed."
+   ]
+  },
+  {
    "v": "3.1.0",
    "data": "2026-09-24",
    "pt": [

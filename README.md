@@ -5,6 +5,67 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.2.0 — duas vistas, vídeo, TUSS, PDF de exame, música, batimento e TV
+
+**As duas vistas do movimento**
+
+- Cada exercício mostra **quatro desenhos parados** — de frente no início e no fim, de lado no início e
+  no fim — e **dois bonecos se mexendo lado a lado**, um de frente e outro de lado.
+- As alturas são exatamente as mesmas nas duas vistas, e isso não é coincidência: girar em volta de
+  uma pessoa não muda a altura de nenhuma articulação. A segunda vista reaproveita todas as alturas do
+  desenho original e só recalcula o que era esquerda/direita, que vira frente/trás. Nenhuma altura foi
+  inventada.
+- **56 dos 80 movimentos** ganharam a segunda vista. Os outros 24 — deitado, de bruços, de quatro
+  apoios, ou que só acontecem no plano de frente, como a inclinação lateral — continuam com uma vista
+  só, e o app escreve na tela por que girar ali daria um desenho encolhido e sem informação.
+- A barra, vista de lado, aparece como a ponta da barra (um círculo), não como uma linha comprida.
+
+**Foto e vídeo**
+
+- **A foto nunca substitui o boneco.** Antes, exercícios com foto (desenvolvimento, elevação lateral e
+  outros) mostravam a foto no lugar do desenho. Agora o boneco vem sempre, e as fotos ganharam um
+  espaço próprio: ao lado no computador, abaixo no celular, com **todas** as fotos do exercício.
+- **O vídeo voltou a funcionar.** O quadro roxo de "Este vídeo não está disponível" tinha uma causa
+  concreta: o app usava a busca embutida do YouTube (`listType=search`), que o YouTube desligou em
+  15 de novembro de 2020. Agora: você busca no YouTube, cola o link do vídeo que gostou e ele passa a
+  abrir dentro do app; o administrador monta a lista `videos.json` que vale para todo mundo. O app não
+  inventa código de vídeo — inventar daria vídeo errado ou apagado.
+
+**Tabela TUSS/TISS**
+
+- Arquivo próprio (`tuss.json`), com número da tabela, versão e data de referência da ANS, quanto ocupa
+  no aparelho e botão de apagar.
+- **Botão de sincronizar**, com a opção "só baixar tabelas grandes no Wi-Fi" — o app lê o tipo de
+  conexão do aparelho e segura o download nos dados móveis.
+- **Importador do arquivo oficial**: o administrador baixa a tabela de procedimentos no site da ANS,
+  salva como CSV, importa aqui e o app gera o `tuss.json` para publicar no repositório.
+- **O app não cria código nenhum.** A tabela vem vazia de propósito. A tabela 19 (materiais e OPME)
+  passa de um milhão de linhas e não cabe num site estático — só entra a de procedimentos.
+- Cada situação de Dor e alívio pode receber um código TUSS **escolhido por você** na lista oficial.
+
+**Exames**
+
+- **Laudo em PDF**: mande o PDF que o laboratório enviou. O app lê o texto direto de dentro do PDF, sem
+  foto e sem OCR — é mais rápido e não erra. Se o PDF for só imagem (escaneado), aí sim ele passa o
+  leitor de câmera por cima.
+- A leitura passou a ser **por bloco**, do jeito que o laudo é escrito de verdade: nome do exame numa
+  linha, "Resultado: 96 mg/dL" na outra, "Valores de referência: 70 a 99" na terceira.
+- Três cuidados que evitam erro grosseiro: linha de cabeçalho (paciente, data da coleta, laboratório) é
+  descartada; número grudado em letra não é valor (o "1" de HbA1c, o "12" de B12, o "4" de T4); e linha
+  de referência nunca vira valor.
+
+**Música, batimento e TV**
+
+- **Música**: cole o link da sua playlist (Spotify, YouTube Music, Deezer, Apple Music) e um botão
+  aparece no treino, abrindo a música num toque. A voz do treinador **não para a música**: o app não
+  toma o áudio para si, então a música continua e a voz entra por cima.
+- **Batimento ao vivo por Bluetooth**, de cinta peitoral ou pulseira, com a zona de esforço durante o
+  treino e o máximo guardado junto com o treino. Funciona no Chrome do Android e do computador.
+- **Projetar na TV de verdade**: a própria TV abre uma página do app (`tv-riseone.html`) e o celular
+  manda, pelo Wi-Fi, o que ela deve mostrar — nome do exercício, os dois bonecos e o cronômetro em
+  letra grande. Com Chromecast ou Google TV, **sem precisar espelhar o celular**; o celular fica livre
+  para você marcar as séries.
+
 ## Novo na versão 3.1.0 — dor e alívio, voz, câmera e privacidade
 
 **Dor e alívio (Treinar › Dor e alívio)**
@@ -56,10 +117,8 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
 - **Filtro por aparelhos disponíveis**, com o desenho de cada um e a opção "só o corpo". Dá para marcar
   vários ao mesmo tempo.
 - **Desenhos coloridos**: pessoa em laranja, aparelho e banco em azul, halteres e anilhas em branco.
-- **Duas posições do movimento**: ao abrir um exercício, o computador mostra a posição inicial e a final
-  lado a lado; o celular mostra uma só, girando, com botão de pausa para olhar com calma. *Ainda não
-  existe um desenho visto de lado para cada exercício — isso exigiria redesenhar os 60 movimentos, e
-  girar o desenho atual mostraria uma postura errada.*
+- **Duas vistas do movimento** (desde a 3.2.0): quatro desenhos parados — de frente e de lado, início e
+  fim — mais dois bonecos se mexendo lado a lado.
 - **Acessibilidade**: letra maior, alto contraste, reduzir animações, sublinhar links, modo leitura e ler
   a tela em voz alta.
 - **"Estou ciente" na primeira abertura** e tela de **Privacidade e dados** (Mais › Dados): autorização
@@ -200,6 +259,9 @@ Todos vão soltos na **raiz** do repositório:
 | `anuncios.json` | lista de anúncios da faixa e do pop-up (editável) |
 | `servicos.json` | quem pode usar cada recurso (Visitante / Membro / Premium); o admin gera dentro do app |
 | `cid.json` | lista de consulta de códigos CID-10 (musculoesquelético). **Lista inicial** — confira na tabela oficial |
+| `tuss.json` | tabela TUSS da ANS. **Vem vazio de propósito** — o administrador importa a tabela oficial dentro do app |
+| `videos.json` | código do vídeo de cada exercício. Vem vazio; o administrador monta dentro do app |
+| `tv-riseone.html` | a página que a **TV** abre quando você manda projetar |
 | `versoes.json` | o que mudou em cada versão; o app desenha a tela "Novidades" a partir dele |
 | `fotos-exercicios.jpg` | opcional: fotos das posições de alguns exercícios |
 | `TESTE-riseone.html` | página de conferência das diretrizes |
@@ -252,4 +314,4 @@ durante um exercício, pare na hora e procure atendimento.
 O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.1.0
+Versão 3.2.0

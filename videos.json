@@ -1,0 +1,6 @@
+{
+ "_leia_me": "Codigos de video do YouTube por exercicio. O app monta este arquivo em Administrador > Videos dos exercicios. Vem vazio de proposito: o app nao inventa codigo de video.",
+ "_readme": "YouTube video ids per exercise. The app builds this file under Administrator > Exercise videos. It ships empty on purpose: the app does not invent video ids.",
+ "atualizado": "",
+ "videos": {}
+}

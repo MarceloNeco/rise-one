@@ -1,0 +1,11 @@
+{
+ "_leia_me": "Tabela TUSS da ANS para consulta dentro do RiseONE. ESTE ARQUIVO VEM VAZIO DE PROPOSITO: os codigos TUSS sao da ANS e nao podem ser inventados. Para preencher: entre no app como administrador, abra Treinar > Dor e alivio > Tabela TUSS/TISS, baixe a tabela oficial da ANS em CSV, use o botao Importar, confira, e baixe o tuss.json gerado para publicar aqui na raiz do repositorio.",
+ "_readme": "ANS TUSS table for reference inside RiseONE. THIS FILE SHIPS EMPTY ON PURPOSE: TUSS codes belong to ANS and must not be invented. To fill it: sign in as administrator, open Train > Pain relief > TUSS/TISS table, download the official ANS table as CSV, use the Import button, check it, and download the generated tuss.json to publish here at the repository root.",
+ "fonte": "ANS — Terminologia Unificada da Saude Suplementar (TUSS)",
+ "onde": "https://www.gov.br/ans/pt-br/assuntos/prestadores/padrao-para-troca-de-informacao-de-saude-suplementar-2013-tiss/codigos-da-tuss",
+ "tabela": "",
+ "versao": "",
+ "referencia": "",
+ "conferido": false,
+ "itens": []
+}

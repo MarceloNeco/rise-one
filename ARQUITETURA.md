@@ -112,10 +112,13 @@ Procure pelo número para ir direto ao assunto.
 
 | Assunto | Situação |
 |---|---|
-| Códigos TUSS/TISS | Em branco. Vêm da tabela oficial da ANS e não podem ser inventados |
-| Faixas de referência de exame | Em branco. São do laboratório de cada pessoa, impressas no resultado |
-| Motor de OCR hospedado no repositório | Hoje vem do cdnjs, com jsdelivr de reserva. A diretriz pede hospedar os ~11 MB no próprio repositório; enquanto isso, não há `integrity` nesses dois `<script>` |
-| Spotify e relógio | Sem integração possível em site estático. A voz do treinador não interrompe o áudio de outro app, então a música continua tocando por cima |
+| Tabela TUSS preenchida | `tuss.json` vem vazio de propósito. Os códigos são da ANS: o administrador importa o CSV oficial dentro do app e publica o arquivo gerado |
+| Tabela TUSS 19 (OPME) | Mais de um milhão de linhas: não cabe no armazenamento do navegador. Só a de procedimentos entra |
+| Lista `videos.json` preenchida | Vem vazia. Adivinhar código de vídeo do YouTube daria vídeo errado ou apagado |
+| Faixas de referência de exame | Em branco. São do laboratório de cada pessoa, impressas no resultado — o app só copia a que está escrita no laudo |
+| Segunda vista de 24 movimentos | Deitado, de bruços, de quatro apoios ou só no plano de frente: girar 90° daria um desenho encolhido e sem informação. Ficam com uma vista, e o app diz isso na tela |
+| Motor de OCR hospedado no repositório | Hoje vem do cdnjs, com jsdelivr de reserva (o pdf.js também). A diretriz pede hospedar os ~11 MB no próprio repositório; enquanto isso, não há `integrity` nesses `<script>` |
+| App de relógio (Wear OS / watchOS) | Um site no GitHub Pages não vira app de relógio. O que dá é ler cinta peitoral ou pulseira por Web Bluetooth (Chrome do Android; no iPhone nenhum navegador tem Bluetooth para sites) |
+| Controlar o Spotify | Nenhum site troca faixa ou dá pause no app de música. O RiseONE abre a playlist num toque e a voz do treinador toca por cima, sem parar a música |
+| Projeção na TV | Resolvido na 3.2.0: a própria TV abre `tv-riseone.html` (Presentation API, com Chromecast ou Google TV). Sem Chromecast, cai para janelinha flutuante ou tela cheia, e aí quem leva a imagem é o espelhamento do aparelho. Câmera ao vivo o navegador não deixa transmitir |
 | Inbox (caixa de recados) | Exige servidor. Não existe ainda no RiseONE |
-| Desenho visto de lado | O visualizador mostra as **duas posições** do movimento (início e fim), lado a lado no computador e girando no celular, com pausa. Um desenho de verdade visto de lado exigiria um segundo conjunto de articulações para cada exercício — não é uma rotação do que já existe, e inventar isso mostraria postura errada |
-| Projeção na TV | O navegador não fala com a TV: o app só prepara a imagem (janelinha flutuante ou tela cheia) e quem faz a ponte é o espelhamento do aparelho |

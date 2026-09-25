@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="RiseONE — treino, dieta e evolucao em um so lugar. / RiseONE — workout, diet and progress in one place.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: mediastream:; font-src 'self' data:; connect-src 'self' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com https://generativelanguage.googleapis.com https://api.openai.com https://api.anthropic.com https://www.googleapis.com; frame-src https://www.youtube.com https://accounts.google.com https://login.microsoftonline.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: mediastream:; font-src 'self' data:; connect-src 'self' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com https://generativelanguage.googleapis.com https://api.openai.com https://api.anthropic.com https://www.googleapis.com; frame-src https://www.youtube.com https://accounts.google.com https://login.microsoftonline.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0f1115">
 <meta name="mobile-web-app-capable" content="yes">
@@ -692,16 +692,47 @@ body.noscroll{overflow:hidden}
 .ditem .dl{flex:1;min-width:0}
 @media (prefers-reduced-motion:reduce){ #drawer,#drawerback{transition:none} }
 html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none}
-.viewgrid{display:grid;gap:10px;margin:4px 0 6px}
-.viewgrid[data-mode="pair"]{grid-template-columns:1fr 1fr}
-.viewgrid[data-mode="pair"] .mov{display:none}
-.viewgrid[data-mode="move"]{grid-template-columns:1fr;max-width:280px;margin-left:auto;margin-right:auto}
-.viewgrid[data-mode="move"] .stat{display:none}
-.vwcell{margin:0;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 8px}
-.vwcell svg.pose{max-height:230px}
-.viewcap{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);text-align:center;margin-top:4px}
-.viewctl{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:6px 0}
-@media (max-width:560px){ .viewgrid[data-mode="pair"]{grid-template-columns:1fr 1fr} .vwcell svg.pose{max-height:150px} }
+.exviews{margin:4px 0 6px}
+.vwstills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.vwstills.one{grid-template-columns:repeat(2,1fr);max-width:340px;margin:0 auto}
+.vwmoves{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px}
+.vwmoves.one{grid-template-columns:1fr;max-width:260px;margin-left:auto;margin-right:auto}
+.vwcell{margin:0;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 6px}
+.vwcell.mv{background:var(--surface3);border-color:var(--border2)}
+.vwcell svg.pose{max-height:180px}
+.vwcell.mv svg.pose{max-height:230px}
+.viewcap{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);text-align:center;margin-top:4px;line-height:1.25}
+.vwcell.mv .viewcap{font-size:.72rem;color:var(--accent)}
+@media (max-width:640px){
+  .vwstills{grid-template-columns:repeat(2,1fr)}
+  .vwcell svg.pose{max-height:140px}
+  .vwcell.mv svg.pose{max-height:170px}
+}
+.exdetail{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:760px){ .exdetail.has-fotos{grid-template-columns:minmax(0,2.1fr) minmax(0,1fr)} }
+.exfotos{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px}
+.exfotos .phgrid{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.exfotos .ph{width:96px;height:96px;border-radius:10px}
+@media (min-width:760px){ .exfotos .phgrid{flex-direction:column;align-items:center} .exfotos .ph{width:100%;max-width:160px;height:150px} }
+.eqic .eqmine{width:34px;height:34px;object-fit:cover;border-radius:7px;border:1px solid var(--border);margin-top:4px}
+.eqic .ph{width:34px;height:34px;border-radius:7px;margin-top:4px}
+.eqic.big{width:120px;height:120px;margin:0 auto}
+.vdempty{display:flex;gap:10px;align-items:center;background:var(--surface2);border:1px dashed var(--border2);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px}
+.vdempty .ic{color:var(--text3);flex-shrink:0}
+.vdlist{display:flex;flex-direction:column;gap:2px;max-height:50vh;overflow:auto}
+.vdrow{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid var(--border);font-size:.85rem}
+.vdrow .nm{flex:1;min-width:0}
+.hrbadge{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;background:var(--surface3);border:1px solid var(--border2);font-size:.82rem;font-weight:700}
+.hrbadge .ic{color:var(--bad);width:15px;height:15px}
+.hrbadge b{font-size:1rem}
+.hrbadge small{color:var(--text3);font-size:.66rem;font-weight:600}
+.hrbadge i{font-style:normal;font-size:.7rem;color:var(--text2)}
+.hrbig{font-size:2.3rem;font-weight:900;line-height:1;min-width:110px}
+.hrbig small{font-size:.72rem;color:var(--text3);font-weight:700;margin-left:4px}
+.hrbadge.z1,.hrbig.z1{color:var(--s1)} .hrbadge.z2,.hrbig.z2{color:var(--ok)}
+.hrbadge.z3,.hrbig.z3{color:var(--warn)} .hrbadge.z4,.hrbig.z4{color:var(--accent)}
+.hrbadge.z5,.hrbig.z5{color:var(--bad)}
+.iconbtn.on,[data-tvbtn].on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
 @media print{ #topbar,header.app,#bottombar,footer.app,#timermini{display:none} }
 </style>
 </head>
@@ -768,7 +799,7 @@ html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.1.0";
+const APP_VERSION = "3.2.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -1999,6 +2030,141 @@ Object.assign(L,{
 "vw.note":["No computador aparecem as duas posições lado a lado; no celular, uma só, girando. O botão pausa para você olhar com calma. Os desenhos mostram sempre o ângulo em que o movimento se enxerga melhor — ainda não existe um desenho visto de lado para cada exercício.","On a computer the two positions appear side by side; on a phone, a single looping one. The button pauses it so you can look carefully. The drawings always show the angle where the movement reads best — there is not yet a separate side-view drawing for each exercise."]
 });
 
+/* ---------- 1g. TEXTOS DA VERSÃO 3.2: duas vistas, fotos e vídeo ---------- */
+Object.assign(L,{
+"vw.front":["De frente","Front view"],
+"vw.side":["De lado","Side view"],
+"vw.start":["início","start"],
+"vw.end":["fim","end"],
+"vw.note":["As mesmas alturas nas duas vistas: girar em volta da pessoa não muda a altura de nenhuma articulação. De frente você confere a abertura dos braços; de lado, o ângulo do cotovelo e se a coluna está reta.","The same heights in both views: walking around the person does not change the height of any joint. From the front you check how wide the arms go; from the side, the elbow angle and whether the back is straight."],
+"vw.noteOne":["Este movimento tem só a vista {v}: deitado, de bruços, de quatro apoios ou só de lado, girar o ângulo daria um desenho encolhido e sem informação.","This movement has only the {v}: lying, face down, on all fours, or purely sideways, turning the angle would give a squashed drawing with no information."],
+"ex.photoTitle":["Fotos","Photos"],
+"ex.video":["Vídeo","Video"],
+/* --- vídeo --- */
+"vd.noneT":["Sem vídeo escolhido para este exercício","No video chosen for this exercise"],
+"vd.noneS":["Busque no YouTube e, se gostar de um, cole o link aqui: ele passa a abrir dentro do app.","Search YouTube and, if you like one, paste the link here: it will then open inside the app."],
+"vd.search":["Buscar no YouTube","Search on YouTube"],
+"vd.other":["Buscar outro","Find another"],
+"vd.paste":["Colar o link de um vídeo","Paste a video link"],
+"vd.change":["Trocar o vídeo","Change the video"],
+"vd.clear":["Voltar ao padrão","Back to default"],
+"vd.link":["Link do vídeo","Video link"],
+"vd.pasteHow":["Abra o vídeo no YouTube, toque em Compartilhar, copie o link e cole aqui. Serve qualquer formato: youtu.be/…, youtube.com/watch?v=… ou youtube.com/shorts/…","Open the video on YouTube, tap Share, copy the link and paste it here. Any format works: youtu.be/…, youtube.com/watch?v=… or youtube.com/shorts/…"],
+"vd.pasteNote":["Fica guardado só neste aparelho. Deixe em branco para voltar ao vídeo padrão do app.","It is stored on this device only. Leave it blank to go back to the app's default video."],
+"vd.bad":["Não reconheci um link de vídeo do YouTube aí.","I did not recognise a YouTube video link there."],
+"vd.admTitle":["Vídeos dos exercícios","Exercise videos"],
+"vd.admSub":["Monte a lista que viaja com o site","Build the list that ships with the site"],
+"vd.admHow":["Escolha um vídeo para cada exercício e baixe o arquivo videos.json. Suba ele na raiz do repositório, junto com os outros: aí todo mundo passa a ver o vídeo, sem precisar colar link nenhum.","Choose a video for each exercise and download the videos.json file. Upload it to the repository root along with the others: everyone then sees the video without having to paste any link."],
+"vd.admDownload":["Baixar videos.json","Download videos.json"],
+"vd.admImport":["Carregar um videos.json","Load a videos.json"],
+"vd.admList":["Ver exercício por exercício","See it exercise by exercise"]
+});
+
+/* ---------- 1h. TEXTOS DA VERSÃO 3.2: tabela TUSS e rede ---------- */
+Object.assign(L,{
+"tu.title":["Tabela TUSS / TISS","TUSS / TISS table"],
+"tu.sub":["Os códigos de procedimento da ANS, para consulta e para anexar a um pedido. O app não cria código nenhum: ele só lê a tabela oficial.","The ANS procedure codes, for reference and to attach to a request. The app creates no codes: it only reads the official table."],
+"tu.noneT":["A tabela ainda não foi carregada","The table has not been loaded yet"],
+"tu.noneS":["Ela vem vazia de propósito. Toque em Sincronizar para buscar o arquivo publicado com o site, ou peça ao administrador para importar a tabela da ANS.","It ships empty on purpose. Tap Sync to fetch the file published with the site, or ask the administrator to import the ANS table."],
+"tu.codes":["códigos","codes"],
+"tu.ref":["Referência","Reference"],
+"tu.synced":["Sincronizada","Synced"],
+"tu.sync":["Sincronizar agora","Sync now"],
+"tu.resync":["Sincronizar de novo","Sync again"],
+"tu.syncing":["Sincronizando…","Syncing…"],
+"tu.ok":["Tabela pronta: {n} códigos.","Table ready: {n} codes."],
+"tu.clear":["Apagar do aparelho","Delete from device"],
+"tu.clearAsk":["Apagar a tabela TUSS deste aparelho?","Delete the TUSS table from this device?"],
+"tu.searchph":["Buscar por código ou por descrição","Search by code or description"],
+"tu.noHits":["Nenhum código com esse termo.","No code matches that term."],
+"tu.check":["Tabela de consulta. Confira sempre na ANS antes de usar em pedido, guia ou reembolso. A tabela 19 (materiais e OPME) passa de um milhão de linhas e não cabe num site como este — aqui só entra a de procedimentos.","Reference table. Always check with ANS before using it on a request, form or reimbursement claim. Table 19 (materials and OPME) has over a million rows and does not fit a site like this — only the procedures table is included here."],
+"tu.tooBig":["A tabela não coube no espaço que o navegador dá para o app. Importe só a tabela de procedimentos.","The table did not fit in the space the browser gives the app. Import only the procedures table."],
+"tu.netNow":["Sua conexão agora","Your connection right now"],
+"tu.netWifi":["Wi-Fi","Wi-Fi"],
+"tu.netData":["dados do celular","mobile data"],
+"tu.netSave":["modo de economia de dados","data saver mode"],
+"tu.netUnknown":["o aparelho não informa","the device does not say"],
+"tu.onlyWifi":["Só baixar tabelas grandes no Wi-Fi","Only download big tables on Wi-Fi"],
+"tu.blockedNet":["Você está nos dados do celular (ou no modo de economia). Ligue o Wi-Fi ou desmarque “só no Wi-Fi”.","You are on mobile data (or in data-saver mode). Turn on Wi-Fi or untick “only on Wi-Fi”."],
+"tu.fileOnly":["A tabela só baixa quando o app é aberto pelo endereço do site.","The table only downloads when the app is opened from the site address."],
+"tu.failT":["Não consegui baixar a tabela","I could not download the table"],
+"tu.failB":["Quase sempre é um destes três motivos:","It is almost always one of these three:"],
+"tu.f1":["O arquivo tuss.json ainda não foi publicado na raiz do site. Quem publica é o administrador, pelo botão de exportar aqui de baixo.","The tuss.json file has not been published at the site root yet. The administrator publishes it, with the export button below."],
+"tu.f2":["O endereço configurado é de outro site. O navegador só deixa o app ler arquivos do próprio endereço, a não ser que o outro site autorize — e os sites do governo geralmente não autorizam.","The configured address belongs to another site. The browser only lets the app read files from its own address, unless the other site allows it — and government sites usually do not."],
+"tu.f3":["A internet caiu no meio do caminho. Tente de novo.","The connection dropped midway. Try again."],
+"tu.failTec":["Detalhe técnico","Technical detail"],
+"tu.admTitle":["Administrador: montar a tabela","Administrator: build the table"],
+"tu.admHow":["Baixe a tabela de procedimentos no site da ANS (Padrão TISS › Códigos da TUSS), salve como CSV, preencha o número da tabela, a versão e a data de referência aqui e importe. Confira o resultado na busca acima e depois baixe o tuss.json para publicar na raiz do repositório, junto com o index.html.","Download the procedures table from the ANS site (TISS standard › TUSS codes), save it as CSV, fill in the table number, version and reference date here and import it. Check the result in the search above, then download tuss.json to publish at the repository root, next to index.html."],
+"tu.tabela":["Nº da tabela","Table no."],
+"tu.versao":["Versão da ANS","ANS version"],
+"tu.url":["Endereço para sincronizar","Address to sync from"],
+"tu.import":["Importar CSV da ANS","Import ANS CSV"],
+"tu.export":["Baixar tuss.json","Download tuss.json"],
+"tu.csvBad":["Não achei coluna de código e de descrição nesse arquivo. No Excel, salve como CSV.","I could not find a code column and a description column in that file. In Excel, save it as CSV."],
+"tu.pick":["Escolher o código TUSS","Choose the TUSS code"],
+"tu.pickShort":["Escolher","Choose"],
+"tu.needFirst":["Carregue a tabela TUSS primeiro.","Load the TUSS table first."]
+});
+
+/* ---------- 1i. TEXTOS DA VERSÃO 3.2: música, batimento e TV ---------- */
+Object.assign(L,{
+/* --- música --- */
+"mu.title":["Música do treino","Workout music"],
+"mu.sub":["Um toque para abrir a sua playlist","One tap to open your playlist"],
+"mu.link":["Link da playlist","Playlist link"],
+"mu.name":["Como chamar o botão","What to call the button"],
+"mu.namePh":["Minha playlist","My playlist"],
+"mu.play":["Tocar música","Play music"],
+"mu.other":["Música","Music"],
+"mu.how":["Abra a sua playlist no Spotify (ou YouTube Music, Deezer, Apple Music), toque em Compartilhar, copie o link e cole aqui. Aí aparece um botão no treino que abre a música direto.","Open your playlist in Spotify (or YouTube Music, Deezer, Apple Music), tap Share, copy the link and paste it here. A button then appears in the workout that opens the music directly."],
+"mu.limit":["A voz do treinador não para a música: o app não toma o áudio para si, então a música continua tocando e a voz entra por cima (o celular abaixa o volume dela por um instante, sozinho). O que nenhum site consegue é trocar de faixa ou dar pause no Spotify por você — isso só o próprio app da música faz.","The trainer voice does not stop the music: the app does not take the audio for itself, so the music keeps playing and the voice comes over it (the phone briefly lowers the music by itself). What no website can do is skip tracks or pause Spotify for you — only the music app itself does that."],
+/* --- batimento --- */
+"hr.title":["Batimento por Bluetooth","Heart rate over Bluetooth"],
+"hr.sub":["Cinta peitoral ou pulseira, ao vivo durante o treino","Chest strap or band, live during the workout"],
+"hr.connect":["Conectar","Connect"],
+"hr.disconnect":["Desconectar","Disconnect"],
+"hr.on":["Conectado","Connected"],
+"hr.off":["Não conectado","Not connected"],
+"hr.lost":["A conexão com a cinta caiu.","The connection to the strap dropped."],
+"hr.fail":["Não consegui conectar. Ligue o Bluetooth e aproxime a cinta.","I could not connect. Turn Bluetooth on and bring the strap closer."],
+"hr.maxIs":["Referência de máximo","Maximum reference"],
+"hr.noMax":["Preencha a sua data de nascimento no perfil, ou o máximo aqui embaixo, para o app mostrar a zona.","Fill in your date of birth in the profile, or the maximum below, for the app to show the zone."],
+"hr.fcMax":["Batimento máximo (bpm)","Maximum heart rate (bpm)"],
+"hr.fcMaxNote":["Em branco, o app usa a conta aproximada 220 menos a sua idade. Isso é só uma referência grosseira, não um exame: quem mede de verdade é um teste de esforço com médico. Se você já fez um, ponha o número aqui.","Left blank, the app uses the rough 220-minus-age estimate. That is only a crude reference, not a measurement: a real one comes from a supervised stress test. If you have had one, put the number here."],
+"hr.session":["Nesta sessão: máximo de {m} bpm, {n} leituras.","This session: peak {m} bpm, {n} readings."],
+"hr.z0":["Bem leve","Very light"],
+"hr.z1":["Leve","Light"],
+"hr.z2":["Moderado","Moderate"],
+"hr.z3":["Puxado","Hard"],
+"hr.z4":["Muito puxado","Very hard"],
+"hr.z5":["Máximo","Maximum"],
+"hr.noBLE":["Este navegador não tem Bluetooth. No Android, use o Chrome. No iPhone e no iPad não funciona: o Safari não oferece Bluetooth para sites, e todos os navegadores do iPhone usam o Safari por dentro.","This browser has no Bluetooth. On Android, use Chrome. On iPhone and iPad it does not work: Safari does not offer Bluetooth to websites, and every iPhone browser uses Safari underneath."],
+"hr.helpBtn":["O que funciona e o que não funciona","What works and what doesn't"],
+"hr.helpT":["Relógio, pulseira e cinta","Watch, band and strap"],
+"hr.helpBody":["<p><b>Funciona:</b> qualquer cinta peitoral ou pulseira que publique o serviço padrão de frequência cardíaca do Bluetooth — Polar, Garmin HRM, Wahoo, Coospo, Magene e a maioria das pulseiras baratas. O app pede para você escolher o aparelho na lista do navegador e passa a receber o batimento ao vivo.</p><p><b>Não funciona:</b> Apple Watch e Galaxy Watch não deixam um site ler o batimento deles — eles só falam com o app do próprio fabricante. Para usar o relógio, a saída é exportar o treino no app do relógio e importar aqui.</p><p><b>Onde funciona:</b> Chrome no Android, no computador e no ChromeOS. No iPhone e no iPad, nenhum navegador tem Bluetooth para sites.</p><p><b>Por que não existe um app de relógio do RiseONE:</b> um site publicado no GitHub Pages não vira aplicativo de relógio. Isso exigiria um app nativo na loja, que é outro projeto.</p>","<p><b>Works:</b> any chest strap or band that publishes the standard Bluetooth heart rate service — Polar, Garmin HRM, Wahoo, Coospo, Magene and most cheap bands. The app asks you to pick the device from the browser's list and then receives the beat live.</p><p><b>Does not work:</b> Apple Watch and Galaxy Watch do not let a website read their heart rate — they only talk to their maker's own app. To use the watch, export the workout in the watch's app and import it here.</p><p><b>Where it works:</b> Chrome on Android, on the desktop and on ChromeOS. On iPhone and iPad, no browser has Bluetooth for websites.</p><p><b>Why there is no RiseONE watch app:</b> a site published on GitHub Pages does not become a watch app. That would need a native app in the store, which is a different project.</p>"],
+/* --- TV --- */
+"tv.short":["TV","TV"],
+"tv.try":["Procurar a TV","Look for the TV"],
+"tv.onNow":["Transmitindo para a TV","Casting to the TV"],
+"tv.offNow":["Parou de transmitir.","Casting stopped."],
+"tv.pipOn":["Abri a janelinha flutuante.","The floating window is open."],
+"tv.fullOn":["Abri em tela cheia.","Opened in full screen."],
+"tv.noDevice":["Nenhuma TV encontrada. Ela precisa estar ligada e no mesmo Wi-Fi.","No TV found. It needs to be on and on the same Wi-Fi."],
+"tv.canCast":["Este navegador transmite para Chromecast e Google TV","This browser can cast to Chromecast and Google TV"],
+"tv.cantCast":["Este navegador não transmite; dá para usar a janelinha ou o espelhamento","This browser cannot cast; you can use the floating window or screen mirroring"],
+"tv.body2":["<p><b>Como funciona de verdade.</b> O RiseONE não vira vídeo para a TV. Ele faz melhor: pede ao navegador que a <b>própria TV abra uma página do app</b> (a <code>tv-riseone.html</code>) e depois manda, pelo Wi-Fi, o que ela deve mostrar — o nome do exercício, os dois bonecos e o cronômetro, tudo em letra grande. A TV desenha sozinha; o celular continua livre para você marcar as séries.</p><p><b>O que você faz:</b> toque em Procurar a TV, escolha o aparelho na lista que o navegador mostra e pronto. TV e celular precisam estar no mesmo Wi-Fi.</p><p><b>Onde funciona:</b> Chrome e Edge, com Chromecast ou Google TV. No iPhone, e em qualquer TV sem Chromecast, o app cai para a janelinha flutuante ou para a tela cheia, e aí quem leva a imagem até a TV é o espelhamento do próprio aparelho (Android: Transmitir; iPhone: Espelhamento de Tela).</p><p><b>Por que não dá para transmitir a câmera do espelho:</b> o navegador bloqueia transmitir imagem de câmera ao vivo, por segurança. O espelho continua no celular.</p>","<p><b>How it actually works.</b> RiseONE does not turn into a video for the TV. It does something better: it asks the browser to have <b>the TV itself open one of the app's pages</b> (<code>tv-riseone.html</code>) and then sends it, over Wi-Fi, what to show — the exercise name, both figures and the countdown, all in large type. The TV draws it by itself; your phone stays free to log your sets.</p><p><b>What you do:</b> tap Look for the TV, pick the device from the list the browser shows, and that is it. TV and phone must be on the same Wi-Fi.</p><p><b>Where it works:</b> Chrome and Edge, with Chromecast or Google TV. On iPhone, and on any TV without Chromecast, the app falls back to the floating window or full screen, and then your own device's mirroring carries the image to the TV (Android: Cast; iPhone: Screen Mirroring).</p><p><b>Why the camera mirror cannot be cast:</b> the browser blocks casting a live camera image, for safety. The mirror stays on the phone.</p>"]
+});
+
+/* ---------- 1j. TEXTOS DA VERSÃO 3.2: PDF do laboratório ---------- */
+Object.assign(L,{
+"pdf.hint":["Se o laudo chegou em PDF, mande o PDF mesmo: o app lê o texto direto, sem depender da foto.","If the report came as a PDF, send the PDF itself: the app reads the text directly, without relying on a photo."],
+"pdf.opening":["Abrindo o PDF…","Opening the PDF…"],
+"pdf.reading":["Lendo a página {i} de {n}…","Reading page {i} of {n}…"],
+"pdf.ok":["Li o texto do PDF ({n} páginas). Confira os valores abaixo.","I read the PDF text ({n} pages). Check the values below."],
+"pdf.scanned":["Este PDF é só imagem, sem texto. Vou passar o leitor de câmera por cima.","This PDF is image only, with no text. I will run the camera reader over it."],
+"pdf.fail":["Não consegui abrir esse PDF. Tente uma foto da folha.","I could not open that PDF. Try a photo of the page instead."]
+});
+
 /* ---------- 2. MUSCULOS (3 niveis de nome) ---------- */
 const MUSCLES = [];
 function M(id, region, p1,p2,p3, e1,e2,e3){ MUSCLES.push({id,region,pt:[p1,p2,p3],en:[e1,e2,e3]}); }
@@ -2638,8 +2804,11 @@ function exCard(x){
   const eq=EQUIP[x.eq];
   const mine=STATE.equipPhotos&&STATE.equipPhotos[x.eq];
   const fig = exFigure(x);
-  const thumb = mine ? '<img src="'+mine+'" alt="" style="width:68px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--border)">'
-                     : (photoThumb(x.id) || '<div class="eqic">'+(fig||(eq?eq.svg:""))+"</div>");
+  /* o boneco vem sempre: e ele que mostra o movimento. A foto, quando existe, entra depois,
+     como miniatura, e a foto do aparelho da propria academia entra como terceira. */
+  const thumb = '<div class="eqic">'+(fig||(eq?eq.svg:""))+"</div>"+
+    (photoThumb(x.id) || "") +
+    (mine ? '<img class="eqmine" src="'+mine+'" alt="">' : "");
   return '<div class="ex"><div class="exh">'+thumb+'<div><div class="nm">'+esc(exName(x))+"</div>"+
     (exTech(x)&&STATE.termsLevel===3?'<div class="tech">'+esc(exTech(x))+"</div>":"")+
     '<div class="tiny muted">'+esc(mName(x.m))+" · "+esc(eqName(x.eq))+"</div></div></div>"+
@@ -2654,19 +2823,26 @@ function wireExCards(){
   document.querySelectorAll("[data-addex]").forEach(b=>b.onclick=()=>addExToWorkout(b.getAttribute("data-addex")));
 }
 function allEx(){ return EXS.concat(STATE.customEx||[]); }
+function exDetailHTML(x){
+  const fotos=photoPanel(x.id);
+  let h='<div class="exdetail'+(fotos?" has-fotos":"")+'">';
+  h+='<div class="exvec">'+(exAnimId(x)? exViewer(exAnimId(x)) : (EQUIP[x.eq]?'<div class="eqic big">'+EQUIP[x.eq].svg+"</div>":""))+"</div>";
+  h+=fotos;
+  h+="</div>";
+  h+='<div class="sep"></div><span class="kicker">'+t("ex.video")+"</span>"+videoBox(x.id, exName(x));
+  h+='<p class="tiny muted" style="margin-top:8px">'+t("ex.videoNote")+"</p>";
+  h+='<div class="sep"></div><p>'+esc(exTip(x))+"</p>";
+  if(exWarn(x)) h+='<div class="warnbox">'+I("alert")+"<div>"+esc(exWarn(x))+"</div></div>";
+  return h;
+}
 function videoModal(id){
   const x=allEx().find(e=>e.id===id); if(!x) return;
-  const q=encodeURIComponent((LANG==="pt"? exName(x)+" execução correta academia" : exName(x)+" proper form exercise"));
-  const m=modal(mh(exName(x))+
-    (exAnimId(x)? exViewer(exAnimId(x)) : "")+
-    photoStrip(x.id, true)+
-    '<div class="yt"><iframe src="https://www.youtube.com/embed?listType=search&list='+q+'" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="'+esc(exName(x))+'"></iframe></div>'+
-    '<p class="tiny muted" style="margin-top:8px">'+t("ex.videoNote")+"</p>"+
-    '<div class="sep"></div><p>'+esc(exTip(x))+"</p>"+
-    '<div class="row"><a class="btn ghost sm" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q+'">'+t("ex.noVideo")+'</a>'+
+  const foot='<div class="row">'+
     (exAnimId(x)?'<button class="btn ghost sm" id="exmir">'+I("video")+t("mir.open")+"</button>":"")+
-    '<button class="btn sm" data-addex2="'+x.id+'">'+I("plus")+t("ex.addToWorkout")+"</button></div>",{wide:true});
-  wireViewer(m);
+    '<button class="btn sm" data-addex2="'+x.id+'">'+I("plus")+t("ex.addToWorkout")+"</button></div>";
+  const m=modal(mh(exName(x))+'<div id="exbody">'+exDetailHTML(x)+"</div>"+foot,{wide:true});
+  const paint=()=>{ const b=m.querySelector("#exbody"); if(!b) return; b.innerHTML=exDetailHTML(x); initAnims(b); fillIcons(b); wireVideo(b,x,paint); };
+  initAnims(m); wireVideo(m,x,paint);
   const mb=m.querySelector("#exmir"); if(mb) mb.onclick=()=>{ m.remove(); openMirror(exAnimId(x), exName(x)); };
   m.querySelector("[data-addex2]").onclick=()=>{ m.remove(); addExToWorkout(x.id); };
 }
@@ -3205,6 +3381,7 @@ function paintTimer(){
   if(TIMER.mode==="series"){ paintSeries(); return; }
   const v=timerValue(), down=TIMER.mode==="down";
   if(TIMER.mini) TIMER.mini.innerHTML=(TIMER.ringing?I("alarm"):(TIMER.running?I("timer"):I("pause")))+"<span>"+fmtClock(v)+"</span>";
+  if(typeof TV!=="undefined" && TV.ligada && TIMER.mode==="down") tvMostraRelogio(Math.max(0,Math.round(v)));
   if(!TIMER.el) return;
   const d=TIMER.el.querySelector("#tdigits"); if(!d) return;
   d.textContent = (down && v<=0 && TIMER.ringing) ? t("tm.over") : fmtClock(v);
@@ -3420,7 +3597,8 @@ function runWorkout(id){
     m.querySelector("#runbox").innerHTML=
       '<div class="mh"><div><span class="pill acc">'+t("wk.running")+'</span><h3 style="margin:.3em 0 0">'+esc(w.name)+"</h3></div><button class='iconbtn' id='rclose'>&times;</button></div>"+
       '<div class="bar" style="margin:6px 0 12px"><i style="width:'+((idx)/w.items.length*100)+'%"></i></div>'+
-      (idx===0?'<div class="row" style="margin-bottom:10px"><button class="btn ghost sm" id="r_warm">'+I("flame")+t("wu.warmBtn")+"</button></div>":"")+
+      '<div class="row" style="margin-bottom:10px">'+(idx===0?'<button class="btn ghost sm" id="r_warm">'+I("flame")+t("wu.warmBtn")+"</button>":"")+
+        musBtn("ghost sm")+'<button class="btn ghost sm" data-tvbtn="1" id="r_tv">'+I("cast")+t("tv.short")+"</button>"+hrBadge()+"</div>"+
       '<div class="card tight" style="margin:0 0 12px"><div class="row nowrap">'+((x&&exAnimId(x))?'<div class="runfig">'+exFigure(x)+"</div>":(eq?'<div class="eqic" style="width:52px;height:52px">'+eq.svg+"</div>":""))+
       '<div><h2 style="margin:0">'+esc(x?exName(x):it.exId)+'</h2><small class="muted">'+esc(x?mName(x.m):"")+" · "+(idx+1)+"/"+w.items.length+"</small></div></div>"+
       '<p class="tiny muted" style="margin:.6em 0 0">'+esc(x?exTip(x):"")+"</p>"+
@@ -3453,14 +3631,18 @@ function runWorkout(id){
     const rw=m.querySelector("#r_warm");
     if(rw) rw.onclick=()=>{ const l=buildRoutine("before", autoGroupsFromWorkout(w), 5);
       if(l) runRoutine(expandRoutine(l), t("wu.warmBtn")); else toast(t("wu.noMoves")); };
+    const rtv=m.querySelector("#r_tv"); if(rtv) rtv.onclick=()=>tvProjetar();
+    if(x) tvMostraExercicio(x);
+    paintTvBtn();
     m.querySelector("#r_prev").onclick=()=>{ if(idx>0){ idx--; paint(); } };
     m.querySelector("#r_next").onclick=()=>{ if(idx<w.items.length-1){ idx++; paint(); } };
     m.querySelector("#r_fin").onclick=()=>{
       const dur=Math.round((Date.now()-started)/1000);
       let vol=0, any=false;
       prog.forEach(p=>p.sets.forEach(s=>{ vol+=(num(s.reps,0)*num(s.load,0)); any=true; }));
-      STATE.logs.push({id:uid(), date:todayISO(), workoutId:w.id, name:w.name, dur, volume:Math.round(vol),
-        items:prog.map(p=>({exId:p.exId, sets:p.sets}))});
+      STATE.logs.push(Object.assign({id:uid(), date:todayISO(), workoutId:w.id, name:w.name, dur, volume:Math.round(vol),
+        items:prog.map(p=>({exId:p.exId, sets:p.sets}))},
+        HR.max? {fcMax:HR.max, fcMedia:Math.round(HR.serie.reduce((a,x)=>a+x[1],0)/Math.max(1,HR.serie.length))} : {}));
       const c=ensureCi(todayISO());
       const trainMission=STATE.missions.find(mm=>/train|trein/i.test(mTitle(mm)));
       if(trainMission && c.done.indexOf(trainMission.id)<0) c.done.push(trainMission.id);
@@ -4024,7 +4206,8 @@ SCREENS.scan = function(){
       '<button class="tile" data-mode="'+m[0]+'"'+(SCANMODE===m[0]?' style="border-color:var(--accent);background:var(--accent-soft)"':"")+'><span class="ibub'+(SCANMODE===m[0]?"":" grey")+'">'+I(m[1])+'</span><span class="tl">'+m[2]+'</span><span class="td">'+m[3]+"</span></button>").join("")+"</div>";
   h+='<div class="sep"></div><div id="camwrap2"></div>'+
      '<div class="row"><button class="btn" id="opencam2">'+I("camera")+t("sc.camera")+'</button>'+
-     '<label class="btn ghost" style="cursor:pointer">'+I("upload")+t("sc.upload")+'<input type="file" accept="image/*" id="fileinp2" style="display:none"></label></div>'+
+     '<label class="btn ghost" style="cursor:pointer">'+I("upload")+t("sc.upload")+'<input type="file" accept="image/*,application/pdf,.pdf" id="fileinp2" style="display:none"></label></div>'+
+     (SCANMODE==="exam"?'<p class="tiny muted" style="margin-top:6px">'+I("file")+" "+t("pdf.hint")+"</p>":"")+
      '<p class="tiny muted" style="margin-top:8px">'+t("sc.tip")+"</p></div>";
   h+='<div id="scanout"></div>';
   return h;
@@ -4033,7 +4216,7 @@ SCREENS.scan_after = function(){
   document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{ SCANMODE=b.getAttribute("data-mode"); SCANFOUND=null; SCANTEXT=""; render(); });
   document.getElementById("opencam2").onclick=()=>askConsent("camera",()=>
     startCam2(document.getElementById("camwrap2"), d=>{ stopCam(); document.getElementById("camwrap2").innerHTML=""; runOCR(d); }));
-  document.getElementById("fileinp2").onchange=e=>{ const f=e.target.files[0]; if(f) readFile(f, d=>shootChecked(d, runOCR)); };
+  document.getElementById("fileinp2").onchange=e=>{ const f=e.target.files[0]; if(f) lerArquivoExame(f); };
   if(SCANTEXT) paintScan();
 };
 function runOCR(dataUrl){
@@ -4166,6 +4349,8 @@ SCREENS.set = function(){
     h+='<div class="card">'+cardHead("body", t("st.terms"), t("body.level"))+
       '<div class="optionlist">'+[1,2,3].map(i=>'<button class="opt '+(STATE.termsLevel===i?"on":"")+'" data-lvl="'+i+'"><span class="ibub '+(STATE.termsLevel===i?"":"grey")+'">'+I(i===1?"chat":(i===2?"book":"flask"))+'</span><span><span class="ot">'+t("body.lv"+i)+'</span><br><span class="od">'+t("body.lv"+i+"d")+"</span></span></button>").join("")+"</div></div>";
     h+=favsCard();
+    h+=musCard();
+    h+=hrCard();
     h+=vozCard();
     h+=a11yCard();
   }
@@ -4245,6 +4430,8 @@ SCREENS.set_after = function(){
   wireAccountCard();
   wireNotifCard();
   if(typeof wireFavsCard==="function") wireFavsCard();
+  if(typeof wireMusCard==="function") wireMusCard();
+  if(typeof wireHR==="function") wireHR();
   if(typeof wireVozCard==="function") wireVozCard();
   if(typeof wireA11yCard==="function") wireA11yCard();
   if(typeof wirePrivacy==="function") wirePrivacy();
@@ -4970,7 +5157,7 @@ function moveVideo(id){
   const md=modal(mh(mvName(m))+
     '<div class="row nowrap" style="align-items:flex-start"><div style="width:130px;flex-shrink:0;color:var(--accent)">'+mvFigure(m)+"</div>"+
     '<div><p style="margin:0">'+esc(mvTip(m))+'</p><p class="tiny muted" style="margin:.4em 0 0">'+t("wu.hold")+"</p></div></div>"+photoStrip(m.id)+
-    '<div class="sep"></div><div class="yt"><iframe src="https://www.youtube.com/embed?listType=search&list='+q+'" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="'+esc(mvName(m))+'"></iframe></div>'+
+    '<div class="sep"></div><span class="kicker">'+t("ex.video")+"</span>"+videoBox(m.id, mvName(m))+
     '<div class="row" style="margin-top:10px"><button class="btn" id="mvgo">▶ '+t("wu.start")+"</button>"+
     (mvAnimId(m)?'<button class="btn ghost sm" id="mvmir">'+I("video")+t("mir.open")+"</button>":"")+
     '<a class="btn ghost sm" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q+'">'+t("ex.noVideo")+"</a></div>",{wide:true});
@@ -5085,6 +5272,7 @@ function buildRoutineUI(){
   const rm2=q("#rmir"); if(rm2) rm2.onclick=()=>openMirror(mvAnimId(shown.mv), mvName(shown.mv));
   initAnims(RUN.el);
   paintRoutine();
+  if(typeof tvMostraMovimento==="function" && TV.ligada) tvMostraMovimento(shown.mv, shown.sec);
   /* voz: anuncia o movimento da vez e adianta o proximo */
   if(typeof sayMove==="function"){
     if(intro) sayMove(mvName(shown.mv), shown.sec, shown.side);
@@ -5298,15 +5486,21 @@ const B_FLOOR={h:[16,84],n:[25,84],s:[30,84],e:[30,70],w:[30,58],p:[58,86],k:[72
 const B_PRONE={h:[84,74],n:[76,76],s:[72,78],e:[70,90],w:[68,99],p:[40,82],k:[26,88],f:[14,96]};
 
 /* ---- desenho dos aparelhos ---- */
-function eqLayer(d,fr){
-  let g=eqPart(d.eq,d,fr);
-  if(d.eq2) g+=eqPart(d.eq2,d,fr);
+function eqLayer(d,fr,vista){
+  let g=eqPart(d.eq,d,fr,vista);
+  if(d.eq2) g+=eqPart(d.eq2,d,fr,vista);
   if(d.ground!==false) g+='<line class="agr" x1="8" y1="104" x2="92" y2="104"/>';
   return g;
 }
-function eqPart(kind,d,fr){
+function eqPart(kind,d,fr,vista){
   const g=[];
   const W=fr.w, W2=fr.w2||fr.w, P=fr.p, F2=fr.f;
+  /* visto de lado a barra aponta para o observador: vira a ponta da barra, nao uma linha comprida */
+  if(vista==="alt" && (kind==="barra"||kind==="halter")){
+    const r=(kind==="barra")?5:3.4;
+    return '<circle class="aeq" cx="'+W[0]+'" cy="'+W[1]+'" r="'+r+'" fill="none"/>'+
+      (kind==="barra"?'<circle class="aeqp" cx="'+W[0]+'" cy="'+W[1]+'" r="1.6"/>':"");
+  }
   const d2={eq:kind,anchor:d.anchor};
   if(kind==="barra") g.push('<line class="aeq" x1="'+(W[0]-17)+'" y1="'+W[1]+'" x2="'+(W[0]+17)+'" y2="'+W[1]+'"/>'+
       '<line class="aeqp" x1="'+(W[0]-15)+'" y1="'+(W[1]-6)+'" x2="'+(W[0]-15)+'" y2="'+(W[1]+6)+'"/>'+
@@ -5341,12 +5535,15 @@ function animSVG(id, opts){
   /* opts.frame fixa o desenho numa das duas posicoes (0 = inicio, 1 = fim) */
   const d=ANIM[id];
   if(!d) return poseSVG(id);
-  const a=d.a, b=d.b;
+  const vista=(opts.view==="alt" && d.v2)? "alt" : "base";
+  const src=(vista==="alt")? d.v2 : d;
+  const a=src.a, b=src.b;
   const arrows=(d.arw?[d.arw]:[]).concat(d.arw2?[d.arw2]:[])
     .map(j=>(a[j]&&b[j])?arrowPath(a[j],b[j]):"").join("");
   return '<svg viewBox="0 0 100 110" class="pose anim" data-anim="'+id+'"'+(opts.static?' data-static="1"':"")+
+    ' data-view="'+vista+'"'+
     (opts.frame===0||opts.frame===1?' data-frame="'+opts.frame+'" data-static="1"':"")+'>'+
-    '<g class="aeqg">'+eqLayer(d,a)+"</g>"+
+    '<g class="aeqg">'+eqLayer(d,a,vista)+"</g>"+
     (opts.noArrow?"":arrows)+
     '<g class="askel">'+
       '<circle class="ph" cx="'+a.h[0]+'" cy="'+a.h[1]+'" r="8"/>'+
@@ -5358,15 +5555,16 @@ function animSVG(id, opts){
     "</g></svg>";
 }
 function lerpPt(p1,p2,t){ return [p1[0]+(p2[0]-p1[0])*t, p1[1]+(p2[1]-p1[1])*t]; }
-function frameAt(d,t){
-  const a=d.a,b=d.b,o={};
+function frameAt(d,t,vista){
+  const v=(vista==="alt" && d.v2)? d.v2 : d;
+  const a=v.a,b=v.b,o={};
   ["h","n","s","e","w","p","k","f","e2","w2","k2","f2"].forEach(j=>{
     if(a[j]&&b[j]) o[j]=lerpPt(a[j],b[j],t);
     else if(a[j]) o[j]=a[j];
   });
   return o;
 }
-function paintAnimSVG(svg, fr, d){
+function paintAnimSVG(svg, fr, d, vista){
   const pts=(arr)=>arr.filter(Boolean).map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
   const hd=svg.querySelector("circle.ph");
   if(hd){ hd.setAttribute("cx",fr.h[0].toFixed(1)); hd.setAttribute("cy",fr.h[1].toFixed(1)); }
@@ -5377,7 +5575,7 @@ function paintAnimSVG(svg, fr, d){
   set("leg",[fr.p,fr.k,fr.f]);
   set("leg2", fr.k2? [fr.p,fr.k2,fr.f2||fr.k2] : []);
   const eq=svg.querySelector(".aeqg");
-  if(eq && d && d.eq) eq.innerHTML=eqLayer(d,fr);
+  if(eq && d && d.eq) eq.innerHTML=eqLayer(d,fr,vista);
 }
 /* ---- ticker unico ---- */
 let ANIM_LIST=[], ANIM_RAF=null, ANIM_OBS=null;
@@ -5392,9 +5590,10 @@ function initAnims(root){
     if(sv._reg) return; sv._reg=true; sv._vis=true;
     const d=ANIM[sv.getAttribute("data-anim")]; if(!d) return;
     sv._d=d; sv._t0=performance.now()+Math.random()*600;
+    sv._view=sv.getAttribute("data-view")||"base";
     const fx=sv.getAttribute("data-frame");
-    if(fx!==null){ paintAnimSVG(sv, frameAt(d, fx==="1"?1:0), d); return; }
-    paintAnimSVG(sv, frameAt(d,0), d);
+    if(fx!==null){ paintAnimSVG(sv, frameAt(d, fx==="1"?1:0, sv._view), d, sv._view); return; }
+    paintAnimSVG(sv, frameAt(d,0,sv._view), d, sv._view);
     ANIM_LIST.push(sv);
     if(ANIM_OBS) ANIM_OBS.observe(sv);
   });
@@ -5407,7 +5606,7 @@ function animTick(now){
     const d=sv._d, dur=(d.dur||2.4)*1000;
     const ph=((now-sv._t0)%dur)/dur;
     const t=(1-Math.cos(ph*Math.PI*2))/2;
-    paintAnimSVG(sv, frameAt(d,t), d);
+    paintAnimSVG(sv, frameAt(d,t,sv._view), d, sv._view);
   });
   ANIM_RAF = ANIM_LIST.length? requestAnimationFrame(animTick) : null;
 }
@@ -5886,7 +6085,8 @@ function openMirror(animId, title){
       '<p class="tiny muted" id="mnote" style="text-align:center;margin:8px 0 0">'+t("mir.note")+"</p></div>";
   d.querySelector("#mclose").onclick=()=>closeMirror();
   d.querySelector("#mflip").onclick=()=>{ MIR.facing=(MIR.facing==="user")?"environment":"user"; startMirrorCam(); };
-  d.querySelector("#mcast").onclick=()=>{ const vd=d.querySelector("video"); if(vd) projectVideo(vd); else tvHelpModal(); };
+  d.querySelector("#mcast").setAttribute("data-tvbtn","1");
+  d.querySelector("#mcast").onclick=()=>tvProjetar(d.querySelector("video"));
   d.querySelector("#mcast").oncontextmenu=e=>{ e.preventDefault(); tvHelpModal(); };
   d.querySelector("#mtg").onclick=e=>{ MIR.guide=!MIR.guide; e.currentTarget.classList.toggle("on",MIR.guide);
     d.querySelector("#mguide").style.display=MIR.guide?"block":"none"; };
@@ -6367,9 +6567,11 @@ SCREENS.admin = function(){
     (Object.values(ROOT.users).length? Object.values(ROOT.users).map(u=>"<tr><td>"+esc(u.name)+"</td><td>"+esc(u.email||"—")+"</td><td>"+t("role."+u.role)+
       '</td><td class="num"><label class="switch"><input type="checkbox" data-prem="'+u.id+'" '+(((ROOT.data[u.id]||{}).pro)?"checked":"")+'><span class="tr"></span></label></td></tr>').join("")
       : '<tr><td colspan="4">'+t("common.empty")+"</td></tr>")+"</tbody></table></div></div>";
+  h+=videosAdminCard();
   return h;
 };
 SCREENS.admin_after = function(){
+  if(typeof wireVideosAdmin==="function") wireVideosAdmin();
   document.querySelectorAll("[data-viewas]").forEach(b=>b.onclick=()=>setViewAs(b.getAttribute("data-viewas")));
   document.querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>{
     const a=b.getAttribute("data-pl").split(":"); ROOT.plans[a[0]]=a[1]; ROOT.plansTouched=true; saveRoot(); render(); buildNav(); });
@@ -6950,6 +7152,184 @@ A("int-rot",
  {h:[46,16],n:[48,26],s:[48,35],e:[57,52],w:[78,50],p:[48,62],k:[45,84],f:[43,102],k2:[53,84],f2:[56,102]},
  {h:[46,16],n:[48,26],s:[48,35],e:[57,52],w:[44,50],p:[48,62],k:[45,84],f:[43,102],k2:[53,84],f2:[56,102]},
  {eq:"polia-baixa",anchor:[96,50],arw:"w"});
+/* ---------- 41b. SEGUNDA VISTA DE CADA MOVIMENTO ---------- */
+/* Gerado a partir do desenho que ja existia. A regra e geometrica: girar o observador
+   90 graus em torno do eixo da pessoa NAO muda a ALTURA de nenhuma articulacao — so muda
+   o que era esquerda/direita, que vira frente/tras. Por isso cada quadro aqui reaproveita
+   exatamente os mesmos y do quadro original; nenhuma altura foi inventada.
+   AV(id, plano_do_desenho_original, quadro_inicial, quadro_final).
+   Movimento sem segunda vista (deitado, de bruços, de quatro apoios, ou que so acontece no
+   plano de frente) fica de fora de proposito: girar daria um desenho encolhido e sem informacao. */
+function AV(id, plano, a, b){ const d=ANIM[id]; if(!d) return; d.plano=plano; d.v2={a:a,b:b}; }
+AV("abduction","lado",
+ {h:[48,22],n:[48,32],s:[48,38],e:[40,50],w:[38,56],e2:[56,50],w2:[58,56],p:[48,66],k:[43,70],f:[40,96],k2:[53,70],f2:[56,96]},
+ {h:[48,22],n:[48,32],s:[48,38],e:[40,50],w:[38,56],e2:[56,50],w2:[58,56],p:[48,66],k:[32,58],f:[24,82],k2:[64,58],f2:[72,82]});
+AV("calf","frente",
+ {h:[49,18],n:[48,28],s:[48,36],e:[49,52],w:[49,68],p:[47,64],k:[48,84],f:[50,102]},
+ {h:[49,8],n:[48,18],s:[48,26],e:[49,42],w:[49,58],p:[47,54],k:[48,76],f:[50,98]});
+AV("carry","frente",
+ {h:[49,16],n:[48,26],s:[48,36],e:[49,54],w:[49,72],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,14],n:[48,24],s:[48,34],e:[49,52],w:[49,70],p:[47,60],k:[51,82],f:[54,100],k2:[44,82],f2:[40,102]});
+AV("curl","frente",
+ {h:[49,16],n:[48,26],s:[48,36],e:[50,54],w:[52,72],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,36],e:[50,54],w:[60,40],p:[47,62],k:[48,84],f:[50,102]});
+AV("curl-preacher","lado",
+ {h:[48,24],n:[48,34],s:[48,40],e:[42,56],w:[42,62],e2:[54,56],w2:[54,62],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]},
+ {h:[48,24],n:[48,34],s:[48,40],e:[42,56],w:[42,38],e2:[54,56],w2:[54,38],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]});
+AV("deadlift","lado",
+ {h:[48,44],n:[48,48],s:[48,52],e:[43,68],w:[43,84],e2:[53,68],w2:[53,84],p:[48,62],k:[42,82],f:[39,101],k2:[54,82],f2:[57,101]},
+ {h:[48,16],n:[48,26],s:[48,34],e:[44,52],w:[44,70],e2:[52,52],w2:[52,70],p:[48,62],k:[43,84],f:[40,101],k2:[53,84],f2:[56,101]});
+AV("dip","frente",
+ {h:[51,26],n:[50,36],s:[50,42],e:[45,54],w:[51,66],p:[49,64],k:[56,82],f:[50,94]},
+ {h:[51,14],n:[50,24],s:[50,30],e:[43,44],w:[51,66],p:[49,52],k:[56,70],f:[50,84]});
+AV("ext-rot","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[60,50],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[52,50],p:[47,62],k:[48,84],f:[50,102]});
+AV("fly-machine","frente",
+ {h:[49,22],n:[48,32],s:[48,40],e:[55,42],w:[61,48],p:[47,64],k:[48,84],f:[50,102]},
+ {h:[49,22],n:[48,32],s:[48,40],e:[56,44],w:[65,52],p:[47,64],k:[48,84],f:[50,102]});
+AV("heel-kick","frente",
+ {h:[51,14],n:[50,25],s:[50,34],e:[53,44],w:[56,56],p:[49,60],k:[50,82],f:[52,101],k2:[46,80],f2:[40,62]},
+ {h:[51,14],n:[50,25],s:[50,34],e:[47,44],w:[44,56],p:[49,60],k:[46,80],f:[40,62],k2:[50,82],f2:[52,101]});
+AV("hinge","frente",
+ {h:[49,16],n:[48,26],s:[48,34],e:[50,50],w:[51,64],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[64,42],n:[61,46],s:[59,50],e:[62,62],w:[64,76],p:[50,58],k:[58,82],f:[60,102]});
+AV("int-rot","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[52,50],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[51,52],w:[60,50],p:[47,62],k:[48,84],f:[50,102]});
+AV("jack","frente",
+ {h:[51,14],n:[50,25],s:[50,34],e:[52,48],w:[53,64],p:[49,60],k:[50,82],f:[52,101]},
+ {h:[51,12],n:[50,23],s:[50,32],e:[51,18],w:[51,8],p:[49,58],k:[50,80],f:[52,100]});
+AV("kickback","frente",
+ {h:[46,20],n:[45,30],s:[45,38],e:[47,52],w:[48,64],p:[44,64],k:[45,84],f:[47,102],k2:[41,80],f2:[35,92]},
+ {h:[46,20],n:[45,30],s:[45,38],e:[47,52],w:[48,64],p:[44,64],k:[45,84],f:[47,102],k2:[33,74],f2:[19,80]});
+AV("knee-high","frente",
+ {h:[51,14],n:[50,25],s:[50,34],e:[53,44],w:[56,56],p:[49,60],k:[50,82],f:[52,101],k2:[58,58],f2:[62,76]},
+ {h:[51,14],n:[50,25],s:[50,34],e:[47,44],w:[44,56],p:[49,60],k:[58,58],f:[62,76],k2:[50,82],f2:[52,101]});
+AV("leg-curl-sit","lado",
+ {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,62],k2:[53,68],f2:[54,62]},
+ {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,96],k2:[53,68],f2:[54,96]});
+AV("leg-ext","lado",
+ {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,96],k2:[53,68],f2:[54,96]},
+ {h:[48,22],n:[48,32],s:[48,38],e:[41,54],w:[38,62],e2:[55,54],w2:[58,62],p:[48,66],k:[43,68],f:[42,64],k2:[53,68],f2:[54,64]});
+AV("lunge","frente",
+ {h:[49,16],n:[48,26],s:[48,34],e:[50,50],w:[50,66],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[46,26],n:[45,36],s:[45,44],e:[47,58],w:[47,74],p:[44,70],k:[55,80],f:[59,102],k2:[33,92],f2:[25,102]});
+AV("m-armcircle","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[50,26],w:[50,14],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[51,46],w:[52,58],p:[47,62],k:[48,84],f:[50,102]});
+AV("m-armswing","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[45,38],w:[42,40],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[54,38],w:[63,36],p:[47,62],k:[48,84],f:[50,102]});
+AV("m-hipcircle","frente",
+ {h:[47,16],n:[46,26],s:[46,35],e:[48,48],w:[49,60],p:[48,62],k:[46,84],f:[48,102]},
+ {h:[51,16],n:[50,26],s:[50,35],e:[52,48],w:[53,60],p:[46,62],k:[50,84],f:[52,102]});
+AV("m-legswing","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[50,42],w:[54,46],p:[47,62],k:[48,84],f:[50,102],k2:[40,78],f2:[30,88]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[50,42],w:[54,46],p:[47,62],k:[48,84],f:[50,102],k2:[62,72],f2:[76,64]});
+AV("m-neckroll","frente",
+ {h:[49,16],n:[48,28],s:[48,36],e:[49,52],w:[49,68],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,28],s:[48,36],e:[49,52],w:[49,68],p:[47,62],k:[48,84],f:[50,102]});
+AV("m-trunkrot","frente",
+ {h:[49,16],n:[48,26],s:[48,36],e:[56,38],w:[64,42],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,36],e:[40,38],w:[32,42],p:[47,62],k:[48,84],f:[50,102]});
+AV("m-wrist","frente",
+ {h:[39,20],n:[38,30],s:[38,38],e:[44,50],w:[50,44],p:[37,64],k:[38,84],f:[40,102]},
+ {h:[39,20],n:[38,30],s:[38,38],e:[44,50],w:[50,58],p:[37,64],k:[38,84],f:[40,102]});
+AV("nordic","lado",
+ {h:[48,30],n:[48,40],s:[48,46],e:[42,58],w:[39,68],e2:[54,58],w2:[57,68],p:[48,70],k:[43,92],f:[41,98],k2:[53,92],f2:[55,98]},
+ {h:[48,54],n:[48,58],s:[48,62],e:[42,72],w:[39,80],e2:[54,72],w2:[57,80],p:[48,72],k:[43,92],f:[41,98],k2:[53,92],f2:[55,98]});
+AV("press-over","frente",
+ {h:[49,18],n:[48,28],s:[48,37],e:[53,45],w:[52,33],p:[47,64],k:[48,84],f:[50,102]},
+ {h:[49,18],n:[48,28],s:[48,37],e:[49,24],w:[48,10],p:[47,64],k:[48,84],f:[50,102]});
+AV("pulldown","frente",
+ {h:[49,28],n:[48,38],s:[48,44],e:[50,28],w:[49,10],p:[47,68],k:[62,72],f:[64,98]},
+ {h:[49,28],n:[48,38],s:[48,44],e:[45,44],w:[51,34],p:[47,68],k:[62,72],f:[64,98]});
+AV("pullover","frente",
+ {h:[49,20],n:[48,30],s:[48,38],e:[54,24],w:[58,10],p:[47,64],k:[48,84],f:[50,102]},
+ {h:[49,20],n:[48,30],s:[48,38],e:[52,50],w:[57,64],p:[47,64],k:[48,84],f:[50,102]});
+AV("pullup","frente",
+ {h:[51,40],n:[50,50],s:[50,56],e:[52,34],w:[50,10],p:[49,74],k:[54,92],f:[48,100]},
+ {h:[51,24],n:[50,34],s:[50,40],e:[47,26],w:[50,10],p:[49,58],k:[54,76],f:[48,86]});
+AV("pushdown","frente",
+ {h:[49,16],n:[48,26],s:[48,36],e:[51,50],w:[54,36],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,36],e:[51,50],w:[52,66],p:[47,62],k:[48,84],f:[50,102]});
+AV("raise-front","frente",
+ {h:[48,16],n:[47,26],s:[47,35],e:[50,52],w:[52,68],p:[46,62],k:[47,84],f:[49,102]},
+ {h:[48,16],n:[47,26],s:[47,35],e:[61,32],w:[77,30],p:[46,62],k:[47,84],f:[49,102]});
+AV("raise-lat","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[51,50],w:[53,66],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[52,36],w:[54,36],p:[47,62],k:[48,84],f:[50,102]});
+AV("rear-fly","frente",
+ {h:[58,32],n:[55,36],s:[53,40],e:[55,54],w:[56,68],p:[46,52],k:[52,78],f:[54,100]},
+ {h:[58,32],n:[55,36],s:[53,40],e:[51,44],w:[49,46],p:[46,52],k:[52,78],f:[54,100]});
+AV("rope","frente",
+ {h:[51,16],n:[50,27],s:[50,35],e:[54,44],w:[59,56],p:[49,62],k:[50,82],f:[52,99]},
+ {h:[51,8],n:[50,19],s:[50,27],e:[54,36],w:[59,48],p:[49,54],k:[50,74],f:[52,90]});
+AV("row-bent","frente",
+ {h:[61,34],n:[58,38],s:[55,42],e:[56,58],w:[57,74],p:[48,54],k:[54,78],f:[56,100]},
+ {h:[61,34],n:[58,38],s:[55,42],e:[47,50],w:[55,52],p:[48,54],k:[54,78],f:[56,100]});
+AV("row-seated","lado",
+ {h:[48,24],n:[48,34],s:[48,40],e:[41,44],w:[36,48],e2:[55,44],w2:[60,48],p:[48,66],k:[43,68],f:[41,94],k2:[53,68],f2:[55,94]},
+ {h:[48,24],n:[48,34],s:[48,40],e:[39,48],w:[43,50],e2:[57,48],w2:[53,50],p:[48,66],k:[43,68],f:[41,94],k2:[53,68],f2:[55,94]});
+AV("run","frente",
+ {h:[51,14],n:[50,25],s:[50,34],e:[54,42],w:[59,54],p:[49,60],k:[46,80],f:[40,98],k2:[58,74],f2:[64,62]},
+ {h:[51,14],n:[50,25],s:[50,34],e:[46,42],w:[41,34],p:[49,60],k:[58,78],f:[64,64],k2:[46,80],f2:[40,98]});
+AV("shrug","frente",
+ {h:[49,16],n:[48,27],s:[48,37],e:[49,54],w:[49,72],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,14],n:[48,24],s:[48,31],e:[49,48],w:[49,66],p:[47,62],k:[48,84],f:[50,102]});
+AV("squat","frente",
+ {h:[49,16],n:[48,26],s:[48,34],e:[51,50],w:[53,66],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[47,32],n:[46,42],s:[46,50],e:[54,58],w:[63,60],p:[39,74],k:[54,82],f:[48,102]});
+AV("squat-bar","frente",
+ {h:[49,16],n:[48,26],s:[48,34],e:[44,36],w:[40,34],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[47,32],n:[46,42],s:[46,50],e:[42,52],w:[38,50],p:[39,74],k:[54,82],f:[48,102]});
+AV("st-backseat","lado",
+ {h:[48,30],n:[48,40],s:[48,46],e:[42,50],w:[38,54],e2:[54,50],w2:[58,54],p:[48,70],k:[43,72],f:[41,96],k2:[53,72],f2:[55,96]},
+ {h:[48,36],n:[48,44],s:[48,50],e:[42,54],w:[38,58],e2:[54,54],w2:[58,58],p:[48,70],k:[43,72],f:[41,96],k2:[53,72],f2:[55,96]});
+AV("st-butterfly","frente",
+ {h:[49,22],n:[48,34],s:[48,42],e:[54,60],w:[60,76],p:[47,68],k:[60,78],f:[68,86]},
+ {h:[49,26],n:[48,38],s:[48,46],e:[54,64],w:[60,82],p:[47,70],k:[60,86],f:[68,90]});
+AV("st-calf","frente",
+ {h:[39,20],n:[38,30],s:[38,36],e:[48,30],w:[60,26],p:[37,62],k:[44,80],f:[48,98],k2:[28,82],f2:[16,100]},
+ {h:[37,22],n:[36,32],s:[36,38],e:[46,32],w:[58,28],p:[35,64],k:[42,82],f:[46,100],k2:[26,84],f2:[14,102]});
+AV("st-chest","frente",
+ {h:[48,18],n:[47,28],s:[47,36],e:[43,30],w:[37,24],p:[46,62],k:[47,84],f:[49,102]},
+ {h:[44,18],n:[43,28],s:[43,36],e:[39,30],w:[33,24],p:[42,62],k:[43,84],f:[45,102]});
+AV("st-crossarm","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[52,40],w:[50,44],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[53,40],w:[50,42],p:[47,62],k:[48,84],f:[50,102]});
+AV("st-fold","frente",
+ {h:[64,62],n:[61,56],s:[58,52],e:[58,70],w:[58,88],p:[51,48],k:[56,76],f:[58,102]},
+ {h:[66,72],n:[63,64],s:[60,58],e:[60,78],w:[60,96],p:[53,48],k:[58,76],f:[60,102]});
+AV("st-forearm","frente",
+ {h:[39,20],n:[38,30],s:[38,38],e:[46,54],w:[54,60],p:[37,64],k:[38,84],f:[40,102]},
+ {h:[39,20],n:[38,30],s:[38,38],e:[46,54],w:[54,68],p:[37,64],k:[38,84],f:[40,102]});
+AV("st-hang","frente",
+ {h:[51,36],n:[50,46],s:[50,52],e:[51,30],w:[50,10],p:[49,72],k:[50,90],f:[52,104]},
+ {h:[51,40],n:[50,50],s:[50,56],e:[51,32],w:[50,10],p:[49,76],k:[50,94],f:[52,106]});
+AV("st-hipflex","frente",
+ {h:[39,20],n:[38,32],s:[38,40],e:[40,56],w:[41,70],p:[37,64],k:[50,66],f:[54,100],k2:[28,86],f2:[16,98]},
+ {h:[35,20],n:[34,32],s:[34,40],e:[36,56],w:[37,70],p:[33,66],k:[46,68],f:[50,100],k2:[24,88],f2:[12,100]});
+AV("st-neck","frente",
+ {h:[49,16],n:[48,28],s:[48,36],e:[51,22],w:[49,10],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,18],n:[48,28],s:[48,36],e:[51,22],w:[49,12],p:[47,62],k:[48,84],f:[50,102]});
+AV("st-quad","frente",
+ {h:[47,16],n:[46,26],s:[46,35],e:[48,52],w:[50,68],p:[45,62],k:[46,84],f:[48,102],k2:[40,80],f2:[32,66]},
+ {h:[47,16],n:[46,26],s:[46,35],e:[48,52],w:[50,64],p:[45,62],k:[46,82],f:[48,102],k2:[40,78],f2:[32,60]});
+AV("st-triceps","frente",
+ {h:[49,18],n:[48,28],s:[48,37],e:[46,14],w:[42,22],p:[47,64],k:[48,84],f:[50,102]},
+ {h:[49,18],n:[48,28],s:[48,37],e:[45,12],w:[40,18],p:[47,64],k:[48,84],f:[50,102]});
+AV("tri-over","frente",
+ {h:[49,18],n:[48,28],s:[48,37],e:[47,18],w:[41,26],p:[47,64],k:[48,84],f:[50,102]},
+ {h:[49,18],n:[48,28],s:[48,37],e:[47,18],w:[49,6],p:[47,64],k:[48,84],f:[50,102]});
+AV("upright-row","frente",
+ {h:[49,16],n:[48,26],s:[48,35],e:[50,52],w:[50,68],p:[47,62],k:[48,84],f:[50,102]},
+ {h:[49,16],n:[48,26],s:[48,35],e:[52,38],w:[50,42],p:[47,62],k:[48,84],f:[50,102]});
+AV("wrist","lado",
+ {h:[48,24],n:[48,34],s:[48,40],e:[42,58],w:[40,66],e2:[54,58],w2:[56,66],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]},
+ {h:[48,24],n:[48,34],s:[48,40],e:[42,58],w:[40,54],e2:[54,58],w2:[56,54],p:[48,66],k:[43,70],f:[41,96],k2:[53,70],f2:[55,96]});
+
 Object.assign(EX2ANIM,{"flexao-escapular":"plank","remada-baixa-triangulo":"row-seated","supino-maquina":"press-flat","panturrilha-parede":"calf",
   "rotacao-externa-elastico":"ext-rot","rotacao-interna-elastico":"int-rot","crucifixo-inverso-elastico":"rear-fly","extensao-punho":"wrist",
   "remada-maquina":"row-seated","remada-elastico":"row-seated","extensora-unilateral":"leg-ext","esteira-inclinada":"run"});
@@ -7001,6 +7381,14 @@ function photoStrip(id, big){
   return '<div class="phrow'+(big?" big":"")+'">'+tiles.map((n,i)=>(i?'<span class="arrow">→</span>':"")+phTile(n)).join("")+'</div><p class="tiny muted" style="margin:.3em 0 .6em">'+t("ex.photoNote")+"</p>";
 }
 function photoThumb(id){ const tiles=PHOTOS[id]; if(!PHOTO_OK || !tiles) return ""; return phTile(tiles[0]); }
+/* todas as fotos do exercicio, em coluna no computador e em faixa no celular */
+function photoPanel(id){
+  const tiles=PHOTOS[id];
+  if(!PHOTO_OK || !tiles || !tiles.length) return "";
+  return '<div class="exfotos"><span class="kicker">'+t("ex.photoTitle")+" ("+tiles.length+")</span>"+
+    '<div class="phgrid">'+tiles.map(n=>phTile(n)).join("")+"</div>"+
+    '<p class="tiny muted">'+t("ex.photoNote")+"</p></div>";
+}
 
 /* ---------- 53. CONFERIR SE O SITE JÁ ESTÁ NA VERSÃO NOVA ---------- */
 /* Por que: quando o navegador guarda a versão antiga (cache ou service worker), a pessoa fica vendo
@@ -7655,7 +8043,7 @@ function painSVG(view, sel){
   return '<svg viewBox="0 0 200 400" role="img" aria-label="'+(view==="front"?t("body.front"):t("body.back"))+'">'+g+"</svg>";
 }
 /* ---------- 58. TELA: DOR & FISIOTERAPIA ---------- */
-const FIS={view:"front", zone:"", q:"", open:"", cidOpen:false};
+const FIS={view:"front", zone:"", q:"", open:"", cidOpen:false, tussOpen:false};
 function fisMatch(q){
   q=q.toLowerCase().trim();
   if(q.length<2) return [];
@@ -7680,7 +8068,10 @@ function condDetail(c){
   let h='<div class="conddet">';
   h+='<p class="lead">'+esc(condDesc(c))+"</p>";
   if(condCare(c)) h+='<div class="carebox">'+I("shield")+"<div><b>"+t("fis.care")+"</b> "+esc(condCare(c))+"</div></div>";
-  h+='<div class="codebox tiny muted">'+t("fis.cid")+": <b>"+esc(c.cid)+"</b> · "+t("fis.tuss")+": <i>"+t("fis.tussNone")+"</i></div>";
+  const tu=(typeof condTuss==="function")? (condTuss()[c.id]||"") : "";
+  h+='<div class="codebox tiny muted">'+t("fis.cid")+": <b>"+esc(c.cid)+"</b> · "+t("fis.tuss")+": "+
+     (tu? "<b>"+esc(tu)+'</b> <button class="btn xs ghost" data-tusspick="'+c.id+'">'+t("common.edit")+"</button>"
+        : '<i>'+t("fis.tussNone")+'</i> <button class="btn xs line" data-tusspick="'+c.id+'">'+I("plus")+t("tu.pickShort")+"</button>")+"</div>";
   if(als.length){
     h+='<span class="kicker">'+t("fis.stretches")+" ("+als.length+")</span><div class='grid gauto' style='margin:6px 0 12px'>"+
       als.map(m=>'<div class="ex"><div class="eqic">'+mvFigure(m,{static:1})+'</div><div class="nm">'+esc(mvName(m))+"</div>"+
@@ -7707,7 +8098,7 @@ SCREENS.fisio = function(){
   if(FIS.q.trim().length>=2){
     h+='<div class="card">'+cardHead("search", t("fis.results"), hits.length+" "+t("fis.found"))+
        (hits.length? hits.map(condRow).join("") : emptyBox("search", t("fis.noHits"), t("fis.noHitsSub")))+"</div>";
-    return h+cidCard();
+    return h+cidCard()+tussCard(uiRole()==="admin");
   }
   h+='<div class="card">'+cardHead("body", t("fis.whereT"), t("fis.whereS"))+
      '<div class="seg" style="max-width:280px;margin:0 auto 10px"><button class="'+(FIS.view==="front"?"on":"")+'" data-fisview="front">'+t("body.front")+'</button><button class="'+(FIS.view==="back"?"on":"")+'" data-fisview="back">'+t("body.back")+"</button></div>"+
@@ -7721,10 +8112,14 @@ SCREENS.fisio = function(){
   } else {
     h+='<div class="card soft">'+emptyBox("body", t("fis.pickFirst"), t("fis.pickFirstSub"))+"</div>";
   }
-  return h+cidCard();
+  return h+cidCard()+tussCard(uiRole()==="admin");
 };
 SCREENS.fisio_after = function(){
   wireCid();
+  wireTuss(uiRole()==="admin");
+  document.querySelectorAll("[data-tusspick]").forEach(b=>b.onclick=()=>pickTussModal(b.getAttribute("data-tusspick")));
+  const tf=document.getElementById("tussfold");
+  if(tf){ tf.open=!!FIS.tussOpen; tf.addEventListener("toggle",()=>{ FIS.tussOpen=tf.open; }); }
   const fold=document.getElementById("cidfold");
   if(fold){ fold.open=FIS.cidOpen; fold.addEventListener("toggle",()=>{ FIS.cidOpen=fold.open; }); }
   const q=document.getElementById("fsq");
@@ -8225,28 +8620,84 @@ function indOf(nome){
 /* como o indicador aparece na tela (sigla continua sigla) */
 const IND_NOMES={glicose:"Glicose", hba1c:"Hemoglobina glicada (HbA1c)", insulina:"Insulina", colesterol:"Colesterol total", hdl:"HDL", ldl:"LDL", vldl:"VLDL", triglic:"Triglicerídeos", creatinina:"Creatinina", ureia:"Ureia", acidourico:"Ácido úrico", tgo:"TGO (AST)", tgp:"TGP (ALT)", ggt:"Gama GT", falcalina:"Fosfatase alcalina", albumina:"Albumina", tsh:"TSH", t4l:"T4 livre", vitd:"Vitamina D", vitb12:"Vitamina B12", ferro:"Ferro sérico", ferritina:"Ferritina", hemoglobina:"Hemoglobina", hematocrito:"Hematócrito", leucocitos:"Leucócitos", plaquetas:"Plaquetas", pcr:"Proteína C reativa", testosterona:"Testosterona total", calcio:"Cálcio", potassio:"Potássio", sodio:"Sódio", magnesio:"Magnésio"};
 function indName(id){ return IND_NOMES[id] || id; }
-/* leitura do laudo: pega nome, valor, unidade e a faixa que o proprio laboratorio imprimiu */
+/* Leitura do laudo. O laudo de verdade não vem numa linha só: o nome do exame fica numa linha,
+   "Resultado: 96 mg/dL" na seguinte e "Valores de referência: 70 a 99" na outra. Por isso a leitura
+   é por BLOCO, e não por linha solta. Três cuidados que evitam erro grosseiro:
+     1) linha de cabeçalho (paciente, data da coleta, laboratório) é descartada;
+     2) número grudado em letra não é valor — o "1" de HbA1c, o "12" de B12, o "4" de T4;
+     3) linha de referência nunca vira valor: ela só preenche a faixa do exame aberto.
+   Nada é inventado: valor e faixa saem escritos do próprio laudo. */
+const EX_IGNORAR=/paciente|data da coleta|data de nasc|nascimento|convenio|conv[eê]nio|requisitante|solicitante|m[eé]dico|crm|protocolo|amostra|material|m[eé]todo|metodo|liberado|p[aá]gina|pagina|laborat[oó]rio|laboratorio|cnpj|endere[cç]o|telefone|assinatura|\bcpf\b|\brg\b|respons[aá]vel/i;
+const EX_REFLINE=/valor(es)?\s+de\s+refer|refer[eê]ncia|referencia|desej[aá]vel|desejavel|normal\s*:|\bvr\s*:|intervalo/i;
+function exLimpa(l){
+  return String(l)
+    .replace(/\([^)]*\)/g," ")                              /* (HbA1c), (25-OH), (AST) */
+    .replace(/\d{1,2}[\/.]\d{1,2}[\/.]\d{2,4}/g," ")        /* datas */
+    .replace(/\d{1,2}:\d{2}/g," ");                         /* horas */
+}
+function exNums(str){
+  const out=[], re=/(?:^|[\s:>=<(])(-?\d+(?:[.,]\d+)?)(?!\d*[A-Za-zÀ-ÿ])/g;
+  let m; while((m=re.exec(str))) out.push({v:m[1], i:m.index+m[0].length-m[1].length});
+  return out;
+}
+function exFaixa(str){
+  let m=str.match(/(\d+(?:[.,]\d+)?)\s*(?:a|à|-|–|at[ée]|to)\s+(\d+(?:[.,]\d+)?)/i);
+  if(m) return m[1].replace(",",".")+" – "+m[2].replace(",",".");
+  m=str.match(/(?:at[eé]|menor que|inferior a|<)\s*(\d+(?:[.,]\d+)?)/i);
+  if(m) return "< "+m[1].replace(",",".");
+  m=str.match(/(?:maior que|superior a|>)\s*(\d+(?:[.,]\d+)?)/i);
+  if(m) return "> "+m[1].replace(",",".");
+  return "";
+}
+function exUnidade(resto){
+  const m=String(resto).match(/^\s*\/?\s*([A-Za-zµμ%]{1,6}(?:\/[A-Za-z0-9³²µμ]{1,6})?)/);
+  if(!m) return "";
+  const u=m[1];
+  return /^(a|at|to|de|e|ou|desejavel|normal|refer)$/i.test(u)? "" : u;
+}
 function parseExame(raw){
-  const lines=String(raw).split(/\n+/).map(l=>l.trim()).filter(l=>/\d/.test(l)&&l.length>4);
-  const out=[]; const vistos={};
-  lines.forEach(l=>{
-    const ind=indOf(l);
-    const m=l.match(/([A-Za-zÀ-ÿ0-9\s\.\-\/()]{3,44}?)[\s:.\-]{1,6}(\d+(?:[.,]\d+)?)\s*([A-Za-zµ%\/³²]{0,10})/);
-    if(!m && !ind) return;
-    const valor=m? m[2].replace(",",".") : (firstNum(l)!=null? String(firstNum(l)) : "");
-    if(!valor) return;
-    /* faixa impressa no laudo: "70 - 99", "ate 200", "< 150" */
-    let ref="";
-    const rr=l.match(/(\d+(?:[.,]\d+)?)\s*(?:a|-|–|to)\s*(\d+(?:[.,]\d+)?)\s*$/) ||
-             l.match(/(?:ate|menor que|inferior a|<)\s*(\d+(?:[.,]\d+)?)/);
-    if(rr) ref=rr[2]? (rr[1]+" – "+rr[2]) : ("< "+rr[1]);
-    const nome=ind? indName(ind.id) : (m? m[1].trim() : l.slice(0,40));
-    const key=ind? ind.id : norm(nome);
-    if(vistos[key]) return;
-    vistos[key]=1;
-    out.push({ind:ind?ind.id:"", name:nome, value:valor, unit:(m&&m[3]?m[3].trim():"")||(ind?ind.unit:""), ref:ref, line:l});
+  const linhas=String(raw).split(/\r?\n/).map(l=>l.trim()).filter(l=>l.length>1);
+  const out=[], vistos={};
+  let ctx=null, ultimo=null;
+  linhas.forEach(l=>{
+    if(EX_IGNORAR.test(l)) return;
+    const limpo=exLimpa(l);
+    const ind=indOf(limpo);
+    const nums=exNums(limpo);
+    /* "Desejável: < 190" no fim de uma linha de resultado é faixa; no começo, a linha inteira é faixa */
+    const posRef=limpo.search(EX_REFLINE);
+    if(posRef>=0 && (!nums.length || posRef < nums[0].i)){
+      const f=exFaixa(limpo.slice(posRef));
+      if(f && ultimo && !ultimo.ref) ultimo.ref=f;
+      return;
+    }
+    if(ind && !nums.length){ ctx=ind; return; }      /* só o nome do exame: abre o bloco */
+    if(!nums.length) return;
+    const alvo = ind || ctx;
+    if(!alvo) return;                                 /* número solto sem dono: não inventa */
+    const key=alvo.id;
+    if(vistos[key]){ if(!ind) ctx=null; return; }
+    const primeiro=nums[0];
+    const resto=limpo.slice(primeiro.i+primeiro.v.length);
+    const item={ind:alvo.id, name:indName(alvo.id), value:primeiro.v.replace(",","."),
+                 unit:exUnidade(resto)||alvo.unit||"", ref:exFaixa(resto), line:l};
+    out.push(item); vistos[key]=1; ultimo=item; ctx=null;
   });
-  return out.length? out.slice(0,30) : null;
+  /* linhas soltas que não são de indicador conhecido, para a pessoa não perder nada */
+  if(out.length<3){
+    linhas.forEach(l=>{
+      if(EX_IGNORAR.test(l)||EX_REFLINE.test(l)) return;
+      const limpo=exLimpa(l);
+      if(indOf(limpo)) return;
+      const m=limpo.match(/^([A-Za-zÀ-ÿ\s\.\-\/]{4,40}?)[\s:.\-]{1,6}(\d+(?:[.,]\d+)?)\s*([A-Za-zµμ%\/]{0,8})/);
+      if(!m) return;
+      const nome=m[1].trim();
+      if(vistos["x"+norm(nome)]) return;
+      vistos["x"+norm(nome)]=1;
+      out.push({ind:"", name:nome, value:m[2].replace(",","."), unit:(m[3]||"").trim(), ref:"", line:l});
+    });
+  }
+  return out.length? out.slice(0,40) : null;
 }
 /* agrupa o historico por indicador, para virar um grafico por linha */
 function examSeries(){
@@ -8518,47 +8969,721 @@ function wireFavsCard(){
   if(r) r.onclick=()=>{ ROOT.prefs.favs=null; saveRoot(); buildNav(); render(); };
 }
 
-/* ---------- 65. DUAS POSIÇÕES E MOVIMENTO GIRANDO ---------- */
-/* Por que: um boneco mexendo ajuda, mas na hora de conferir a postura a pessoa quer parar e olhar.
-   No computador cabem as duas posições lado a lado; no celular cabe uma só, girando, com pausa.
-   OBSERVAÇÃO HONESTA: aqui "duas vistas" são as duas POSIÇÕES do movimento (início e fim).
-   Um desenho de verdade visto de lado exigiria um segundo desenho para cada exercício — não é
-   uma rotação do que já existe, e inventar isso mostraria uma postura errada. Ficou pendente. */
-function viewCell(animId, frame, cap, cls){
-  return '<figure class="vwcell '+cls+'">'+animSVG(animId, frame===null?{}:{frame:frame})+
-    '<figcaption class="viewcap">'+esc(cap)+"</figcaption></figure>";
+/* ---------- 65. AS DUAS VISTAS DO MOVIMENTO ---------- */
+/* Por que: o ângulo muda tudo. De frente você confere a altura e a abertura dos braços;
+   de lado, o ângulo do cotovelo e se a coluna está reta. Então o app mostra as duas.
+   Quatro fotos paradas (frente início/fim e lado início/fim) e, embaixo, os dois bonecos
+   se mexendo lado a lado, no mesmo movimento.
+   Movimento deitado, de bruços, de quatro apoios, ou que só acontece no plano de frente
+   (inclinação lateral, por exemplo) tem uma vista só, e o app diz isso. */
+function animPlanes(id){
+  const d=ANIM[id]; if(!d) return [];
+  const base=d.plano||"lado";
+  const outra=(base==="frente")?"lado":"frente";
+  return d.v2? [{v:"base",k:base},{v:"alt",k:outra}] : [{v:"base",k:base}];
 }
+function planeName(k){ return t(k==="frente"?"vw.front":"vw.side"); }
 function exViewer(animId){
   if(!animId || !ANIM[animId]) return "";
-  const wide = (typeof window!=="undefined" && window.innerWidth>=820);
-  const mode = wide? "pair" : "move";
-  return '<div class="viewgrid" id="vgrid" data-mode="'+mode+'">'+
-      viewCell(animId, 0, t("vw.start"), "stat")+
-      viewCell(animId, 1, t("vw.end"), "stat")+
-      viewCell(animId, null, t("vw.move"), "mov")+
-    "</div>"+
-    '<div class="viewctl">'+
-      '<div class="seg" style="flex:1;max-width:280px"><button class="'+(mode==="pair"?"on":"")+'" data-vmode="pair">'+I("layers")+t("vw.pair")+'</button>'+
-      '<button class="'+(mode==="move"?"on":"")+'" data-vmode="move">'+I("refresh")+t("vw.rot")+"</button></div>"+
-      '<button class="btn xs line" id="vpause">'+I("pause")+t("tm.pause")+"</button></div>"+
-    '<p class="tiny muted" style="text-align:center;margin:.3em 0 .8em">'+t("vw.note")+"</p>";
+  const pl=animPlanes(animId);
+  const still=(p,frame)=>'<figure class="vwcell">'+animSVG(animId,{view:p.v,frame:frame})+
+    '<figcaption class="viewcap">'+esc(planeName(p.k))+" · "+t(frame?"vw.end":"vw.start")+"</figcaption></figure>";
+  const moving=(p)=>'<figure class="vwcell mv">'+animSVG(animId,{view:p.v})+
+    '<figcaption class="viewcap">'+esc(planeName(p.k))+"</figcaption></figure>";
+  let h='<div class="exviews">';
+  h+='<div class="vwstills'+(pl.length>1?"":" one")+'">'+pl.map(p=>still(p,0)+still(p,1)).join("")+"</div>";
+  h+='<div class="vwmoves'+(pl.length>1?"":" one")+'">'+pl.map(moving).join("")+"</div>";
+  h+="</div>";
+  h+='<p class="tiny muted" style="text-align:center;margin:.2em 0 .8em">'+
+     t(pl.length>1?"vw.note":"vw.noteOne").replace("{v}",planeName(pl[0].k).toLowerCase())+"</p>";
+  return h;
 }
-function wireViewer(root){
-  root=root||document;
-  const g=root.querySelector("#vgrid"); if(!g) return;
-  root.querySelectorAll("[data-vmode]").forEach(b=>b.onclick=()=>{
-    g.setAttribute("data-mode", b.getAttribute("data-vmode"));
-    root.querySelectorAll("[data-vmode]").forEach(x=>x.classList.toggle("on", x===b));
-  });
-  const pb=root.querySelector("#vpause");
-  if(pb) pb.onclick=()=>{
-    const sv=g.querySelector(".mov svg.anim"); if(!sv) return;
-    const parado=sv.hasAttribute("data-static");
-    if(parado) sv.removeAttribute("data-static"); else sv.setAttribute("data-static","1");
-    pb.innerHTML=(parado? I("pause")+t("tm.pause") : I("play")+t("tm.resume"));
-    g.setAttribute("data-mode","move");
-    root.querySelectorAll("[data-vmode]").forEach(x=>x.classList.toggle("on", x.getAttribute("data-vmode")==="move"));
+
+/* ---------- 66. VÍDEO DO EXERCÍCIO ---------- */
+/* Por que mudou: até a versão 3.1 o app embutia uma BUSCA do YouTube dentro do quadro
+   (listType=search). O YouTube desligou isso em 15/11/2020 e agora devolve "Este vídeo não está
+   disponível" — era esse o quadro roxo. Não dá para adivinhar o código de um vídeo: inventar
+   levaria a vídeo errado ou apagado. Então o app passa a usar, nesta ordem:
+     1) o link que a própria pessoa colou (fica no aparelho dela);
+     2) a lista videos.json publicada junto com o site (o administrador monta dentro do app);
+     3) um botão que abre a busca do YouTube em outra aba — sempre funciona. */
+let VIDEOS={}, VIDEOS_TRIED=false;
+function loadVideos(cb){
+  if(VIDEOS_TRIED){ cb&&cb(); return; }
+  VIDEOS_TRIED=true;
+  if(location.protocol==="file:"){ cb&&cb(); return; }
+  fetch("videos.json?ts="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{
+    if(j && j.videos) VIDEOS=j.videos;
+    cb&&cb();
+  }).catch(()=>{ cb&&cb(); });
+}
+/* aceita qualquer formato de endereço do YouTube e devolve só o código de 11 caracteres */
+function ytId(url){
+  const s=String(url||"").trim();
+  if(/^[A-Za-z0-9_-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:v=|\/embed\/|\/shorts\/|youtu\.be\/|\/live\/|\/v\/)([A-Za-z0-9_-]{11})/);
+  return m? m[1] : "";
+}
+function myVideos(){ STATE.videos=STATE.videos||{}; return STATE.videos; }
+function videoFor(exId){ return myVideos()[exId] || VIDEOS[exId] || ""; }
+function ytSearchUrl(nome){
+  const q=encodeURIComponent(LANG==="pt" ? (nome+" execução correta academia") : (nome+" proper form exercise"));
+  return "https://www.youtube.com/results?search_query="+q;
+}
+/* serve tanto para exercício quanto para movimento do aquecimento: recebe o id e o nome */
+function videoBox(exId, nome){
+  const x={id:exId}; const id=videoFor(exId);
+  if(id){
+    return '<div class="yt"><iframe src="https://www.youtube.com/embed/'+esc(id)+'?rel=0" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="'+esc(nome)+'"></iframe></div>'+
+      '<div class="row" style="margin-top:8px"><a class="btn xs ghost" target="_blank" rel="noopener" href="'+ytSearchUrl(nome)+'">'+I("search")+t("vd.other")+"</a>"+
+      '<button class="btn xs line" data-vdset="'+x.id+'">'+I("edit")+t("vd.change")+"</button>"+
+      (myVideos()[x.id]?'<button class="btn xs ghost" data-vddel="'+x.id+'">'+I("trash")+t("vd.clear")+"</button>":"")+"</div>";
+  }
+  return '<div class="vdempty">'+I("video")+"<div><b>"+t("vd.noneT")+"</b><br><small>"+t("vd.noneS")+"</small></div></div>"+
+    '<div class="row"><a class="btn" target="_blank" rel="noopener" href="'+ytSearchUrl(nome)+'">'+I("search")+t("vd.search")+"</a>"+
+    '<button class="btn line" data-vdset="'+x.id+'">'+I("plus")+t("vd.paste")+"</button></div>";
+}
+function videoAskModal(exId, after){
+  const atual=myVideos()[exId]||VIDEOS[exId]||"";
+  const m=modal(mh(t("vd.paste"))+
+    '<p class="muted">'+t("vd.pasteHow")+"</p>"+
+    '<label class="fld"><span>'+t("vd.link")+'</span><input type="url" id="vd_u" inputmode="url" placeholder="https://www.youtube.com/watch?v=..." value="'+esc(atual?("https://youtu.be/"+atual):"")+'"></label>'+
+    '<p class="tiny muted">'+t("vd.pasteNote")+"</p>"+
+    '<div class="row" style="justify-content:flex-end"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="vd_ok">'+t("common.save")+"</button></div>");
+  m.querySelector("#vd_ok").onclick=()=>{
+    const v=m.querySelector("#vd_u").value;
+    if(!v.trim()){ myVideos()[exId]=undefined; delete myVideos()[exId]; save(); m.remove(); after&&after(); return; }
+    const id=ytId(v);
+    if(!id){ toast(t("vd.bad")); return; }
+    myVideos()[exId]=id; save(); m.remove(); toast(t("common.saved")); after&&after();
   };
+}
+function wireVideo(root, x, repaint){
+  root=root||document;
+  root.querySelectorAll("[data-vdset]").forEach(b=>b.onclick=()=>videoAskModal(b.getAttribute("data-vdset"), repaint));
+  root.querySelectorAll("[data-vddel]").forEach(b=>b.onclick=()=>{ delete myVideos()[b.getAttribute("data-vddel")]; save(); repaint&&repaint(); });
+}
+/* --- administrador: montar o videos.json que viaja com o site --- */
+function videosAdminCard(){
+  const todos=allEx();
+  const meus=myVideos();
+  const comVideo=todos.filter(x=>videoFor(x.id));
+  let h='<div class="card">'+cardHead("video", t("vd.admTitle"), t("vd.admSub"),
+    '<span class="pill">'+comVideo.length+" / "+todos.length+"</span>");
+  h+='<p class="tiny muted">'+t("vd.admHow")+"</p>";
+  h+='<div class="row"><button class="btn" id="vd_dl">'+I("download")+t("vd.admDownload")+'</button>'+
+     '<label class="btn ghost" style="cursor:pointer">'+I("upload")+t("vd.admImport")+'<input type="file" accept="application/json,.json" id="vd_up" style="display:none"></label></div>';
+  h+='<details class="fold" style="margin-top:12px"><summary>'+I("listcheck")+t("vd.admList")+"</summary><div class='fb'>"+
+     '<div class="vdlist">'+todos.map(x=>{
+       const id=videoFor(x.id), meu=!!meus[x.id];
+       return '<div class="vdrow"><span class="nm">'+esc(exName(x))+"</span>"+
+         (id?'<span class="pill ok">'+esc(id)+(meu?" ★":"")+"</span>":'<span class="pill">—</span>')+
+         '<button class="btn xs line" data-vdset="'+x.id+'">'+(id?t("vd.change"):t("vd.paste"))+"</button></div>";
+     }).join("")+"</div></div></details>";
+  h+="</div>";
+  return h;
+}
+function wireVideosAdmin(){
+  const d=document.getElementById("vd_dl");
+  if(d) d.onclick=()=>{
+    const obj={_leia_me:"Códigos de vídeo do YouTube por exercício. O app monta este arquivo em Administrador › Vídeos.",
+      atualizado:todayISO(), videos:Object.assign({}, VIDEOS, myVideos())};
+    const blob=new Blob([JSON.stringify(obj,null,1)],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="videos.json"; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  };
+  const u=document.getElementById("vd_up");
+  if(u) u.onchange=e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>{ try{ const j=JSON.parse(r.result); if(j&&j.videos){ VIDEOS=Object.assign({},VIDEOS,j.videos); toast(t("common.ok")); render(); } else toast(t("vd.bad")); }catch(err){ toast(t("vd.bad")); } };
+    r.readAsText(f);
+  };
+  wireVideo(document, null, ()=>render());
+}
+
+/* ---------- 67. TABELA TUSS/TISS ---------- */
+/* Por que fica assim: a TUSS é da ANS, é grande e muda com o tempo. O app NÃO inventa código
+   nenhum — ele só sabe ler a tabela oficial e guardar no aparelho.
+   Caminhos possíveis, do mais simples para o mais trabalhoso:
+     1) o arquivo tuss.json publicado junto com o site (quem monta é o administrador, aqui dentro);
+     2) sincronizar com um endereço que você configura (funciona quando o servidor de lá deixa —
+        muitos sites do governo bloqueiam a leitura direta pelo navegador, e o app avisa quando isso
+        acontece em vez de fingir que deu certo);
+     3) importar o arquivo da ANS que você baixou (CSV) e deixar o app montar o tuss.json.
+   A tabela 22 (procedimentos) tem cerca de 6 mil linhas e cabe bem. A tabela 19 (OPME) passa de
+   um milhão de linhas e não cabe num site estático — por isso ela fica de fora. */
+const TUSSKEY="riseone.tuss";
+let TUSSDB=null;
+function tussRead(){
+  if(TUSSDB) return TUSSDB;
+  try{ const s=localStorage.getItem(TUSSKEY); if(s){ TUSSDB=JSON.parse(s); return TUSSDB; } }catch(e){}
+  return null;
+}
+function tussBytes(){ try{ const s=localStorage.getItem(TUSSKEY); return s? s.length*2 : 0; }catch(e){ return 0; } }
+function tussClear(){ try{ localStorage.removeItem(TUSSKEY); }catch(e){} TUSSDB=null; }
+function tussSave(db){
+  TUSSDB=db;
+  try{ localStorage.setItem(TUSSKEY, JSON.stringify(db)); return true; }
+  catch(e){ toast(t("tu.tooBig")); return false; }
+}
+/* --- rede: só sincronizar no Wi-Fi, se a pessoa pedir isso --- */
+function netCfg(){
+  STATE.settings=STATE.settings||{};
+  STATE.settings.rede=Object.assign({soWifi:true, url:""}, STATE.settings.rede||{});
+  return STATE.settings.rede;
+}
+function netInfo(){
+  const c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  if(!c) return {tipo:"", economia:false, sabe:false};
+  return {tipo:c.type||"", efetivo:c.effectiveType||"", economia:!!c.saveData, sabe:!!(c.type||c.saveData)};
+}
+function netName(){
+  const n=netInfo();
+  if(!n.sabe) return t("tu.netUnknown");
+  if(n.economia) return t("tu.netSave");
+  if(n.tipo==="wifi"||n.tipo==="ethernet") return t("tu.netWifi");
+  if(n.tipo==="cellular") return t("tu.netData")+(n.efetivo?" ("+n.efetivo+")":"");
+  return n.tipo;
+}
+function podeBaixarGrande(){
+  const c=netCfg(); if(!c.soWifi) return true;
+  const n=netInfo();
+  if(!n.sabe) return true;                 /* o aparelho não conta: não dá para bloquear às cegas */
+  if(n.economia) return false;
+  return !(n.tipo==="cellular");
+}
+/* --- ler o arquivo --- */
+function tussFetch(url, cb){
+  fetch(url,{cache:"no-store"}).then(r=>{
+    if(!r.ok) throw new Error("http "+r.status);
+    return r.json();
+  }).then(j=>{
+    if(!j || !j.itens || !j.itens.length) throw new Error("vazio");
+    j.baixadoEm=todayISO();
+    cb(tussSave(j)? j : null, "");
+  }).catch(err=>cb(null, String(err&&err.message||err)));
+}
+function tussSync(cb){
+  if(location.protocol==="file:"){ cb(null, "file"); return; }
+  const c=netCfg();
+  if(!podeBaixarGrande()){ cb(null, "rede"); return; }
+  tussFetch((c.url||"tuss.json")+"?ts="+Date.now(), cb);
+}
+function tussSearch(q){
+  const db=tussRead(); if(!db) return [];
+  q=norm(q||"").trim();
+  if(!q) return db.itens.slice(0,25);
+  const so=/^\d+$/.test(q);
+  return db.itens.filter(i=> so? String(i.cod).indexOf(q)===0 : norm(i.desc).indexOf(q)>=0 ).slice(0,60);
+}
+/* --- importar o arquivo da ANS (CSV) --- */
+function csvLinhas(txt){
+  const sep = (txt.split("\n")[0].split(";").length > txt.split("\n")[0].split(",").length) ? ";" : ",";
+  return txt.split(/\r?\n/).filter(l=>l.trim()).map(l=>{
+    const out=[]; let cur="", dentro=false;
+    for(let i=0;i<l.length;i++){
+      const ch=l[i];
+      if(ch==='"'){ if(dentro && l[i+1]==='"'){ cur+='"'; i++; } else dentro=!dentro; }
+      else if(ch===sep && !dentro){ out.push(cur); cur=""; }
+      else cur+=ch;
+    }
+    out.push(cur);
+    return out.map(c=>c.trim());
+  });
+}
+function tussFromCSV(txt, meta){
+  const linhas=csvLinhas(txt);
+  if(linhas.length<2) return null;
+  /* acha a coluna do código e a da descrição pelo cabeçalho; se não achar, usa as duas primeiras */
+  const cab=linhas[0].map(c=>norm(c));
+  let ic=cab.findIndex(c=>/codigo|termo|cod\b/.test(c));
+  let id=cab.findIndex(c=>/descricao|termo|nome/.test(c) && cab.indexOf(c)!==ic);
+  if(ic<0) ic=0;
+  if(id<0||id===ic) id=(ic===0?1:0);
+  const itens=[];
+  const vistos={};
+  for(let i=1;i<linhas.length;i++){
+    const l=linhas[i];
+    const cod=(l[ic]||"").replace(/[^0-9A-Za-z.\-]/g,"");
+    const desc=(l[id]||"").trim();
+    if(!cod || !desc || vistos[cod]) continue;
+    vistos[cod]=1;
+    itens.push({cod:cod, desc:desc});
+  }
+  if(!itens.length) return null;
+  return Object.assign({
+    _leia_me:"Tabela TUSS da ANS, convertida pelo próprio RiseONE a partir do arquivo oficial. Confira sempre na fonte antes de usar em pedido ou reembolso.",
+    fonte:"ANS — Terminologia Unificada da Saúde Suplementar (TUSS)",
+    tabela:"", versao:"", referencia:"", conferido:false, baixadoEm:todayISO()
+  }, meta||{}, {itens:itens});
+}
+/* --- cartão da tabela, usado em Dor e alívio e no Administrador --- */
+function tussCard(admin){
+  const db=tussRead(), c=netCfg();
+  let h='<details class="fold" id="tussfold"><summary>'+I("file")+t("tu.title")+
+    (db?' <span class="pill" style="margin-left:6px">'+db.itens.length+"</span>":"")+"</summary><div class='fb'>";
+  h+='<p class="tiny muted">'+t("tu.sub")+"</p>";
+  if(db){
+    h+='<div class="row" style="align-items:center"><span class="pill">'+db.itens.length+" "+t("tu.codes")+'</span>'+
+       '<span class="pill">'+fmtBytes(tussBytes())+"</span>"+
+       (db.versao?'<span class="pill acc">'+esc(db.versao)+"</span>":"")+
+       (db.referencia?'<span class="pill">'+t("tu.ref")+": "+esc(db.referencia)+"</span>":"")+
+       (db.baixadoEm?'<span class="pill">'+t("tu.synced")+": "+fmtDate(db.baixadoEm)+"</span>":"")+"</div>";
+    h+='<div class="warnbox tiny" style="margin:10px 0">'+I("alert")+"<div>"+t("tu.check")+"</div></div>";
+    h+='<div class="help-q" style="margin:8px 0">'+I("search")+'<input type="search" id="tussq" placeholder="'+t("tu.searchph")+'"></div>';
+    h+='<div class="cidlist" id="tusslist">'+tussRows(tussSearch(""))+"</div>";
+  } else {
+    h+='<div class="vdempty">'+I("file")+"<div><b>"+t("tu.noneT")+"</b><br><small>"+t("tu.noneS")+"</small></div></div>";
+  }
+  h+='<div class="sep"></div><div class="row"><button class="btn line" id="tuss_sync">'+I("download")+t(db?"tu.resync":"tu.sync")+"</button>"+
+     (db?'<button class="btn xs ghost" id="tuss_del">'+I("trash")+t("tu.clear")+"</button>":"")+"</div>";
+  h+='<p class="tiny muted" style="margin-top:6px">'+t("tu.netNow")+": <b>"+esc(netName())+"</b></p>";
+  h+='<label class="switch" style="margin-top:8px"><input type="checkbox" id="tuss_wifi" '+(c.soWifi?"checked":"")+'><span class="tr"></span><span>'+t("tu.onlyWifi")+"</span></label>";
+  if(admin){
+    h+='<div class="sep"></div><span class="kicker">'+t("tu.admTitle")+"</span>"+
+       '<p class="tiny muted">'+t("tu.admHow")+"</p>"+
+       '<div class="grid g3"><label class="fld"><span>'+t("tu.tabela")+'</span><input type="text" id="tu_tab" placeholder="22" value="'+esc((db&&db.tabela)||"")+'"></label>'+
+       '<label class="fld"><span>'+t("tu.versao")+'</span><input type="text" id="tu_ver" placeholder="202601" value="'+esc((db&&db.versao)||"")+'"></label>'+
+       '<label class="fld"><span>'+t("tu.ref")+'</span><input type="date" id="tu_ref" value="'+esc((db&&db.referencia)||"")+'"></label></div>'+
+       '<label class="fld"><span>'+t("tu.url")+'</span><input type="url" id="tu_url" placeholder="tuss.json" value="'+esc(c.url||"")+'"></label>'+
+       '<div class="row"><label class="btn ghost" style="cursor:pointer">'+I("upload")+t("tu.import")+'<input type="file" accept=".csv,text/csv,text/plain" id="tu_csv" style="display:none"></label>'+
+       (db?'<button class="btn" id="tu_dl">'+I("download")+t("tu.export")+"</button>":"")+"</div>";
+  }
+  h+="</div></details>";
+  return h;
+}
+function tussRows(list){
+  if(!list.length) return '<p class="tiny muted">'+t("tu.noHits")+"</p>";
+  return list.map(i=>'<div class="cidrow"><b>'+esc(i.cod)+"</b><span>"+esc(i.desc)+"</span></div>").join("");
+}
+function wireTuss(admin){
+  const s=document.getElementById("tuss_sync");
+  if(s) s.onclick=()=>{
+    s.disabled=true; s.textContent=t("tu.syncing");
+    tussSync((db,err)=>{
+      s.disabled=false;
+      if(db){ toast(t("tu.ok").replace("{n}",db.itens.length)); render(); return; }
+      if(err==="rede"){ toast(t("tu.blockedNet")); }
+      else if(err==="file"){ toast(t("tu.fileOnly")); }
+      else { tussFailModal(err); }
+      render();
+    });
+  };
+  const d=document.getElementById("tuss_del");
+  if(d) d.onclick=()=>confirmBox(t("tu.clearAsk"),()=>{ tussClear(); toast(t("common.done")); render(); });
+  const w=document.getElementById("tuss_wifi");
+  if(w) w.onchange=()=>{ netCfg().soWifi=w.checked; save(); };
+  const q=document.getElementById("tussq");
+  if(q) q.oninput=()=>{ document.getElementById("tusslist").innerHTML=tussRows(tussSearch(q.value)); };
+  if(!admin) return;
+  const u=document.getElementById("tu_url");
+  if(u) u.onchange=()=>{ netCfg().url=u.value.trim(); save(); };
+  const f=document.getElementById("tu_csv");
+  if(f) f.onchange=e=>{
+    const file=e.target.files[0]; if(!file) return;
+    const r=new FileReader();
+    r.onload=()=>{
+      const meta={tabela:(document.getElementById("tu_tab")||{}).value||"",
+                  versao:(document.getElementById("tu_ver")||{}).value||"",
+                  referencia:(document.getElementById("tu_ref")||{}).value||""};
+      const db=tussFromCSV(String(r.result), meta);
+      if(!db){ toast(t("tu.csvBad")); return; }
+      if(tussSave(db)){ toast(t("tu.ok").replace("{n}",db.itens.length)); render(); }
+    };
+    r.readAsText(file,"utf-8");
+  };
+  const dl=document.getElementById("tu_dl");
+  if(dl) dl.onclick=()=>{
+    const db=tussRead(); if(!db) return;
+    db.tabela=(document.getElementById("tu_tab")||{}).value||db.tabela;
+    db.versao=(document.getElementById("tu_ver")||{}).value||db.versao;
+    db.referencia=(document.getElementById("tu_ref")||{}).value||db.referencia;
+    tussSave(db);
+    const blob=new Blob([JSON.stringify(db)],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="tuss.json"; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  };
+}
+function tussFailModal(err){
+  modal('<div class="mh"><div class="row nowrap"><span class="ibub warn">'+I("alert")+'</span><h3 style="margin:0">'+t("tu.failT")+"</h3></div></div>"+
+    "<p class='muted'>"+t("tu.failB")+"</p>"+
+    "<ol class='bul tiny'>"+["tu.f1","tu.f2","tu.f3"].map(k=>"<li>"+t(k)+"</li>").join("")+"</ol>"+
+    "<p class='tiny muted'>"+t("tu.failTec")+": <code>"+esc(err||"?")+"</code></p>");
+}
+/* --- ligar um código TUSS a uma situação de Dor e alívio (quem escolhe é a pessoa) --- */
+function condTuss(){ STATE.condTuss=STATE.condTuss||{}; return STATE.condTuss; }
+function pickTussModal(condId){
+  const db=tussRead();
+  if(!db){ toast(t("tu.needFirst")); return; }
+  const m=modal(mh(t("tu.pick"))+
+    '<div class="help-q">'+I("search")+'<input type="search" id="pt_q" placeholder="'+t("tu.searchph")+'"></div>'+
+    '<div class="cidlist" id="pt_l" style="margin-top:8px"></div>');
+  const paint=(q)=>{
+    const l=tussSearch(q);
+    m.querySelector("#pt_l").innerHTML = l.length? l.map(i=>'<button class="cidrow" data-pt="'+esc(i.cod)+'" style="text-align:left;background:none;border:0;border-bottom:1px solid var(--border);cursor:pointer;width:100%"><b>'+esc(i.cod)+"</b><span>"+esc(i.desc)+"</span></button>").join("") : '<p class="tiny muted">'+t("tu.noHits")+"</p>";
+    m.querySelectorAll("[data-pt]").forEach(b=>b.onclick=()=>{
+      condTuss()[condId]=b.getAttribute("data-pt"); save(); m.remove(); toast(t("common.saved")); render();
+    });
+  };
+  m.querySelector("#pt_q").oninput=e=>paint(e.target.value);
+  paint("");
+}
+
+/* ---------- 68. MÚSICA, RELÓGIO/CINTA E TV ---------- */
+/* O que dá e o que não dá, sem enrolação:
+   MÚSICA — nenhum site controla o Spotify que está tocando no celular. O que existe de verdade é
+   abrir o app da música num toque e voltar. E a voz do treinador NÃO para a música: o navegador não
+   pede o áudio só para ele, então a música continua e a voz entra por cima (o celular abaixa o
+   volume dela por um instante, sozinho).
+   RELÓGIO/CINTA — um site não instala nada no relógio. Mas o navegador do Android lê, por Bluetooth,
+   qualquer cinta ou pulseira que publique o serviço padrão de frequência cardíaca. É isso que o app
+   usa: batimento ao vivo durante o treino. No iPhone não funciona: o Safari não tem Bluetooth na web.
+   TV — ver a seção 69. */
+/* --- música --- */
+const MUSICA_APPS=[
+ {id:"spotify", nome:"Spotify",       re:/spotify\.com|^spotify:/i},
+ {id:"ytmusic", nome:"YouTube Music", re:/music\.youtube\.com/i},
+ {id:"deezer",  nome:"Deezer",        re:/deezer\.com/i},
+ {id:"apple",   nome:"Apple Music",   re:/music\.apple\.com/i},
+ {id:"outro",   nome:"",              re:/^https?:\/\//i}
+];
+function musCfg(){
+  STATE.settings=STATE.settings||{};
+  STATE.settings.musica=Object.assign({url:"", nome:""}, STATE.settings.musica||{});
+  return STATE.settings.musica;
+}
+function musApp(url){ const a=MUSICA_APPS.find(x=>x.re.test(String(url||""))); return a? (a.nome||t("mu.other")) : ""; }
+function musBtn(cls){
+  const c=musCfg();
+  if(!c.url) return "";
+  return '<a class="btn '+(cls||"line sm")+'" target="_blank" rel="noopener" href="'+esc(c.url)+'">'+I("speaker")+esc(c.nome||musApp(c.url)||t("mu.play"))+"</a>";
+}
+function musCard(){
+  const c=musCfg();
+  let h='<div class="card">'+cardHead("speaker", t("mu.title"), t("mu.sub"));
+  h+='<div class="grid g2 collapse"><label class="fld"><span>'+t("mu.link")+'</span><input type="url" id="mu_u" inputmode="url" placeholder="https://open.spotify.com/playlist/..." value="'+esc(c.url)+'"></label>'+
+     '<label class="fld"><span>'+t("mu.name")+'</span><input type="text" id="mu_n" placeholder="'+t("mu.namePh")+'" value="'+esc(c.nome)+'"></label></div>';
+  h+='<div class="row"><button class="btn sm" id="mu_s">'+I("check")+t("common.save")+"</button>"+(c.url?musBtn("ghost sm"):"")+"</div>";
+  h+='<div class="warnbox" style="margin-top:12px">'+I("info")+"<div>"+t("mu.how")+"</div></div>";
+  h+='<p class="tiny muted">'+t("mu.limit")+"</p></div>";
+  return h;
+}
+function wireMusCard(){
+  const s=document.getElementById("mu_s");
+  if(s) s.onclick=()=>{
+    const c=musCfg();
+    c.url=document.getElementById("mu_u").value.trim();
+    c.nome=document.getElementById("mu_n").value.trim();
+    save(); toast(t("common.saved")); render();
+  };
+}
+/* --- batimento por Bluetooth --- */
+const HR={dev:null, ch:null, bpm:0, em:0, max:0, serie:[], ligado:false};
+function hasBLE(){ return !!(navigator.bluetooth && navigator.bluetooth.requestDevice); }
+function hrCfg(){
+  STATE.settings=STATE.settings||{};
+  STATE.settings.hr=Object.assign({fcMax:0, autoLigar:false}, STATE.settings.hr||{});
+  return STATE.settings.hr;
+}
+/* 220 menos a idade é uma CONTA APROXIMADA, não um exame. Serve de referência e pode ser trocada. */
+function fcMax(){
+  const c=hrCfg();
+  if(c.fcMax>0) return c.fcMax;
+  const b=STATE.profile&&STATE.profile.birth;
+  if(!b) return 0;
+  const idade=Math.floor((Date.now()-new Date(b).getTime())/31557600000);
+  return (idade>5 && idade<100)? (220-idade) : 0;
+}
+const HR_ZONAS=[[50,60,"z1"],[60,70,"z2"],[70,80,"z3"],[80,90,"z4"],[90,101,"z5"]];
+function hrZona(bpm){
+  const m=fcMax(); if(!m||!bpm) return null;
+  const pc=bpm/m*100;
+  const z=HR_ZONAS.find(z=>pc>=z[0]&&pc<z[1]);
+  return z? {id:z[2], pc:Math.round(pc)} : (pc<50? {id:"z0",pc:Math.round(pc)} : {id:"z5",pc:Math.round(pc)});
+}
+function hrParse(dv){
+  /* formato padrão do serviço de frequência cardíaca (Bluetooth SIG):
+     byte 0 = sinalizadores; bit 0 diz se o valor vem em 1 ou em 2 bytes */
+  const flags=dv.getUint8(0);
+  return (flags & 0x01)? dv.getUint16(1, true) : dv.getUint8(1);
+}
+function hrConnect(){
+  if(!hasBLE()){ hrHelpModal(); return Promise.resolve(false); }
+  return navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}], optionalServices:["battery_service"]})
+    .then(d=>{ HR.dev=d; d.addEventListener("gattserverdisconnected", hrLost); return d.gatt.connect(); })
+    .then(sv=>sv.getPrimaryService("heart_rate"))
+    .then(s=>s.getCharacteristic("heart_rate_measurement"))
+    .then(ch=>{ HR.ch=ch; return ch.startNotifications(); })
+    .then(ch=>{
+      ch.addEventListener("characteristicvaluechanged", e=>{
+        const bpm=hrParse(e.target.value);
+        if(!bpm) return;
+        HR.bpm=bpm; HR.em=Date.now();
+        if(bpm>HR.max) HR.max=bpm;
+        HR.serie.push([Math.round(Date.now()/1000), bpm]);
+        if(HR.serie.length>5000) HR.serie.splice(0,1000);
+        paintHR();
+      });
+      HR.ligado=true; paintHR(); toast(t("hr.on"));
+      return true;
+    })
+    .catch(err=>{ if(String(err&&err.name)!=="NotFoundError") toast(t("hr.fail")); return false; });
+}
+function hrLost(){ HR.ligado=false; HR.ch=null; paintHR(); toast(t("hr.lost")); }
+function hrDisconnect(){
+  try{ if(HR.ch) HR.ch.stopNotifications(); }catch(e){}
+  try{ if(HR.dev && HR.dev.gatt.connected) HR.dev.gatt.disconnect(); }catch(e){}
+  HR.ligado=false; HR.ch=null; paintHR();
+}
+function hrBadge(){
+  if(!HR.ligado && !HR.bpm) return "";
+  const z=hrZona(HR.bpm);
+  return '<span class="hrbadge'+(z?" "+z.id:"")+'" id="hrbadge">'+I("heart")+"<b>"+(HR.bpm||"--")+"</b><small>bpm</small>"+
+    (z?'<i>'+z.pc+"%</i>":"")+"</span>";
+}
+function paintHR(){
+  document.querySelectorAll("#hrbadge").forEach(n=>{ n.outerHTML=hrBadge(); });
+  const c=document.getElementById("hrcard"); if(c) c.innerHTML=hrCardInner();
+  fillIcons(document);
+}
+function hrCardInner(){
+  const m=fcMax(), z=hrZona(HR.bpm);
+  let h='<div class="row" style="align-items:center">';
+  h+='<span class="hrbig'+(z?" "+z.id:"")+'">'+(HR.bpm||"--")+'<small>bpm</small></span>';
+  h+='<div class="gr"><div class="t">'+(HR.ligado? t("hr.on") : t("hr.off"))+"</div>"+
+     '<div class="s">'+(m? (t("hr.maxIs")+" "+m+" bpm"+(z?" · "+t("hr."+z.id)+" · "+z.pc+"%":"")) : t("hr.noMax"))+"</div></div>";
+  h+='<span class="spacer"></span>';
+  h+= HR.ligado? '<button class="btn sm line" id="hr_off">'+t("hr.disconnect")+"</button>"
+               : '<button class="btn sm" id="hr_on">'+I("heart")+t("hr.connect")+"</button>";
+  h+="</div>";
+  if(HR.max) h+='<p class="tiny muted" style="margin-top:8px">'+t("hr.session").replace("{m}",HR.max).replace("{n}",HR.serie.length)+"</p>";
+  return h;
+}
+function hrCard(){
+  if(!hasBLE()) return '<div class="card">'+cardHead("heart", t("hr.title"), t("hr.sub"))+
+    '<p class="muted">'+t("hr.noBLE")+'</p><button class="btn line sm" id="hr_help">'+I("help")+t("hr.helpBtn")+"</button></div>";
+  const c=hrCfg();
+  let h='<div class="card">'+cardHead("heart", t("hr.title"), t("hr.sub"));
+  h+='<div id="hrcard">'+hrCardInner()+"</div>";
+  h+='<div class="sep"></div><label class="fld"><span>'+t("hr.fcMax")+'</span><input type="number" id="hr_max" inputmode="numeric" placeholder="'+(fcMax()||"—")+'" value="'+(c.fcMax||"")+'"></label>';
+  h+='<p class="tiny muted">'+t("hr.fcMaxNote")+"</p>";
+  h+='<div class="row"><button class="btn xs ghost" id="hr_help">'+I("help")+t("hr.helpBtn")+"</button></div></div>";
+  return h;
+}
+function wireHR(){
+  const on=document.getElementById("hr_on"); if(on) on.onclick=()=>askConsent("saude",()=>hrConnect());
+  const off=document.getElementById("hr_off"); if(off) off.onclick=hrDisconnect;
+  const mx=document.getElementById("hr_max"); if(mx) mx.onchange=()=>{ hrCfg().fcMax=num(mx.value,0); save(); paintHR(); };
+  const hp=document.getElementById("hr_help"); if(hp) hp.onclick=hrHelpModal;
+}
+function hrHelpModal(){
+  modal('<div class="mh"><div class="row nowrap"><span class="ibub">'+I("heart")+'</span><h3 style="margin:0">'+t("hr.helpT")+"</h3></div></div>"+
+    "<div class='legalbody'>"+t("hr.helpBody")+"</div>");
+}
+
+/* ---------- 69. PROJETAR NA TV ---------- */
+/* Entendendo o que acontece, em ordem do melhor para o pior:
+
+   1) TRANSMITIR DE VERDADE (Presentation API). O navegador tem uma ponte pronta com Chromecast e
+      Google TV. O app pede "abra esta página na TV", o Chrome mostra a lista de aparelhos, a TV
+      carrega a página tv-riseone.html sozinha e o celular passa a mandar o que ela deve mostrar.
+      A TV fica com a imagem grande; o celular continua livre. Funciona no Chrome e no Edge.
+      Não é espelhamento: é a TV abrindo a página por conta própria.
+
+   2) AirPlay / transmitir vídeo (Remote Playback API). Serve para <video> com arquivo. A imagem da
+      câmera do espelho NÃO entra aqui: o navegador bloqueia transmissão de câmera ao vivo.
+
+   3) JANELINHA FLUTUANTE (picture-in-picture). A imagem sai do app e vira uma janela por cima de
+      tudo. Quem estiver espelhando a tela do celular vê essa janela na TV.
+
+   4) TELA CHEIA. Último recurso, para quem espelha o celular inteiro.
+
+   O app tenta nessa ordem e diz qual deu certo. */
+const TV={req:null, conn:null, ligada:false, ultimo:null};
+function tvSuportaCast(){ return typeof PresentationRequest!=="undefined" && location.protocol==="https:"; }
+function tvSuportaRemoto(v){ return !!(v && v.remote && typeof v.remote.prompt==="function" && !(v.srcObject)); }
+function tvPage(){ return location.href.replace(/[^/]*$/, "") + "tv-riseone.html"; }
+function tvConectar(){
+  if(!tvSuportaCast()) return Promise.reject(new Error("sem-cast"));
+  TV.req = new PresentationRequest([tvPage()]);
+  return TV.req.start().then(conn=>{
+    TV.conn=conn; TV.ligada=true;
+    conn.addEventListener("close", tvSolta);
+    conn.addEventListener("terminate", tvSolta);
+    conn.addEventListener("connect", ()=>{ tvManda(TV.ultimo||{tipo:"espera"}); });
+    setTimeout(()=>tvManda(TV.ultimo||{tipo:"espera"}), 800);
+    paintTvBtn();
+    return conn;
+  });
+}
+function tvSolta(){ TV.ligada=false; TV.conn=null; paintTvBtn(); }
+function tvDesligar(){ try{ if(TV.conn) TV.conn.terminate(); }catch(e){} tvSolta(); }
+function tvManda(msg){
+  TV.ultimo=msg;
+  if(!TV.conn) return;
+  try{ TV.conn.send(JSON.stringify(Object.assign({lang:LANG}, msg))); }catch(e){}
+}
+/* A TV nao tem o codigo do app: ela recebe o desenho pronto. Aqui montamos um SVG
+   independente, com os DOIS quadros guardados em data-a / data-b — a TV so alterna entre eles. */
+function tvFigura(id, vista){
+  const d=ANIM[id]; if(!d) return "";
+  const src=(vista==="alt" && d.v2)? d.v2 : d;
+  const P=arr=>arr.filter(Boolean).map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+  const quadro=fr=>{
+    let g='<g class="aeqg">'+(d.eq? eqLayer(d,fr,vista) : "")+"</g>";
+    if(d.ground!==false) g+='<line class="agr" x1="8" y1="104" x2="92" y2="104"/>';
+    g+='<circle class="ph" cx="'+fr.h[0].toFixed(1)+'" cy="'+fr.h[1].toFixed(1)+'" r="6"/>';
+    g+='<polyline class="pl" points="'+P([fr.n,fr.s,fr.p])+'"/>';
+    g+='<polyline class="pl" points="'+P([fr.s,fr.e,fr.w])+'"/>';
+    if(fr.e2) g+='<polyline class="pl" points="'+P([fr.s,fr.e2,fr.w2||fr.e2])+'"/>';
+    g+='<polyline class="pl" points="'+P([fr.p,fr.k,fr.f])+'"/>';
+    if(fr.k2) g+='<polyline class="pl" points="'+P([fr.p,fr.k2,fr.f2||fr.k2])+'"/>';
+    return g;
+  };
+  const a=quadro(src.a), b=quadro(src.b);
+  return '<svg viewBox="0 0 100 110" preserveAspectRatio="xMidYMid meet" data-a="'+esc(a)+'" data-b="'+esc(b)+'">'+a+"</svg>";
+}
+function tvVista(id, qual){
+  const d=ANIM[id]; if(!d) return "";
+  const base=d.plano||"lado";
+  if(qual===base) return tvFigura(id,"base");
+  return d.v2? tvFigura(id,"alt") : "";
+}
+/* o que a TV mostra durante um exercício ou um movimento */
+function tvMostraExercicio(x){
+  const id=exAnimId(x);
+  tvManda({tipo:"exercicio", nome:exName(x), sub:mName(x.m)+" · "+eqName(x.eq), dica:exTip(x),
+    frente:id?tvVista(id,"frente"):"", lado:id?tvVista(id,"lado"):""});
+}
+function tvMostraMovimento(m, seg){
+  const id=mvAnimId(m);
+  tvManda({tipo:"movimento", nome:mvName(m), sub:seg? seg+"s":"", dica:mvTip(m),
+    frente:id?tvVista(id,"frente"):"", lado:id?tvVista(id,"lado"):""});
+}
+function tvMostraRelogio(seg, titulo){ tvManda({tipo:"relogio", seg:seg, nome:titulo||""}); }
+function paintTvBtn(){
+  document.querySelectorAll("[data-tvbtn]").forEach(b=>{
+    b.classList.toggle("on", TV.ligada);
+    b.setAttribute("title", TV.ligada? t("tv.onNow") : t("tv.title"));
+  });
+}
+/* o botão único: tenta transmitir, depois janelinha, depois tela cheia */
+function tvProjetar(video){
+  if(TV.ligada){ tvDesligar(); toast(t("tv.offNow")); return; }
+  if(tvSuportaCast()){
+    tvConectar().then(()=>toast(t("tv.onNow"))).catch(err=>{
+      if(err && err.name==="NotFoundError"){ toast(t("tv.noDevice")); return; }
+      tvFallback(video);
+    });
+    return;
+  }
+  tvFallback(video);
+}
+function tvFallback(video){
+  const v=video||document.querySelector("#mirrorscreen video, #routinescreen video");
+  if(tvSuportaRemoto(v)){ v.remote.prompt().then(()=>toast(t("tv.onNow"))).catch(()=>tvPiP(v)); return; }
+  tvPiP(v);
+}
+function tvPiP(v){
+  if(v && document.pictureInPictureEnabled && v.requestPictureInPicture){
+    v.requestPictureInPicture().then(()=>toast(t("tv.pipOn"))).catch(()=>tvTelaCheia(v));
+    return;
+  }
+  tvTelaCheia(v);
+}
+function tvTelaCheia(v){
+  const el=(v&&v.parentElement) || document.getElementById("screen") || document.documentElement;
+  const f=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+  if(f){ try{ f.call(el); toast(t("tv.fullOn")); return; }catch(e){} }
+  tvHelpModal();
+}
+function tvHelpModal(){
+  const can=tvSuportaCast();
+  modal('<div class="mh"><div class="row nowrap"><span class="ibub">'+I("cast")+'</span><div><h3 style="margin:0">'+t("tv.title")+'</h3><small class="muted">'+(can?t("tv.canCast"):t("tv.cantCast"))+"</small></div></div></div>"+
+    "<div class='legalbody'>"+t("tv.body2")+"</div>"+
+    '<div class="row" style="justify-content:flex-end"><button class="btn" id="tv_go">'+I("cast")+t("tv.try")+"</button></div>", {wide:true})
+  .querySelector("#tv_go").onclick=()=>tvProjetar();
+}
+
+/* ---------- 70. LER O PDF DO LABORATÓRIO ---------- */
+/* Por que: quase todo laudo chega em PDF, por e-mail. Fotografar a tela do celular para depois
+   tentar ler a foto é o caminho mais errado que existe — o texto já está lá dentro, escrito.
+   Então: se o PDF tiver texto (quase todos têm), o app lê o texto direto, sem OCR e sem erro.
+   Se for um PDF escaneado (só imagem), aí sim ele desenha a página e passa o OCR por cima. */
+const PDF_CDN=["https://cdn.jsdelivr.net/npm/pdfjs-dist@4/build/pdf.min.mjs",
+               "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.mjs"];
+let PDFLIB=null;
+function loadPdfLib(){
+  if(PDFLIB) return Promise.resolve(PDFLIB);
+  let i=0;
+  const tenta=()=>{
+    if(i>=PDF_CDN.length) return Promise.reject(new Error("sem-pdfjs"));
+    const url=PDF_CDN[i++];
+    return import(/* webpackIgnore: true */ url).then(mod=>{
+      const lib=mod.getDocument? mod : (mod.default||mod);
+      try{ lib.GlobalWorkerOptions.workerSrc = url.replace(/pdf\.min\.mjs$/,"pdf.worker.min.mjs"); }catch(e){}
+      PDFLIB=lib; return lib;
+    }).catch(()=>tenta());
+  };
+  return tenta();
+}
+/* devolve {texto, paginas, escaneado} */
+function pdfExtrair(arrayBuffer, onProgresso){
+  return loadPdfLib().then(lib=>lib.getDocument({data:arrayBuffer}).promise).then(doc=>{
+    const n=Math.min(doc.numPages, 12);   /* laudo longo: 12 páginas já é muito */
+    let texto="";
+    const passo=(i)=>{
+      if(i>n) return Promise.resolve();
+      onProgresso && onProgresso(i,n);
+      return doc.getPage(i).then(pg=>pg.getTextContent()).then(tc=>{
+        /* junta por linha: o pdf.js entrega pedaços soltos com a posição de cada um */
+        const linhas={};
+        tc.items.forEach(it=>{
+          const y=Math.round((it.transform&&it.transform[5])||0);
+          (linhas[y]=linhas[y]||[]).push([(it.transform&&it.transform[4])||0, it.str]);
+        });
+        Object.keys(linhas).map(Number).sort((a,b)=>b-a).forEach(y=>{
+          texto += linhas[y].sort((a,b)=>a[0]-b[0]).map(p=>p[1]).join(" ").replace(/\s+/g," ").trim()+"\n";
+        });
+        return passo(i+1);
+      });
+    };
+    return passo(1).then(()=>({texto:texto, paginas:doc.numPages, escaneado:texto.replace(/\s/g,"").length<40, doc:doc}));
+  });
+}
+/* PDF só de imagem: desenha a primeira página e devolve a foto para o OCR */
+function pdfPrimeiraPagina(doc, cb){
+  doc.getPage(1).then(pg=>{
+    const vp=pg.getViewport({scale:2});
+    const cv=document.createElement("canvas");
+    cv.width=Math.min(1600,Math.round(vp.width)); cv.height=Math.round(vp.height*cv.width/vp.width);
+    const ctx=cv.getContext("2d");
+    return pg.render({canvasContext:ctx, viewport:pg.getViewport({scale:cv.width/vp.width*2})}).promise
+      .then(()=>cb(cv.toDataURL("image/jpeg",0.92)));
+  }).catch(()=>cb(null));
+}
+/* entrada única: a pessoa escolhe um arquivo e o app decide o caminho */
+function lerArquivoExame(file){
+  const out=document.getElementById("scanout");
+  const aviso=(txt,barra)=>{ if(out) out.innerHTML='<div class="card"><p id="ocrst">'+esc(txt)+"</p>"+(barra?'<div class="bar"><i id="ocrbar" style="width:'+barra+'%"></i></div>':"")+"</div>"; };
+  if(!/pdf$/i.test(file.type||"") && !/\.pdf$/i.test(file.name||"")){
+    readFile(file, d=>shootChecked(d, runOCR));
+    return;
+  }
+  aviso(t("pdf.opening"), 8);
+  file.arrayBuffer().then(buf=>pdfExtrair(buf,(i,n)=>aviso(t("pdf.reading").replace("{i}",i).replace("{n}",n), Math.round(i/n*90))))
+    .then(r=>{
+      if(!r.escaneado){
+        SCANIMG=null; SCANTEXT=r.texto; SCANFOUND=null;
+        toast(t("pdf.ok").replace("{n}",r.paginas));
+        paintScan();
+        return;
+      }
+      aviso(t("pdf.scanned"), 40);
+      pdfPrimeiraPagina(r.doc, d=>{ if(d) runOCR(d); else { toast(t("pdf.fail")); manualFallback(); } });
+    })
+    .catch(()=>{ toast(t("pdf.fail")); if(out) out.innerHTML=""; manualFallback(); });
 }
 
 /* ---------- 32. INICIALIZACAO ---------- */
@@ -8631,6 +9756,7 @@ loadAnuncios();
 loadServicos();
 setTimeout(checkUpdate, 4000);
 loadNews(()=>{});
+loadVideos();
 /* atalhos do manifesto: index.html#workout, #timer, #scan, #progress */
 (function(){
   const h=(location.hash||"").replace("#","");
