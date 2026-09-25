@@ -1,8 +1,8 @@
 /* RiseONE — service worker
    Guarda o app para abrir sem internet e recebe as notificacoes.
    Troque CACHE_VER ao publicar uma versao nova. */
-const CACHE_VER = "riseone-v3.2.0";
-const CORE = ["./", "./index.html", "./manifest.json", "./icone-192.png", "./icone-512.png", "./icone-maskable.png", "./fundo.jpg", "./fundo-celular.jpg", "./fundo-claro.jpg", "./fundo-claro-celular.jpg", "./anuncios.json", "./servicos.json", "./fotos-exercicios.jpg", "./cid.json", "./versoes.json", "./tuss.json", "./videos.json", "./tv-riseone.html"];
+const CACHE_VER = "riseone-v3.3.0";
+const CORE = ["./", "./index.html", "./manifest.json", "./icone-192.png", "./icone-512.png", "./icone-maskable.png", "./fundo.jpg", "./fundo-celular.jpg", "./fundo-claro.jpg", "./fundo-claro-celular.jpg", "./anuncios.json", "./servicos.json", "./fotos-exercicios.jpg", "./cid.json", "./versoes.json", "./tuss.json", "./videos.json", "./tv-riseone.html", "./musicas.json"];
 
 self.addEventListener("install", ev => {
   /* um arquivo faltando (ex.: fotos opcionais) nao pode impedir o resto de ser guardado */

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="RiseONE — treino, dieta e evolucao em um so lugar. / RiseONE — workout, diet and progress in one place.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: mediastream:; font-src 'self' data:; connect-src 'self' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com https://generativelanguage.googleapis.com https://api.openai.com https://api.anthropic.com https://www.googleapis.com; frame-src https://www.youtube.com https://accounts.google.com https://login.microsoftonline.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' blob: mediastream:; font-src 'self' data:; connect-src 'self' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com https://storage.googleapis.com https://generativelanguage.googleapis.com https://api.openai.com https://api.anthropic.com https://www.googleapis.com; frame-src https://www.youtube.com https://open.spotify.com https://widget.deezer.com https://accounts.google.com https://login.microsoftonline.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0f1115">
 <meta name="mobile-web-app-capable" content="yes">
@@ -733,6 +733,32 @@ html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none
 .hrbadge.z3,.hrbig.z3{color:var(--warn)} .hrbadge.z4,.hrbig.z4{color:var(--accent)}
 .hrbadge.z5,.hrbig.z5{color:var(--bad)}
 .iconbtn.on,[data-tvbtn].on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.bsres{max-height:58vh;overflow:auto;margin-top:6px}
+.bsgrupo{display:flex;align-items:center;gap:7px;padding:10px 4px 4px;font-size:.68rem;font-weight:800;
+ text-transform:uppercase;letter-spacing:.06em;color:var(--text3);position:sticky;top:0;background:var(--surface);z-index:1}
+.bsgrupo .ic{width:13px;height:13px}
+.bsrow{display:flex;align-items:center;gap:10px;width:100%;min-height:50px;padding:8px 10px;border:0;
+ border-radius:var(--radius-sm);background:none;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.bsrow:hover,.bsrow.sel,.bsrow:focus-visible{background:var(--surface2);outline:none}
+.bsrow.sel{box-shadow:inset 0 0 0 1px var(--accent-line)}
+.bsrow>.ic{flex:0 0 19px;width:19px;height:19px}
+.bsrow>.ic:first-child{color:var(--accent)}
+.bsrow>.ic:last-child{color:var(--text3);width:15px;height:15px;flex-shrink:0}
+.bsrow .bt{flex:1;min-width:0;display:block}
+.bsrow b{display:block;font-size:.92rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bsrow small{display:block;font-size:.74rem;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.muslist{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.musrow{display:flex;align-items:center;gap:4px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);padding:4px}
+.musrow.on{border-color:var(--accent-line);background:var(--accent-soft)}
+.musrow .pick{display:flex;align-items:center;gap:10px;flex:1;min-width:0;background:none;border:0;color:var(--text);
+ font:inherit;text-align:left;cursor:pointer;padding:8px 6px;min-height:44px}
+.musrow .pick .ic{color:var(--text3);flex-shrink:0}
+.musrow.on .pick .ic{color:var(--accent)}
+.musrow .pick span{flex:1;min-width:0}
+.musrow b{display:block;font-size:.9rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.musrow small{display:block;font-size:.72rem;color:var(--text2)}
+.musplayer{margin-top:10px;border-radius:12px;overflow:hidden;background:var(--surface3)}
+.musplayer iframe{width:100%;height:152px;border:0;display:block}
 @media print{ #topbar,header.app,#bottombar,footer.app,#timermini{display:none} }
 </style>
 </head>
@@ -764,6 +790,7 @@ html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none
       <span>Rise<span class="one">ONE</span></span>
     </button>
     <span class="spacer"></span>
+    <button class="iconbtn" id="searchbtn" aria-label="Buscar / Search" title="Buscar / Search"><span class="ic" data-icon="search"></span></button>
     <button class="iconbtn" id="helpbtn" title="Ajuda / Help"><span class="ic" id="helpic" data-icon="help"></span><span class="hl" data-i18n="help.btn">Ajuda</span></button>
     <button class="whoami" id="whoami" title="Perfil"><span class="av" id="whoav">?</span><span class="nm" id="whonm">Visitante</span></button>
   </div>
@@ -799,7 +826,7 @@ html[data-motion="0"] #drawer, html[data-motion="0"] #drawerback{transition:none
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.2.0";
+const APP_VERSION = "3.3.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2165,6 +2192,47 @@ Object.assign(L,{
 "pdf.fail":["Não consegui abrir esse PDF. Tente uma foto da folha.","I could not open that PDF. Try a photo of the page instead."]
 });
 
+/* ---------- 1k. TEXTOS DA VERSÃO 3.3: lupa, playlists e versões ---------- */
+Object.assign(L,{
+/* --- lupa --- */
+"bs.title":["Buscar em tudo","Search everything"],
+"bs.ph":["Exercício, dor, tela, código, ajuste…","Exercise, pain, screen, code, setting…"],
+"bs.hint":["Escreva qualquer coisa: o nome de um exercício, uma dor, um código CID, o nome de uma tela ou de um ajuste. Toque no resultado para ir direto.","Type anything: an exercise name, a pain, an ICD code, a screen or a setting name. Tap a result to go straight there."],
+"bs.min":["Escreva pelo menos duas letras.","Type at least two letters."],
+"bs.noneT":["Nada com esse termo","Nothing matches"],
+"bs.noneS":["Tente outra palavra, ou abra a Ajuda para ver o glossário.","Try another word, or open Help for the glossary."],
+"bs.tip":["Atalhos: “/” ou Ctrl+K abrem esta busca. Setas escolhem, Enter abre.","Shortcuts: “/” or Ctrl+K open this search. Arrows choose, Enter opens."],
+"bs.gTela":["Telas e ajustes","Screens and settings"],
+"bs.gEx":["Exercícios","Exercises"],
+"bs.gMov":["Aquecimento e alongamento","Warm-up and stretching"],
+"bs.gDor":["Dor e alívio","Pain relief"],
+"bs.gCid":["Códigos CID","ICD codes"],
+"bs.gTuss":["Códigos TUSS","TUSS codes"],
+"bs.gTreino":["Seus treinos","Your workouts"],
+"bs.gAjuda":["Ajuda e glossário","Help and glossary"],
+"bs.gVersao":["Novidades","What's new"],
+/* --- música em lista --- */
+"mu.add":["Adicionar playlist","Add playlist"],
+"mu.addNote":["Cole o link e dê um nome. Fica guardado só neste aparelho. Os códigos de rastreio que o Spotify cola no link são removidos automaticamente.","Paste the link and give it a name. It is stored on this device only. The tracking codes Spotify adds to the link are removed automatically."],
+"mu.noneT":["Nenhuma playlist ainda","No playlist yet"],
+"mu.noneS":["Toque em Adicionar e cole o link da sua playlist do Spotify, YouTube Music, Deezer ou Apple Music.","Tap Add and paste the link of your Spotify, YouTube Music, Deezer or Apple Music playlist."],
+"mu.sug":["sugestão do app","app suggestion"],
+"mu.sugN":["Playlist sugerida {n}","Suggested playlist {n}"],
+"mu.open":["Abrir no app da música","Open in the music app"],
+"mu.delAsk":["Tirar esta playlist da lista?","Remove this playlist from the list?"],
+"mu.bad":["Isso não parece um link de playlist.","That does not look like a playlist link."],
+"mu.embed":["Tocar dentro do RiseONE","Play inside RiseONE"],
+"mu.embedNote":["Com isto ligado, o tocador do Spotify aparece na tela do treino. Sem estar logado no Spotify pelo navegador, ele toca trechos de 30 segundos; logado, toca inteiro. Ele para quando você troca de app ou apaga a tela — por isso o botão que abre o app da música continua sendo o caminho mais confiável.","With this on, the Spotify player appears on the workout screen. Without being signed in to Spotify in the browser it plays 30-second previews; signed in, it plays in full. It stops when you switch apps or turn off the screen — which is why the button that opens the music app is still the most reliable path."],
+"mu.noEmbed":["O {a} não tem tocador para colocar dentro de outro site. Use o botão que abre o app.","{a} has no player that can be embedded in another site. Use the button that opens the app."],
+"mu.find":["Procurar playlists de treino no Spotify","Find workout playlists on Spotify"],
+"mu.admTitle":["Administrador: sugestões que viajam com o site","Administrator: suggestions shipped with the site"],
+"mu.admHow":["As playlists que você guardou aqui podem virar sugestão para todo mundo. Baixe o musicas.json e publique na raiz do repositório. São só links públicos — o app não hospeda música.","The playlists you saved here can become suggestions for everyone. Download musicas.json and publish it at the repository root. They are public links only — the app hosts no music."],
+"mu.admDownload":["Baixar musicas.json","Download musicas.json"],
+/* --- créditos --- */
+"st.credits":["Créditos e fontes","Credits and sources"],
+"st.creditsBody":["<p>O RiseONE não embute nenhuma biblioteca. Três serviços são carregados só quando você usa a função: <b>Tesseract.js</b> (ler o texto das fotos), <b>MediaPipe</b> (postura no espelho) e <b>pdf.js</b> (ler o PDF do laboratório) — todos com licença Apache-2.0.</p><p>Vídeo e música abrem no YouTube e no app de música que você escolher: o RiseONE guarda apenas o link e não hospeda nem redistribui conteúdo.</p><p><b>CID-10</b>: redação resumida, lista inicial de consulta. <b>TUSS</b>: tabela da ANS, importada por quem publica o site. <b>Limites de “alto em”</b>: RDC 429/2020 e IN 75/2020. O arquivo <code>CREDITOS.md</code>, publicado junto com o app, traz a lista completa com licença e origem de cada coisa.</p>","<p>RiseONE embeds no library. Three services load only when you use the feature: <b>Tesseract.js</b> (reading text from photos), <b>MediaPipe</b> (posture in the mirror) and <b>pdf.js</b> (reading the lab PDF) — all Apache-2.0.</p><p>Video and music open in YouTube and in the music app you choose: RiseONE stores only the link and hosts or redistributes nothing.</p><p><b>ICD-10</b>: shortened wording, an initial reference list. <b>TUSS</b>: the ANS table, imported by whoever publishes the site. <b>“High in” limits</b>: Brazilian RDC 429/2020 and IN 75/2020. The <code>CREDITOS.md</code> file, published with the app, has the full list with each item's licence and origin.</p>"]
+});
+
 /* ---------- 2. MUSCULOS (3 niveis de nome) ---------- */
 const MUSCLES = [];
 function M(id, region, p1,p2,p3, e1,e2,e3){ MUSCLES.push({id,region,pt:[p1,p2,p3],en:[e1,e2,e3]}); }
@@ -2408,6 +2476,7 @@ function modal(html, opts){
   m.addEventListener("click", e=>{ if(e.target===m && !opts.sticky) m.remove(); });
   document.body.appendChild(m);
   m.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>m.remove()));
+  if(opts.sticky) m.setAttribute("data-sticky","1");
   const f=m.querySelector("input,select,textarea"); if(f && window.innerWidth>820) setTimeout(()=>f.focus(),60);
   initAnims(m);
   return m;
@@ -4349,7 +4418,7 @@ SCREENS.set = function(){
     h+='<div class="card">'+cardHead("body", t("st.terms"), t("body.level"))+
       '<div class="optionlist">'+[1,2,3].map(i=>'<button class="opt '+(STATE.termsLevel===i?"on":"")+'" data-lvl="'+i+'"><span class="ibub '+(STATE.termsLevel===i?"":"grey")+'">'+I(i===1?"chat":(i===2?"book":"flask"))+'</span><span><span class="ot">'+t("body.lv"+i)+'</span><br><span class="od">'+t("body.lv"+i+"d")+"</span></span></button>").join("")+"</div></div>";
     h+=favsCard();
-    h+=musCard();
+    h+=musCard(uiRole()==="admin");
     h+=hrCard();
     h+=vozCard();
     h+=a11yCard();
@@ -4389,7 +4458,8 @@ SCREENS.set = function(){
       '<div class="item"><span class="ibub grey" style="width:32px;height:32px">'+I("globe")+'</span><div class="gr"><div class="t">'+t("up.site")+'</div><div class="s" id="up_site">'+t("up.checking")+'</div></div></div></div>'+
       '<div class="row" style="margin-top:12px"><button class="btn" id="up_go">'+I("refresh")+t("up.force")+"</button></div>"+
       '<p class="tiny muted" style="margin-top:8px">'+t("up.note")+"</p></div>";
-    h+='<div class="card">'+cardHead("info", t("st.about"), "RiseONE "+APP_VERSION+" · "+fmtDate(todayISO()))+'<div class="row"><button class="btn line sm" id="legal2">'+t("legal.title")+'</button></div></div>';
+    h+=newsScreen();
+    h+='<div class="card">'+cardHead("info", t("st.about"), "RiseONE "+APP_VERSION+" · "+fmtDate(todayISO()))+'<div class="row"><button class="btn line sm" id="legal2">'+t("legal.title")+'</button><button class="btn line sm" id="credits2">'+t("st.credits")+"</button></div></div>";
     h+='<div class="card" style="border-color:var(--bad)">'+cardHead("trash", t("st.reset"), t("st.resetC"))+'<button class="btn danger" id="reset">'+I("trash")+t("st.reset")+"</button></div>";
   }
   return h;
@@ -4441,6 +4511,8 @@ SCREENS.set_after = function(){
     if(ROOT.session&&ROOT.session.uid) delete ROOT.data[ROOT.session.uid];
     ROOT.session=null; saveRoot(); sessionStorage.removeItem("riseone.addismiss"); boot(); });
   if($("legal2")) $("legal2").onclick=legalModal;
+  if($("credits2")) $("credits2").onclick=()=>modal(mh(t("st.credits"))+"<div class='legalbody'>"+t("st.creditsBody")+"</div>");
+  if(SUB.set==="sobre") loadNews(()=>{ const n=document.getElementById("newslist"); if(n && NEWS) n.innerHTML=newsList(); markNewsSeen(); });
   if($("up_go")) $("up_go").onclick=forceUpdate;
   if($("up_site")) siteVersion().then(v=>{
     const n=document.getElementById("up_site"); if(!n) return;
@@ -8900,7 +8972,8 @@ function drawerItemHTML(id){
 }
 function buildDrawer(){
   const box=document.getElementById("drawerbody"); if(!box) return;
-  let h='<button class="ditem big" data-go="home">'+I("home")+'<span class="dl">'+t("nav.home")+"</span></button>";
+  let h='<button class="ditem big" data-dbusca="1">'+I("search")+'<span class="dl">'+t("bs.title")+"</span></button>";
+  h+='<button class="ditem big" data-go="home">'+I("home")+'<span class="dl">'+t("nav.home")+"</span></button>";
   DRAWER_GROUPS.forEach(g=>{
     const items=g.items.map(drawerItemHTML).filter(Boolean);
     if(!items.length) return;
@@ -8914,6 +8987,7 @@ function buildDrawer(){
   fillIcons(box);
   box.querySelectorAll("[data-drun]").forEach(b=>b.onclick=()=>{ const ex=DRAWER_EXTRA[b.getAttribute("data-drun")]; closeDrawer(); if(ex) ex.run(); });
   box.querySelectorAll("[data-dlegal]").forEach(b=>b.onclick=()=>{ closeDrawer(); legalModal(); });
+  box.querySelectorAll("[data-dbusca]").forEach(b=>b.onclick=()=>{ closeDrawer(); setTimeout(()=>openBusca(""),120); });
   box.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>closeDrawer()));
 }
 function openDrawer(){
@@ -9340,44 +9414,7 @@ function pickTussModal(condId){
    qualquer cinta ou pulseira que publique o serviço padrão de frequência cardíaca. É isso que o app
    usa: batimento ao vivo durante o treino. No iPhone não funciona: o Safari não tem Bluetooth na web.
    TV — ver a seção 69. */
-/* --- música --- */
-const MUSICA_APPS=[
- {id:"spotify", nome:"Spotify",       re:/spotify\.com|^spotify:/i},
- {id:"ytmusic", nome:"YouTube Music", re:/music\.youtube\.com/i},
- {id:"deezer",  nome:"Deezer",        re:/deezer\.com/i},
- {id:"apple",   nome:"Apple Music",   re:/music\.apple\.com/i},
- {id:"outro",   nome:"",              re:/^https?:\/\//i}
-];
-function musCfg(){
-  STATE.settings=STATE.settings||{};
-  STATE.settings.musica=Object.assign({url:"", nome:""}, STATE.settings.musica||{});
-  return STATE.settings.musica;
-}
-function musApp(url){ const a=MUSICA_APPS.find(x=>x.re.test(String(url||""))); return a? (a.nome||t("mu.other")) : ""; }
-function musBtn(cls){
-  const c=musCfg();
-  if(!c.url) return "";
-  return '<a class="btn '+(cls||"line sm")+'" target="_blank" rel="noopener" href="'+esc(c.url)+'">'+I("speaker")+esc(c.nome||musApp(c.url)||t("mu.play"))+"</a>";
-}
-function musCard(){
-  const c=musCfg();
-  let h='<div class="card">'+cardHead("speaker", t("mu.title"), t("mu.sub"));
-  h+='<div class="grid g2 collapse"><label class="fld"><span>'+t("mu.link")+'</span><input type="url" id="mu_u" inputmode="url" placeholder="https://open.spotify.com/playlist/..." value="'+esc(c.url)+'"></label>'+
-     '<label class="fld"><span>'+t("mu.name")+'</span><input type="text" id="mu_n" placeholder="'+t("mu.namePh")+'" value="'+esc(c.nome)+'"></label></div>';
-  h+='<div class="row"><button class="btn sm" id="mu_s">'+I("check")+t("common.save")+"</button>"+(c.url?musBtn("ghost sm"):"")+"</div>";
-  h+='<div class="warnbox" style="margin-top:12px">'+I("info")+"<div>"+t("mu.how")+"</div></div>";
-  h+='<p class="tiny muted">'+t("mu.limit")+"</p></div>";
-  return h;
-}
-function wireMusCard(){
-  const s=document.getElementById("mu_s");
-  if(s) s.onclick=()=>{
-    const c=musCfg();
-    c.url=document.getElementById("mu_u").value.trim();
-    c.nome=document.getElementById("mu_n").value.trim();
-    save(); toast(t("common.saved")); render();
-  };
-}
+/* (a parte da música ficou na seção 71, por ter crescido) */
 /* --- batimento por Bluetooth --- */
 const HR={dev:null, ch:null, bpm:0, em:0, max:0, serie:[], ligado:false};
 function hasBLE(){ return !!(navigator.bluetooth && navigator.bluetooth.requestDevice); }
@@ -9686,6 +9723,273 @@ function lerArquivoExame(file){
     .catch(()=>{ toast(t("pdf.fail")); if(out) out.innerHTML=""; manualFallback(); });
 }
 
+/* ---------- 71. MÚSICA DO TREINO ---------- */
+/* O que dá e o que não dá, com a razão:
+   ABRIR a playlist num toque — dá, e é o melhor caminho: a música toca no app do Spotify, continua
+   com a tela apagada e a voz do treinador entra por cima sem parar nada.
+   TOCAR DENTRO DO APP — dá, com o tocador oficial do Spotify embutido. Sem conta logada no navegador
+   ele toca trechos de 30 segundos; com a conta logada, toca inteiro. Ele para quando você troca de
+   app ou apaga a tela, porque quem manda aí é o navegador.
+   BUSCAR PLAYLIST PÚBLICA DENTRO DO APP — NÃO dá. A busca do Spotify exige login de desenvolvedor,
+   e um app nessa condição atende no máximo 5 pessoas (e o dono precisa ser Premium). Passar disso
+   exige empresa registrada com 250 mil usuários por mês. Então o app não promete o que não cumpre:
+   ele traz uma lista de sugestões e o botão de buscar abre a busca do próprio Spotify. */
+const MUS_APPS=[
+ {id:"spotify", nome:"Spotify",       re:/open\.spotify\.com|^spotify:/i, embed:true},
+ {id:"deezer",  nome:"Deezer",        re:/deezer\.com/i,                  embed:true},
+ {id:"ytmusic", nome:"YouTube Music", re:/music\.youtube\.com/i,          embed:false},
+ {id:"apple",   nome:"Apple Music",   re:/music\.apple\.com/i,            embed:false},
+ {id:"outro",   nome:"",              re:/^https?:\/\//i,                 embed:false}
+];
+let MUSICAS=[], MUS_TRIED=false;
+function loadMusicas(cb){
+  if(MUS_TRIED){ cb&&cb(); return; }
+  MUS_TRIED=true;
+  if(location.protocol==="file:"){ cb&&cb(); return; }
+  fetch("musicas.json?ts="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{
+    if(j && j.listas) MUSICAS=j.listas.filter(x=>x&&x.url);
+    cb&&cb();
+  }).catch(()=>{ cb&&cb(); });
+}
+function musCfg(){
+  STATE.settings=STATE.settings||{};
+  const c=STATE.settings.musica=Object.assign({ativa:"", embed:false, listas:[]}, STATE.settings.musica||{});
+  /* quem vinha da versão 3.2.0 tinha uma playlist só, num campo url */
+  if(c.url){ c.listas.push({id:uid(), nome:c.nome||"", url:c.url}); delete c.url; delete c.nome; save(); }
+  if(!Array.isArray(c.listas)) c.listas=[];
+  return c;
+}
+function musApp(url){ return MUS_APPS.find(x=>x.re.test(String(url||""))) || null; }
+function musAppNome(url){ const a=musApp(url); return a? (a.nome||t("mu.other")) : ""; }
+/* tira os códigos de rastreio que o Spotify cola no link de compartilhar (si, pi, utm_*) */
+function musLimpaUrl(url){
+  const u=String(url||"").trim();
+  const m=u.match(/^(https?:\/\/open\.spotify\.com\/(?:intl-[a-z]{2}\/)?(?:playlist|album|track|artist|show|episode)\/[A-Za-z0-9]+)/i);
+  if(m) return m[1];
+  try{
+    const o=new URL(u);
+    ["si","pi","utm_source","utm_medium","utm_campaign","nd","_branch_match_id","context"].forEach(k=>o.searchParams.delete(k));
+    return o.toString().replace(/\?$/,"");
+  }catch(e){ return u; }
+}
+function musEmbedUrl(url){
+  const s=String(url||"").match(/open\.spotify\.com\/(?:intl-[a-z]{2}\/)?(playlist|album|track|artist|show|episode)\/([A-Za-z0-9]+)/i);
+  if(s) return "https://open.spotify.com/embed/"+s[1].toLowerCase()+"/"+s[2]+"?utm_source=generator";
+  const d=String(url||"").match(/deezer\.com\/(?:[a-z]{2}\/)?(playlist|album|track)\/(\d+)/i);
+  if(d) return "https://widget.deezer.com/widget/dark/"+d[1].toLowerCase()+"/"+d[2];
+  return "";
+}
+/* todas as playlists: as sugeridas que vêm com o site + as que a pessoa guardou */
+function musTodas(){
+  const c=musCfg();
+  const sug=MUSICAS.map((x,i)=>({id:"sug:"+(x.id||i), nome:x.nome||"", url:x.url, sug:true}));
+  return sug.concat(c.listas.map(x=>({id:x.id, nome:x.nome||"", url:x.url, sug:false})));
+}
+function musNome(p, i){
+  if(p.nome) return p.nome;
+  const a=musAppNome(p.url);
+  return p.sug? (t("mu.sugN").replace("{n}", (i==null?"":i+1))) : (a||t("mu.play"));
+}
+function musAtiva(){
+  const c=musCfg(), todas=musTodas();
+  return todas.find(x=>x.id===c.ativa) || todas[0] || null;
+}
+function musBtn(cls){
+  const p=musAtiva();
+  if(!p) return "";
+  return '<a class="btn '+(cls||"line sm")+'" target="_blank" rel="noopener" href="'+esc(p.url)+'">'+I("speaker")+esc(musNome(p,0))+"</a>";
+}
+/* tocador embutido, quando a pessoa liga e o serviço permite */
+function musPlayer(){
+  const c=musCfg(); if(!c.embed) return "";
+  const p=musAtiva(); if(!p) return "";
+  const u=musEmbedUrl(p.url);
+  if(!u) return '<p class="tiny muted">'+t("mu.noEmbed").replace("{a}", musAppNome(p.url)||t("mu.other"))+"</p>";
+  return '<div class="musplayer"><iframe src="'+esc(u)+'" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="'+esc(musNome(p,0))+'"></iframe></div>';
+}
+function musLinha(p, i){
+  const ativa=(musAtiva()||{}).id===p.id;
+  return '<div class="musrow'+(ativa?" on":"")+'">'+
+    '<button class="pick" data-musa="'+esc(p.id)+'" aria-pressed="'+(ativa?"true":"false")+'">'+I(ativa?"check":"speaker")+
+      '<span><b>'+esc(musNome(p,i))+"</b><small>"+esc(musAppNome(p.url)||t("mu.other"))+(p.sug?" · "+t("mu.sug"):"")+"</small></span></button>"+
+    '<a class="iconbtn" target="_blank" rel="noopener" href="'+esc(p.url)+'" title="'+t("mu.open")+'">'+I("arrowr")+"</a>"+
+    (p.sug?"":'<button class="iconbtn" data-muse="'+esc(p.id)+'" title="'+t("common.edit")+'">'+I("edit")+"</button>"+
+             '<button class="iconbtn" data-musd="'+esc(p.id)+'" title="'+t("common.del")+'">'+I("trash")+"</button>")+
+    "</div>";
+}
+function musCard(admin){
+  const c=musCfg(), todas=musTodas();
+  let h='<div class="card">'+cardHead("speaker", t("mu.title"), t("mu.sub"),
+    '<button class="btn sm ghost" id="mu_add">'+I("plus")+t("mu.add")+"</button>");
+  if(!todas.length) h+=emptyBox("speaker", t("mu.noneT"), t("mu.noneS"));
+  else h+='<div class="muslist">'+todas.map((p,i)=>musLinha(p,i)).join("")+"</div>";
+  h+='<label class="switch" style="margin-top:12px"><input type="checkbox" id="mu_emb" '+(c.embed?"checked":"")+'><span class="tr"></span><span>'+t("mu.embed")+"</span></label>";
+  h+='<p class="tiny muted">'+t("mu.embedNote")+"</p>";
+  if(c.embed) h+=musPlayer();
+  h+='<div class="sep"></div><div class="row"><a class="btn line sm" target="_blank" rel="noopener" href="https://open.spotify.com/search/academia%20treino/playlists">'+I("search")+t("mu.find")+"</a></div>";
+  h+='<div class="warnbox" style="margin-top:12px">'+I("info")+"<div>"+t("mu.how")+"</div></div>";
+  h+='<p class="tiny muted">'+t("mu.limit")+"</p>";
+  if(admin){
+    h+='<div class="sep"></div><span class="kicker">'+t("mu.admTitle")+'</span><p class="tiny muted">'+t("mu.admHow")+"</p>"+
+       '<div class="row"><button class="btn line sm" id="mu_dl">'+I("download")+t("mu.admDownload")+"</button></div>";
+  }
+  h+="</div>";
+  return h;
+}
+function musEditModal(id){
+  const c=musCfg();
+  const p=id? c.listas.find(x=>x.id===id) : null;
+  const m=modal(mh(p? t("common.edit") : t("mu.add"))+
+    '<label class="fld"><span>'+t("mu.link")+'</span><input type="url" id="mu_u" inputmode="url" placeholder="https://open.spotify.com/playlist/..." value="'+esc(p?p.url:"")+'"></label>'+
+    '<label class="fld"><span>'+t("mu.name")+'</span><input type="text" id="mu_n" placeholder="'+t("mu.namePh")+'" value="'+esc(p?p.nome:"")+'"></label>'+
+    '<p class="tiny muted">'+t("mu.addNote")+"</p>"+
+    '<div class="row" style="justify-content:flex-end"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="mu_ok">'+t("common.save")+"</button></div>");
+  m.querySelector("#mu_ok").onclick=()=>{
+    const url=musLimpaUrl(m.querySelector("#mu_u").value);
+    if(!/^https?:\/\//i.test(url)){ toast(t("mu.bad")); return; }
+    const nome=m.querySelector("#mu_n").value.trim();
+    if(p){ p.url=url; p.nome=nome; }
+    else { const novo={id:uid(), nome:nome, url:url}; c.listas.push(novo); c.ativa=novo.id; }
+    save(); m.remove(); render(); toast(t("common.saved"));
+  };
+}
+function wireMusCard(){
+  const a=document.getElementById("mu_add"); if(a) a.onclick=()=>musEditModal("");
+  document.querySelectorAll("[data-musa]").forEach(b=>b.onclick=()=>{ musCfg().ativa=b.getAttribute("data-musa"); save(); render(); });
+  document.querySelectorAll("[data-muse]").forEach(b=>b.onclick=()=>musEditModal(b.getAttribute("data-muse")));
+  document.querySelectorAll("[data-musd]").forEach(b=>b.onclick=()=>confirmBox(t("mu.delAsk"),()=>{
+    const c=musCfg(); c.listas=c.listas.filter(x=>x.id!==b.getAttribute("data-musd")); save(); render();
+  }));
+  const e=document.getElementById("mu_emb"); if(e) e.onchange=()=>{ musCfg().embed=e.checked; save(); render(); };
+  const d=document.getElementById("mu_dl");
+  if(d) d.onclick=()=>{
+    const c=musCfg();
+    const obj={_leia_me:"Sugestoes de playlist que viajam com o site. Sao apenas links publicos.",
+      atualizado:todayISO(),
+      listas:MUSICAS.concat(c.listas.map(x=>({id:x.id, nome:x.nome||"", url:x.url})))};
+    const blob=new Blob([JSON.stringify(obj,null,1)],{type:"application/json"});
+    const el=document.createElement("a"); el.href=URL.createObjectURL(blob); el.download="musicas.json"; el.click();
+    setTimeout(()=>URL.revokeObjectURL(el.href),4000);
+  };
+}
+
+/* ---------- 72. LUPA: BUSCA EM TUDO, COM RESULTADO CLICÁVEL ---------- */
+/* Por que: a busca que existia ficava escondida dentro da Ajuda e só explicava palavras.
+   Esta procura em tudo que o app tem — telas, exercícios, alongamentos, dores, códigos, treinos,
+   ajustes, novidades — e cada linha do resultado LEVA até lá num toque. */
+const BUSCA={q:"", sel:0, el:null};
+function buscaGrupos(){
+  return {
+    tela:      {ic:"grid",     k:"bs.gTela"},
+    exercicio: {ic:"dumbbell", k:"bs.gEx"},
+    movimento: {ic:"stretch",  k:"bs.gMov"},
+    dor:       {ic:"heart",    k:"bs.gDor"},
+    cid:       {ic:"file",     k:"bs.gCid"},
+    tuss:      {ic:"file",     k:"bs.gTuss"},
+    treino:    {ic:"clipboard",k:"bs.gTreino"},
+    ajuda:     {ic:"help",     k:"bs.gAjuda"},
+    versao:    {ic:"sparkles", k:"bs.gVersao"}
+  };
+}
+const SET_BUSCA=[["perfil","st.tabProfile"],["pref","st.tabPrefs"],["avisos","nt.short"],["conta","st.tabAccount"],["dados","st.tabData"],["sobre","st.about"]];
+function buscaTudo(q){
+  q=norm(q).trim();
+  if(q.length<2) return [];
+  const bate=(...partes)=>norm(partes.filter(Boolean).join(" ")).indexOf(q)>=0;
+  const r=[];
+  /* telas */
+  visibleRoutes().forEach(x=>{ if(bate(t(x.k))) r.push({g:"tela", ic:x.ic, t:t(x.k), s:"", go:()=>go(x.id)}); });
+  SET_BUSCA.forEach(([sub,k])=>{ if(bate(t(k), t("st.title"))) r.push({g:"tela", ic:"sliders", t:t("st.title")+" · "+t(k), s:"", go:()=>go("set",sub)}); });
+  [["pv.title","dados"],["ac.title","pref"],["vz.title","pref"],["mu.title","pref"],["hr.title","pref"],["fav.title","pref"],["nw.title","sobre"]]
+    .forEach(([k,sub])=>{ if(bate(t(k))) r.push({g:"tela", ic:"sliders", t:t(k), s:t("st.title"), go:()=>go("set",sub)}); });
+  /* exercícios */
+  allEx().forEach(x=>{
+    if(bate(exName(x), x.pt, x.en, x.gpt, x.gen, mName(x.m), eqName(x.eq)))
+      r.push({g:"exercicio", ic:"dumbbell", t:exName(x), s:mName(x.m)+" · "+eqName(x.eq), go:()=>videoModal(x.id)});
+  });
+  /* aquecimento e alongamento */
+  MOVES.forEach(m=>{ if(bate(mvName(m), m.pt, m.en)) r.push({g:"movimento", ic:"stretch", t:mvName(m), s:(m.type||[]).map(k=>t("wu.t."+k)||k).join(" · "), go:()=>moveVideo(m.id)}); });
+  /* dor e alívio */
+  if(typeof CONDS!=="undefined") CONDS.forEach(c=>{
+    if(bate(condName(c), c.pt, c.en, c.cid, zoneName(c.zona)))
+      r.push({g:"dor", ic:"heart", t:condName(c), s:zoneName(c.zona)+" · CID "+c.cid,
+        go:()=>{ FIS.zone=c.zona; FIS.open=c.id; FIS.q=""; go("fisio"); }});
+  });
+  /* tabelas carregadas no aparelho */
+  const cid=(typeof cidRead==="function")? cidRead() : null;
+  if(cid) cid.itens.forEach(i=>{ if(bate(i.cid, i.pt, i.en)) r.push({g:"cid", ic:"file", t:i.cid+" — "+(LANG==="pt"?i.pt:i.en), s:zoneName(i.zona), go:()=>{ FIS.cidOpen=true; go("fisio"); }}); });
+  const tu=(typeof tussRead==="function")? tussRead() : null;
+  if(tu) tu.itens.forEach(i=>{ if(bate(i.cod, i.desc)) r.push({g:"tuss", ic:"file", t:i.cod+" — "+i.desc, s:"TUSS", go:()=>{ FIS.tussOpen=true; go("fisio"); }}); });
+  /* treinos da pessoa */
+  (STATE.workouts||[]).forEach(w=>{ if(bate(w.name)) r.push({g:"treino", ic:"clipboard", t:w.name, s:(w.items||[]).length+" "+t("ex.count"), go:()=>go("workout")}); });
+  /* ajuda e glossário */
+  GLOSS.forEach(g=>{ if(bate(g[0].join(" "), g[1], g[2], g[3], g[4]))
+    r.push({g:"ajuda", ic:"book", t:LANG==="pt"?g[1]:g[2], s:(LANG==="pt"?g[3]:g[4]).replace(/<[^>]*>/g,"").slice(0,90),
+      go:()=>{ if(g[5]) go(g[5], g[6]||undefined); else openHelp("busca"); }}); });
+  Object.keys(HELP).forEach(k=>HELP[k].forEach(it=>{
+    if(bate(it[1], it[2], it[3], it[4])){
+      const rt=k.split("/")[0], sb=k.split("/")[1], ri=routeInfo(rt);
+      r.push({g:"ajuda", ic:it[0]||"help", t:(LANG==="pt"?it[1]:it[2]), s:ri?t(ri.k):"", go:()=>go(rt, sb||undefined)});
+    }
+  }));
+  /* novidades */
+  if(typeof NEWS!=="undefined" && NEWS) NEWS.versoes.forEach(v=>{
+    const itens=(LANG==="pt"?v.pt:v.en)||[];
+    itens.forEach(i=>{ if(bate(i, "v"+v.v)) r.push({g:"versao", ic:"sparkles", t:"v"+v.v, s:i.slice(0,110), go:()=>go("set","sobre")}); });
+  });
+  /* exato primeiro, depois começo da palavra, depois o resto */
+  r.forEach(x=>{ const n=norm(x.t); x._p = (n===q)?0 : (n.indexOf(q)===0?1:2); });
+  r.sort((a,b)=>a._p-b._p);
+  return r.slice(0,60);
+}
+function buscaHTML(lista){
+  if(!BUSCA.q.trim()) return '<p class="tiny muted" style="padding:6px 2px">'+t("bs.hint")+"</p>";
+  if(BUSCA.q.trim().length<2) return '<p class="tiny muted" style="padding:6px 2px">'+t("bs.min")+"</p>";
+  if(!lista.length) return emptyBox("search", t("bs.noneT"), t("bs.noneS"));
+  const G=buscaGrupos();
+  let h="", grupo="";
+  lista.forEach((x,i)=>{
+    if(x.g!==grupo){ grupo=x.g; h+='<div class="bsgrupo">'+I(G[grupo].ic)+t(G[grupo].k)+"</div>"; }
+    h+='<button class="bsrow'+(i===BUSCA.sel?" sel":"")+'" data-bs="'+i+'">'+I(x.ic)+
+       '<span class="bt"><b>'+esc(x.t)+"</b>"+(x.s?"<small>"+esc(x.s)+"</small>":"")+"</span>"+I("arrowr")+"</button>";
+  });
+  return h;
+}
+function openBusca(inicial){
+  /* nunca empilhar duas buscas */
+  document.querySelectorAll(".modal.busca").forEach(n=>n.remove());
+  BUSCA.q=inicial||""; BUSCA.sel=0;
+  const m=modal('<div class="mh"><div class="help-q" style="flex:1;margin:0">'+I("search")+
+      '<input type="search" id="bsq" autocomplete="off" placeholder="'+t("bs.ph")+'" value="'+esc(BUSCA.q)+'"></div>'+
+      '<button class="iconbtn" data-close aria-label="'+t("common.close")+'">'+I("x")+"</button></div>"+
+    '<div class="bsres" id="bsres"></div>'+
+    '<p class="tiny muted" style="margin:8px 0 0">'+t("bs.tip")+"</p>", {wide:true});
+  m.classList.add("busca");
+  BUSCA.el=m;
+  const res=m.querySelector("#bsres"), inp=m.querySelector("#bsq");
+  let lista=[];
+  const pinta=()=>{
+    lista=buscaTudo(BUSCA.q);
+    if(BUSCA.sel>=lista.length) BUSCA.sel=0;
+    res.innerHTML=buscaHTML(lista);
+    fillIcons(res);
+    res.querySelectorAll("[data-bs]").forEach(b=>b.onclick=()=>{
+      const x=lista[+b.getAttribute("data-bs")]; if(!x) return;
+      m.remove(); try{ x.go(); }catch(e){}
+    });
+    const s=res.querySelector(".bsrow.sel"); if(s && s.scrollIntoView) s.scrollIntoView({block:"nearest"});
+  };
+  inp.oninput=()=>{ BUSCA.q=inp.value; BUSCA.sel=0; pinta(); };
+  inp.onkeydown=e=>{
+    if(e.key==="ArrowDown"){ e.preventDefault(); BUSCA.sel=Math.min(BUSCA.sel+1, Math.max(0,lista.length-1)); pinta(); }
+    else if(e.key==="ArrowUp"){ e.preventDefault(); BUSCA.sel=Math.max(0, BUSCA.sel-1); pinta(); }
+    else if(e.key==="Enter"){ const x=lista[BUSCA.sel]; if(x){ m.remove(); try{ x.go(); }catch(err){} } }
+  };
+  setTimeout(()=>inp.focus(), 60);
+  pinta();
+  return m;
+}
+
 /* ---------- 32. INICIALIZACAO ---------- */
 function boot(){
   loadRoot();
@@ -9721,6 +10025,7 @@ document.getElementById("langbtn").onclick=()=>applyLang(LANG==="pt"?"en":"pt");
 document.getElementById("iabtn").onclick=()=>go("ia");
 /* cabecalho */
 document.getElementById("helpbtn").onclick=()=>openHelp(ROUTE==="home"?"tutorial":"tela");
+document.getElementById("searchbtn").onclick=()=>openBusca("");
 document.getElementById("whoami").onclick=()=>loginModal();
 document.getElementById("brandbtn").onclick=()=>go("home");
 /* gaveta lateral: abre no ☰, fecha no ×, no Esc, tocando fora e ao escolher o destino */
@@ -9731,7 +10036,15 @@ document.getElementById("legalbtn").onclick=e=>{ e.preventDefault(); legalModal(
 window.addEventListener("beforeunload", ()=>{ stopCam(); });
 document.addEventListener("keydown", e=>{
   if(e.key==="Escape" && TOURST.active){ tourEnd(); return; }
-  if(e.key==="Escape"){ closeDrawer(); }
+  if(e.key==="Escape"){
+    const abertas=[...document.querySelectorAll(".modal:not([data-sticky])")];
+    if(abertas.length){ abertas[abertas.length-1].remove(); return; }
+    closeDrawer(); return;
+  }
+  /* Ctrl+K / Cmd+K abre a busca; "/" tambem, desde que nao esteja escrevendo num campo */
+  const dig=/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||"");
+  if((e.key==="k"||e.key==="K") && (e.ctrlKey||e.metaKey)){ e.preventDefault(); openBusca(""); return; }
+  if(e.key==="/" && !dig && !document.querySelector(".modal")){ e.preventDefault(); openBusca(""); }
 });
 fillIcons(document);
 checkBgArt(); checkHelpIcon(); checkPhotos();
@@ -9757,6 +10070,7 @@ loadServicos();
 setTimeout(checkUpdate, 4000);
 loadNews(()=>{});
 loadVideos();
+loadMusicas();
 /* atalhos do manifesto: index.html#workout, #timer, #scan, #progress */
 (function(){
   const h=(location.hash||"").replace("#","");
@@ -9768,7 +10082,7 @@ boot();
 
 /* API publica e estavel do app: o que outro codigo (ou uma IA) pode chamar sem mexer por dentro.
    pode(recurso) decide permissao; entrar(sessao)/sair() decidem identidade. Com servidor, muda aqui e nada mais. */
-window.RISE={ versao:APP_VERSION, atualizar:forceUpdate, versaoDoSite:siteVersion, pode:canUse, entrar:entrar, sair:sair, idioma:applyLang, tema:applyTheme, ir:go, ajuda:openHelp, tutorial:tourStart, guia:wizRun, novidades:openNews, menu:toggleDrawer, favoritos:setFavs,
+window.RISE={ versao:APP_VERSION, atualizar:forceUpdate, versaoDoSite:siteVersion, pode:canUse, entrar:entrar, sair:sair, idioma:applyLang, tema:applyTheme, ir:go, ajuda:openHelp, tutorial:tourStart, guia:wizRun, novidades:openNews, menu:toggleDrawer, favoritos:setFavs, buscar:openBusca,
   falar:speak, calar:()=>speak(""), acessibilidade:setA11y, privacidade:()=>go("set","dados"), aviso:()=>disclaimerModal(true), cid:cidSearch };
 </script>
 </body>

@@ -5,6 +5,33 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.3.0 — lupa de busca, playlists e versões nas Configurações
+
+- **Lupa no cabeçalho**, em todas as telas. Ela procura em tudo ao mesmo tempo: exercícios,
+  alongamentos, situações de Dor e alívio, códigos CID e TUSS já carregados, os seus treinos, telas,
+  ajustes, glossário e a própria lista de novidades. **Cada resultado é clicável e leva direto ao
+  lugar** — um exercício abre a janela dele, uma dor abre a situação já aberta na tela certa, um
+  ajuste abre a aba certa das Configurações. No computador, `/` ou `Ctrl+K` abrem a busca; as setas
+  escolhem e o Enter abre. A busca também está no menu ☰.
+- **A lista de versões agora fica em Ajustes › Sobre**, com o que mudou em cada uma, em PT e EN — é o
+  que a diretriz do portfólio pede. Ela continua também em Mais › Novidades.
+- **Botão de créditos e fontes** nas Configurações, apontando para o `CREDITOS.md`.
+- **Música virou lista**: várias playlists com nome, você escolhe a do dia, e o app já vem com
+  sugestões de treino no arquivo `musicas.json`. Dá para adicionar, renomear e apagar as suas.
+- **Tocador do Spotify dentro do app**, opcional (Ajustes › Preferências › Música do treino). Sem
+  conta logada no navegador ele toca trechos de 30 segundos; com a conta logada, toca inteiro. Ele
+  para quando você troca de app ou apaga a tela — por isso o botão que abre o app da música continua
+  sendo o caminho mais confiável.
+- Os **códigos de rastreio** que o Spotify cola no link de compartilhar (`si`, `pi`, `utm_*`) são
+  removidos sozinhos quando você salva a playlist.
+- **Esc fecha a janela aberta.**
+
+**Sobre buscar playlists públicas dentro do app:** não dá, e o app não finge que dá. A busca do
+Spotify exige login de desenvolvedor, e um aplicativo nessa condição atende no máximo **5 pessoas**
+(com o dono obrigatoriamente Premium). Passar disso exige empresa registrada com 250 mil usuários por
+mês. Então o botão "Procurar playlists de treino no Spotify" abre a busca do próprio Spotify, numa
+aba nova — honesto e sempre funciona.
+
 ## Novo na versão 3.2.0 — duas vistas, vídeo, TUSS, PDF de exame, música, batimento e TV
 
 **As duas vistas do movimento**
@@ -261,6 +288,7 @@ Todos vão soltos na **raiz** do repositório:
 | `cid.json` | lista de consulta de códigos CID-10 (musculoesquelético). **Lista inicial** — confira na tabela oficial |
 | `tuss.json` | tabela TUSS da ANS. **Vem vazio de propósito** — o administrador importa a tabela oficial dentro do app |
 | `videos.json` | código do vídeo de cada exercício. Vem vazio; o administrador monta dentro do app |
+| `musicas.json` | sugestões de playlist que viajam com o site. São só **links públicos** — o app não hospeda música |
 | `tv-riseone.html` | a página que a **TV** abre quando você manda projetar |
 | `versoes.json` | o que mudou em cada versão; o app desenha a tela "Novidades" a partir dele |
 | `fotos-exercicios.jpg` | opcional: fotos das posições de alguns exercícios |
@@ -314,4 +342,4 @@ durante um exercício, pare na hora e procure atendimento.
 O app não dá diagnóstico, não interpreta exame e não diz se um valor está bom ou ruim.
 
 ---
-Versão 3.2.0
+Versão 3.3.0

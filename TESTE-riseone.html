@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RiseONE — teste das diretrizes (v3.2.0)</title>
+<title>RiseONE — teste das diretrizes (v3.3.0)</title>
 <style>
 :root{--bg:#0f1115;--card:#171a20;--card2:#1d222a;--bd:#2a303b;--tx:#f2f4f8;--tx2:#a7b0bf;--ac:#ff7a2f;--ok:#2ecc8f;--no:#ff5d5d;--wr:#ffb020}
 *{box-sizing:border-box}
@@ -45,6 +45,7 @@ code{background:var(--card2);border:1px solid var(--bd);border-radius:6px;paddin
   <div class="item"><span class="dot">2</span><div><span class="k">Idioma e datas</span><br><small class="mut">Trocar PT | EN muda tudo, inclusive as datas: <code>19/Set/2026</code> em PT e <code>Sep/19/2026</code> em EN.</small></div></div>
   <div class="item"><span class="dot">3</span><div><span class="k">Cinco áreas</span><br><small class="mut">Início, Treinar (Treino · Exercícios · Corpo · Dor e alívio · Aquecer & Alongar), Dieta, Evolução (Hoje · Peso · Fotos · Medidas · Exames · Missões) e Mais.</small></div></div>
   <div class="item"><span class="dot">3b</span><div><span class="k">Menu ☰ e barra de favoritos</span><br><small class="mut">O ☰ fica no topo, à esquerda do nome do app, em todas as telas: abre a gaveta com <b>todas</b> as funções agrupadas. Fecha no ×, no Esc, tocando fora e ao escolher o destino — e o foco volta para o ☰. A barra de baixo do celular mostra só os favoritos (até 5), escolhidos em Mais › Preferências; não tem ☰ nem "Mais".</small></div></div>
+  <div class="item"><span class="dot">3c</span><div><span class="k">Lupa de busca</span><br><small class="mut">A lupa fica no cabeçalho, em todas as telas, e também no menu ☰. Escreva "lombar": devem aparecer exercícios, situações de Dor e alívio e telas, agrupados, e <b>cada linha leva direto ao lugar</b>. No computador, "/" e Ctrl+K abrem; setas escolhem e Enter abre; Esc fecha.</small></div></div>
   <div class="item"><span class="dot">4</span><div><span class="k">Botão Ajuda (Assist ONE)</span><br><small class="mut">Um botão só abre: Tutorial (destaque na tela de verdade), Guia passo a passo (Primeiros passos e Ficha de saúde, com pular, salvar e retomar), Buscar por termo e Esta tela. Tudo em PT e EN. Na primeira vez o app oferece o tutorial.</small></div></div>
   <div class="item"><span class="dot">5</span><div><span class="k">Conta com apelido, e-mail e recuperação</span><br><small class="mut">Ao criar a conta aparece um código <code>RISE-XXXX-XXXX</code>. Teste "Esqueci a senha" com ele: ao usar, o app gera um código novo e o antigo deixa de valer. Senha guardada com PBKDF2.</small></div></div>
   <div class="item"><span class="dot">6</span><div><span class="k">Pop-up em dois momentos</span><br><small class="mut">Um antes do login e outro depois (app diferente), com contagem 3-2-1 antes de liberar o X. Deitado no computador, em pé no celular. Botão "Conhecer".</small></div></div>
@@ -65,7 +66,8 @@ code{background:var(--card2);border:1px solid var(--bd);border-radius:6px;paddin
   <div class="item"><span class="dot">12</span><div><span class="k">Conferência de versão</span><br><small class="mut">Mais › Sobre mostra a versão deste aparelho e a publicada no site. Se o site estiver mais novo, o Início avisa e o botão "Atualizar agora" limpa o cache e recarrega.</small></div></div>
   <div class="item"><span class="dot">13</span><div><span class="k">Acessibilidade</span><br><small class="mut">Mais › Preferências › Acessibilidade: letra maior, alto contraste, reduzir animações, sublinhar links, modo leitura e ler a tela em voz alta. Confira também a 320 px de largura: nada pode rolar para o lado.</small></div></div>
   <div class="item"><span class="dot">14</span><div><span class="k">Privacidade e aviso legal</span><br><small class="mut">Na primeira abertura aparece o "Estou ciente". Mais › Dados traz a tela de Privacidade: autorização por finalidade, exportar, apagar por grupo e apagar tudo, com a base legal e a data em que foi conferida.</small></div></div>
-  <div class="item"><span class="dot">15</span><div><span class="k">Novidades por versão</span><br><small class="mut">Mais › Novidades lista o que cada versão trouxe, em PT e EN, com selo na entrada nova até você abrir uma vez. Vem do <code>versoes.json</code>.</small></div></div>
+  <div class="item"><span class="dot">15</span><div><span class="k">Novidades por versão</span><br><small class="mut"><b>Ajustes › Sobre</b> traz a lista de versões com o que mudou em cada uma, em PT e EN, com selo na entrada nova até você abrir uma vez. A mesma lista está em Mais › Novidades. Vem do <code>versoes.json</code>. Ali também fica o botão de créditos e fontes.</small></div></div>
+  <div class="item"><span class="dot">15b</span><div><span class="k">Playlists do treino</span><br><small class="mut">Ajustes › Preferências › Música do treino: o app já vem com sugestões; adicione a sua colando o link (os códigos de rastreio do Spotify somem sozinhos), escolha a do dia e ligue o tocador embutido se quiser. O botão da música aparece no passo a passo do treino.</small></div></div>
   <div class="item"><span class="dot">16</span><div><span class="k">Arte de fundo e tema</span><br><small class="mut">Mais › Preferências: tema escuro/claro e arte de fundo ligada/desligada. No tema claro entra a versão clara da arte.</small></div></div>
 </div>
 
@@ -120,7 +122,7 @@ function run(){
       });
     });
   }).catch(()=>line(A,null,'Conferência de versões','só funciona servido por http:// ou https://'));
-  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg','anuncios.json','servicos.json','cid.json','versoes.json','tuss.json','videos.json','tv-riseone.html','ARQUITETURA.md','CREDITOS.md','LICENSE','TESTE-VOZ-riseone.html'].forEach(f=>{
+  ['index.html','manifest.json','sw.js','icone-192.png','icone-512.png','icone-maskable.png','fundo.jpg','fundo-celular.jpg','fundo-claro.jpg','fundo-claro-celular.jpg','anuncios.json','servicos.json','cid.json','versoes.json','tuss.json','videos.json','musicas.json','tv-riseone.html','ARQUITETURA.md','CREDITOS.md','LICENSE','TESTE-VOZ-riseone.html'].forEach(f=>{
     fetch(f,{method:'HEAD'}).then(r=>line(F, r.ok, f, r.ok? 'encontrado':'faltando na raiz'))
       .catch(()=>line(F,false,f,'faltando na raiz'));
   });

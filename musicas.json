@@ -1,0 +1,17 @@
+{
+ "_leia_me": "Sugestoes de playlist para treinar, que viajam com o site. Sao apenas LINKS publicos: o RiseONE nao hospeda nem redistribui musica, e nao tem vinculo com o Spotify. Para trocar: entre no app como administrador, abra Ajustes > Preferencias > Musica do treino e use o botao de baixar musicas.json.",
+ "_readme": "Workout playlist suggestions shipped with the site. These are public LINKS only: RiseONE does not host or redistribute music and has no affiliation with Spotify. To change them: sign in as administrator, open Settings > Preferences > Workout music and use the download musicas.json button.",
+ "atualizado": "2026-09-25",
+ "listas": [
+  {
+   "id": "sug1",
+   "nome": "",
+   "url": "https://open.spotify.com/playlist/27HBz1BR4dGB5TduJZ6Yx9"
+  },
+  {
+   "id": "sug2",
+   "nome": "",
+   "url": "https://open.spotify.com/playlist/1Ic3oVdHCBfMuGiPwFyjRr"
+  }
+ ]
+}

@@ -3,6 +3,28 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.3.0",
+   "data": "2026-09-25",
+   "pt": [
+    "Lupa de busca no cabeçalho, em todas as telas: procura em tudo ao mesmo tempo — exercícios, alongamentos, dores, códigos CID e TUSS, seus treinos, telas, ajustes, glossário e as próprias novidades — e cada resultado leva direto ao lugar num toque. Atalhos “/” e Ctrl+K no computador.",
+    "A lista de versões, com o que mudou em cada uma, passou a ficar também em Ajustes › Sobre, como manda a diretriz do portfólio.",
+    "Botão de créditos e fontes nas Configurações.",
+    "Música do treino virou lista: várias playlists com nome, você escolhe a do dia, e o app já vem com sugestões de treino.",
+    "Tocador do Spotify dentro do app, opcional. Sem conta logada toca trechos de 30 segundos; logado, toca inteiro.",
+    "Os códigos de rastreio que o Spotify cola no link de compartilhar são removidos sozinhos ao salvar.",
+    "Esc fecha a janela aberta."
+   ],
+   "en": [
+    "Search magnifier in the header, on every screen: it searches everything at once — exercises, stretches, pains, ICD and TUSS codes, your workouts, screens, settings, glossary and the what's-new list itself — and every result takes you straight there in one tap. “/” and Ctrl+K shortcuts on the desktop.",
+    "The version list, with what changed in each one, is now also under Settings › About, as the portfolio guideline requires.",
+    "A credits and sources button in Settings.",
+    "Workout music became a list: several named playlists, you pick the one for the day, and the app ships with workout suggestions.",
+    "Optional Spotify player inside the app. Without being signed in it plays 30-second previews; signed in, it plays in full.",
+    "The tracking codes Spotify adds to share links are stripped automatically on save.",
+    "Esc closes the open dialog."
+   ]
+  },
+  {
    "v": "3.2.0",
    "data": "2026-09-25",
    "pt": [
