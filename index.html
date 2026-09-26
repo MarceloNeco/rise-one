@@ -845,6 +845,14 @@ main{padding-bottom:88px}
   .toast{bottom:calc(168px + env(safe-area-inset-bottom))}
 }
 @media(min-width:821px){ #langbtn2{display:none} }
+/* ---- câmera: medidor de nitidez e anel de foco ---- */
+.camfocus{display:flex;align-items:center;gap:10px;margin:8px 0 2px;font-size:.8rem;font-weight:700}
+.camfocus .bar{flex:1;margin:0}
+.camfocus.ok{color:var(--ok)} .camfocus.ok .bar i{background:var(--ok)}
+.camfocus.bad{color:var(--warn)} .camfocus.bad .bar i{background:var(--warn)}
+.camring{position:absolute;width:64px;height:64px;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%) scale(1.3);opacity:0;pointer-events:none;transition:transform .25s,opacity .25s}
+.camring.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.camstage{cursor:crosshair}
 /* ---- AssistONE: personagem redondo flutuante ---- */
 #helpbtn.assist{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:58px;height:58px;border-radius:50%;padding:0;
   background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink);border:0;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;
@@ -1949,6 +1957,106 @@ Object.assign(L,{
 "ia.switchQuota":["🔁 {a} está sem cota agora — usando {b}","🔁 {a} is out of quota right now — using {b}"],
 "ia.switchKey":["🔁 {a} recusou a chave — usando {b}","🔁 {a} refused the key — using {b}"],
 "as.name":["AssistONE","AssistONE"],
+"nu.tabToday":["Hoje","Today"],
+"nu.tabFoods":["Alimentos","Foods"],
+"nu.tabDishes":["Pratos e sugestões","Dishes and suggestions"],
+"nu.myFoods":["Meus alimentos","My foods"],
+"nu.myFoodsSub":["Rótulos que você leu e alimentos que cadastrou, com a tabela nutricional de cada um.","Labels you read and foods you added, each with its nutrition table."],
+"nu.baseFoods":["Alimentos comuns","Common foods"],
+"nu.baseSub":["Valores aproximados por 100 g (referência TACO/USDA). Confira no rótulo quando houver.","Approximate values per 100 g (TACO/USDA reference). Check the label when there is one."],
+"nu.search":["Buscar alimento","Search food"],
+"nu.add":["Cadastrar alimento","Add food"],
+"nu.readLabel":["Ler rótulo","Read a label"],
+"nu.noFoods":["Nenhum alimento seu ainda.","No foods of yours yet."],
+"nu.noFoodsSub":["Leia um rótulo com a câmera ou cadastre à mão.","Read a label with the camera or add one by hand."],
+"nu.per100":["por 100 g","per 100 g"],
+"nu.portion":["Porção","Portion"],
+"nu.brand":["Marca","Brand"],
+"nu.name":["Nome","Name"],
+"nu.fiber":["Fibras","Fiber"],
+"nu.sugar":["Açúcares","Sugars"],
+"nu.satFat":["Gord. saturada","Sat. fat"],
+"nu.sodium":["Sódio","Sodium"],
+"nu.ings":["Ingredientes (como no rótulo)","Ingredients (as on the label)"],
+"nu.calc":["Calculadora de porção","Portion calculator"],
+"nu.grams":["Quantidade (g)","Amount (g)"],
+"nu.fits":["Cabe na meta de hoje: até {a} g ({b} kcal restantes)","Fits today's target: up to {a} g ({b} kcal left)"],
+"nu.noTarget":["Defina a meta de calorias em Hoje › Calcular para mim para ver quanto cabe.","Set the calorie target in Today › Calculate for me to see how much fits."],
+"nu.addMeal":["Adicionar à refeição","Add to a meal"],
+"nu.saveFood":["Salvar como alimento","Save as a food"],
+"nu.saved":["Alimento salvo em Dieta › Alimentos.","Food saved under Diet › Foods."],
+"nu.deleted":["Alimento apagado.","Food removed."],
+"nu.contains":["Contém","Contains"],
+"nu.mayContain":["Pode conter","May contain"],
+"nu.forYou":["Para você","For you"],
+"nu.forYouOk":["Nada do que você evita apareceu na lista de ingredientes.","Nothing you avoid showed up in the ingredient list."],
+"nu.forYouNote":["Conferido pela lista de ingredientes que o app leu. Confira também o aviso de alérgicos na embalagem.","Checked against the ingredient list the app read. Also check the allergen notice on the package."],
+"nu.profile":["Seu perfil alimentar","Your food profile"],
+"nu.profileSub":["Marque o que se aplica. As sugestões e os alertas de rótulo seguem isso.","Tick what applies. Suggestions and label alerts follow this."],
+"nu.goals":["Objetivo alimentar","Food goal"],
+"nu.restr":["Alergias e restrições","Allergies and restrictions"],
+"nu.suggest":["Sugestões de pratos","Dish suggestions"],
+"nu.suggestSub":["Pratos simples com alimentos comuns, filtrados pelo seu perfil e pela meta do dia.","Simple dishes with common foods, filtered by your profile and daily target."],
+"nu.slot":["Para qual refeição?","For which meal?"],
+"nu.noSuggest":["Nenhum prato passa pelas suas restrições. Cadastre um prato seu ou afrouxe uma restrição.","No dish passes your restrictions. Add a dish of your own or relax a restriction."],
+"nu.why":["Por que este","Why this one"],
+"nu.wLowKcal":["leve","light"],
+"nu.wProt":["rico em proteína","high protein"],
+"nu.wLowCarb":["pouco carboidrato","low carb"],
+"nu.wNoSugar":["sem açúcar adicionado","no added sugar"],
+"nu.wFresh":["sem ultraprocessado","no ultra-processed"],
+"nu.wKids":["bom para crianças","kid-friendly"],
+"nu.wFits":["cabe na meta","fits the target"],
+"nu.plan":["Plano do dia sugerido","Suggested day plan"],
+"nu.planSub":["Café, almoço, lanche e jantar somando perto da sua meta. Só uma sugestão: ajuste com um nutricionista.","Breakfast, lunch, snack and dinner adding up close to your target. Just a suggestion: adjust with a dietitian."],
+"nu.usePlan":["Usar este plano hoje","Use this plan today"],
+"nu.otherPlan":["Outro plano","Another plan"],
+"nu.planUsed":["Plano adicionado às refeições de hoje.","Plan added to today's meals."],
+"nu.total":["Total","Total"],
+"nu.target":["Meta","Target"],
+"nu.myDishes":["Meus pratos","My dishes"],
+"nu.myDishesSub":["Monte pratos com os seus alimentos e veja calorias e macros somados.","Build dishes with your foods and see calories and macros added up."],
+"nu.newDish":["Montar prato","Build a dish"],
+"nu.dishName":["Nome do prato","Dish name"],
+"nu.addItem":["Adicionar item","Add item"],
+"nu.items":["Itens","Items"],
+"nu.noItems":["Adicione alimentos e quantidades.","Add foods and amounts."],
+"nu.noDishes":["Nenhum prato seu ainda.","No dishes of yours yet."],
+"nu.dishSaved":["Prato salvo.","Dish saved."],
+"nu.scale":["Ajustar o tamanho","Adjust the size"],
+"nu.ai":["Sugestão com IA","AI suggestion"],
+"nu.aiSub":["Pede um cardápio do dia à sua IA (cofre de chaves), com o seu perfil e as suas metas. Não vai nome nem dado de saúde além disso.","Asks your AI (key vault) for a day menu, with your profile and targets. Nothing else about you is sent."],
+"nu.aiAsk":["Pedir cardápio à IA","Ask the AI for a menu"],
+"nu.aiNoKey":["Cole uma chave de IA primeiro (Mais › Assistente › Cofre de chaves).","Paste an AI key first (More › Assistant › Key vault)."],
+"nu.aiWait":["Montando o cardápio…","Building the menu…"],
+"nu.disclaimer":["Sugestões automáticas não substituem nutricionista ou médico, principalmente com diabetes, pressão alta, gravidez ou alergia grave.","Automatic suggestions do not replace a dietitian or physician, especially with diabetes, high blood pressure, pregnancy or a severe allergy."],
+"nu.obj.emagrecer":["Emagrecimento saudável","Healthy weight loss"],
+"nu.obj.pressao":["Controle de pressão","Blood pressure control"],
+"nu.obj.diabetes":["Controle de diabetes","Diabetes control"],
+"nu.obj.criancas":["Alimentação para crianças","Food for children"],
+"nu.obj.massa":["Ganho de massa","Muscle gain"],
+"nu.r.gluten":["Sem glúten","Gluten-free"],
+"nu.r.lactose":["Sem lactose","Lactose-free"],
+"nu.r.leite":["Sem leite","Milk-free"],
+"nu.r.animal":["Sem origem animal","No animal products"],
+"nu.r.ovo":["Sem ovo","Egg-free"],
+"nu.r.soja":["Sem soja","Soy-free"],
+"nu.r.amendoim":["Sem amendoim","Peanut-free"],
+"nu.r.castanhas":["Sem castanhas e nozes","Nut-free"],
+"nu.r.frutosmar":["Sem peixe e frutos do mar","No fish or seafood"],
+"nu.r.acucar":["Sem açúcar adicionado","No added sugar"],
+"cam.focus":["Focar","Focus"],
+"cam.torch":["Lanterna","Torch"],
+"cam.sharp":["Nítido ✓ — pode fotografar","Sharp ✓ — go ahead"],
+"cam.blurry":["Embaçado — toque na imagem para focar e segure firme","Blurry — tap the image to focus and hold steady"],
+"cam.focusHint":["Toque na imagem para focar. A barra mostra a nitidez ao vivo.","Tap the image to focus. The bar shows sharpness live."],
+"cam.fullRes":["Foto em resolução cheia","Full-resolution photo"],
+"sc.pass":["Lendo… tentativa {a} de {b}","Reading… attempt {a} of {b}"],
+"sc.prep":["Endireitando e limpando a imagem…","Straightening and cleaning the image…"],
+"sc.rotate":["Girar","Rotate"],
+"sc.reread":["Ler de novo","Read again"],
+"sc.conf":["Confiança da leitura: {a}%","Reading confidence: {a}%"],
+"sc.confLow":["Leitura fraca. Tente girar a imagem, aproximar mais ou tirar outra foto com mais luz.","Weak reading. Try rotating the image, getting closer or taking another photo with more light."],
 "as.hi":["Olá! Eu sou o AssistONE 👋","Hi! I am AssistONE 👋"],
 "as.hiSub":["Posso te mostrar o app, começar o passo a passo ou explicar a tela em que você está.","I can show you around, start the step-by-step or explain the screen you are on."],
 "as.here":["Você está em","You are in"],
@@ -2730,7 +2838,7 @@ function defaultState(name){
       {id:uid(), title:{pt:"Dormir 7 horas",en:"Sleep 7 hours"}, icon:"😴", days:[0,1,2,3,4,5,6]}
     ],
     reminders:[], checkins:[], workouts:[], logs:[], measures:[], photos:[], meals:[], wuLogs:[],
-    equipPhotos:{}, customEx:[], exams:[], laudos:[], students:[],
+    equipPhotos:{}, customEx:[], exams:[], laudos:[], students:[], foods:[], dishes:[],
     diet:{kcal:0,prot:0,carb:0,fat:0,water:0,restKcal:0},
     settings:{units:"metric", cloud:{provider:"", clientId:"", connected:false}, notif:false, weeklyBackup:false}
   };
@@ -3357,7 +3465,7 @@ function resizeImage(src, max, cb){
 }
 function readFile(file, cb){ const r=new FileReader(); r.onload=()=>resizeImage(r.result,1400,cb); r.readAsDataURL(file); }
 let CAMSTREAM=null, CAMFACING="environment";
-function stopCam(){ if(CAMSTREAM){ CAMSTREAM.getTracks().forEach(tr=>tr.stop()); CAMSTREAM=null; } }
+function stopCam(){ if(CAMSTREAM){ CAMSTREAM.getTracks().forEach(tr=>tr.stop()); CAMSTREAM=null; } if(typeof CAM2!=="undefined" && CAM2.meterT){ clearInterval(CAM2.meterT); CAM2.meterT=null; } }
 function pickImage(cb){
   const m=modal(mh(t("common.photo"))+
     '<div id="camwrap"></div>'+
@@ -4085,12 +4193,18 @@ const FOODS=[
 function foodName(f){ return LANG==="pt"?f[0]:f[1]; }
 
 /* ---------- 24. TELA: DIETA ---------- */
+const DT_TABS=()=>[["hoje",t("nu.tabToday"),"apple"],["alimentos",t("nu.tabFoods"),"book"],["pratos",t("nu.tabDishes"),"sparkles"]];
+function dtView(){ return SUB.diet || "hoje"; }
 SCREENS.diet = function(){
   const iso=todayISO(), list=mealsOn(iso), s=sumMeals(list), d=STATE.diet;
   const isTrain=!!workoutToday(); const kcalTarget=(isTrain||!d.restKcal)?d.kcal:d.restKcal;
+  const v=dtView();
   let h='<div class="pagehead"><div><h1>'+t("dt.title")+'</h1><small>'+fmtDate(iso)+" · "+(isTrain?t("dt.trainDay"):t("dt.restDay"))+"</small></div>"+
-    '<div class="row nowrap"><button class="btn ghost sm" id="scanlbl">'+I("scan")+t("dt.scanLabel")+'</button><button class="btn" id="addmeal">'+I("plus")+t("dt.addMeal")+"</button></div></div>";
+    (v==="hoje"?'<div class="row nowrap"><button class="btn ghost sm" id="scanlbl">'+I("scan")+t("dt.scanLabel")+'</button><button class="btn" id="addmeal">'+I("plus")+t("dt.addMeal")+"</button></div>":"")+"</div>";
+  h+=segBar("diet", DT_TABS());
   h+=guestBanner();
+  if(v==="alimentos") return h+foodsScreen();
+  if(v==="pratos") return h+dishesScreen();
   /* metas + anel */
   h+='<div class="card">'+cardHead("target", t("dt.targets"), d.kcal?t("dt.planSub"):t("dt.noTargets"), '<button class="btn sm ghost" id="calcd">'+I("zap")+t("dt.calc")+"</button>");
   h+='<div class="row" style="align-items:center;gap:18px">'+
@@ -4144,6 +4258,8 @@ function macroBar(lb,v,total,col){
 }
 SCREENS.diet_after = function(){
   wireGuestBanner();
+  if(dtView()==="alimentos"){ wireFoods(); return; }
+  if(dtView()==="pratos"){ wireDishes(); return; }
   document.getElementById("addmeal").onclick=()=>mealModal();
   document.getElementById("scanlbl").onclick=()=>{ SCANMODE="label"; go("scan"); };
   document.getElementById("calcd").onclick=calcDiet;
@@ -4185,7 +4301,9 @@ function mealModal(pre){
   pre=pre||{};
   const m=modal(mh(t("dt.addMeal"))+
     '<label class="fld"><span>'+t("dt.slot")+'</span><select id="m_s">'+["bf","sn1","lu","sn2","di","sn3","pre","post"].map(s=>'<option value="'+s+'">'+t("dt."+s)+"</option>").join("")+"</select></label>"+
-    '<label class="fld"><span>'+t("dt.common")+'</span><select id="m_pick"><option value="">—</option>'+FOODS.map((f,i)=>'<option value="'+i+'">'+esc(foodName(f))+"</option>").join("")+"</select></label>"+
+    '<label class="fld"><span>'+t("dt.common")+'</span><select id="m_pick"><option value="">—</option>'+
+      (STATE.foods.length?'<optgroup label="'+esc(t("nu.myFoods"))+'">'+STATE.foods.map(f=>'<option value="my:'+f.id+'">'+esc(f.nome)+(f.marca?" · "+esc(f.marca):"")+"</option>").join("")+"</optgroup>":"")+
+      '<optgroup label="'+esc(t("nu.baseFoods"))+'">'+FOODS.map((f,i)=>'<option value="'+i+'">'+esc(foodName(f))+"</option>").join("")+"</optgroup></select></label>"+
     '<label class="fld"><span>'+t("dt.food")+'</span><input id="m_n" type="text" value="'+esc(pre.name||"")+'"></label>'+
     '<label class="fld"><span>'+t("dt.qty")+'</span><input id="m_q" type="number" value="'+(pre.qty||100)+'"></label>'+
     '<small class="muted">'+t("dt.per100")+"</small>"+
@@ -4195,7 +4313,12 @@ function mealModal(pre){
     '<label class="fld"><span>G (g)</span><input id="m_f" type="number" step="0.1" value="'+(pre.fat||"")+'"></label></div>'+
     '<div class="row" style="justify-content:space-between"><button class="btn line sm" id="m_scan">'+I("scan")+t("dt.scanLabel")+"</button>"+
     '<span><button class="btn line" data-close>'+t("common.cancel")+'</button> <button class="btn" id="m_ok">'+t("common.add")+"</button></span></div>");
-  m.querySelector("#m_pick").onchange=e=>{ const f=FOODS[e.target.value]; if(!f) return;
+  m.querySelector("#m_pick").onchange=e=>{
+    const val=String(e.target.value);
+    if(val.indexOf("my:")===0){ const mf=STATE.foods.find(x=>x.id===val.slice(3)); if(!mf) return; const n=mf.por100;
+      m.querySelector("#m_n").value=mf.nome; m.querySelector("#m_k").value=n.kcal||0; m.querySelector("#m_p").value=n.prot||0; m.querySelector("#m_c").value=n.carb||0; m.querySelector("#m_f").value=n.fat||0;
+      if(mf.porcao) m.querySelector("#m_q").value=mf.porcao; return; }
+    const f=FOODS[val]; if(!f) return;
     m.querySelector("#m_n").value=foodName(f); m.querySelector("#m_k").value=f[2];
     m.querySelector("#m_p").value=f[3]; m.querySelector("#m_c").value=f[4]; m.querySelector("#m_f").value=f[5]; };
   m.querySelector("#m_scan").onclick=()=>{ m.remove(); SCANMODE="label"; go("scan"); };
@@ -4208,6 +4331,322 @@ function mealModal(pre){
     save(); m.remove(); render(); toast(t("common.saved"));
   };
   if(pre.slot) m.querySelector("#m_s").value=pre.slot;
+}
+
+/* ---------- 24b. ALIMENTOS, PRATOS E SUGESTÕES (inspirado no Desrotulando) ---------- */
+/* Por que: ler o rótulo é só o começo. A pessoa quer guardar o alimento com a tabela dele, calcular a
+   porção, saber se cabe na meta, ver se tem algo que ela evita, e receber ideias de prato e de dia
+   inteiro que respeitem as restrições. Tudo roda no aparelho; a IA só entra se a pessoa pedir. */
+const NUT_OBJ=["emagrecer","pressao","diabetes","criancas","massa"];
+/* restrições: id e o que denuncia na lista de ingredientes (texto sem acento, minúsculo) */
+const NUT_RESTR=[
+ ["gluten",   /gluten|trigo|cevada|centeio|malte|\baveia\b|\bpao\b|\bpaes\b|macarrao|biscoito|bolacha|\bbolo\b|torrada|cerveja|farinha(?! de arroz| de mandioca| de milho)/],
+ ["lactose",  /lactose|\bleite\b|soro de leite|whey|queijo|manteiga|iogurte|creme de leite|caseina|\bnata\b|requeij/],
+ ["leite",    /\bleite\b|soro de leite|whey|queijo|manteiga|iogurte|creme de leite|caseina|\bnata\b|requeij|lactose/],
+ ["animal",   /\bcarne|frango|peixe|\bovos?\b|\bleite\b|gelatina|\bmel\b|banha|manteiga|queijo|whey|caseina|albumina|iogurte|atum|salm|tilapia|camar|bacon|presunto|linguica|salsicha|bovin|patinho|contrafile|\bbife\b|\bcoxa\b|peito de|requeij/],
+ ["ovo",      /\bovos?\b|albumina|\bgema\b|clara de ovo|maionese/],
+ ["soja",     /\bsoja\b|lecitina de soja|\btofu\b|shoyu|\bmiss?o\b/],
+ ["amendoim", /amendoim|peanut/],
+ ["castanhas",/castanha|\bnozes\b|\bnoz\b|amendoa|avela|pistache|macadamia|\bpeca\b/],
+ ["frutosmar",/peixe|camar|frutos do mar|\batum\b|sardinha|salm|bacalhau|tilapia|\blula\b|polvo|marisco|mexilh/],
+ ["acucar",   /acucar|xarope|glicose|frutose|maltodextrina|\bmel\b|dextrose|sacarose|glucose|refrigerante|chocolate/]
+];
+function dietPrefs(){ STATE.diet.prefs=STATE.diet.prefs||{objetivos:[],restricoes:[]}; return STATE.diet.prefs; }
+function nutTags(text){ const x=norm(text||""); return NUT_RESTR.filter(r=>r[1].test(x)).map(r=>r[0]); }
+/* um alimento "olhável" de qualquer origem: da tabela comum (linha do FOODS) ou dos meus */
+function nutBase(i){ const f=FOODS[i]; return {id:"b:"+i, nome:foodName(f), nomePT:f[0], por100:{kcal:f[2],prot:f[3],carb:f[4],fat:f[5]}, tags:nutTags(f[0]), base:true}; }
+function nutFind(id){
+  if(String(id).indexOf("b:")===0) return nutBase(+String(id).slice(2));
+  const f=STATE.foods.find(x=>x.id===id); if(!f) return null;
+  return Object.assign({}, f, {tags:nutTags(f.nome+" "+(f.ingRaw||"")+" "+(f.ings||[]).join(" "))});
+}
+function nutAll(){ return STATE.foods.map(f=>nutFind(f.id)).concat(FOODS.map((f,i)=>nutBase(i))); }
+function nutScale(por100, g){ const k=(g||0)/100, o={}; ["kcal","prot","carb","fat","fiber","sugar","satFat","sodium"].forEach(key=>{ if(por100[key]!=null) o[key]=por100[key]*k; }); return o; }
+function nutKcalLeft(){
+  const d=STATE.diet, isTrain=!!workoutToday(), alvo=(isTrain||!d.restKcal)?d.kcal:d.restKcal;
+  if(!alvo) return null;
+  return {alvo, resta:Math.max(0, alvo-sumMeals(mealsOn(todayISO())).kcal)};
+}
+/* rótulo lido → alimento (valores do rótulo são por porção; guardamos por 100 g) */
+function foodFromLabel(o){
+  const k=(o.portion&&o.portion>0)? 100/o.portion : 1;
+  const por100={}; [["kcal","kcal"],["prot","prot"],["carb","carb"],["fat","fat"],["fiber","fiber"],["sugar","sugar"],["satFat","satFat"],["sodium","sodium"]].forEach(([a,b])=>{ if(o[a]!=null) por100[b]=Math.round(o[a]*k*10)/10; });
+  return {nome:"", marca:o.brand||"", porcao:o.portion||0, por100, ingRaw:o.ingRaw||"", ings:o.ings||[], selos:o.dietas||[], rag:o.rag?o.rag.cor:"", altoEm:o.altoEm||[], fonte:"rotulo"};
+}
+/* bloco "Para você" no cartão do rótulo: o que a pessoa evita e apareceu nos ingredientes */
+function nutForYouHTML(o){
+  const pr=dietPrefs(); if(!pr.restricoes.length) return "";
+  const txt=(o.ingRaw||"")+" "+(o.ings||[]).join(" ");
+  if(!txt.trim()) return "";
+  const hit=nutTags(txt).filter(r=>pr.restricoes.indexOf(r)>=0);
+  const pode=/pode conter/.test(norm(txt));
+  let h='<div class="sep"></div><span class="kicker">'+t("nu.forYou")+"</span>";
+  if(!hit.length) h+='<div class="rag g" style="margin-top:6px"><span class="dot"></span><div><b>✓</b> <small>'+t("nu.forYouOk")+"</small></div></div>";
+  else h+='<div class="rag r" style="margin-top:6px"><span class="dot"></span><div><b>'+t("nu.contains")+": "+hit.map(r=>esc(t("nu.r."+r).replace(/^(Sem|No) /,""))).join(", ")+"</b>"+(pode?"<br><small>"+t("nu.mayContain")+"</small>":"")+"</div></div>";
+  h+='<p class="tiny muted">'+t("nu.forYouNote")+"</p>";
+  return h;
+}
+/* ---- tela Alimentos ---- */
+let NUT_Q="";
+function nutRow(f){
+  const n=f.por100||{};
+  return '<button class="item link" data-food="'+esc(f.id)+'"><span class="ibub '+(f.base?"grey":"")+'" style="width:32px;height:32px">'+I(f.base?"leaf":"book")+'</span>'+
+    '<div class="gr"><div class="t">'+esc(f.nome)+(f.marca?' <span class="muted tiny">· '+esc(f.marca)+"</span>":"")+'</div><div class="s">'+fmtNum(n.kcal||0,0)+" kcal · P "+fmtNum(n.prot||0,1)+" C "+fmtNum(n.carb||0,1)+" G "+fmtNum(n.fat||0,1)+" "+t("nu.per100")+"</div></div>"+
+    (f.rag?'<span class="pill xs '+(f.rag==="g"?"ok":(f.rag==="a"?"warn":""))+'">●</span>':"")+"</button>";
+}
+function foodsScreen(){
+  const q=norm(NUT_Q);
+  const mine=STATE.foods.map(f=>nutFind(f.id)).filter(f=>!q||norm(f.nome+" "+(f.marca||"")).indexOf(q)>=0);
+  const base=FOODS.map((f,i)=>nutBase(i)).filter(f=>!q||norm(f.nome+" "+f.nomePT).indexOf(q)>=0);
+  let h='<div class="card">'+cardHead("book", t("nu.myFoods"), t("nu.myFoodsSub"))+
+    '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="nu_add">'+I("plus")+t("nu.add")+'</button><button class="btn sm line" id="nu_scan">'+I("scan")+t("nu.readLabel")+"</button></div>"+
+    '<div class="help-q" style="margin-bottom:10px">'+I("search")+'<input type="search" id="nu_q" value="'+esc(NUT_Q)+'" placeholder="'+t("nu.search")+'" autocomplete="off"></div>'+
+    (mine.length?'<div class="list">'+mine.map(nutRow).join("")+"</div>":(STATE.foods.length?'<p class="tiny muted">'+t("help.noResults")+"</p>":emptyBox("book", t("nu.noFoods"), t("nu.noFoodsSub"))))+"</div>";
+  h+='<div class="card">'+cardHead("leaf", t("nu.baseFoods"), t("nu.baseSub"))+'<div class="list">'+base.slice(0, q?60:14).map(nutRow).join("")+"</div>"+
+     (!q && base.length>14?'<button class="btn ghost sm" id="nu_more" style="margin-top:10px">'+t("help.seeAll")+" ("+base.length+")</button>":"")+"</div>";
+  return h;
+}
+function wireFoods(){
+  const q=document.getElementById("nu_q");
+  if(q){ q.oninput=()=>{ NUT_Q=q.value; const pos=q.selectionStart; render(); const q2=document.getElementById("nu_q"); if(q2){ q2.focus(); try{ q2.setSelectionRange(pos,pos); }catch(e){} } }; }
+  const add=document.getElementById("nu_add"); if(add) add.onclick=()=>foodEditModal({});
+  const sc=document.getElementById("nu_scan"); if(sc) sc.onclick=()=>{ SCANMODE="label"; go("scan"); };
+  const more=document.getElementById("nu_more"); if(more) more.onclick=()=>{ NUT_Q=" "; render(); NUT_Q=""; };
+  document.querySelectorAll("[data-food]").forEach(b=>b.onclick=()=>foodModal(b.getAttribute("data-food")));
+}
+/* ficha do alimento: tabela por 100 g e por porção, calculadora de porção, quanto cabe hoje */
+function foodModal(id){
+  const f=nutFind(id); if(!f) return;
+  const n=f.por100||{}, left=nutKcalLeft();
+  const linhas=[["kcal","kcal",""],["prot",t("dt.prot"),"g"],["carb",t("dt.carb"),"g"],["fat",t("dt.fat"),"g"],["fiber",t("nu.fiber"),"g"],["sugar",t("nu.sugar"),"g"],["satFat",t("nu.satFat"),"g"],["sodium",t("nu.sodium"),"mg"]].filter(l=>n[l[0]]!=null);
+  const g0=f.porcao||100;
+  const m=modal(mh(f.nome+(f.marca?" · "+f.marca:""))+
+    (f.tags&&f.tags.length?'<div class="chips" style="margin-bottom:8px">'+f.tags.map(r=>'<span class="chip'+(dietPrefs().restricoes.indexOf(r)>=0?" on":"")+'">'+esc(t("nu.contains"))+" "+esc(t("nu.r."+r).replace(/^(Sem|No) /,""))+"</span>").join("")+"</div>":"")+
+    '<span class="kicker">'+t("rt.tabela")+" · "+t("nu.per100")+'</span><div class="grid g4" style="margin:6px 0 12px">'+linhas.map(l=>stat(l[1], fmtNum(n[l[0]], l[0]==="kcal"?0:1), l[2],"")).join("")+"</div>"+
+    '<div class="card tight soft"><span class="kicker">'+t("nu.calc")+'</span><label class="fld" style="margin-top:6px"><span>'+t("nu.grams")+'</span><input type="number" id="fm_g" value="'+g0+'" min="0"></label>'+
+    '<div class="grid g4" id="fm_out"></div>'+
+    '<p class="tiny muted" id="fm_fit" style="margin:8px 0 0"></p></div>'+
+    (f.ings&&f.ings.length?'<details class="fold"><summary>'+I("file")+t("rt.ings")+' <span class="pill" style="margin-left:6px">'+f.ings.length+'</span></summary><div class="fb"><ol class="bul tiny">'+f.ings.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ol></div></details>":"")+
+    '<div class="row" style="justify-content:space-between;margin-top:12px"><span>'+(f.base?"":'<button class="btn xs line" id="fm_edit">'+t("common.edit")+'</button> <button class="btn xs line" id="fm_del">'+t("common.del")+"</button>")+"</span>"+
+    '<button class="btn" id="fm_add">'+I("plus")+t("nu.addMeal")+"</button></div>");
+  const paint=()=>{
+    const g=num(m.querySelector("#fm_g").value,0), o=nutScale(n,g);
+    m.querySelector("#fm_out").innerHTML=linhas.slice(0,4).map(l=>stat(l[1], fmtNum(o[l[0]]||0, l[0]==="kcal"?0:1), l[2],"")).join("");
+    const fit=m.querySelector("#fm_fit");
+    if(!left) fit.textContent=t("nu.noTarget");
+    else { const perG=(n.kcal||0)/100; fit.textContent= perG>0? t("nu.fits").replace("{a}",fmtNum(left.resta/perG,0)).replace("{b}",fmtNum(left.resta,0)) : ""; }
+  };
+  m.querySelector("#fm_g").oninput=paint; paint();
+  m.querySelector("#fm_add").onclick=()=>{ const g=num(m.querySelector("#fm_g").value,100); m.remove(); mealModal({name:f.nome, qty:g, kcal:n.kcal||0, prot:n.prot||0, carb:n.carb||0, fat:n.fat||0}); };
+  const ed=m.querySelector("#fm_edit"); if(ed) ed.onclick=()=>{ m.remove(); foodEditModal(STATE.foods.find(x=>x.id===f.id)); };
+  const del=m.querySelector("#fm_del"); if(del) del.onclick=()=>confirmBox(t("common.del")+"?", ()=>{ STATE.foods=STATE.foods.filter(x=>x.id!==f.id); save(); m.remove(); toast(t("nu.deleted")); render(); });
+}
+/* cadastro à mão ou vindo do rótulo */
+function foodEditModal(pre){
+  pre=pre||{}; const n=pre.por100||{};
+  const campo=(id,lb,v,step)=>'<label class="fld"><span>'+lb+'</span><input type="number" id="'+id+'" step="'+(step||"0.1")+'" value="'+(v==null?"":v)+'"></label>';
+  const m=modal(mh(pre.id?t("common.edit"):t("nu.add"))+
+    '<div class="grid g2 collapse"><label class="fld"><span>'+t("nu.name")+'</span><input type="text" id="fe_n" value="'+esc(pre.nome||"")+'"></label>'+
+    '<label class="fld"><span>'+t("nu.brand")+'</span><input type="text" id="fe_b" value="'+esc(pre.marca||"")+'"></label></div>'+
+    '<label class="fld"><span>'+t("nu.portion")+' (g)</span><input type="number" id="fe_por" value="'+(pre.porcao||"")+'"></label>'+
+    '<small class="muted">'+t("nu.per100")+'</small><div class="grid g4" style="margin-top:6px">'+campo("fe_k","kcal",n.kcal,"1")+campo("fe_p",t("dt.prot")+" (g)",n.prot)+campo("fe_c",t("dt.carb")+" (g)",n.carb)+campo("fe_f",t("dt.fat")+" (g)",n.fat)+"</div>"+
+    '<div class="grid g4">'+campo("fe_fi",t("nu.fiber")+" (g)",n.fiber)+campo("fe_su",t("nu.sugar")+" (g)",n.sugar)+campo("fe_sa",t("nu.satFat")+" (g)",n.satFat)+campo("fe_so",t("nu.sodium")+" (mg)",n.sodium,"1")+"</div>"+
+    '<label class="fld"><span>'+t("nu.ings")+'</span><textarea id="fe_i" rows="3">'+esc(pre.ingRaw||(pre.ings||[]).join(", "))+'</textarea></label>'+
+    '<div class="row" style="justify-content:flex-end"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="fe_ok">'+t("common.save")+"</button></div>");
+  m.querySelector("#fe_ok").onclick=()=>{
+    if(typeof precisaConta==="function" && !precisaConta()) return;
+    const v=id=>{ const x=m.querySelector("#"+id).value; return x===""?null:num(x,0); };
+    const nome=m.querySelector("#fe_n").value.trim(); if(!nome){ toast(t("login.noname")); return; }
+    const ingRaw=m.querySelector("#fe_i").value.trim();
+    const f={id:pre.id||uid(), nome, marca:m.querySelector("#fe_b").value.trim(), porcao:v("fe_por")||0,
+      por100:{kcal:v("fe_k")||0, prot:v("fe_p")||0, carb:v("fe_c")||0, fat:v("fe_f")||0, fiber:v("fe_fi"), sugar:v("fe_su"), satFat:v("fe_sa"), sodium:v("fe_so")},
+      ingRaw, ings:ingRaw? ingRaw.split(/,|;/).map(x=>x.trim()).filter(Boolean).slice(0,40) : [],
+      selos:pre.selos||[], rag:pre.rag||"", altoEm:pre.altoEm||[], fonte:pre.fonte||"manual", criado:pre.criado||todayISO()};
+    Object.keys(f.por100).forEach(k=>{ if(f.por100[k]==null) delete f.por100[k]; });
+    STATE.foods=STATE.foods.filter(x=>x.id!==f.id); STATE.foods.unshift(f); save(); m.remove(); toast(t("nu.saved"));
+    if(ROUTE==="diet") render();
+  };
+}
+/* ---- pratos prontos: alimentos comuns e gramas; as marcas de restrição saem dos próprios itens ---- */
+const PRATOS=[
+ {id:"p1",  pt:"Frango grelhado com arroz, feijão e salada", en:"Grilled chicken with rice, beans and salad", kids:1, itens:[["Peito de frango grelhado",120],["Arroz branco cozido",100],["Feijão carioca cozido",80],["Alface",40],["Tomate",50]], slots:["lu","di"]},
+ {id:"p2",  pt:"Omelete com pão integral e tomate", en:"Omelette with wholemeal bread and tomato", kids:1, itens:[["Ovo cozido",100],["Pão integral",50],["Tomate",40]], slots:["bf","di"]},
+ {id:"p3",  pt:"Iogurte grego com aveia e banana", en:"Greek yoghurt with oats and banana", kids:1, itens:[["Iogurte grego zero",150],["Aveia em flocos",30],["Banana",100]], slots:["bf","sn1","sn2"]},
+ {id:"p4",  pt:"Tilápia com batata-doce e brócolis", en:"Tilapia with sweet potato and broccoli", itens:[["Tilápia grelhada",150],["Batata doce cozida",150],["Brócolis cozido",100],["Azeite de oliva",5]], slots:["lu","di"]},
+ {id:"p5",  pt:"Salada de atum com ovo", en:"Tuna salad with egg", itens:[["Atum em água",100],["Alface",60],["Tomate",60],["Ovo cozido",50],["Azeite de oliva",8]], slots:["lu","di"]},
+ {id:"p6",  pt:"Tapioca com queijo minas", en:"Tapioca with fresh cheese", kids:1, itens:[["Tapioca (goma)",60],["Queijo minas frescal",40]], slots:["bf","sn2"]},
+ {id:"p7",  pt:"Vitamina de banana com aveia", en:"Banana and oat smoothie", kids:1, itens:[["Banana",100],["Leite integral",200],["Aveia em flocos",30]], slots:["bf","sn1","sn2"]},
+ {id:"p8",  pt:"Macarrão com carne moída e molho de tomate", en:"Pasta with minced beef and tomato sauce", kids:1, itens:[["Macarrão cozido",150],["Patinho bovino grelhado",100],["Tomate",80],["Azeite de oliva",5]], slots:["lu","di"]},
+ {id:"p9",  pt:"Bowl vegano: arroz integral, feijão preto e abacate", en:"Vegan bowl: brown rice, black beans and avocado", itens:[["Arroz integral cozido",120],["Feijão preto cozido",100],["Abacate",50],["Tomate",50]], slots:["lu","di"]},
+ {id:"p10", pt:"Salmão com legumes e batata", en:"Salmon with vegetables and potato", itens:[["Salmão grelhado",120],["Brócolis cozido",100],["Cenoura",80],["Batata cozida",100]], slots:["lu","di"]},
+ {id:"p11", pt:"Mingau de aveia com maçã", en:"Oat porridge with apple", kids:1, itens:[["Aveia em flocos",40],["Leite desnatado",200],["Maçã",100]], slots:["bf","sn3"]},
+ {id:"p12", pt:"Pão francês com requeijão e café", en:"Bread roll with cream cheese and coffee", itens:[["Pão francês",50],["Requeijão light",20],["Café sem açúcar",150]], slots:["bf"]},
+ {id:"p13", pt:"Shake de whey com banana", en:"Whey shake with banana", itens:[["Whey protein (pó)",30],["Banana",100],["Leite desnatado",250]], slots:["post","sn1","sn2"]},
+ {id:"p14", pt:"Mandioca cozida com ovos", en:"Boiled cassava with eggs", kids:1, itens:[["Mandioca cozida",150],["Ovo cozido",100]], slots:["bf","di"]},
+ {id:"p15", pt:"Frango desfiado com batata e cenoura", en:"Shredded chicken with potato and carrot", kids:1, itens:[["Peito de frango grelhado",120],["Batata cozida",150],["Cenoura",80]], slots:["lu","di"]},
+ {id:"p16", pt:"Maçã com pasta de amendoim", en:"Apple with peanut butter", kids:1, itens:[["Maçã",150],["Pasta de amendoim",20]], slots:["sn1","sn2","sn3"]},
+ {id:"p17", pt:"Castanhas com laranja", en:"Cashews with orange", itens:[["Castanha de caju",30],["Laranja",150]], slots:["sn1","sn2","sn3"]},
+ {id:"p18", pt:"Contrafilé com arroz e salada", en:"Sirloin with rice and salad", itens:[["Contrafilé grelhado",150],["Arroz branco cozido",120],["Alface",40],["Tomate",50]], slots:["lu","di"]},
+ {id:"p19", pt:"Ovos mexidos com tapioca", en:"Scrambled eggs with tapioca", kids:1, itens:[["Ovo cozido",100],["Tapioca (goma)",50]], slots:["bf","di"]},
+ {id:"p20", pt:"Iogurte natural com mamão", en:"Plain yoghurt with papaya", kids:1, itens:[["Iogurte natural",170],["Mamão",150]], slots:["bf","sn1","sn3"]},
+ {id:"p21", pt:"Batata-doce com atum", en:"Sweet potato with tuna", itens:[["Batata doce cozida",150],["Atum em água",100]], slots:["lu","di","post"]},
+ {id:"p22", pt:"Coxa de frango assada com mandioca e brócolis", en:"Roast chicken thigh with cassava and broccoli", kids:1, itens:[["Coxa de frango assada",150],["Mandioca cozida",120],["Brócolis cozido",80]], slots:["lu","di"]},
+ {id:"p23", pt:"Arroz, feijão, ovo e salada", en:"Rice, beans, egg and salad", kids:1, itens:[["Arroz branco cozido",120],["Feijão carioca cozido",100],["Ovo cozido",50],["Alface",40],["Tomate",50]], slots:["lu","di"]},
+ {id:"p24", pt:"Salada de frango com abacate", en:"Chicken salad with avocado", itens:[["Peito de frango grelhado",100],["Alface",60],["Tomate",60],["Abacate",50],["Azeite de oliva",5]], slots:["lu","di"]},
+ {id:"p25", pt:"Banana com aveia e amendoim", en:"Banana with oats and peanuts", kids:1, itens:[["Banana",100],["Aveia em flocos",20],["Amendoim",15]], slots:["sn1","sn2","pre"]}
+];
+const NUT_SLOTS=[["bf",0.25],["lu",0.35],["sn2",0.12],["di",0.28]];
+function pratoItens(pr){
+  /* prato pronto: itens por nome da tabela comum; prato meu: itens por id */
+  return (pr.itens||[]).map(it=>{
+    if(Array.isArray(it)){ const i=FOODS.findIndex(f=>f[0]===it[0]); return i<0? null : {f:nutBase(i), g:it[1]}; }
+    const f=nutFind(it.id); return f? {f, g:it.g} : null;
+  }).filter(Boolean);
+}
+function pratoNome(pr){ return pr.nome || (LANG==="pt"?pr.pt:pr.en); }
+function pratoTotais(pr, fator){
+  fator=fator||1; const tot={kcal:0,prot:0,carb:0,fat:0,g:0}, tags=new Set();
+  pratoItens(pr).forEach(({f,g})=>{ const o=nutScale(f.por100, g*fator); tot.kcal+=o.kcal||0; tot.prot+=o.prot||0; tot.carb+=o.carb||0; tot.fat+=o.fat||0; tot.g+=g*fator; (f.tags||[]).forEach(x=>tags.add(x)); });
+  tot.tags=[...tags]; return tot;
+}
+/* nota do prato para o perfil: restrição ferida = fora; objetivo atendido = pontos; perto da meta da refeição = pontos */
+function pratoNota(pr, slot, alvoSlot){
+  const pr2=dietPrefs(), tot=pratoTotais(pr), motivos=[];
+  if(tot.tags.some(x=>pr2.restricoes.indexOf(x)>=0)) return null;
+  let n=0;
+  const ob=pr2.objetivos;
+  const ultra=pratoItens(pr).some(x=>/refrigerante|acucar|cerveja/.test(norm(x.f.nomePT||x.f.nome)));
+  if(ob.indexOf("emagrecer")>=0){ if(tot.kcal<=450){ n+=2; motivos.push("nu.wLowKcal"); } if(tot.prot/Math.max(1,tot.kcal)*100>=6){ n+=1; } }
+  if(ob.indexOf("massa")>=0 && tot.prot>=25){ n+=2; motivos.push("nu.wProt"); }
+  if(ob.indexOf("diabetes")>=0){ if(tot.carb<=45){ n+=2; motivos.push("nu.wLowCarb"); } if(tot.tags.indexOf("acucar")<0){ n+=1; motivos.push("nu.wNoSugar"); } }
+  if(ob.indexOf("pressao")>=0 && !ultra){ n+=1; motivos.push("nu.wFresh"); }
+  if(ob.indexOf("criancas")>=0 && pr.kids){ n+=2; motivos.push("nu.wKids"); }
+  if(slot && pr.slots && pr.slots.indexOf(slot)>=0) n+=2;
+  if(alvoSlot){ const d=Math.abs(tot.kcal-alvoSlot)/alvoSlot; if(d<0.2){ n+=2; motivos.push("nu.wFits"); } else if(d<0.45) n+=1; }
+  return {n, motivos:[...new Set(motivos)], tot};
+}
+function pratosTodos(){ return STATE.dishes.map(d=>Object.assign({meu:true}, d)).concat(PRATOS); }
+function sugerirPratos(slot){
+  const left=nutKcalLeft(); const alvo=left? Math.round(left.alvo*((NUT_SLOTS.find(x=>x[0]===slot)||[0,0.3])[1])) : 0;
+  return pratosTodos().map(pr=>{ const nt=pratoNota(pr, slot, alvo); return nt? {pr, nt} : null; }).filter(Boolean).sort((a,b)=>b.nt.n-a.nt.n).slice(0,6);
+}
+let NUT_SLOT="lu", NUT_SEED=0;
+function planoDoDia(seed){
+  const left=nutKcalLeft(); if(!left) return null;
+  const usados=new Set(), plano=[];
+  NUT_SLOTS.forEach(([slot,pct])=>{
+    const alvo=left.alvo*pct;
+    const lista=pratosTodos().map(pr=>{ const nt=pratoNota(pr, slot, alvo); return nt? {pr,nt} : null; }).filter(x=>x && !usados.has(x.pr.id)).sort((a,b)=>b.nt.n-a.nt.n);
+    if(!lista.length) return;
+    const esc2=lista[Math.min(lista.length-1, (seed||0)%Math.min(3,lista.length))];
+    usados.add(esc2.pr.id);
+    const fator=Math.max(0.7, Math.min(1.4, alvo/Math.max(1,esc2.nt.tot.kcal)));
+    plano.push({slot, pr:esc2.pr, fator, tot:pratoTotais(esc2.pr, fator)});
+  });
+  const total=plano.reduce((a,x)=>({kcal:a.kcal+x.tot.kcal, prot:a.prot+x.tot.prot, carb:a.carb+x.tot.carb, fat:a.fat+x.tot.fat}),{kcal:0,prot:0,carb:0,fat:0});
+  return {plano, total, alvo:left.alvo};
+}
+function pratoLinha(pr, tot, extra){
+  return '<div class="item"><span class="ibub '+(pr.meu?"":"grey")+'" style="width:32px;height:32px">'+I(pr.meu?"star":"apple")+'</span><div class="gr"><div class="t">'+esc(pratoNome(pr))+'</div><div class="s">'+
+    fmtNum(tot.kcal,0)+" kcal · P "+fmtNum(tot.prot,0)+" C "+fmtNum(tot.carb,0)+" G "+fmtNum(tot.fat,0)+(extra||"")+"</div></div>"+
+    '<span class="row nowrap"><button class="btn xs line" data-pver="'+esc(pr.id)+'">'+t("help.tabScreen")+'</button><button class="btn xs" data-padd="'+esc(pr.id)+'">'+I("plus")+t("common.add")+"</button></span></div>";
+}
+function dishesScreen(){
+  const pr=dietPrefs(), left=nutKcalLeft();
+  let h='<div class="card">'+cardHead("user", t("nu.profile"), t("nu.profileSub"))+
+    '<span class="kicker">'+t("nu.goals")+'</span><div class="chips" style="margin:6px 0 12px">'+NUT_OBJ.map(o=>'<button class="chip '+(pr.objetivos.indexOf(o)>=0?"on":"")+'" data-nobj="'+o+'" aria-pressed="'+(pr.objetivos.indexOf(o)>=0)+'">'+(pr.objetivos.indexOf(o)>=0?I("check"):"")+t("nu.obj."+o)+"</button>").join("")+"</div>"+
+    '<span class="kicker">'+t("nu.restr")+'</span><div class="chips" style="margin-top:6px">'+NUT_RESTR.map(r=>'<button class="chip '+(pr.restricoes.indexOf(r[0])>=0?"on":"")+'" data-nres="'+r[0]+'" aria-pressed="'+(pr.restricoes.indexOf(r[0])>=0)+'">'+(pr.restricoes.indexOf(r[0])>=0?I("check"):"")+t("nu.r."+r[0])+"</button>").join("")+"</div></div>";
+  const sug=sugerirPratos(NUT_SLOT);
+  h+='<div class="card">'+cardHead("sparkles", t("nu.suggest"), t("nu.suggestSub"))+
+    '<span class="kicker">'+t("nu.slot")+'</span><div class="chips" style="margin:6px 0 12px">'+["bf","lu","sn2","di"].map(sl=>'<button class="chip '+(NUT_SLOT===sl?"on":"")+'" data-nslot="'+sl+'">'+t("dt."+sl)+"</button>").join("")+"</div>"+
+    (sug.length?'<div class="list">'+sug.map(x=>pratoLinha(x.pr, x.nt.tot, x.nt.motivos.length?" · "+x.nt.motivos.map(k=>t(k)).join(", "):"")).join("")+"</div>":'<p class="muted">'+t("nu.noSuggest")+"</p>")+"</div>";
+  const plano=planoDoDia(NUT_SEED);
+  h+='<div class="card">'+cardHead("calendar", t("nu.plan"), t("nu.planSub"))+
+    (plano? '<div class="list">'+plano.plano.map(x=>'<div class="item"><span class="pill">'+t("dt."+x.slot)+'</span><div class="gr"><div class="t">'+esc(pratoNome(x.pr))+(Math.abs(x.fator-1)>0.05?' <span class="tiny muted">×'+x.fator.toFixed(1)+"</span>":"")+'</div><div class="s">'+fmtNum(x.tot.kcal,0)+" kcal · P "+fmtNum(x.tot.prot,0)+" C "+fmtNum(x.tot.carb,0)+" G "+fmtNum(x.tot.fat,0)+"</div></div></div>").join("")+"</div>"+
+      '<div class="grid g4" style="margin-top:10px">'+stat(t("nu.total"), fmtNum(plano.total.kcal,0), "kcal","")+stat(t("nu.target"), fmtNum(plano.alvo,0), "kcal","")+stat(t("dt.prot"), fmtNum(plano.total.prot,0), "g","")+stat(t("dt.carb"), fmtNum(plano.total.carb,0), "g","")+"</div>"+
+      '<div class="row" style="margin-top:10px"><button class="btn sm" id="nu_useplan">'+I("check")+t("nu.usePlan")+'</button><button class="btn sm line" id="nu_replan">'+I("refresh")+t("nu.otherPlan")+"</button></div>"
+      : '<p class="muted">'+t("nu.noTarget")+'</p><button class="btn sm line" data-go="diet" data-sub="hoje">'+I("zap")+t("dt.calc")+"</button>")+"</div>";
+  h+='<div class="card">'+cardHead("star", t("nu.myDishes"), t("nu.myDishesSub"), '<button class="btn sm" id="nu_newdish">'+I("plus")+t("nu.newDish")+"</button>")+
+    (STATE.dishes.length?'<div class="list">'+STATE.dishes.map(d=>pratoLinha(Object.assign({meu:true},d), pratoTotais(d))).join("")+"</div>":'<p class="tiny muted">'+t("nu.noDishes")+"</p>")+"</div>";
+  h+='<div class="card">'+cardHead("sparkles", t("nu.ai"), t("nu.aiSub"))+'<button class="btn sm line" id="nu_ai">'+I("sparkles")+t("nu.aiAsk")+"</button></div>";
+  h+='<p class="tiny muted">'+t("nu.disclaimer")+"</p>";
+  return h;
+}
+function wireDishes(){
+  const pr=dietPrefs();
+  document.querySelectorAll("[data-nobj]").forEach(b=>b.onclick=()=>{ const o=b.getAttribute("data-nobj"); const i=pr.objetivos.indexOf(o); if(i>=0) pr.objetivos.splice(i,1); else pr.objetivos.push(o); save(); render(); });
+  document.querySelectorAll("[data-nres]").forEach(b=>b.onclick=()=>{ const o=b.getAttribute("data-nres"); const i=pr.restricoes.indexOf(o); if(i>=0) pr.restricoes.splice(i,1); else pr.restricoes.push(o); save(); render(); });
+  document.querySelectorAll("[data-nslot]").forEach(b=>b.onclick=()=>{ NUT_SLOT=b.getAttribute("data-nslot"); render(); });
+  document.querySelectorAll("[data-pver]").forEach(b=>b.onclick=()=>dishModal(b.getAttribute("data-pver")));
+  document.querySelectorAll("[data-padd]").forEach(b=>b.onclick=()=>{ const pr2=pratosTodos().find(x=>x.id===b.getAttribute("data-padd")); if(pr2) addDishMeal(pr2, 1, NUT_SLOT); });
+  const up=document.getElementById("nu_useplan"); if(up) up.onclick=()=>{ const pl=planoDoDia(NUT_SEED); if(!pl) return; if(typeof precisaConta==="function" && !precisaConta()) return; pl.plano.forEach(x=>addDishMeal(x.pr, x.fator, x.slot, true)); save(); toast(t("nu.planUsed")); go("diet","hoje"); };
+  const rp=document.getElementById("nu_replan"); if(rp) rp.onclick=()=>{ NUT_SEED++; render(); };
+  const nd=document.getElementById("nu_newdish"); if(nd) nd.onclick=()=>dishEditModal({});
+  const ai=document.getElementById("nu_ai"); if(ai) ai.onclick=nutAskAI;
+}
+function addDishMeal(pr, fator, slot, quiet){
+  if(!quiet && typeof precisaConta==="function" && !precisaConta()) return;
+  const tot=pratoTotais(pr, fator||1);
+  STATE.meals.push({id:uid(), date:todayISO(), slot:slot||"lu", name:pratoNome(pr), qty:Math.round(tot.g), kcal:tot.kcal, prot:tot.prot, carb:tot.carb, fat:tot.fat});
+  if(!quiet){ save(); toast(t("common.saved")); }
+}
+/* ficha do prato: itens, totais, e o tamanho ajustável (×0,5 a ×2) */
+function dishModal(id){
+  const pr=pratosTodos().find(x=>x.id===id); if(!pr) return;
+  const m=modal(mh(pratoNome(pr))+
+    '<div class="list" id="dm_items"></div>'+
+    '<label class="fld" style="margin-top:12px"><span>'+t("nu.scale")+' <b id="dm_fx">×1.0</b></span><input type="range" id="dm_f" min="0.5" max="2" step="0.1" value="1"></label>'+
+    '<div class="grid g4" id="dm_tot"></div>'+
+    '<div class="row" style="justify-content:space-between;margin-top:12px"><span>'+(pr.meu?'<button class="btn xs line" id="dm_edit">'+t("common.edit")+'</button> <button class="btn xs line" id="dm_del">'+t("common.del")+"</button>":"")+"</span>"+
+    '<button class="btn" id="dm_add">'+I("plus")+t("nu.addMeal")+"</button></div>");
+  const paint=()=>{
+    const f=parseFloat(m.querySelector("#dm_f").value); m.querySelector("#dm_fx").textContent="×"+f.toFixed(1);
+    m.querySelector("#dm_items").innerHTML=pratoItens(pr).map(({f:fd,g})=>'<div class="item"><div class="gr"><div class="t">'+esc(fd.nome)+'</div><div class="s">'+fmtNum(g*f,0)+" g · "+fmtNum(nutScale(fd.por100,g*f).kcal||0,0)+" kcal</div></div></div>").join("")||'<p class="tiny muted">'+t("nu.noItems")+"</p>";
+    const tot=pratoTotais(pr,f);
+    m.querySelector("#dm_tot").innerHTML=stat("kcal",fmtNum(tot.kcal,0),"","")+stat(t("dt.prot"),fmtNum(tot.prot,0),"g","")+stat(t("dt.carb"),fmtNum(tot.carb,0),"g","")+stat(t("dt.fat"),fmtNum(tot.fat,0),"g","");
+  };
+  m.querySelector("#dm_f").oninput=paint; paint();
+  m.querySelector("#dm_add").onclick=()=>{ addDishMeal(pr, parseFloat(m.querySelector("#dm_f").value), NUT_SLOT); m.remove(); render(); };
+  const ed=m.querySelector("#dm_edit"); if(ed) ed.onclick=()=>{ m.remove(); dishEditModal(STATE.dishes.find(x=>x.id===pr.id)); };
+  const del=m.querySelector("#dm_del"); if(del) del.onclick=()=>confirmBox(t("common.del")+"?", ()=>{ STATE.dishes=STATE.dishes.filter(x=>x.id!==pr.id); save(); m.remove(); render(); });
+}
+/* montar um prato meu: escolher alimento + gramas, quantas vezes quiser */
+function dishEditModal(pre){
+  pre=pre||{}; const itens=(pre.itens||[]).map(x=>({id:x.id, g:x.g}));
+  const opts=nutAll();
+  const m=modal(mh(pre.id?t("common.edit"):t("nu.newDish"))+
+    '<label class="fld"><span>'+t("nu.dishName")+'</span><input type="text" id="de_n" value="'+esc(pre.nome||"")+'"></label>'+
+    '<span class="kicker">'+t("nu.items")+'</span><div class="list" id="de_items" style="margin:6px 0 10px"></div>'+
+    '<div class="row nowrap"><select id="de_pick" style="flex:2">'+opts.map(f=>'<option value="'+esc(f.id)+'">'+esc(f.nome)+(f.marca?" · "+esc(f.marca):"")+"</option>").join("")+'</select><input type="number" id="de_g" value="100" style="flex:1;min-width:70px"><button class="btn sm" id="de_add">'+I("plus")+"</button></div>"+
+    '<div class="grid g4" id="de_tot" style="margin-top:10px"></div>'+
+    '<div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="de_ok">'+t("common.save")+"</button></div>");
+  const paint=()=>{
+    const pr={itens}; 
+    m.querySelector("#de_items").innerHTML=itens.length? itens.map((it,i)=>{ const f=nutFind(it.id); return '<div class="item"><div class="gr"><div class="t">'+esc(f?f.nome:"?")+'</div><div class="s">'+fmtNum(it.g,0)+" g · "+fmtNum(f?nutScale(f.por100,it.g).kcal||0:0,0)+' kcal</div></div><button class="btn xs line" data-rm="'+i+'">&times;</button></div>'; }).join("") : '<p class="tiny muted">'+t("nu.noItems")+"</p>";
+    const tot=pratoTotais(pr);
+    m.querySelector("#de_tot").innerHTML=stat("kcal",fmtNum(tot.kcal,0),"","")+stat(t("dt.prot"),fmtNum(tot.prot,0),"g","")+stat(t("dt.carb"),fmtNum(tot.carb,0),"g","")+stat(t("dt.fat"),fmtNum(tot.fat,0),"g","");
+    m.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{ itens.splice(+b.getAttribute("data-rm"),1); paint(); });
+  };
+  m.querySelector("#de_add").onclick=()=>{ itens.push({id:m.querySelector("#de_pick").value, g:num(m.querySelector("#de_g").value,100)}); paint(); };
+  m.querySelector("#de_ok").onclick=()=>{
+    if(typeof precisaConta==="function" && !precisaConta()) return;
+    const nome=m.querySelector("#de_n").value.trim(); if(!nome){ toast(t("login.noname")); return; }
+    if(!itens.length){ toast(t("nu.noItems")); return; }
+    const d={id:pre.id||uid(), nome, itens, slots:pre.slots||["lu","di"], criado:pre.criado||todayISO()};
+    STATE.dishes=STATE.dishes.filter(x=>x.id!==d.id); STATE.dishes.unshift(d); save(); m.remove(); toast(t("nu.dishSaved")); render();
+  };
+  paint();
+}
+/* cardápio do dia pela IA do cofre: manda só perfil alimentar, metas e a lista de alimentos comuns */
+function nutAskAI(){
+  if(!AI_PROVIDERS.some(p=>aiKey(p[0]))){ toast(t("nu.aiNoKey")); go("ia"); return; }
+  const pr=dietPrefs(), left=nutKcalLeft(), d=STATE.diet;
+  const q=(LANG==="pt"
+    ? "Monte um cardápio de um dia (café da manhã, almoço, lanche e jantar) com quantidades em gramas e calorias por refeição. Objetivos: "+(pr.objetivos.map(o=>t("nu.obj."+o)).join(", ")||"nenhum")+". Restrições: "+(pr.restricoes.map(r=>t("nu.r."+r)).join(", ")||"nenhuma")+". Meta do dia: "+(left?left.alvo:"não definida")+" kcal, proteína "+(d.prot||"?")+" g, carboidrato "+(d.carb||"?")+" g, gordura "+(d.fat||"?")+" g. Prefira alimentos comuns no Brasil e baratos. Responda em lista curta."
+    : "Build a one-day menu (breakfast, lunch, snack, dinner) with amounts in grams and calories per meal. Goals: "+(pr.objetivos.map(o=>t("nu.obj."+o)).join(", ")||"none")+". Restrictions: "+(pr.restricoes.map(r=>t("nu.r."+r)).join(", ")||"none")+". Daily target: "+(left?left.alvo:"not set")+" kcal, protein "+(d.prot||"?")+" g, carbs "+(d.carb||"?")+" g, fat "+(d.fat||"?")+" g. Prefer common, cheap foods. Answer as a short list.");
+  const m=modal(mh(t("nu.ai"))+'<p class="muted" id="nai_out">⏳ '+t("nu.aiWait")+'</p><p class="tiny muted">'+t("nu.disclaimer")+"</p>");
+  aiAsk(q, msg=>toast(msg)).then(ans=>{ const o=m.querySelector("#nai_out"); if(o){ o.style.whiteSpace="pre-wrap"; o.style.color="var(--text)"; o.textContent=ans||t("ia.empty2"); } })
+    .catch(e=>{ const o=m.querySelector("#nai_out"); if(o) o.textContent=(e.message==="nokey"?t("nu.aiNoKey"):(e.message==="offline"?t("ia.offline"):t("ia.error")+" "+e.message)); });
 }
 
 /* ---------- 25. GRAFICOS (canvas) ---------- */
@@ -4694,20 +5133,172 @@ SCREENS.scan_after = function(){
   document.getElementById("fileinp2").onchange=e=>{ const f=e.target.files[0]; if(f) lerArquivoExame(f); };
   if(SCANTEXT) paintScan();
 };
-function runOCR(dataUrl){
-  SCANIMG=dataUrl; SCANTEXT=""; SCANFOUND=null;
+/* ---- pré-processamento do OCR (vindo do leitor-OCR de testes): endireitar, recortar o papel, ampliar e limpar ----
+   Por que: o motor lê muito melhor texto reto, grande e preto no branco. A foto de rótulo ou laudo quase nunca vem assim. */
+function ocrGrayOf(img, maxDim){
+  const w0=img.naturalWidth||img.width, h0=img.naturalHeight||img.height;
+  const k=Math.min(1, maxDim/Math.max(w0,h0));
+  const w=Math.max(1,Math.round(w0*k)), h=Math.max(1,Math.round(h0*k));
+  const c=document.createElement("canvas"); c.width=w; c.height=h;
+  const cx=c.getContext("2d"); cx.drawImage(img,0,0,w,h);
+  const d=cx.getImageData(0,0,w,h).data, g=new Float32Array(w*h);
+  for(let i=0;i<g.length;i++) g[i]=0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2];
+  return {w,h,g};
+}
+function ocrIntegral(g,w,h){
+  const integ=new Float64Array((w+1)*(h+1));
+  for(let y=0;y<h;y++){ let row=0; for(let x=0;x<w;x++){ row+=g[y*w+x]; integ[(y+1)*(w+1)+x+1]=integ[y*(w+1)+x+1]+row; } }
+  return integ;
+}
+/* quanto a foto está inclinada: as linhas de texto formam faixas escuras; o ângulo em que elas ficam mais nítidas é o certo (só até ±30°) */
+function ocrEstimateAngle(img){
+  const {w,h,g}=ocrGrayOf(img,360);
+  const integ=ocrIntegral(g,w,h), r=Math.max(6,Math.round(w/12)), ink=new Uint8Array(w*h);
+  for(let y=0;y<h;y++){ const ya=Math.max(0,y-r), yb=Math.min(h,y+r+1);
+    for(let x=0;x<w;x++){ const xa=Math.max(0,x-r), xb=Math.min(w,x+r+1), area=(xb-xa)*(yb-ya);
+      const sum=integ[yb*(w+1)+xb]-integ[ya*(w+1)+xb]-integ[yb*(w+1)+xa]+integ[ya*(w+1)+xa];
+      ink[y*w+x]= g[y*w+x]*area < sum*0.9 ? 1 : 0; } }
+  const cx=w/2, cy=h/2, diag=Math.ceil(Math.sqrt(w*w+h*h));
+  let best=0, bestScore=-1;
+  for(let a=-30;a<=30;a+=2){
+    const ar=a*Math.PI/180, sa=Math.sin(ar), ca=Math.cos(ar), prof=new Float32Array(diag+2);
+    for(let y=0;y<h;y++) for(let x=0;x<w;x++){
+      if(!ink[y*w+x]) continue;
+      const yy=-(x-cx)*sa+(y-cy)*ca+diag/2, y0=Math.floor(yy);
+      if(y0<0||y0>=diag) continue;
+      const f=yy-y0; prof[y0]+=1-f; prof[y0+1]+=f;
+    }
+    let sc=0; for(let i=1;i<=diag;i++){ const dv=prof[i]-prof[i-1]; sc+=dv*dv; }
+    if(sc>bestScore){ bestScore=sc; best=a; }
+  }
+  return best;
+}
+/* monta a imagem que vai para o motor: girada, (opcionalmente) recortada no papel, ampliada e em preto no branco */
+function ocrCanvas(img, rotation, opts){
+  opts=opts||{};
+  const MAX_SRC=3000;
+  let w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
+  const s=Math.min(1, MAX_SRC/Math.max(w,h)); w=Math.round(w*s); h=Math.round(h*s);
+  const rad=rotation*Math.PI/180, cos=Math.abs(Math.cos(rad)), sin=Math.abs(Math.sin(rad));
+  const src=document.createElement("canvas"); src.width=Math.round(w*cos+h*sin); src.height=Math.round(w*sin+h*cos);
+  const sctx=src.getContext("2d"); sctx.fillStyle="#808080"; sctx.fillRect(0,0,src.width,src.height);
+  sctx.translate(src.width/2,src.height/2); sctx.rotate(rad); sctx.drawImage(img,-w/2,-h/2,w,h);
+  let cx=0, cy=0, cw=src.width, ch=src.height;
+  if(opts.crop){
+    /* acha o papel: a maior mancha clara numa cópia pequena da foto */
+    const {w:sw,h:sh,g:gray}=ocrGrayOf(src,300), k=sw/src.width;
+    const otsu=from=>{ const hist=new Array(256).fill(0); let n=0;
+      for(let i=0;i<gray.length;i++){ const v=gray[i]|0; if(v>=from){ hist[v]++; n++; } }
+      let sum=0; for(let t2=0;t2<256;t2++) sum+=t2*hist[t2];
+      let sumB=0,wB=0,best=0,thr=from;
+      for(let t2=0;t2<256;t2++){ wB+=hist[t2]; if(!wB||wB===n) continue; sumB+=t2*hist[t2];
+        const mB=sumB/wB, mF=(sum-sumB)/(n-wB), bt=wB*(n-wB)*(mB-mF)*(mB-mF); if(bt>best){ best=bt; thr=t2; } }
+      return thr; };
+    const largest=thr=>{ const seen=new Uint8Array(sw*sh); let bestBox=null,bestArea=0; const stack=[];
+      for(let st=0;st<gray.length;st++){ if(seen[st]||gray[st]<=thr) continue;
+        let area=0,x0=sw,y0=sh,x1=0,y1=0; seen[st]=1; stack.push(st);
+        while(stack.length){ const q=stack.pop(), x=q%sw, y=(q-x)/sw; area++;
+          if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y;
+          const nb=[x>0?q-1:-1, x<sw-1?q+1:-1, y>0?q-sw:-1, y<sh-1?q+sw:-1];
+          for(const z of nb){ if(z>=0&&!seen[z]&&gray[z]>thr){ seen[z]=1; stack.push(z); } } }
+        if(area>bestArea){ bestArea=area; bestBox={x0,y0,x1,y1}; } }
+      return {box:bestBox, frac:bestArea/(sw*sh)}; };
+    let blob=largest(otsu(0));
+    for(let i=0;i<3 && blob.frac>0.6;i++) blob=largest(otsu(otsu(0)+1+i*8));
+    if(blob.box && blob.frac>0.15 && blob.frac<0.9){
+      const pad=0.02*Math.max(sw,sh);
+      const bx0=Math.max(0,blob.box.x0-pad), by0=Math.max(0,blob.box.y0-pad), bx1=Math.min(sw,blob.box.x1+1+pad), by1=Math.min(sh,blob.box.y1+1+pad);
+      cx=Math.round(bx0/k); cy=Math.round(by0/k); cw=Math.round((bx1-bx0)/k); ch=Math.round((by1-by0)/k);
+    }
+  }
+  const scale=Math.max(0.5, Math.min(3, (opts.targetW||1600)/cw));
+  const out=document.createElement("canvas"); out.width=Math.round(cw*scale); out.height=Math.round(ch*scale);
+  const octx=out.getContext("2d"); octx.imageSmoothingEnabled=true; octx.imageSmoothingQuality="high";
+  octx.drawImage(src,cx,cy,cw,ch,0,0,out.width,out.height);
+  const od=octx.getImageData(0,0,out.width,out.height), d=od.data, W=out.width, H=out.height, g=new Float32Array(W*H);
+  for(let i=0;i<g.length;i++) g[i]=0.299*d[i*4]+0.587*d[i*4+1]+0.114*d[i*4+2];
+  if(opts.binarize){
+    /* limiar local: aguenta sombra, brilho e impressão fraca */
+    const integ=ocrIntegral(g,W,H), r=Math.max(8,Math.round(W/32)), T=0.15;
+    for(let y=0;y<H;y++){ const ya=Math.max(0,y-r), yb=Math.min(H,y+r+1);
+      for(let x=0;x<W;x++){ const xa=Math.max(0,x-r), xb=Math.min(W,x+r+1), area=(xb-xa)*(yb-ya);
+        const sum=integ[yb*(W+1)+xb]-integ[ya*(W+1)+xb]-integ[yb*(W+1)+xa]+integ[ya*(W+1)+xa];
+        g[y*W+x]= g[y*W+x]*area < sum*(1-T) ? 0 : 255; } }
+  } else {
+    /* só reforça o contraste, mantendo os tons (bom para rótulo colorido) */
+    for(let i=0;i<g.length;i++) g[i]=Math.min(255,Math.max(0,(g[i]-128)*1.5+128));
+  }
+  for(let i=0;i<g.length;i++) d[i*4]=d[i*4+1]=d[i*4+2]=g[i];
+  octx.putImageData(od,0,0);
+  return out;
+}
+/* a leitura "deu certo" quando o leitor do modo atual encontra alguma coisa nela */
+function ocrParsedOk(text){
+  if(!text || text.trim().length<8) return false;
+  try{
+    if(SCANMODE==="label"){ const o=parseRotulo(text); return !!(o && (o.kcal!=null||o.ings.length>2)); }
+    if(SCANMODE==="exam"){ const e=parseExame(text); if(e && e.length>=3) return true; return !!parseLaudo(text); }
+    if(SCANMODE==="scale"){ return !!parseScale(text); }
+    if(SCANMODE==="tape"){ return !!parseTape(text); }
+    if(SCANMODE==="sheet"){ const e=parseSheet(text); return !!(e && e.length); }
+    if(SCANMODE==="card"){ return !!parseCarteirinha(text); }
+  }catch(e){}
+  return text.trim().length>20;
+}
+let OCR_WORKER=null, OCR_LANG="", SCANROT=0;
+function ocrWorker(lg, logger){
+  if(OCR_WORKER && OCR_LANG===lg) return Promise.resolve(OCR_WORKER);
+  const old=OCR_WORKER; OCR_WORKER=null;
+  if(old) try{ old.terminate(); }catch(e){}
+  return window.Tesseract.createWorker(lg, 1, {logger}).then(w=>{ OCR_WORKER=w; OCR_LANG=lg; return w; });
+}
+function runOCR(dataUrl, rot){
+  SCANIMG=dataUrl; SCANTEXT=""; SCANFOUND=null; SCANROT=rot||0;
   const out=document.getElementById("scanout");
-  out.innerHTML='<div class="card"><img src="'+dataUrl+'" style="width:100%;max-height:34vh;object-fit:contain;border-radius:12px;background:var(--surface2)">'+
+  out.innerHTML='<div class="card"><img id="ocrimg" src="'+dataUrl+'" style="width:100%;max-height:34vh;object-fit:contain;border-radius:12px;background:var(--surface2);transform:rotate('+SCANROT+'deg)">'+
+    '<div class="row" style="margin-top:8px"><button class="btn xs line" id="ocrrotl">↺ '+t("sc.rotate")+'</button><button class="btn xs line" id="ocrrotr">↻ '+t("sc.rotate")+"</button></div>"+
     '<div class="sep"></div><p id="ocrst">⏳ '+t("sc.loadingEngine")+'</p><div class="bar"><i id="ocrbar" style="width:6%"></i></div></div>';
+  out.querySelector("#ocrrotl").onclick=()=>runOCR(dataUrl, (SCANROT+270)%360);
+  out.querySelector("#ocrrotr").onclick=()=>runOCR(dataUrl, (SCANROT+90)%360);
+  const st=msg=>{ const n=document.getElementById("ocrst"); if(n) n.textContent=msg; };
+  const bar=p=>{ const b=document.getElementById("ocrbar"); if(b) b.style.width=Math.max(6,Math.min(100,Math.round(p)))+"%"; };
+  const meu=SCANIMG+":"+SCANROT;   /* se a pessoa girou ou trocou a foto no meio, o resultado velho é descartado */
   loadTesseract(ok=>{
-    if(!ok){ out.querySelector("#ocrst").textContent="⚠ "+t("sc.engineFail"); manualFallback(); return; }
-    out.querySelector("#ocrst").textContent="⏳ "+t("sc.reading");
+    if(!ok){ st("⚠ "+t("sc.engineFail")); manualFallback(); return; }
     const lg = LANG==="pt" ? "por" : "eng";
-    window.Tesseract.recognize(dataUrl, lg, {logger:m=>{
-      const b=document.getElementById("ocrbar");
-      if(b && m.progress) b.style.width=Math.max(6,Math.round(m.progress*100))+"%";
-    }}).then(r=>{ SCANTEXT=(r&&r.data&&r.data.text)||""; paintScan(); })
-      .catch(()=>{ out.querySelector("#ocrst").textContent="⚠ "+t("sc.engineFail"); manualFallback(); });
+    const im=new Image();
+    im.onload=()=>{
+      st("⏳ "+t("sc.prep"));
+      let tilt=0; try{ tilt=ocrEstimateAngle(im); }catch(e){}
+      const base=SCANROT+tilt;
+      /* três jeitos, parando no primeiro que o leitor do modo entende bem: reto e com contraste; reto, recortado e preto no branco; em bloco único */
+      const passes=[[base,{crop:false,binarize:false,targetW:1600},"3"],[base,{crop:true,binarize:true,targetW:1600},"6"],[base,{crop:false,binarize:true,targetW:1400},"4"]];
+      let i=0, best=null;
+      const logger=m=>{ if(m.status==="recognizing text" && m.progress) bar(((i+m.progress)/passes.length)*100); };
+      ocrWorker(lg, logger).then(w=>{
+        const next=()=>{
+          if(SCANIMG+":"+SCANROT!==meu) return;
+          if(i>=passes.length || (best && best.ok && best.conf>=78)){
+            SCANTEXT=best? best.text : ""; bar(100); paintScan();
+            const o2=document.getElementById("scanout");
+            if(o2 && best){ const c=document.createElement("p"); c.className="tiny muted"; c.textContent=t("sc.conf").replace("{a}",Math.round(best.conf))+(best.conf<55?" · "+t("sc.confLow"):""); o2.prepend(c); }
+            return;
+          }
+          const [rot,opts,psm]=passes[i];
+          st("⏳ "+t("sc.pass").replace("{a}",i+1).replace("{b}",passes.length));
+          let cv; try{ cv=ocrCanvas(im, rot, opts); }catch(e){ cv=im; }
+          w.setParameters({tessedit_pageseg_mode:psm, preserve_interword_spaces:"1"}).then(()=>w.recognize(cv)).then(r=>{
+            const text=(r&&r.data&&r.data.text)||"", conf=(r&&r.data&&r.data.confidence)||0, ok=ocrParsedOk(text);
+            const score=conf+(ok?25:0);
+            if(!best || score>best.score) best={text,conf,ok,score};
+            i++; next();
+          }).catch(()=>{ i++; next(); });
+        };
+        next();
+      }).catch(()=>{ st("⚠ "+t("sc.engineFail")); manualFallback(); });
+    };
+    im.onerror=()=>{ st("⚠ "+t("sc.engineFail")); manualFallback(); };
+    im.src=dataUrl;
   });
 }
 function manualFallback(){
@@ -4740,7 +5331,7 @@ function paintScan(){
   }
   SCANFOUND=parsed;
   if(SCANMODE==="label" && parsed){
-    body="";
+    body='<div class="row"><button class="btn line sm" id="lblsave">'+I("book")+t("nu.saveFood")+"</button></div>";
   } else if(SCANMODE==="card" && parsed){
     body='<div class="grid g2 collapse">'+
       '<label class="fld"><span>'+t("pl.oper")+'</span><input id="cd_o" type="text" value="'+esc(parsed.operadora||"")+'"></label>'+
@@ -4768,6 +5359,7 @@ function paintScan(){
     (SCANTEXT?'<div class="card"><h4>'+t("sc.raw")+'</h4><div class="ocrbox">'+esc(SCANTEXT)+"</div></div>":"");
   const ok=out.querySelector("#scok"); if(ok) ok.onclick=commitScan;
   out.querySelector("#scman").onclick=()=>manualFor(SCANMODE, prefillFrom(parsed));
+  const ls=out.querySelector("#lblsave"); if(ls) ls.onclick=()=>foodEditModal(foodFromLabel(parsed));
 }
 function scLabel(k){ return {waist:t("pg.waist"),hip:t("pg.hip"),chest:t("pg.chest"),arm:t("pg.arm"),thigh:t("pg.thigh"),
   calf:t("pg.calf"),weight:t("home.weight"),fat:t("pg.fat"),muscle:(LANG==="pt"?"Massa magra":"Lean mass")}[k]||k; }
@@ -6467,11 +7059,11 @@ A("carry",
 /* --- pernas --- */
 A("squat",
  {h:[46,16],n:[48,26],s:[48,34],e:[50,50],w:[52,66],p:[48,62],k:[45,84],f:[43,102],e2:[46,50],w2:[44,66],k2:[53,84],f2:[56,102]},
- {h:[42,32],n:[45,42],s:[46,50],e:[56,58],w:[64,60],p:[44,74],k:[58,82],f:[44,102],e2:[54,58],w2:[62,62],k2:[62,82],f2:[58,102]},
+ {h:[48,32],n:[48,42],s:[48,50],e:[40,58],w:[36,60],p:[48,74],k:[36,82],f:[43,102],e2:[56,58],w2:[60,60],k2:[60,82],f2:[56,102]},
  {arw:"p"});
 A("squat-bar",
  {h:[46,16],n:[48,26],s:[48,34],e:[38,36],w:[30,34],p:[48,62],k:[45,84],f:[43,102],e2:[58,36],w2:[66,34],k2:[53,84],f2:[56,102]},
- {h:[42,32],n:[45,42],s:[46,50],e:[36,52],w:[28,50],p:[44,74],k:[58,82],f:[44,102],e2:[56,52],w2:[64,50],k2:[62,82],f2:[58,102]},
+ {h:[48,32],n:[48,42],s:[48,50],e:[38,52],w:[30,50],p:[48,74],k:[36,82],f:[43,102],e2:[58,52],w2:[66,50],k2:[60,82],f2:[56,102]},
  {eq:"barra",arw:"p"});
 A("leg-press",
  {h:[16,58],n:[25,60],s:[30,62],e:[30,74],w:[28,84],p:[52,68],k:[64,50],f:[74,40]},
@@ -6491,7 +7083,7 @@ A("leg-curl-sit",
  {eq:"maquina",arw:"f",eq2:"sela"});
 A("lunge",
  {h:[46,16],n:[48,26],s:[48,34],e:[46,50],w:[46,66],p:[48,62],k:[45,84],f:[43,102],e2:[52,50],w2:[52,66],k2:[53,84],f2:[56,102]},
- {h:[42,26],n:[44,36],s:[45,44],e:[42,58],w:[42,74],p:[44,70],k:[70,80],f:[72,102],e2:[50,58],w2:[50,74],k2:[26,92],f2:[16,102]},
+ {h:[48,26],n:[48,36],s:[48,44],e:[44,58],w:[44,74],p:[48,70],k:[42,80],f:[41,102],e2:[52,58],w2:[52,74],k2:[57,92],f2:[60,102]},
  {arw:"p"});
 A("hip-thrust",
  {h:[16,60],n:[24,62],s:[30,64],e:[28,76],w:[22,84],p:[56,84],k:[74,80],f:[80,101]},
@@ -7719,7 +8311,7 @@ const ASSIST_ACOES={
  workout:[["book","Biblioteca","Library",()=>go("ex")],["flame","Aquecer & Alongar","Warm up & Stretch",()=>go("warm")]],
  ex:[["body","Mapa do corpo","Body map",()=>go("body")],["dumbbell","Meus treinos","My workouts",()=>go("workout")]],
  body:[["book","Biblioteca","Library",()=>go("ex")]],
- diet:[["camera","Ler rótulo","Read a label",()=>go("scan")],["chart","Evolução","Progress",()=>go("progress")]],
+ diet:[["book","Alimentos","Foods",()=>go("diet","alimentos")],["sparkles","Sugestões de pratos","Dish suggestions",()=>go("diet","pratos")],["camera","Ler rótulo","Read a label",()=>{ SCANMODE="label"; go("scan"); }]],
  progress:[["chart","Peso","Weight",()=>go("progress","peso")],["flask","Exames","Lab results",()=>go("progress","exames")]],
  more:[["sparkles","Assistente de IA","AI assistant",()=>go("ia")],["sliders","Preferências","Preferences",()=>go("set","pref")]],
  ia:[["key","Cofre de chaves","Key vault",()=>{ const d=document.querySelector("#screen details.fold"); if(d){ d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); } }]],
@@ -7852,6 +8444,14 @@ const HELP={
   ["target","Metas do dia","Daily targets","Calorias e proteína/carboidrato/gordura que você quer atingir. <b>Calcular para mim</b> estima a partir do seu peso, altura e idade.","Calories and protein/carbs/fat you aim for. <b>Calculate for me</b> estimates from your weight, height and age."],
   ["apple","Refeições","Meals","Adicione o que comeu por refeição. Pode escolher da lista de alimentos comuns ou ler o rótulo com a câmera.","Add what you ate per meal. Pick from the common foods list or read the label with the camera."],
   ["droplet","Água","Water","Toque nos copos conforme bebe. A meta de copos fica nas metas do dia.","Tap the glasses as you drink. The glass goal is in the daily targets."]
+ ],
+ "diet/alimentos":[
+  ["book","Meus alimentos","My foods","Rótulos que você leu e alimentos cadastrados, com a tabela por 100 g. Toque num alimento para a calculadora de porção e para ver quanto cabe na meta de hoje.","Labels you read and foods you added, with the per-100 g table. Tap a food for the portion calculator and to see how much fits today's target."],
+  ["leaf","Alimentos comuns","Common foods","Tabela de referência com valores aproximados. Serve para calcular e montar pratos; quando houver rótulo, ele manda.","Reference table with approximate values. Use it to calculate and build dishes; when there is a label, the label wins."]
+ ],
+ "diet/pratos":[
+  ["user","Perfil alimentar","Food profile","Objetivo (emagrecer, pressão, diabetes, crianças, massa) e restrições (glúten, lactose, ovo…). As sugestões e o alerta \"Para você\" do rótulo seguem isso.","Goal (weight loss, blood pressure, diabetes, children, muscle) and restrictions (gluten, lactose, egg…). Suggestions and the label's \"For you\" alert follow this."],
+  ["sparkles","Sugestões e plano do dia","Suggestions and day plan","Pratos simples que respeitam suas restrições e chegam perto da meta da refeição. O plano do dia monta café, almoço, lanche e jantar; ajuste o tamanho e adicione às refeições.","Simple dishes that respect your restrictions and get close to the meal target. The day plan builds breakfast, lunch, snack and dinner; adjust the size and add to your meals."]
  ],
  progress:[
   ["clipboard","Hoje","Today","Registro do dia: peso, como foi o dia, missões cumpridas e anotações. Leva um minuto.","Daily log: weight, how the day went, missions done and notes. Takes a minute."],
@@ -9317,7 +9917,39 @@ function wireCid(){
 /* Por que: a foto do rótulo quase sempre sai tremida ou longe demais. Aqui a pessoa aproxima,
    usa o temporizador para não mexer no aparelho na hora do clique, e pode borrar o fundo antes
    de fotografar em lugar público. */
-const CAM2={zoom:1, timer:0, privacy:false, track:null, hasZoom:false, zmin:1, zmax:4, host:null, busy:false};
+const CAM2={zoom:1, timer:0, privacy:false, track:null, hasZoom:false, zmin:1, zmax:4, host:null, busy:false, focusModes:[], hasTorch:false, torch:false, meterT:null, poi:false};
+/* foco: pede foco contínuo ao abrir; ao tocar na imagem, um foco único naquele ponto (quando o aparelho deixa) */
+function camFocusContinuous(){
+  if(!CAM2.track || CAM2.focusModes.indexOf("continuous")<0) return;
+  try{ CAM2.track.applyConstraints({advanced:[{focusMode:"continuous"}]}); }catch(e){}
+}
+function camFocusOnce(px,py){
+  if(!CAM2.track) return;
+  const adv={};
+  if(CAM2.focusModes.indexOf("single-shot")>=0) adv.focusMode="single-shot";
+  else if(CAM2.focusModes.indexOf("manual")<0 && CAM2.focusModes.indexOf("continuous")>=0) adv.focusMode="continuous";
+  if(CAM2.poi && px!==undefined) adv.pointsOfInterest=[{x:Math.max(0,Math.min(1,px)), y:Math.max(0,Math.min(1,py))}];
+  if(!Object.keys(adv).length) return;
+  try{ CAM2.track.applyConstraints({advanced:[adv]}).then(()=>{ setTimeout(camFocusContinuous, 1800); }).catch(()=>{}); }catch(e){}
+}
+function camTorch(on){
+  if(!CAM2.track || !CAM2.hasTorch) return;
+  CAM2.torch=!!on;
+  try{ CAM2.track.applyConstraints({advanced:[{torch:CAM2.torch}]}); }catch(e){}
+  const b=CAM2.host && CAM2.host.querySelector("#camtorch"); if(b) b.classList.toggle("on", CAM2.torch);
+}
+/* medidor de nitidez ao vivo: a mesma medida da foto, só que na prévia, duas vezes por segundo */
+function camMeterStart(v){
+  if(CAM2.meterT) clearInterval(CAM2.meterT);
+  CAM2.meterT=setInterval(()=>{
+    const box=CAM2.host && CAM2.host.querySelector("#camfocus"); if(!box || !v.videoWidth) return;
+    const s=sharpnessOf(v,200); if(s===null) return;
+    const ok=s>=BLUR_MIN;
+    box.classList.toggle("ok",ok); box.classList.toggle("bad",!ok);
+    box.querySelector("i").style.width=Math.max(4,Math.min(100,Math.round(s/(BLUR_MIN*2.2)*100)))+"%";
+    box.querySelector("span").textContent=ok? t("cam.sharp") : t("cam.blurry");
+  },500);
+}
 function camZoomApply(v){
   CAM2.zoom=Math.max(CAM2.zmin, Math.min(CAM2.zmax, v));
   const vd=CAM2.host && CAM2.host.querySelector("video");
@@ -9339,26 +9971,30 @@ function paintCamBar(){
   if(tb) tb.forEach(b=>b.classList.toggle("on", +b.getAttribute("data-camt")===CAM2.timer));
 }
 /* mede o foco da imagem: variancia do Laplaciano. Numero baixo = foto borrada. */
+function sharpnessOf(src, W){
+  W=W||320;
+  const sw=src.videoWidth||src.naturalWidth||src.width, shh=src.videoHeight||src.naturalHeight||src.height;
+  if(!sw||!shh) return null;
+  const H=Math.max(1,Math.round(shh/sw*W));
+  const cv=document.createElement("canvas"); cv.width=W; cv.height=H;
+  const cx=cv.getContext("2d"); cx.drawImage(src,0,0,W,H);
+  let d;
+  try{ d=cx.getImageData(0,0,W,H).data; }catch(e){ return null; }
+  const g=new Float32Array(W*H);
+  for(let i=0,j=0;i<d.length;i+=4,j++) g[j]=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+  let sum=0, sum2=0, n=0;
+  for(let y=1;y<H-1;y++) for(let x=1;x<W-1;x++){
+    const k=y*W+x;
+    const L=g[k-W]+g[k+W]+g[k-1]+g[k+1]-4*g[k];
+    sum+=L; sum2+=L*L; n++;
+  }
+  if(!n) return null;
+  const mean=sum/n;
+  return sum2/n-mean*mean;
+}
 function sharpness(dataUrl, cb){
   const im=new Image();
-  im.onload=()=>{
-    const W=320, H=Math.max(1,Math.round(im.height/im.width*W));
-    const cv=document.createElement("canvas"); cv.width=W; cv.height=H;
-    const cx=cv.getContext("2d"); cx.drawImage(im,0,0,W,H);
-    let d;
-    try{ d=cx.getImageData(0,0,W,H).data; }catch(e){ cb(null); return; }
-    const g=new Float32Array(W*H);
-    for(let i=0,j=0;i<d.length;i+=4,j++) g[j]=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
-    let sum=0, sum2=0, n=0;
-    for(let y=1;y<H-1;y++) for(let x=1;x<W-1;x++){
-      const k=y*W+x;
-      const L=g[k-W]+g[k+W]+g[k-1]+g[k+1]-4*g[k];
-      sum+=L; sum2+=L*L; n++;
-    }
-    if(!n){ cb(null); return; }
-    const mean=sum/n;
-    cb(sum2/n-mean*mean);
-  };
+  im.onload=()=>cb(sharpnessOf(im,320));
   im.onerror=()=>cb(null);
   im.src=dataUrl;
 }
@@ -9380,13 +10016,16 @@ function shootChecked(dataUrl, cb){
 function startCam2(host, cb){
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ toast(t("sc.noCam")); return; }
   CAM2.host=host; CAM2.zoom=1; CAM2.busy=false;
-  host.innerHTML='<div class="camstage"><video class="camprev" autoplay playsinline muted></video><div class="camcount" id="camcount"></div></div>'+
+  host.innerHTML='<div class="camstage"><video class="camprev" autoplay playsinline muted></video><div class="camring" id="camring"></div><div class="camcount" id="camcount"></div></div>'+
     '<div class="camctl">'+
       '<button class="iconbtn" id="camzout" title="'+t("cam.zoomOut")+'">'+I("zoomout")+'</button>'+
       '<span class="camz" id="camzlv">1.0×</span>'+
       '<button class="iconbtn" id="camzin" title="'+t("cam.zoomIn")+'">'+I("zoomin")+'</button>'+
       '<button class="iconbtn" id="camflip" title="'+t("sc.switch")+'">'+I("flip")+'</button>'+
+      '<button class="iconbtn hidden" id="camfoc" title="'+t("cam.focus")+'" aria-label="'+t("cam.focus")+'">'+I("target")+'</button>'+
+      '<button class="iconbtn hidden" id="camtorch" title="'+t("cam.torch")+'" aria-label="'+t("cam.torch")+'">'+I("zap")+'</button>'+
       '<button class="iconbtn" id="campriv" title="'+t("cam.privacy")+'">'+I("eye")+"</button></div>"+
+    '<div class="camfocus" id="camfocus" aria-live="polite"><div class="bar"><i style="width:4%"></i></div><span>'+t("cam.focusHint")+"</span></div>"+
     '<div class="chips" style="margin:8px 0"><span class="kicker" style="align-self:center;margin-right:4px">'+t("cam.timer")+"</span>"+
       [0,3,10].map(n=>'<button class="chip'+(CAM2.timer===n?" on":"")+'" data-camt="'+n+'">'+(n?n+"s":t("cam.noTimer"))+"</button>").join("")+"</div>"+
     '<div class="row"><button class="btn" id="camshoot">'+I("camera")+t("sc.shoot")+'</button>'+
@@ -9395,7 +10034,7 @@ function startCam2(host, cb){
   const v=host.querySelector("video");
   const open=()=>{
     stopCam();
-    navigator.mediaDevices.getUserMedia({video:{facingMode:CAMFACING,width:{ideal:1920}},audio:false})
+    navigator.mediaDevices.getUserMedia({video:{facingMode:CAMFACING,width:{ideal:1920},height:{ideal:1440}},audio:false})
       .then(s=>{
         CAMSTREAM=s; v.srcObject=s;
         CAM2.track=s.getVideoTracks()[0];
@@ -9404,20 +10043,49 @@ function startCam2(host, cb){
         CAM2.hasZoom=!!(cap && cap.zoom);
         CAM2.zmin=CAM2.hasZoom? (cap.zoom.min||1) : 1;
         CAM2.zmax=CAM2.hasZoom? (cap.zoom.max||4) : 3;
-        CAM2.zoom=CAM2.zmin; camZoomApply(CAM2.zoom); paintCamBar();
+        CAM2.zoom=CAM2.zmin; camZoomApply(CAM2.zoom);
+        /* foco e lanterna só aparecem quando o aparelho tem (detecção de recurso, não de marca) */
+        CAM2.focusModes=(cap && cap.focusMode)||[]; CAM2.poi=!!(cap && cap.pointsOfInterest); CAM2.hasTorch=!!(cap && cap.torch); CAM2.torch=false;
+        const fb=host.querySelector("#camfoc"); if(fb) fb.classList.toggle("hidden", !CAM2.focusModes.length);
+        const tb2=host.querySelector("#camtorch"); if(tb2) tb2.classList.toggle("hidden", !CAM2.hasTorch);
+        camFocusContinuous(); camMeterStart(v); paintCamBar();
       })
       .catch(()=>{ toast(t("sc.denied")); host.innerHTML=""; });
   };
   open();
-  const grab=()=>{
-    if(!v.videoWidth){ toast(t("sc.noCam")); return; }
+  /* quando o zoom e so na tela, recorta de verdade o pedaco que a pessoa esta vendo */
+  const cropZoom=(src,W,H)=>{
     const cv=document.createElement("canvas");
-    /* quando o zoom e so na tela, recorta de verdade o pedaco que a pessoa esta vendo */
     const z=(!CAM2.hasZoom && CAM2.zoom>1)? CAM2.zoom : 1;
-    const sw=v.videoWidth/z, sh=v.videoHeight/z;
+    const sw=W/z, sh=H/z;
     cv.width=Math.round(sw); cv.height=Math.round(sh);
-    cv.getContext("2d").drawImage(v,(v.videoWidth-sw)/2,(v.videoHeight-sh)/2,sw,sh,0,0,cv.width,cv.height);
-    resizeImage(cv.toDataURL("image/jpeg",0.92),1600, d=>shootChecked(d,cb));
+    cv.getContext("2d").drawImage(src,(W-sw)/2,(H-sh)/2,sw,sh,0,0,cv.width,cv.height);
+    return cv;
+  };
+  const grabFrame=()=>{
+    if(!v.videoWidth){ toast(t("sc.noCam")); return; }
+    const cv=cropZoom(v, v.videoWidth, v.videoHeight);
+    resizeImage(cv.toDataURL("image/jpeg",0.92),2000, d=>shootChecked(d,cb));
+  };
+  /* foto cheia (ImageCapture.takePhoto): sai da câmera em resolução de foto, não de vídeo. Se falhar, usa o quadro do vídeo */
+  const grab=()=>{
+    if(window.ImageCapture && CAM2.track && !CAM2.privacy){
+      let done=false;
+      const fallback=()=>{ if(done) return; done=true; grabFrame(); };
+      const timer=setTimeout(fallback, 2500);
+      try{
+        new ImageCapture(CAM2.track).takePhoto().then(blob=>{
+          const im=new Image();
+          im.onload=()=>{ if(done) return; done=true; clearTimeout(timer); URL.revokeObjectURL(im.src);
+            const cv=cropZoom(im, im.naturalWidth, im.naturalHeight);
+            resizeImage(cv.toDataURL("image/jpeg",0.92),2000, d=>shootChecked(d,cb)); };
+          im.onerror=()=>{ clearTimeout(timer); fallback(); };
+          im.src=URL.createObjectURL(blob);
+        }).catch(()=>{ clearTimeout(timer); fallback(); });
+      }catch(e){ clearTimeout(timer); fallback(); }
+      return;
+    }
+    grabFrame();
   };
   const count=(n)=>{
     const el=host.querySelector("#camcount");
@@ -9436,6 +10104,16 @@ function startCam2(host, cb){
   host.querySelector("#camzout").onclick=()=>camZoomApply(CAM2.zoom-(CAM2.hasZoom?(CAM2.zmax-CAM2.zmin)/6:0.25));
   host.querySelector("#campriv").onclick=()=>{ CAM2.privacy=!CAM2.privacy; paintCamBar(); };
   host.querySelectorAll("[data-camt]").forEach(b=>b.onclick=()=>{ CAM2.timer=+b.getAttribute("data-camt"); paintCamBar(); });
+  /* toque na imagem = foco naquele ponto, com o anel mostrando onde */
+  const stage=host.querySelector(".camstage"), ring=host.querySelector("#camring");
+  stage.addEventListener("pointerdown", e=>{
+    const r=stage.getBoundingClientRect();
+    const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+    ring.style.left=(px*100)+"%"; ring.style.top=(py*100)+"%"; ring.classList.add("on"); setTimeout(()=>ring.classList.remove("on"),900);
+    camFocusOnce(px,py);
+  });
+  const fb=host.querySelector("#camfoc"); if(fb) fb.onclick=()=>{ ring.style.left="50%"; ring.style.top="50%"; ring.classList.add("on"); setTimeout(()=>ring.classList.remove("on"),900); camFocusOnce(0.5,0.5); };
+  const tb2=host.querySelector("#camtorch"); if(tb2) tb2.onclick=()=>camTorch(!CAM2.torch);
   paintCamBar();
 }
 /* ---- projetar na TV ---- */
@@ -9649,6 +10327,7 @@ function rotuloCard(o){
       '<ol class="bul tiny">'+o.ings.map(i=>"<li>"+esc(i)+"</li>").join("")+"</ol>"+
       '<p class="tiny muted">'+t("rt.ingsNote")+"</p></div></details>";
   }
+  h+=nutForYouHTML(o);
   h+='<p class="tiny muted" style="margin-top:12px">'+t("rt.criterio")+"</p>";
   h+="</div>";
   return h;
