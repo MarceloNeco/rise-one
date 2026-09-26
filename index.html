@@ -870,6 +870,23 @@ main{padding-bottom:88px}
 .eqfig>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:10px;opacity:0}
 .eqfig>img.ok{opacity:1;background:#fff}
 .eqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.eqgrid2{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:760px){ .eqgrid2{grid-template-columns:1fr 1fr} }
+.eqcard2{display:flex;gap:12px;align-items:stretch;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px}
+.eqcard2 .eqopen{flex:0 0 128px;width:128px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:4px;cursor:pointer;color:#333}
+.eqcard2 .eqfig{height:120px}
+.eqcard2 .eqfig>img{border-radius:8px}
+.eqcard2 .eqinfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.eqcard2 .nm{font-weight:800;font-size:.95rem;line-height:1.2}
+.eqcard2 .ds{font-size:.8rem;color:var(--text2);line-height:1.35;flex:1}
+.eqtenho{display:inline-flex;align-items:center;gap:8px;margin-top:4px;padding:6px 10px;border-radius:999px;border:1px solid var(--border2);background:var(--surface);font-size:.82rem;font-weight:700;cursor:pointer;min-height:40px;width:fit-content}
+.eqtenho input{position:absolute;opacity:0;width:0;height:0}
+.eqtenho .tr{width:36px;height:22px;border-radius:99px;background:var(--border2);position:relative;flex-shrink:0;transition:background .15s}
+.eqtenho .tr::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
+.eqtenho input:checked + .tr{background:var(--ok)} .eqtenho input:checked + .tr::after{left:16px}
+.eqcard2.have{border-color:var(--ok);background:var(--ok-soft)}
+.eqcard2.have .eqtenho{border-color:var(--ok);color:var(--ok)}
+@media (max-width:380px){ .eqcard2 .eqopen{flex-basis:104px;width:104px} .eqcard2 .eqfig{height:100px} }
 @media(max-width:560px){ .eqgrid{grid-template-columns:1fr 1fr} .eqcard{padding:8px} .eqcard .nm{font-size:.76rem} .eqfig{height:70px} }
 .eqfig .eqmine2{inset:auto 4px 4px auto;width:34px;height:34px;object-fit:cover;border-radius:7px;border:1px solid var(--border);background:none}
 .eqcard .eqopen{display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;color:inherit}
@@ -2037,8 +2054,12 @@ Object.assign(L,{
 "eq.zoom":["Ampliar","Zoom"],
 "eq.open":["Abrir o desenho","Open the drawing"],
 "eq.sheet":["Ficha do aparelho","Machine sheet"],
-"eq.sheetNote":["Marque \"Tenho\" nos aparelhos da sua academia: a biblioteca filtra por eles. Toque no desenho para ampliar.","Tick \"I have it\" on your gym's machines: the library filters by them. Tap the drawing to zoom."],
+"eq.sheetNote":["Olhe a foto, leia para que serve e marque \"Sim, eu tenho\": a biblioteca passa a mostrar só o que dá para fazer com o que você tem.","Tick \"I have it\" on your gym's machines: the library filters by them. Tap the drawing to zoom."],
 "eq.noHits":["Nenhum aparelho com esse termo.","No machine matches that."],
+"eq.yesHave":["Sim, eu tenho","Yes, I have it"],
+"eq.what":["O que é","What it is"],
+"eq.tap":["Toque na foto para ampliar","Tap the photo to enlarge"],
+"eq.simpleNote":["Não precisa saber o nome: olhe a foto, leia para que serve e marque o que existe onde você treina.","No need to know the name: look at the photo, read what it's for and tick what exists where you train."],
 "eq.g.pernas":["Pernas","Legs"],
 "eq.g.bracos":["Braços","Arms"],
 "eq.g.peito":["Peito","Chest"],
@@ -2868,6 +2889,69 @@ const EQ_TAGS={
  "abdominal-maquina":{g:["abdomen","cadeiras"],k:"abdominal maquina crunch"}
 };
 const EQ_GRUPOS=["pernas","bracos","peito","costas","ombros","abdomen","cadeiras","polias","cardio","livre"];
+/* Para quem não entende de academia: o que é cada aparelho, em uma frase, e as palavras que o povo usa para ele.
+   [pt, en, termos populares]. Os termos entram na busca junto com o nome. */
+const EQ_DESC={
+ livre:["Só você e o chão: flexão, agachamento, prancha. Serve em casa, na rua, em qualquer lugar.","Just you and the floor: push-ups, squats, planks. Works at home, outside, anywhere.","sem nada casa rua parque chao"],
+ halter:["Pesos de mão, um em cada mão. Os mais comuns de casa e academia; servem para braço, ombro, peito e perna.","Hand weights, one in each hand. The most common at home and in gyms; for arms, shoulders, chest and legs.","peso de mao pesinho pesos"],
+ barra:["Barra comprida de ferro onde se colocam as anilhas (discos). Para agachar, supino e levantamento.","Long iron bar you load with plates. For squats, bench press and deadlifts.","barra grande discos"],
+ banco:["Banco acolchoado para deitar ou sentar enquanto levanta peso.","Padded bench to lie or sit on while lifting.","banco reto banquinho"],
+ "polia-alta":["Puxador com cabo que vem de cima: você senta e puxa a barra até o peito. Trabalha as costas.","Cable pulled from above: you sit and pull the bar down to your chest. Works the back.","puxador puxada costas cabo de cima"],
+ "polia-baixa":["Cabo que sai de baixo, na altura do chão: você senta e puxa para o corpo. Costas e braços.","Cable coming from floor level: you sit and pull towards you. Back and arms.","remada sentado cabo de baixo"],
+ crossover:["Duas torres com cabos, uma de cada lado, e você no meio. Peito, ombro e braço.","Two cable towers, one each side, you in the middle. Chest, shoulders and arms.","cabos dos dois lados cruzamento"],
+ maquina:["Qualquer aparelho com assento, pino de peso e alavanca: o movimento já vem guiado.","Any machine with a seat, weight pin and lever: the movement is guided for you.","aparelho de pino qualquer maquina"],
+ smith:["Barra presa em trilhos que só sobe e desce. Mais segura para agachar e supino sozinho.","A bar locked into rails that only goes up and down. Safer to squat or bench alone.","barra guiada trilho"],
+ "leg-press":["Você senta ou deita inclinado e empurra uma plataforma com os pés. Coxa e bumbum.","You sit or lie back and push a platform with your feet. Thighs and glutes.","empurrar com os pes plataforma pernas"],
+ extensora:["Cadeira com rolo na frente das canelas: você estica as pernas. Frente da coxa.","Chair with a pad in front of your shins: you straighten your legs. Front of the thigh.","cadeira de perna esticar perna coxa"],
+ flexora:["Deitado de bruços, você dobra os joelhos contra um rolo. Parte de trás da coxa.","Lying face down, you bend your knees against a pad. Back of the thigh.","dobrar perna deitado posterior"],
+ abdutora:["Cadeira que abre ou fecha as pernas contra uma resistência. Lado da coxa e bumbum.","Chair that opens or closes your legs against resistance. Outer thigh and glutes.","abrir e fechar pernas cadeira"],
+ peck:["Sentado, você junta os braços na frente do peito, como um abraço. Peito.","Seated, you bring your arms together in front like a hug. Chest.","voador abraco peito"],
+ graviton:["Barra fixa para subir com os braços; o graviton tem um apoio que ajuda quem ainda não consegue.","Pull-up bar; the assisted version has a pad that helps if you can't do one yet.","barra fixa pendurar subir"],
+ esteira:["Esteira para andar ou correr no lugar. A mais conhecida de todas.","Treadmill to walk or run in place. The best known of all.","correr andar caminhar"],
+ bike:["Bicicleta parada, com selim e pedais. Cardio leve para as pernas.","Stationary bike with saddle and pedals. Easy cardio for the legs.","bicicleta pedalar spinning"],
+ elastico:["Faixa ou tira de borracha que estica. Cabe na mochila e substitui pesos leves.","Rubber band or loop that stretches. Fits in a bag and replaces light weights.","borracha faixa theraband mini band"],
+ kettlebell:["Peso redondo com alça, parece uma chaleira. Para balanço, agachamento e força.","Round weight with a handle, like a kettle. For swings, squats and strength.","chaleira peso com alca"],
+ bola:["Bola grande de pilates e colchonete. Abdômen, equilíbrio e alongamento.","Big Swiss ball and a mat. Core, balance and stretching.","bola de pilates bola grande"],
+ "torre-polia":["Torre preta com pino de peso e dois cabos: um de cima (puxada) e um de baixo (remada). Costas e braços.","Black tower with a weight pin and two cables: one from the top (pulldown) and one from the bottom (row). Back and arms.","torre cabo pino puxador remada"],
+ "polia-dupla":["Coluna com duas alturas de cabo: puxa de cima para tríceps, de baixo para bíceps.","Column with cable at two heights: pull from the top for triceps, from the bottom for biceps.","cabo biceps triceps coluna"],
+ "ext-flex":["Cadeira com rolos nas pernas que faz dois exercícios: esticar (frente da coxa) e dobrar (trás da coxa).","Chair with leg pads that does both: straighten (front of thigh) and bend (back of thigh).","cadeira rolo perna dois em um"],
+ "press-alavanca":["Sentado, você empurra duas alavancas para a frente ou para cima. Peito e ombro.","Seated, you push two levers forward or up. Chest and shoulders.","empurrar alavanca peito ombro"],
+ "banco-regulavel":["Banco que inclina o encosto em vários ângulos. Para supino, ombro e sentar com halteres.","Bench whose backrest tilts to several angles. For presses, shoulders and seated dumbbell work.","banco inclinado banco que levanta"],
+ "banco-abdominal":["Banco inclinado com rolos para prender os pés. Para abdominal.","Tilted bench with pads to hold your feet. For sit-ups.","banco de abdominal prender os pes"],
+ eliptico:["Aparelho em que os pés deslizam em pedais grandes e as mãos seguram alavancas. Cardio sem impacto.","Machine where your feet glide on big pedals and your hands hold moving bars. No-impact cardio.","esqui pedal deslizar transport"],
+ "barra-w":["Barra curta e ondulada. Para rosca de bíceps e tríceps, com pulso mais confortável.","Short wavy bar. For biceps and triceps curls, easier on the wrists.","barra ondulada barra torta rosca"],
+ "barra-hex":["Barra em formato de hexágono: você fica dentro dela. Para levantar peso do chão com as costas retas.","Hexagon-shaped bar you stand inside. For lifting from the floor with a straight back.","barra hexagonal trap bar barra que entra dentro"],
+ anilhas:["Discos de peso que vão nas barras, e o suporte onde ficam guardados.","Weight discs that go on bars, and the rack that stores them.","discos pesos redondos"],
+ espaldar:["Escada de madeira presa na parede, com vários degraus. Alongar, pendurar e abdominal.","Wooden ladder fixed to the wall, with many rungs. Stretching, hanging and core work.","escada de madeira madeira na parede barra sueca"],
+ trx:["Duas fitas penduradas no alto com alças. Você usa o próprio peso, inclinado.","Two straps hanging from above with handles. You use your own body weight, leaning.","fitas penduradas fita alca"],
+ "bola-medicinal":["Bola pesada, de couro ou borracha. Para arremessar, agachar e abdominal.","Heavy leather or rubber ball. For throws, squats and core work.","bola pesada bola de arremesso"],
+ rolo:["Rolo de espuma e blocos para massagear e soltar a musculatura.","Foam roller and blocks to massage and release tight muscles.","rolo massagem espuma bloco yoga"],
+ caneleira:["Peso que se prende no tornozelo com velcro. Deixa os exercícios de perna mais pesados.","Weight strapped to the ankle with velcro. Makes leg exercises heavier.","peso de tornozelo peso na perna velcro"],
+ roda:["Roda pequena com uma alça de cada lado: você rola para a frente de joelhos. Abdômen.","Small wheel with a handle each side: you roll forward on your knees. Core.","rodinha abdominal"],
+ colchonete:["Tapete fino para deitar no chão. Abdominal, alongamento, yoga.","Thin mat to lie on the floor. Core, stretching, yoga.","tapete tapetinho yoga mat"],
+ hack:["Você fica de pé, apoiado em um encosto inclinado, e agacha em trilhos. Coxa.","You stand against a tilted backrest and squat along rails. Thighs.","agachamento na maquina"],
+ romana:["Banco em que você prende os pés e fica com o tronco solto para subir e descer. Lombar e bumbum.","Bench where you lock your feet and your torso hangs free to lift and lower. Lower back and glutes.","lombar banco de costas"],
+ paralelas:["Duas barras paralelas na altura da cintura: você apoia as mãos e desce o corpo. Tríceps e peito.","Two parallel bars at waist height: you hold on and lower your body. Triceps and chest.","mergulho barras paralelas"],
+ remo:["Aparelho em que você senta num carrinho e puxa uma alça, como remar. Corpo inteiro.","Machine where you sit on a sliding seat and pull a handle, like rowing. Whole body.","remar remo"],
+ escada:["Escada que gira, como uma escada rolante ao contrário. Cardio de perna.","Rotating staircase, like an escalator in reverse. Leg cardio.","escada rolante subir escada"],
+ gluteo:["Máquina em que você empurra uma alavanca para trás com o pé. Bumbum.","Machine where you push a lever back with your foot. Glutes.","bumbum chute para tras"],
+ panturrilha:["Você fica na ponta dos pés contra um peso. Batata da perna.","You rise on tiptoes against a weight. Calves.","batata da perna ponta do pe"],
+ rack:["Gaiola de ferro com apoios para a barra. Para agachar e supino com segurança.","Iron cage with hooks for the bar. To squat and bench safely.","gaiola power rack"],
+ "supino-maquina":["Sentado, você empurra duas alavancas para a frente, como um supino sem barra. Peito.","Seated, you push two levers forward, like a bench press without a bar. Chest.","empurrar para frente peito"],
+ "remada-articulada":["Sentado, com o peito apoiado, você puxa duas alavancas para trás. Costas.","Seated with your chest on a pad, you pull two levers back. Back.","puxar para tras costas apoiado"],
+ scott:["Banco com apoio inclinado para os braços. Para rosca de bíceps sem roubar.","Bench with a tilted arm pad. For biceps curls without cheating.","banco de biceps rosca"],
+ corda:["Corda de pular. Cardio barato em qualquer lugar.","Jump rope. Cheap cardio anywhere.","pular corda"],
+ step:["Degrau de plástico para subir e descer. Cardio e perna.","Plastic step to go up and down. Cardio and legs.","degrau caixote"],
+ bosu:["Meia bola com base plana. Equilíbrio e abdômen.","Half ball on a flat base. Balance and core.","meia bola bola cortada equilibrio"],
+ "abdominal-maquina":["Sentado, você dobra o tronco contra uma resistência. Abdômen.","Seated, you curl your torso against resistance. Core.","abdominal sentado maquina de abdominal"]
+};
+function eqDesc(id){ const d=EQ_DESC[id]; return d? (LANG==="pt"?d[0]:d[1]) : ""; }
+/* cartão "for dummies": foto grande, nome, o que é, e o botão "Sim, eu tenho" — usado na biblioteca e em Meus recursos */
+function eqCardHTML(e){
+  return '<div class="eqcard2'+(eqHave(e.id)?" have":"")+'"><button class="eqopen" data-eqsheet="'+e.id+'" aria-label="'+esc(t("eq.sheet"))+'">'+eqFig(e)+"</button>"+
+    '<div class="eqinfo"><div class="nm">'+esc(LANG==="pt"?e.pt:e.en)+'</div><div class="ds">'+esc(eqDesc(e.id))+"</div>"+
+    '<label class="eqtenho"><input type="checkbox" data-eqhave="'+e.id+'" '+(eqHave(e.id)?"checked":"")+'><span class="tr"></span><span>'+t("eq.yesHave")+"</span></label></div></div>";
+}
 function eqHave(id){ return !!(STATE.equipHave && STATE.equipHave[id]); }
 function eqSetHave(id,on){ STATE.equipHave=STATE.equipHave||{}; if(on) STATE.equipHave[id]=1; else delete STATE.equipHave[id]; save(); }
 /* "O que eu tenho para treinar": um lugar só, de acesso fácil (Início, AssistONE, Preferências), para dizer
@@ -2881,20 +2965,30 @@ const RC_CENARIOS=[
 function eqHaveCount(){ return Object.keys(STATE.equipHave||{}).length; }
 function eqSetMany(ids){ STATE.equipHave={}; (ids||Object.keys(EQUIP)).forEach(id=>{ if(EQUIP[id]) STATE.equipHave[id]=1; }); save(); }
 function recursosModal(){
-  const grupos=EQ_GRUPOS.filter(g=>g!=="livre").concat(["livre"]);
-  const chip=e=>'<button class="eqchip'+(eqHave(e.id)?" on":"")+'" data-rc="'+e.id+'" aria-pressed="'+(eqHave(e.id)?"true":"false")+'"><span class="eqchipic">'+e.svg+"</span><span>"+esc(eqName(e.id))+"</span></button>";
+  let q="", grupo="";
   const m=modal(mh(t("rc.title"))+'<p class="tiny muted" style="margin:-4px 0 10px">'+t("rc.sub")+"</p>"+
     '<span class="kicker">'+t("rc.cenarios")+'</span><div class="tiles" style="margin:6px 0 12px">'+RC_CENARIOS.map(c=>
       '<button class="tile" data-rcc="'+c[0]+'"><span class="ibub grey">'+I(c[0]==="rua"?"flame":(c[0]==="casa"?"home":"dumbbell"))+'</span><span class="tl">'+t("rc."+c[0])+'</span><span class="td">'+t("rc."+c[0]+"D")+"</span></button>").join("")+"</div>"+
     '<span class="kicker">'+t("rc.itens")+' · <span id="rc_n">'+t("rc.count").replace("{n}",eqHaveCount())+"</span></span>"+
-    grupos.map(g=>{ const lst=eqBusca("",g); return lst.length?'<p class="tiny muted" style="margin:10px 0 4px">'+t("eq.g."+g)+'</p><div class="eqpick">'+lst.map(chip).join("")+"</div>":""; }).join("")+
+    '<p class="tiny muted" style="margin:2px 0 8px">'+t("eq.simpleNote")+"</p>"+
+    '<div class="help-q" style="margin:0 0 8px">'+I("search")+'<input type="search" id="rc_q" placeholder="'+t("eq.search")+'" autocomplete="off"></div>'+
+    '<div class="chips" style="margin-bottom:10px"><button class="chip on" data-rcg="">'+t("common.all")+"</button>"+EQ_GRUPOS.map(g=>'<button class="chip" data-rcg="'+g+'">'+t("eq.g."+g)+"</button>").join("")+"</div>"+
+    '<div id="rc_list"></div>'+
     '<p class="tiny muted" id="rc_none" style="margin-top:10px'+(eqHaveCount()?";display:none":"")+'">'+t("rc.none")+"</p>"+
-    '<div class="row" style="margin-top:14px"><button class="btn" id="rc_ex">'+I("book")+t("rc.seeEx")+'</button><button class="btn line" id="rc_clear">'+t("rc.clear")+"</button></div>");
-  const paint=()=>{ m.querySelectorAll("[data-rc]").forEach(b=>{ const on=eqHave(b.getAttribute("data-rc")); b.classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false"); });
-    const n=m.querySelector("#rc_n"); if(n) n.textContent=t("rc.count").replace("{n}",eqHaveCount()); const z=m.querySelector("#rc_none"); if(z) z.style.display=eqHaveCount()?"none":""; };
-  m.querySelectorAll("[data-rc]").forEach(b=>b.onclick=()=>{ const id=b.getAttribute("data-rc"); eqSetHave(id,!eqHave(id)); paint(); });
-  m.querySelectorAll("[data-rcc]").forEach(b=>b.onclick=()=>{ const c=RC_CENARIOS.find(x=>x[0]===b.getAttribute("data-rcc")); eqSetMany(c[1]); paint(); toast(t("common.saved")); });
-  m.querySelector("#rc_clear").onclick=()=>{ eqSetMany([]); paint(); };
+    '<div class="row" style="margin-top:14px"><button class="btn" id="rc_ex">'+I("book")+t("rc.seeEx")+'</button><button class="btn line" id="rc_clear">'+t("rc.clear")+"</button></div>",{wide:true});
+  const head=()=>{ const n=m.querySelector("#rc_n"); if(n) n.textContent=t("rc.count").replace("{n}",eqHaveCount()); const z=m.querySelector("#rc_none"); if(z) z.style.display=eqHaveCount()?"none":""; };
+  const list=()=>{
+    const eqs=eqBusca(q, grupo); const box=m.querySelector("#rc_list");
+    box.innerHTML=eqs.length? '<div class="eqgrid2">'+eqs.map(eqCardHTML).join("")+"</div>" : '<p class="tiny muted">'+t("eq.noHits")+"</p>";
+    box.querySelectorAll("[data-eqhave]").forEach(b=>b.onchange=()=>{ eqSetHave(b.getAttribute("data-eqhave"), b.checked); b.closest(".eqcard2").classList.toggle("have", b.checked); head(); });
+    box.querySelectorAll("[data-eqsheet]").forEach(b=>b.onclick=()=>eqModal(b.getAttribute("data-eqsheet")));
+    head();
+  };
+  list();
+  const inp=m.querySelector("#rc_q"); inp.oninput=()=>{ q=inp.value; list(); };
+  m.querySelectorAll("[data-rcg]").forEach(b=>b.onclick=()=>{ grupo=b.getAttribute("data-rcg"); m.querySelectorAll("[data-rcg]").forEach(x=>x.classList.toggle("on", x===b)); list(); });
+  m.querySelectorAll("[data-rcc]").forEach(b=>b.onclick=()=>{ const c=RC_CENARIOS.find(x=>x[0]===b.getAttribute("data-rcc")); eqSetMany(c[1]); list(); toast(t("common.saved")); });
+  m.querySelector("#rc_clear").onclick=()=>{ eqSetMany([]); list(); };
   m.querySelector("#rc_ex").onclick=()=>{ EXF.soMeus=eqHaveCount()>0; EXF.eqs=[]; m.remove(); go("ex"); };
 }
 function recursosCard(){
@@ -2913,7 +3007,8 @@ function eqBusca(q, grupo){
     const tg=EQ_TAGS[e.id]||{g:[],k:""};
     if(grupo && tg.g.indexOf(grupo)<0) return false;
     if(!x) return true;
-    const hay=norm(e.id+" "+e.pt+" "+e.en+" "+tg.k+" "+tg.g.map(g=>t("eq.g."+g)).join(" "));
+    const d=EQ_DESC[e.id]||["","",""];
+    const hay=norm(e.id+" "+e.pt+" "+e.en+" "+tg.k+" "+d[2]+" "+d[0]+" "+d[1]+" "+tg.g.map(g=>t("eq.g."+g)).join(" "));
     return x.split(/\s+/).every(w=>hay.indexOf(w)>=0);
   });
 }
@@ -2924,6 +3019,7 @@ function eqModal(id){
   const m=modal(mh(LANG==="pt"?e.pt:e.en)+
     '<div class="eqbig" id="eqbig">'+eqFig(e)+"</div>"+
     '<div class="row" style="margin-top:8px"><button class="btn xs line" id="eqzoom">'+I("zoomin")+t("eq.zoom")+'</button><a class="btn xs ghost" id="eqopen" href="aparelhos/'+e.id+'.png" target="_blank" rel="noopener">'+I("upload")+t("eq.open")+"</a></div>"+
+    (eqDesc(id)?'<p style="margin:10px 0 0"><span class="kicker">'+t("eq.what")+'</span><br>'+esc(eqDesc(id))+"</p>":"")+
     '<div class="chips" style="margin:10px 0">'+tg.g.map(g=>'<span class="chip">'+t("eq.g."+g)+"</span>").join("")+"</div>"+
     '<label class="switch"><input type="checkbox" id="eqhave" '+(eqHave(id)?"checked":"")+'><span class="tr"></span><span>'+t("eq.have")+"</span></label>"+
     '<div class="row" style="justify-content:space-between;margin-top:12px"><button class="btn sm line" id="eqphoto">'+I("camera")+t("ex.takephoto")+'</button><button class="btn sm" id="eqex">'+t("body.seeEx")+"</button></div>",{wide:true});
@@ -3706,9 +3802,7 @@ SCREENS.ex = function(){
      '<p class="tiny muted">'+t("eq.sheetNote")+"</p>"+
      '<div class="help-q" style="margin:0 0 8px">'+I("search")+'<input type="search" id="eqq" value="'+esc(EXF.eqq||"")+'" placeholder="'+t("eq.search")+'" autocomplete="off"></div>'+
      '<div class="chips" style="margin-bottom:10px"><button class="chip'+(EXF.eqg?"":" on")+'" data-eqg="">'+t("common.all")+"</button>"+EQ_GRUPOS.map(g=>'<button class="chip'+(EXF.eqg===g?" on":"")+'" data-eqg="'+g+'">'+t("eq.g."+g)+"</button>").join("")+"</div>"+
-     (eqs.length? '<div class="eqgrid">'+eqs.map(e=>
-       '<div class="eqcard'+(eqHave(e.id)?" have":"")+'"><button class="eqopen" data-eqsheet="'+e.id+'" aria-label="'+esc(t("eq.sheet"))+'">'+eqFig(e)+'</button><div class="nm">'+esc(LANG==="pt"?e.pt:e.en)+"</div>"+
-         '<label class="switch sm" style="justify-content:center;margin-top:6px"><input type="checkbox" data-eqhave="'+e.id+'" '+(eqHave(e.id)?"checked":"")+'><span class="tr"></span><span class="tiny">'+t("eq.have")+"</span></label></div>").join("")+"</div>"
+     (eqs.length? '<div class="eqgrid2">'+eqs.map(eqCardHTML).join("")+"</div>"
        : '<p class="tiny muted">'+t("eq.noHits")+"</p>")+
      (nHave?'<p class="tiny muted" style="margin-top:10px">'+t("eq.haveCount").replace("{a}",nHave)+"</p>":"")+"</div></details>";
   return h;

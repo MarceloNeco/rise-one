@@ -115,6 +115,7 @@ Procure pelo número para ir direto ao assunto.
   Foto: **`personal/<id>.png`** (ex.: `personal/knox.png`); sem o arquivo, avatar desenhado com as iniciais.
 - **Nota do rótulo** — `notaRotulo(o)` (0–100: processamento 35 %, nutrientes 40 %, aditivos 25 %), `notaHTML`, `nutMatchHTML` (objetivos × tabela por 100 g). `SCANPREV` guarda o texto da foto anterior quando o rótulo é lido em duas fotos.
 - **Menu ☰** — `DRAWER_QUICK` (ações rápidas), `DRAWER_GROUPS` (grupos; item `{id, subs}` vira acordeão de um nível), `SUB_LABEL` (rótulo de cada parte), `DRAWER_EXTRA` (itens que abrem janela em vez de rota). Mudar o menu = mexer nessas listas, não em tela.
+- **Aparelhos em linguagem simples** — `EQ_DESC` (id → [pt, en, termos populares]), `eqDesc(id)`, `eqCardHTML(e)` (cartão foto + texto + "Sim, eu tenho", usado na biblioteca e em `recursosModal`). Os termos populares entram em `eqBusca`.
 - **Meus recursos** — `RC_CENARIOS` (cenários que marcam vários aparelhos de uma vez), `recursosModal()` (janela com cenários e chips por grupo), `recursosCard()` (Preferências); botão `#rc_open` na Início e ação no AssistONE.
 - **Aparelhos** — `EQUIP` (desenho em linha de cada um), `EQ_TAGS` (grupos e termos de busca),
   `STATE.equipHave` ("tenho"), `eqBusca`, `eqModal` (ficha ampliável) e `eqFig`: se existir o arquivo
