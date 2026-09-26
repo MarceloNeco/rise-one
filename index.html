@@ -694,6 +694,19 @@ body.noscroll{overflow:hidden}
 .ditem.on{border-left-color:var(--accent);background:var(--accent-soft);color:var(--text);font-weight:800}
 .ditem.on .ic{color:var(--accent)}
 .ditem.big{font-size:1rem;font-weight:800;min-height:52px}
+.dquick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 10px 4px}
+.dq{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-size:.68rem;font-weight:700;line-height:1.1;text-align:center;min-height:64px;cursor:pointer}
+.dq .ic{width:22px;height:22px;color:var(--accent)}
+.dq:hover,.dq:focus-visible{border-color:var(--accent-line);outline:none}
+.drow{display:flex;align-items:stretch}
+.drow .ditem{flex:1;min-width:0}
+.dtog{width:44px;min-height:44px;border:0;background:none;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:10px}
+.dtog .ic{width:18px;height:18px;transition:transform .2s}
+.dacc.open .dtog .ic{transform:rotate(90deg)}
+.dacc .dsubs{display:none}
+.dacc.open .dsubs{display:block}
+.ditem.sub{min-height:40px;padding-left:46px;font-size:.88rem}
+@media (prefers-reduced-motion:reduce){ .dtog .ic{transition:none} }
 .ditem .ic{width:20px;height:20px;flex:0 0 20px}
 .ditem .dl{flex:1;min-width:0}
 @media (prefers-reduced-motion:reduce){ #drawer,#drawerback{transition:none} }
@@ -1006,7 +1019,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
     <span class="spacer"></span>
     <button class="iconbtn langsw" id="langbtn" title="Português / English" aria-label="Idioma / Language"><span class="lg on" data-lg="pt">PT</span><i>|</i><span class="lg" data-lg="en">EN</span></button>
     <button class="iconbtn" id="searchbtn" aria-label="Buscar / Search" title="Buscar / Search"><span class="ic" data-icon="search"></span></button>
-    <button class="iconbtn" id="setbtn" aria-label="Configurações / Settings" title="Configurações / Settings"><span class="ic" data-icon="sliders"></span></button>
+    <button class="iconbtn" id="setbtn" aria-label="Configurações / Settings" title="Configurações / Settings"><span class="ic" data-icon="cog"></span></button>
     <button class="iconbtn" id="homebtn" aria-label="Início / Home" title="Início / Home"><span class="ic" data-icon="home"></span></button>
     <button class="whoami" id="whoami" title="Perfil"><span class="av" id="whoav">?</span><span class="nm" id="whonm">Visitante</span></button>
   </div>
@@ -2466,9 +2479,15 @@ Object.assign(L,{
 
 /* ---------- 1e. TEXTOS DA VERSÃO 3.1: menu lateral e favoritos ---------- */
 Object.assign(L,{
-"dw.day":["O seu dia","Your day"],
+"dw.day":["Comer e evoluir","Eat and progress"],
+"dw.quick":["Ações rápidas","Quick actions"],
+"dw.parts":["Ver as partes","Show parts"],
+"dw.setAll":["Ajustes","Settings"],
+"dw.helpMore":["Ajuda e mais","Help and more"],
+"dw.eqs":["Aparelhos","Equipment"],
 "dw.tools":["Ferramentas","Tools"],
 "dw.account":["Conta e ajustes","Account and settings"],
+"dw.todayW":["Treino de hoje","Today's workout"],
 "dw.pro":["Área profissional","Professional area"],
 "fav.title":["Atalhos da barra de baixo","Bottom bar shortcuts"],
 "fav.sub":["Escolha até 5 telas para o celular","Pick up to 5 screens for the phone"],
@@ -11497,15 +11516,33 @@ function openNews(){
 /* Por que: as 5 áreas grandes resolvem o dia a dia, mas quem procura uma função específica
    não deveria caçar dentro de "Mais". O ☰ mostra tudo de uma vez, agrupado, em qualquer tela.
    E o rodapé do celular passa a ser só o que a própria pessoa escolheu. */
+/* Organização do ☰ (diretrizes): ações rápidas no topo, grupos por intenção, sub-itens em acordeão de um nível.
+   Tocar no nome abre a função; o ▸ mostra as partes. O grupo da tela atual já vem aberto. */
+const DRAWER_QUICK=["todayW","scan","timer","recursos"];
 const DRAWER_GROUPS=[
- {k:"nav.train",    ic:"dumbbell", items:["workout","ex","body","fisio","warm"]},
- {k:"dw.day",       ic:"leaf",     items:["diet","progress","scan"]},
- {k:"dw.tools",     ic:"grid",     items:["ia","timer","mirror","news"]},
- {k:"dw.account",   ic:"user",     items:["set:perfil","set:pref","set:avisos","set:conta","set:dados","set:sobre"]},
- {k:"dw.pro",       ic:"shield",   items:["coach","ads","admin"]}
+ {k:"nav.train",    ic:"dumbbell", items:[
+    {id:"workout"},
+    {id:"ex", subs:["eqs","recursos"]},
+    {id:"body"},{id:"fisio"},{id:"warm"}]},
+ {k:"dw.day",       ic:"leaf",     items:[
+    {id:"diet",     subs:["diet:hoje","diet:alimentos","diet:pratos"]},
+    {id:"progress", subs:["progress:hoje","progress:peso","progress:medidas","progress:fotos","progress:exames","progress:missoes"]}]},
+ {k:"dw.tools",     ic:"grid",     items:[{id:"ia"},{id:"scan"},{id:"timer"},{id:"mirror"},{id:"news"}]},
+ {k:"dw.account",   ic:"user",     items:[{id:"set", subs:["set:perfil","set:pref","set:avisos","set:conta","set:dados","set:sobre"]}]},
+ {k:"dw.pro",       ic:"shield",   items:[{id:"coach"},{id:"ads"},{id:"admin"}]}
 ];
+const SUB_LABEL={
+  "diet:hoje":"nu.tabToday","diet:alimentos":"nu.tabFoods","diet:pratos":"nu.tabDishes",
+  "progress:hoje":"pg.tabToday","progress:peso":"pg.tabWeight","progress:medidas":"pg.tabMeasures","progress:fotos":"pg.tabPhotos","progress:exames":"pg.tabExams","progress:missoes":"pg.tabMissions",
+  "set:perfil":"st.tabProfile","set:pref":"st.tabPrefs","set:avisos":"nt.short","set:conta":"st.tabAccount","set:dados":"st.tabData","set:sobre":"st.about"
+};
+let DRAWER_OPEN={};   /* acordeões abertos pela pessoa nesta sessão */
 /* itens que não são rota: abrem uma janela em vez de mudar de tela */
 const DRAWER_EXTRA={
+  todayW: {ic:"play",     k:"dw.todayW",   run:()=>{ const w=workoutToday(); if(w && typeof runWorkout==="function") runWorkout(w.id); else go("workout"); }},
+  recursos:{ic:"sliders", k:"rc.short",    run:()=>recursosModal()},
+  scan:   {ic:"scan",     k:"nav.scan",    run:()=>go("scan")},
+  eqs:    {ic:"dumbbell", k:"dw.eqs",      run:()=>{ go("ex"); setTimeout(()=>{ const f=document.getElementById("eqfold"); if(f){ f.open=true; f.scrollIntoView({behavior:"smooth",block:"start"}); } },80); }},
   timer:  {ic:"timer",    k:"tm.short",    run:()=>openTimer()},
   mirror: {ic:"video",    k:"mir.open",    run:()=>openMirror(), feat:"mirror"},
   news:   {ic:"sparkles", k:"nw.title",    run:()=>openNews(), dot:()=>hasNews()},
@@ -11514,9 +11551,19 @@ const DRAWER_EXTRA={
 const SET_LABEL={perfil:"st.tabProfile", pref:"st.tabPrefs", avisos:"nt.short", conta:"st.tabAccount", dados:"st.tabData", sobre:"st.about"};
 let DRAWER_LAST=null;
 function drawerItemHTML(id){
-  if(id.indexOf("set:")===0){
-    const sub=id.slice(4);
-    return '<button class="ditem" data-go="set" data-sub="'+sub+'">'+I("sliders")+'<span class="dl">'+t(SET_LABEL[sub]||"nav.set")+"</span></button>";
+  if(typeof id==="object"){
+    const head=drawerItemHTML(id.id); if(!head) return "";
+    const subs=(id.subs||[]).map(x=>drawerItemHTML(x)).filter(Boolean);
+    if(!subs.length) return head;
+    const open=!!DRAWER_OPEN[id.id] || ROUTE===id.id;
+    return '<div class="dacc'+(open?" open":"")+'" data-dacc="'+id.id+'"><div class="drow">'+head+
+      '<button class="dtog" aria-expanded="'+(open?"true":"false")+'" aria-label="'+esc(t("dw.parts"))+'">'+I("chevr")+"</button></div>"+
+      '<div class="dsubs">'+subs.join("")+"</div></div>";
+  }
+  if(id.indexOf(":")>0 && !DRAWER_EXTRA[id]){
+    const [route,sub]=id.split(":");
+    const r=routeInfo(route); if(!r || r.roles.indexOf(uiRole())<0) return "";
+    return '<button class="ditem sub'+(ROUTE===route && (SUB[route]||"hoje")===sub?" on":"")+'" data-go="'+route+'" data-sub="'+sub+'"><span class="dl">'+t(SUB_LABEL[id]||"nav."+route)+"</span></button>";
   }
   const ex=DRAWER_EXTRA[id];
   if(ex){
@@ -11529,15 +11576,17 @@ function drawerItemHTML(id){
 }
 function buildDrawer(){
   const box=document.getElementById("drawerbody"); if(!box) return;
-  let h='<button class="ditem big" data-dbusca="1">'+I("search")+'<span class="dl">'+t("bs.title")+"</span></button>";
-  h+='<button class="ditem big" data-go="home">'+I("home")+'<span class="dl">'+t("nav.home")+"</span></button>";
+  let h='<div class="dquick">'+DRAWER_QUICK.map(q=>{ const ex=DRAWER_EXTRA[q]; if(!ex) return ""; if(q==="scan"){ const r=routeInfo("scan"); return (r&&r.roles.indexOf(uiRole())>=0)?'<button class="dq" data-go="scan">'+I("scan")+"<span>"+t("nav.scan")+"</span></button>":""; }
+      return '<button class="dq" data-drun="'+q+'">'+I(ex.ic)+"<span>"+t(ex.k)+"</span></button>"; }).join("")+"</div>";
+  h+='<button class="ditem" data-go="home">'+I("home")+'<span class="dl">'+t("nav.home")+"</span></button>";
   DRAWER_GROUPS.forEach(g=>{
     const items=g.items.map(drawerItemHTML).filter(Boolean);
     if(!items.length) return;
     h+='<div class="dgroup"><div class="dg">'+I(g.ic)+t(g.k)+"</div>"+items.join("")+"</div>";
   });
-  h+='<div class="dgroup"><div class="dg">'+I("help")+t("help.title")+"</div>"+
+  h+='<div class="dgroup"><div class="dg">'+I("help")+t("dw.helpMore")+"</div>"+
      drawerItemHTML("help")+
+     '<button class="ditem" data-dbusca="1">'+I("search")+'<span class="dl">'+t("bs.title")+"</span></button>"+
      '<button class="ditem" data-dlegal="1">'+I("file")+'<span class="dl">'+t("legal.title")+"</span></button>"+
      (/^https?:/.test(location.protocol)? '<a class="ditem" href="'+esc(location.origin+"/")+'" target="_blank" rel="noopener">'+I("globe")+'<span class="dl">'+t("as.portal")+" ↗</span></a>" : "")+"</div>";
   h+='<p class="tiny muted" style="padding:10px 14px 0">RiseONE v'+APP_VERSION+"</p>";
@@ -11547,6 +11596,7 @@ function buildDrawer(){
   box.querySelectorAll("[data-dlegal]").forEach(b=>b.onclick=()=>{ closeDrawer(); legalModal(); });
   box.querySelectorAll("[data-dbusca]").forEach(b=>b.onclick=()=>{ closeDrawer(); setTimeout(()=>openBusca(""),120); });
   box.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>closeDrawer()));
+  box.querySelectorAll(".dtog").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const acc=b.closest(".dacc"), id=acc.getAttribute("data-dacc"); const open=!acc.classList.contains("open"); acc.classList.toggle("open",open); b.setAttribute("aria-expanded",open?"true":"false"); DRAWER_OPEN[id]=open; });
 }
 function openDrawer(){
   const d=document.getElementById("drawer"), bk=document.getElementById("drawerback"), bt=document.getElementById("menubtn");

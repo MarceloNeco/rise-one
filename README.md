@@ -12,6 +12,8 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
   (`AIza`, `sk-`, `sk-ant-`) e testa no serviço; quando o serviço responde "falta permissão", a chave
   é aceita como válida. Se a IA escolhida falhar (sem cota, sem crédito, chave recusada), o app espera
   uns 3 segundos e usa a próxima com chave, avisando na tela.
+- **Menu ☰ em grupos.** Ações rápidas no topo, grupos por intenção e partes em acordeão (Dieta, Evolução,
+  Exercícios › Aparelhos, Ajustes). Engrenagem ⚙ de Configurações no cabeçalho.
 - **Visual mais leve.** Cantos mais suaves, barra de baixo flutuante, cabeçalho só com ícones no
   celular (🔍 ⚙ 🏠 👤) e PT | EN no topo do ☰. A faixa do topo ficou só com anúncio.
 - **AssistONE.** O ajudante redondo do canto começa pela tela atual com atalhos e abre tour, passo a
