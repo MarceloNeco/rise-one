@@ -845,6 +845,24 @@ main{padding-bottom:88px}
   .toast{bottom:calc(168px + env(safe-area-inset-bottom))}
 }
 @media(min-width:821px){ #langbtn2{display:none} }
+/* ---- aparelhos: desenho técnico por cima do ícone, ficha ampliável, "tenho" ---- */
+.eqfig{position:relative;width:100%;height:90px;display:flex;align-items:center;justify-content:center}
+.eqfig svg{width:100%;height:100%}
+.eqfig>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:10px;opacity:0}
+.eqfig>img.ok{opacity:1;background:#fff}
+.eqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+@media(max-width:560px){ .eqgrid{grid-template-columns:1fr 1fr} .eqcard{padding:8px} .eqcard .nm{font-size:.76rem} .eqfig{height:70px} }
+.eqfig .eqmine2{inset:auto 4px 4px auto;width:34px;height:34px;object-fit:cover;border-radius:7px;border:1px solid var(--border);background:none}
+.eqcard .eqopen{display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;color:inherit}
+.eqcard.have{border-color:var(--ok);background:var(--ok-soft)}
+.eqcard .switch.sm .tr{width:36px;height:22px} .eqcard .switch.sm .tr::after{width:16px;height:16px;top:2px;left:2px} .eqcard .switch.sm input:checked + .tr::after{left:16px}
+.eqbig{max-height:60vh;overflow:auto;border-radius:16px;background:#fff;border:1px solid var(--border)}
+.eqbig .eqfig{height:auto;min-height:220px;padding:8px}
+.eqbig .eqfig svg{width:60%;height:220px;color:#333}
+.eqbig .eqfig>img{position:static;height:auto;max-height:56vh;border-radius:0}
+.eqbig.zoom .eqfig>img{max-height:none;width:200%;max-width:none}
+.eqbig.zoom .eqfig svg{width:120%;height:440px}
+@media(max-width:560px){ .pratoitem{flex-direction:column;align-items:stretch} .pratoitem .gr{width:100%} .pratoitem>.row{justify-content:flex-end} }
 /* ---- câmera: medidor de nitidez e anel de foco ---- */
 .camfocus{display:flex;align-items:center;gap:10px;margin:8px 0 2px;font-size:.8rem;font-weight:700}
 .camfocus .bar{flex:1;margin:0}
@@ -1957,6 +1975,25 @@ Object.assign(L,{
 "ia.switchQuota":["🔁 {a} está sem cota agora — usando {b}","🔁 {a} is out of quota right now — using {b}"],
 "ia.switchKey":["🔁 {a} recusou a chave — usando {b}","🔁 {a} refused the key — using {b}"],
 "as.name":["AssistONE","AssistONE"],
+"eq.search":["Buscar aparelho: perna, braço, cadeira, polia…","Search machine: leg, arm, seat, cable…"],
+"eq.have":["Tenho","I have it"],
+"eq.haveCount":["{a} marcados como \"tenho\"","{a} ticked as \"I have it\""],
+"eq.onlyMine":["Só o que eu tenho","Only what I have"],
+"eq.zoom":["Ampliar","Zoom"],
+"eq.open":["Abrir o desenho","Open the drawing"],
+"eq.sheet":["Ficha do aparelho","Machine sheet"],
+"eq.sheetNote":["Marque \"Tenho\" nos aparelhos da sua academia: a biblioteca filtra por eles. Toque no desenho para ampliar.","Tick \"I have it\" on your gym's machines: the library filters by them. Tap the drawing to zoom."],
+"eq.noHits":["Nenhum aparelho com esse termo.","No machine matches that."],
+"eq.g.pernas":["Pernas","Legs"],
+"eq.g.bracos":["Braços","Arms"],
+"eq.g.peito":["Peito","Chest"],
+"eq.g.costas":["Costas","Back"],
+"eq.g.ombros":["Ombros","Shoulders"],
+"eq.g.abdomen":["Abdômen","Core"],
+"eq.g.cardio":["Cardio","Cardio"],
+"eq.g.livre":["Sem aparelho","No machine"],
+"eq.g.cadeiras":["Cadeiras e bancos","Seats and benches"],
+"eq.g.polias":["Polias e cabos","Cables and pulleys"],
 "nu.tabToday":["Hoje","Today"],
 "nu.tabFoods":["Alimentos","Foods"],
 "nu.tabDishes":["Pratos e sugestões","Dishes and suggestions"],
@@ -2688,10 +2725,170 @@ EQ("abdutora","Cadeira abdutora/adutora","Ab/adductor machine",`<svg viewBox="0 
 EQ("peck","Peck deck / voador","Pec deck",`<svg viewBox="0 0 100 60"><g ${_s}><path d="M50 16v30"/><path d="M50 22L28 14M50 22l22-8M28 14v22M72 14v22"/><path d="M34 52h32"/></g></svg>`);
 EQ("graviton","Barra fixa / graviton","Pull-up bar",`<svg viewBox="0 0 100 60"><g ${_s}><path d="M20 12h60M26 12v36M74 12v36"/><path d="M42 12v8M58 12v8"/><path d="M18 50h64"/></g></svg>`);
 EQ("esteira","Esteira","Treadmill",`<svg viewBox="0 0 100 60"><g ${_s}><path d="M16 46h58l8-8"/><rect x="16" y="40" width="58" height="8" rx="4"/><path d="M74 38V16h10"/><path d="M62 16h22"/></g></svg>`);
-EQ("bike","Bicicleta / elíptico","Bike / elliptical",`<svg viewBox="0 0 100 60"><g ${_s}><circle cx="28" cy="42" r="10"/><circle cx="72" cy="42" r="10"/><path d="M28 42l14-20h14M42 22l10 20M56 22h10l6 20"/></g></svg>`);
+EQ("bike","Bicicleta ergométrica","Exercise bike",`<svg viewBox="0 0 100 60"><g ${_s}><circle cx="28" cy="42" r="10"/><circle cx="72" cy="42" r="10"/><path d="M28 42l14-20h14M42 22l10 20M56 22h10l6 20"/></g></svg>`);
 EQ("elastico","Elástico / faixa","Resistance band",`<svg viewBox="0 0 100 60"><g ${_s}><path d="M20 20c20 16 40 16 60 0"/><path d="M20 20v14M80 20v14"/><path d="M14 34h12M74 34h12"/></g></svg>`);
 EQ("kettlebell","Kettlebell","Kettlebell",`<svg viewBox="0 0 100 60"><g ${_s}><path d="M40 24a10 10 0 0120 0"/><path d="M36 26h28c6 6 8 14 6 22H30c-2-8 0-16 6-22z"/></g></svg>`);
 EQ("bola","Bola / colchonete","Ball / mat",`<svg viewBox="0 0 100 60"><g ${_s}><circle cx="36" cy="32" r="16"/><path d="M60 44h30M60 44l6-8h26l-6 8"/></g></svg>`);
+
+/* grupos e palavras de busca de cada aparelho (PT e EN, sem acento): é o que a lupa de aparelhos procura */
+const EQ_TAGS={
+ livre:{g:["livre"],k:"corpo peso do corpo chao casa bodyweight floor"},
+ halter:{g:["bracos","peito","ombros","pernas"],k:"halter halteres dumbbell peso livre braco rosca"},
+ barra:{g:["peito","costas","pernas"],k:"barra anilha supino agachamento terra barbell squat deadlift"},
+ banco:{g:["peito","bracos","cadeiras"],k:"banco supino reto inclinado bench press"},
+ "polia-alta":{g:["costas","bracos","polias"],k:"puxada pulley polia alta costas triceps lat pulldown torre cabo"},
+ "polia-baixa":{g:["costas","bracos","polias"],k:"remada baixa polia cabo rosca row cable"},
+ crossover:{g:["peito","ombros","polias"],k:"cabo crucifixo cross crossover cable fly"},
+ maquina:{g:["pernas","peito","costas","cadeiras"],k:"maquina guiada articulada cadeira machine"},
+ smith:{g:["pernas","peito"],k:"smith guiada agachamento supino"},
+ "leg-press":{g:["pernas","cadeiras"],k:"leg press perna prensa 45 coxa gluteo"},
+ extensora:{g:["pernas","cadeiras"],k:"cadeira extensora quadriceps coxa leg extension"},
+ flexora:{g:["pernas","cadeiras"],k:"mesa flexora cadeira flexora posterior coxa leg curl"},
+ abdutora:{g:["pernas","cadeiras"],k:"cadeira abdutora adutora gluteo coxa lateral abductor adductor"},
+ peck:{g:["peito","costas","cadeiras"],k:"voador peck deck peito crucifixo pec fly"},
+ graviton:{g:["costas","bracos","abdomen"],k:"barra fixa graviton paralela elevacao pull up dip"},
+ esteira:{g:["cardio"],k:"esteira corrida caminhada treadmill"},
+ bike:{g:["cardio"],k:"bicicleta eliptico spinning bike elliptical"},
+ elastico:{g:["livre"],k:"elastico faixa mini band resistance"},
+ kettlebell:{g:["livre","pernas"],k:"kettlebell swing"},
+ bola:{g:["abdomen","livre"],k:"bola colchonete tapete pilates ball mat suica"},
+ "torre-polia":{g:["costas","bracos","polias"],k:"torre polia puxada alta remada baixa lat pulldown low row cabo multi estacao life fitness"},
+ "polia-dupla":{g:["bracos","polias"],k:"polia biceps triceps rosca pushdown corda cabo estacao"},
+ "ext-flex":{g:["pernas","cadeiras"],k:"cadeira extensora flexora quadriceps posterior coxa leg extension curl"},
+ "press-alavanca":{g:["peito","ombros","cadeiras"],k:"supino desenvolvimento articulado alavanca press peito ombro"},
+ "banco-regulavel":{g:["peito","bracos","cadeiras"],k:"banco regulavel inclinado reto supino halter adjustable bench"},
+ "banco-abdominal":{g:["abdomen","cadeiras"],k:"banco abdominal declinado apoio pes crunch ab bench"},
+ eliptico:{g:["cardio"],k:"eliptico transport elliptical cardio"},
+ "barra-w":{g:["bracos"],k:"barra w ez rosca biceps triceps curl bar"},
+ "barra-hex":{g:["pernas","costas"],k:"barra hexagonal trap bar terra levantamento shrug"},
+ anilhas:{g:["livre","pernas","costas"],k:"anilha anilhas bumper suporte peso plate"},
+ espaldar:{g:["abdomen","costas","livre"],k:"espaldar barra sueca escada alongamento wall bars"},
+ trx:{g:["abdomen","costas","bracos","livre"],k:"trx fita suspensao suspension trainer"},
+ "bola-medicinal":{g:["abdomen","livre"],k:"bola medicinal wall ball slam ball medicine"},
+ rolo:{g:["livre"],k:"rolo espuma foam roller bloco yoga liberacao"},
+ caneleira:{g:["pernas","livre"],k:"caneleira tornozeleira ankle weight"},
+ roda:{g:["abdomen","livre"],k:"roda abdominal ab wheel"},
+ colchonete:{g:["abdomen","livre"],k:"colchonete tapete mat"},
+ hack:{g:["pernas"],k:"hack agachamento guiado squat perna quadriceps"},
+ romana:{g:["costas","abdomen","cadeiras"],k:"cadeira romana lombar hiperextensao back extension"},
+ paralelas:{g:["bracos","peito"],k:"paralelas mergulho dip triceps peito"},
+ remo:{g:["cardio","costas"],k:"remo remador rowing cardio"},
+ escada:{g:["cardio","pernas"],k:"escada stair climber stairmaster cardio gluteo"},
+ gluteo:{g:["pernas"],k:"gluteo kickback coice maquina"},
+ panturrilha:{g:["pernas"],k:"panturrilha calf gemeos"},
+ rack:{g:["pernas","peito","costas"],k:"gaiola power rack agachamento supino barra"},
+ "supino-maquina":{g:["peito","cadeiras"],k:"supino chest press maquina peito"},
+ "remada-articulada":{g:["costas","cadeiras"],k:"remada articulada sentada row maquina costas"},
+ scott:{g:["bracos","cadeiras"],k:"banco scott rosca biceps preacher"},
+ corda:{g:["cardio","livre"],k:"corda de pular jump rope cardio"},
+ step:{g:["cardio","pernas","livre"],k:"step plataforma degrau aerobica"},
+ bosu:{g:["abdomen","livre"],k:"bosu meia bola equilibrio"},
+ "abdominal-maquina":{g:["abdomen","cadeiras"],k:"abdominal maquina crunch"}
+};
+const EQ_GRUPOS=["pernas","bracos","peito","costas","ombros","abdomen","cadeiras","polias","cardio","livre"];
+function eqHave(id){ return !!(STATE.equipHave && STATE.equipHave[id]); }
+function eqSetHave(id,on){ STATE.equipHave=STATE.equipHave||{}; if(on) STATE.equipHave[id]=1; else delete STATE.equipHave[id]; save(); }
+/* desenho técnico do aparelho: quando existe o arquivo aparelhos/<id>.png (sem fundo), ele cobre o ícone; senão fica o ícone */
+function eqFig(e){
+  const mine=STATE.equipPhotos&&STATE.equipPhotos[e.id];
+  return '<div class="eqfig">'+e.svg+'<img src="aparelhos/'+e.id+'.png" alt="" loading="lazy" onload="this.classList.add(\'ok\')" onerror="this.remove()">'+(mine?'<img class="eqmine2" src="'+mine+'" alt="">':"")+"</div>";
+}
+function eqBusca(q, grupo){
+  const x=norm(q).trim();
+  return Object.values(EQUIP).filter(e=>{
+    const tg=EQ_TAGS[e.id]||{g:[],k:""};
+    if(grupo && tg.g.indexOf(grupo)<0) return false;
+    if(!x) return true;
+    const hay=norm(e.id+" "+e.pt+" "+e.en+" "+tg.k+" "+tg.g.map(g=>t("eq.g."+g)).join(" "));
+    return x.split(/\s+/).every(w=>hay.indexOf(w)>=0);
+  });
+}
+/* ficha do aparelho: desenho grande (ampliável), nome, "tenho", exercícios e foto da própria academia */
+function eqModal(id){
+  const e=EQUIP[id]; if(!e) return;
+  const tg=EQ_TAGS[id]||{g:[]};
+  const m=modal(mh(LANG==="pt"?e.pt:e.en)+
+    '<div class="eqbig" id="eqbig">'+eqFig(e)+"</div>"+
+    '<div class="row" style="margin-top:8px"><button class="btn xs line" id="eqzoom">'+I("zoomin")+t("eq.zoom")+'</button><a class="btn xs ghost" id="eqopen" href="aparelhos/'+e.id+'.png" target="_blank" rel="noopener">'+I("upload")+t("eq.open")+"</a></div>"+
+    '<div class="chips" style="margin:10px 0">'+tg.g.map(g=>'<span class="chip">'+t("eq.g."+g)+"</span>").join("")+"</div>"+
+    '<label class="switch"><input type="checkbox" id="eqhave" '+(eqHave(id)?"checked":"")+'><span class="tr"></span><span>'+t("eq.have")+"</span></label>"+
+    '<div class="row" style="justify-content:space-between;margin-top:12px"><button class="btn sm line" id="eqphoto">'+I("camera")+t("ex.takephoto")+'</button><button class="btn sm" id="eqex">'+t("body.seeEx")+"</button></div>",{wide:true});
+  m.querySelector("#eqzoom").onclick=()=>m.querySelector("#eqbig").classList.toggle("zoom");
+  m.querySelector("#eqhave").onchange=ev=>{ eqSetHave(id, ev.target.checked); if(ROUTE==="ex") render(); };
+  m.querySelector("#eqex").onclick=()=>{ m.remove(); EXF.eqs=[id]; EXF.eq=""; EXF.q=""; EXF.eqOpen=false; go("ex"); };
+  m.querySelector("#eqphoto").onclick=()=>pickImage(dataUrl=>{ STATE.equipPhotos=STATE.equipPhotos||{}; STATE.equipPhotos[id]=dataUrl; save(); m.remove(); eqModal(id); toast(t("common.saved")); });
+  /* sem o arquivo do desenho, o link "abrir" não faz sentido */
+  const probe=new Image(); probe.onerror=()=>{ const a=m.querySelector("#eqopen"); if(a) a.remove(); }; probe.src="aparelhos/"+e.id+".png";
+}
+
+/* aparelhos da academia fotografada (set/2026): desenho em linha com os estofados sombreados. _f = estofado */
+const _f='fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"';
+EQ("torre-polia","Torre de polias (puxada alta + remada baixa)","Cable tower (lat pulldown + low row)",
+ `<svg viewBox="0 0 100 60"><g ${_s}><rect x="10" y="8" width="16" height="46" rx="3"/><path d="M14 14v34M22 14v34M18 6v2"/><path d="M26 10h30l10 4"/><path d="M62 14v14M50 28h24"/><path d="M40 54h50M44 54v-8h16"/><path d="M30 40l10 4"/></g><g ${_f}><rect x="58" y="40" width="22" height="6" rx="3"/><rect x="40" y="34" width="8" height="6" rx="3"/></g></svg>`);
+EQ("polia-dupla","Estação de polias (bíceps / tríceps)","Pulley station (biceps / triceps)",
+ `<svg viewBox="0 0 100 60"><g ${_s}><rect x="12" y="8" width="18" height="46" rx="3"/><path d="M30 12h16v42M46 12l10 4M56 16v10M50 26h12"/><path d="M46 40h10M56 40v6M50 46h12"/><path d="M8 54h84"/></g><g ${_f}><rect x="60" y="30" width="14" height="6" rx="3"/></g></svg>`);
+EQ("ext-flex","Cadeira extensora / flexora","Leg extension / curl machine",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M30 54V30l8-2M38 28h26M62 28v26M28 54h40"/><path d="M62 36l18-6M80 30v10"/><path d="M60 50l16 4"/></g><g ${_f}><rect x="36" y="22" width="24" height="7" rx="3"/><rect x="30" y="8" width="8" height="16" rx="3"/><circle cx="80" cy="42" r="4"/><circle cx="78" cy="55" r="4"/></g></svg>`);
+EQ("press-alavanca","Supino / desenvolvimento articulado","Lever chest / shoulder press",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M20 54V26M20 26l10-8h26l8 6M28 22v32M12 54h60"/><path d="M50 20V8M50 10l-22-2M50 10l22-2M26 8v6M74 8v6"/></g><g ${_f}><rect x="36" y="30" width="20" height="7" rx="3"/><rect x="24" y="12" width="7" height="20" rx="3"/></g></svg>`);
+EQ("banco-regulavel","Banco regulável (reto / inclinado)","Adjustable bench",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M20 54h60M28 54V40h44v14M50 40V30M36 30h28"/><path d="M40 30l-14-18"/></g><g ${_f}><rect x="44" y="26" width="26" height="8" rx="4"/><path d="M22 10l18 16h10l-18-20z"/></g></svg>`);
+EQ("banco-abdominal","Banco abdominal (apoio de pés)","Ab bench (foot rollers)",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M12 54h70M20 54V32M70 54V30M20 34l50-8"/><path d="M76 26v14M84 26v14"/></g><g ${_f}><path d="M16 36l52-9 2 6-52 9z"/><circle cx="76" cy="20" r="4"/><circle cx="84" cy="20" r="4"/><circle cx="76" cy="44" r="4"/><circle cx="84" cy="44" r="4"/></g></svg>`);
+EQ("eliptico","Elíptico","Elliptical",
+ `<svg viewBox="0 0 100 60"><g ${_s}><circle cx="24" cy="44" r="10"/><path d="M24 34l14-24M38 10h10M30 20l22 8M52 28l10-18M62 10h10M12 54h76M52 28l20 22"/><path d="M40 44l16 4"/></g><g ${_f}><rect x="40" y="42" width="14" height="4" rx="2"/><rect x="58" y="46" width="14" height="4" rx="2"/></g></svg>`);
+EQ("barra-w","Barra W (rosca)","EZ curl bar",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M18 30h12l8-8 8 8h8l8-8 8 8h12"/><rect x="10" y="20" width="7" height="20" rx="2"/><rect x="83" y="20" width="7" height="20" rx="2"/></g></svg>`);
+EQ("barra-hex","Barra hexagonal (trap bar)","Trap bar",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M30 14h40l14 16-14 16H30L16 30z"/><path d="M36 22v16M64 22v16M36 30h-8M64 30h8"/><rect x="4" y="24" width="8" height="12" rx="2"/><rect x="88" y="24" width="8" height="12" rx="2"/></g></svg>`);
+EQ("anilhas","Anilhas e suporte","Weight plates and rack",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M50 8v46M20 54h60M30 54V30M70 54V30"/><circle cx="30" cy="26" r="12"/><circle cx="30" cy="26" r="3"/><circle cx="70" cy="26" r="12"/><circle cx="70" cy="26" r="3"/><circle cx="50" cy="40" r="9"/><circle cx="50" cy="40" r="2.5"/></g></svg>`);
+EQ("espaldar","Espaldar (barra sueca)","Wall bars",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M30 4v52M70 4v52M26 8h48M30 16h40M30 24h40M30 32h40M30 40h40M30 48h40"/></g></svg>`);
+EQ("trx","Fita de suspensão (TRX)","Suspension trainer",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M50 4v10M50 14l-16 30M50 14l16 30"/><path d="M28 44h12M60 44h12"/><path d="M34 44v6M66 44v6"/><rect x="44" y="12" width="12" height="6" rx="2"/></g></svg>`);
+EQ("bola-medicinal","Bola medicinal / wall ball","Medicine ball / wall ball",
+ `<svg viewBox="0 0 100 60"><g ${_s}><circle cx="36" cy="34" r="18"/><path d="M22 24c10 6 18 6 28 0M22 44c10-6 18-6 28 0"/><circle cx="70" cy="42" r="10"/></g></svg>`);
+EQ("rolo","Rolo de espuma e blocos","Foam roller and blocks",
+ `<svg viewBox="0 0 100 60"><g ${_s}><rect x="10" y="22" width="52" height="16" rx="8"/><ellipse cx="62" cy="30" rx="4" ry="8"/><path d="M70 20h18v28H70z"/></g></svg>`);
+EQ("caneleira","Caneleiras","Ankle weights",
+ `<svg viewBox="0 0 100 60"><g ${_s}><rect x="18" y="18" width="28" height="26" rx="6"/><path d="M18 30h28"/><rect x="54" y="18" width="28" height="26" rx="6"/><path d="M54 30h28"/></g><g ${_f}><rect x="22" y="22" width="20" height="6" rx="3"/><rect x="58" y="22" width="20" height="6" rx="3"/></g></svg>`);
+EQ("roda","Roda abdominal","Ab wheel",
+ `<svg viewBox="0 0 100 60"><g ${_s}><circle cx="50" cy="34" r="14"/><circle cx="50" cy="34" r="3"/><path d="M20 34h16M64 34h16"/><rect x="12" y="30" width="10" height="8" rx="3"/><rect x="78" y="30" width="10" height="8" rx="3"/></g></svg>`);
+EQ("colchonete","Colchonete","Exercise mat",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 22l20-10h52l-20 10z"/><path d="M14 22v20h52V22M66 22l20-10v20l-20 10"/></g></svg>`);
+
+/* aparelhos comuns em outras academias e casas (a lista não é só da academia fotografada) */
+EQ("hack","Hack / agachamento guiado","Hack squat",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M22 54L60 12M70 54L84 24M60 12l24 12"/><path d="M40 34l14 8M32 44l14 8"/></g><g ${_f}><path d="M58 14l20 10-4 8-20-10z"/><rect x="18" y="46" width="24" height="6" rx="3"/></g></svg>`);
+EQ("romana","Cadeira romana (lombar)","Back extension bench",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M30 54V30M66 54V38M30 30l40-10M70 20v18"/><path d="M76 48h10M82 40v12"/></g><g ${_f}><path d="M26 32l44-11 2 6-44 11z"/><circle cx="78" cy="42" r="4"/><circle cx="86" cy="42" r="4"/></g></svg>`);
+EQ("paralelas","Paralelas (mergulho)","Dip station",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M26 54V14M74 54V14M20 54h14M66 54h14"/><path d="M26 14h14M60 14h14"/></g></svg>`);
+EQ("remo","Remo (máquina)","Rowing machine",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M8 46h84M14 46V34l14-4h22"/><circle cx="18" cy="30" r="8"/><path d="M50 30l18 12M70 42v4"/><path d="M40 30l6-10h10"/></g><g ${_f}><rect x="46" y="38" width="16" height="6" rx="3"/><rect x="24" y="26" width="8" height="10" rx="3"/></g></svg>`);
+EQ("escada","Escada (stair climber)","Stair climber",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M20 54h60M28 54V12l30 4v38"/><path d="M28 20h14M28 30h14M28 40h14M58 16l16-6M74 10v8"/></g><g ${_f}><rect x="30" y="22" width="12" height="5" rx="2"/><rect x="30" y="32" width="12" height="5" rx="2"/><rect x="30" y="42" width="12" height="5" rx="2"/></g></svg>`);
+EQ("gluteo","Máquina de glúteo (kickback)","Glute machine",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M24 54V20M24 20h30M54 20v10M24 32h28"/><path d="M60 54V40l16-10M76 30v10"/></g><g ${_f}><rect x="26" y="34" width="28" height="7" rx="3"/><rect x="26" y="12" width="8" height="18" rx="3"/><circle cx="76" cy="44" r="5"/></g></svg>`);
+EQ("panturrilha","Máquina de panturrilha","Calf machine",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M30 54V16M70 54V16M30 16h40M40 30h20"/><path d="M36 44h28"/></g><g ${_f}><rect x="34" y="12" width="12" height="7" rx="3"/><rect x="54" y="12" width="12" height="7" rx="3"/><rect x="34" y="46" width="32" height="6" rx="2"/></g></svg>`);
+EQ("rack","Gaiola / power rack","Power rack",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M20 54V8h60v46M20 8h60M20 30h60"/><path d="M24 12v40M76 12v40"/><path d="M12 30h76"/><rect x="8" y="24" width="6" height="12" rx="2"/><rect x="86" y="24" width="6" height="12" rx="2"/></g></svg>`);
+EQ("supino-maquina","Supino / chest press (máquina)","Chest press machine",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M26 54V24M26 24h20v30"/><path d="M46 34h24M70 34v-10M70 24h14"/><path d="M60 54V44"/></g><g ${_f}><rect x="28" y="12" width="8" height="18" rx="3"/><rect x="26" y="38" width="22" height="6" rx="3"/><rect x="68" y="20" width="18" height="5" rx="2"/></g></svg>`);
+EQ("remada-articulada","Remada articulada (máquina)","Seated row machine",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M34 54V28M34 28h22v26"/><path d="M62 30h18l6-8M80 30v8"/><path d="M20 54V36h12"/></g><g ${_f}><rect x="36" y="14" width="8" height="18" rx="3"/><rect x="34" y="38" width="22" height="6" rx="3"/><rect x="18" y="30" width="6" height="14" rx="3"/></g></svg>`);
+EQ("scott","Banco Scott (rosca)","Preacher curl bench",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M30 54V30M30 30l30-14M60 16v38M60 28h20"/><path d="M40 30h12"/></g><g ${_f}><path d="M28 30l32-15 2 6-32 15z"/><rect x="30" y="34" width="24" height="6" rx="3"/></g></svg>`);
+EQ("corda","Corda de pular","Jump rope",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M20 16c0 26 60 26 60 0"/><rect x="14" y="6" width="8" height="18" rx="3"/><rect x="78" y="6" width="8" height="18" rx="3"/></g></svg>`);
+EQ("step","Step","Step platform",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 40l16-10h56v10z"/><path d="M14 40v8h72v-8M86 30v18"/><path d="M22 44h56"/></g><g ${_f}><path d="M30 30h56v10H14z"/></g></svg>`);
+EQ("bosu","Bosu / meia bola","Bosu ball",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M16 44a34 34 0 0 1 68 0z"/><path d="M12 44h76M28 44v6M72 44v6"/></g><g ${_f}><path d="M22 44a28 28 0 0 1 56 0z"/></g></svg>`);
+EQ("abdominal-maquina","Abdominal (máquina)","Ab crunch machine",
+ `<svg viewBox="0 0 100 60"><g ${_s}><path d="M14 54h72M30 54V28M30 28h24v26"/><path d="M40 20l20-10M60 10v6M36 20l18 0"/><path d="M62 54V44"/></g><g ${_f}><rect x="32" y="12" width="8" height="18" rx="3"/><rect x="30" y="38" width="24" height="6" rx="3"/><rect x="52" y="10" width="14" height="6" rx="3"/></g></svg>`);
 
 /* ---------- 5. BIBLIOTECA DE EXERCICIOS ---------- */
 const EXS = [];
@@ -3367,7 +3564,8 @@ function eqPickerHTML(){
   let h='<div class="sep"></div><span class="kicker">'+t("ex.equipPick")+'</span>'+
         '<p class="tiny muted" style="margin:2px 0 8px">'+t("ex.equipPickSub")+"</p>"+
         '<div class="eqpick">';
-  h+=chip("", t("common.all"), "", !sel.length);
+  h+=chip("", t("common.all"), "", !sel.length && !EXF.soMeus);
+  if(STATE.equipHave && Object.keys(STATE.equipHave).length) h+='<button class="eqchip'+(EXF.soMeus?" on":"")+'" id="eqmine" aria-pressed="'+(EXF.soMeus?"true":"false")+'">'+I("check")+"<span>"+t("eq.onlyMine")+"</span></button>";
   Object.values(EQUIP).forEach(e=>{
     const mine=STATE.equipPhotos&&STATE.equipPhotos[e.id];
     const fig=mine? '<img src="'+mine+'" alt="">' : e.svg;
@@ -3386,14 +3584,17 @@ SCREENS.ex = function(){
      MUSCLES.map(m=>'<option value="'+m.id+'"'+(EXF.m===m.id?" selected":"")+">"+esc(mName(m.id))+"</option>").join("")+"</select></label>"+
      eqPickerHTML()+"</div>";
   h+='<div class="exlist" id="exgrid">'+(list.length?list.map(exCard).join(""):emptyBox("search", t("ex.noHits"), t("ex.noHitsSub")))+"</div>";
-  h+='<details class="fold" id="eqfold" style="margin-top:14px"'+(EXF.eqOpen?" open":"")+'><summary>'+I("camera")+t("ex.equipTitle")+"</summary><div class='fb'>"+
-     '<p class="tiny muted">'+t("ex.equipSub")+"</p>"+
-     '<div class="grid gauto">'+Object.values(EQUIP).map(e=>{
-       const ph=STATE.equipPhotos&&STATE.equipPhotos[e.id];
-       return '<div class="eqcard">'+(ph?'<img src="'+ph+'" alt="">':e.svg)+'<div class="nm">'+esc(LANG==="pt"?e.pt:e.en)+"</div>"+
-         '<div class="row" style="justify-content:center;margin-top:6px"><button class="btn xs line" data-eqphoto="'+e.id+'">'+I("camera")+t("ex.takephoto")+'</button>'+
-         '<button class="btn xs ghost" data-eqex="'+e.id+'">'+t("body.seeEx")+"</button></div></div>";
-     }).join("")+"</div></div></details>";
+  const nHave=STATE.equipHave? Object.keys(STATE.equipHave).length : 0;
+  const eqs=eqBusca(EXF.eqq||"", EXF.eqg||"");
+  h+='<details class="fold" id="eqfold" style="margin-top:14px"'+(EXF.eqOpen?" open":"")+'><summary>'+I("camera")+t("ex.equipTitle")+(nHave?' <span class="pill ok xs" style="margin-left:6px">'+nHave+"</span>":"")+"</summary><div class='fb'>"+
+     '<p class="tiny muted">'+t("eq.sheetNote")+"</p>"+
+     '<div class="help-q" style="margin:0 0 8px">'+I("search")+'<input type="search" id="eqq" value="'+esc(EXF.eqq||"")+'" placeholder="'+t("eq.search")+'" autocomplete="off"></div>'+
+     '<div class="chips" style="margin-bottom:10px"><button class="chip'+(EXF.eqg?"":" on")+'" data-eqg="">'+t("common.all")+"</button>"+EQ_GRUPOS.map(g=>'<button class="chip'+(EXF.eqg===g?" on":"")+'" data-eqg="'+g+'">'+t("eq.g."+g)+"</button>").join("")+"</div>"+
+     (eqs.length? '<div class="eqgrid">'+eqs.map(e=>
+       '<div class="eqcard'+(eqHave(e.id)?" have":"")+'"><button class="eqopen" data-eqsheet="'+e.id+'" aria-label="'+esc(t("eq.sheet"))+'">'+eqFig(e)+'</button><div class="nm">'+esc(LANG==="pt"?e.pt:e.en)+"</div>"+
+         '<label class="switch sm" style="justify-content:center;margin-top:6px"><input type="checkbox" data-eqhave="'+e.id+'" '+(eqHave(e.id)?"checked":"")+'><span class="tr"></span><span class="tiny">'+t("eq.have")+"</span></label></div>").join("")+"</div>"
+       : '<p class="tiny muted">'+t("eq.noHits")+"</p>")+
+     (nHave?'<p class="tiny muted" style="margin-top:10px">'+t("eq.haveCount").replace("{a}",nHave)+"</p>":"")+"</div></details>";
   return h;
 };
 
@@ -3402,13 +3603,15 @@ function wireEqPicker(){
   document.querySelectorAll("[data-eqpick]").forEach(b=>b.onclick=()=>{
     const id=b.getAttribute("data-eqpick");
     EXF.eqs=EXF.eqs||[];
-    if(!id){ EXF.eqs=[]; }
+    if(!id){ EXF.eqs=[]; EXF.soMeus=false; }
     else { const i=EXF.eqs.indexOf(id); if(i>=0) EXF.eqs.splice(i,1); else EXF.eqs.push(id); }
     EXF.eq="";
     render();
   });
   const c=document.getElementById("eqclr");
   if(c) c.onclick=()=>{ EXF.eqs=[]; render(); };
+  const mn=document.getElementById("eqmine");
+  if(mn) mn.onclick=()=>{ EXF.soMeus=!EXF.soMeus; EXF.eqs=[]; render(); };
 }
 function filterEx(){
   const q=EXF.q.toLowerCase().trim();
@@ -3416,6 +3619,7 @@ function filterEx(){
     if(EXF.m && x.m!==EXF.m && x.sec.indexOf(EXF.m)<0) return false;
     if(EXF.eq && x.eq!==EXF.eq) return false;
     if(EXF.eqs && EXF.eqs.length && EXF.eqs.indexOf(x.eq)<0) return false;
+    if(EXF.soMeus && x.eq!=="livre" && !eqHave(x.eq)) return false;
     if(!q) return true;
     const hay=(x.pt+" "+x.en+" "+x.gpt+" "+x.gen+" "+mName(x.m,1)+" "+mName(x.m,2)+" "+mName(x.m,3)+" "+eqName(x.eq)).toLowerCase();
     if(hay.indexOf(q)>=0) return true;
@@ -3430,10 +3634,11 @@ SCREENS.ex_after = function(){
   document.getElementById("exm").onchange=e=>{ EXF.m=e.target.value; render(); };
   wireEqPicker();
   document.getElementById("newex").onclick=newExModal;
-  document.querySelectorAll("[data-eqex]").forEach(b=>b.onclick=()=>{ EXF.eqs=[b.getAttribute("data-eqex")]; EXF.eq=""; EXF.q=""; EXF.eqOpen=false; render(); window.scrollTo({top:0,behavior:"smooth"}); });
-  document.querySelectorAll("[data-eqphoto]").forEach(b=>b.onclick=()=>pickImage(dataUrl=>{
-    STATE.equipPhotos=STATE.equipPhotos||{}; STATE.equipPhotos[b.getAttribute("data-eqphoto")]=dataUrl; EXF.eqOpen=true; save(); render(); toast(t("common.saved"));
-  }));
+  document.querySelectorAll("[data-eqsheet]").forEach(b=>b.onclick=()=>{ EXF.eqOpen=true; eqModal(b.getAttribute("data-eqsheet")); });
+  document.querySelectorAll("[data-eqhave]").forEach(b=>b.onchange=()=>{ eqSetHave(b.getAttribute("data-eqhave"), b.checked); EXF.eqOpen=true; render(); });
+  document.querySelectorAll("[data-eqg]").forEach(b=>b.onclick=()=>{ EXF.eqg=b.getAttribute("data-eqg"); EXF.eqOpen=true; render(); });
+  const eqq=document.getElementById("eqq");
+  if(eqq) eqq.oninput=()=>{ EXF.eqq=eqq.value; EXF.eqOpen=true; const pos=eqq.selectionStart; render(); const q2=document.getElementById("eqq"); if(q2){ q2.focus(); try{ q2.setSelectionRange(pos,pos); }catch(e){} } };
   const ef=document.getElementById("eqfold"); if(ef) ef.addEventListener("toggle",()=>{ EXF.eqOpen=ef.open; });
 };
 function newExModal(){
@@ -4547,7 +4752,7 @@ function planoDoDia(seed){
   return {plano, total, alvo:left.alvo};
 }
 function pratoLinha(pr, tot, extra){
-  return '<div class="item"><span class="ibub '+(pr.meu?"":"grey")+'" style="width:32px;height:32px">'+I(pr.meu?"star":"apple")+'</span><div class="gr"><div class="t">'+esc(pratoNome(pr))+'</div><div class="s">'+
+  return '<div class="item pratoitem"><span class="ibub '+(pr.meu?"":"grey")+'" style="width:32px;height:32px">'+I(pr.meu?"star":"apple")+'</span><div class="gr"><div class="t">'+esc(pratoNome(pr))+'</div><div class="s">'+
     fmtNum(tot.kcal,0)+" kcal · P "+fmtNum(tot.prot,0)+" C "+fmtNum(tot.carb,0)+" G "+fmtNum(tot.fat,0)+(extra||"")+"</div></div>"+
     '<span class="row nowrap"><button class="btn xs line" data-pver="'+esc(pr.id)+'">'+t("help.tabScreen")+'</button><button class="btn xs" data-padd="'+esc(pr.id)+'">'+I("plus")+t("common.add")+"</button></span></div>";
 }
