@@ -871,6 +871,7 @@ main{padding-bottom:88px}
 .eqfig>img.ok{opacity:1;background:#fff}
 .eqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .eqgrid2{display:grid;grid-template-columns:1fr;gap:10px}
+@media (max-width:600px){ .rc-tiles{grid-template-columns:1fr 1fr;gap:6px} .rc-tiles .tile{padding:8px;min-height:0} .rc-tiles .tile .ibub{width:30px;height:30px} .rc-tiles .tile .tl{font-size:.82rem} .rc-tiles .tile .td{font-size:.68rem} }
 @media (min-width:760px){ .eqgrid2{grid-template-columns:1fr 1fr} }
 .eqcard2{display:flex;gap:12px;align-items:stretch;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px}
 .eqcard2 .eqopen{flex:0 0 128px;width:128px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:4px;cursor:pointer;color:#333}
@@ -2057,6 +2058,16 @@ Object.assign(L,{
 "eq.sheetNote":["Olhe a foto, leia para que serve e marque \"Sim, eu tenho\": a biblioteca passa a mostrar só o que dá para fazer com o que você tem.","Tick \"I have it\" on your gym's machines: the library filters by them. Tap the drawing to zoom."],
 "eq.noHits":["Nenhum aparelho com esse termo.","No machine matches that."],
 "eq.yesHave":["Sim, eu tenho","Yes, I have it"],
+"eq.ident":["Identificar pela foto (IA)","Identify by photo (AI)"],
+"eq.identSub":["Fotografe o aparelho e a IA diz qual é. A foto vai para a IA que você configurou no cofre; não vai nada seu junto.","Photograph the machine and the AI says which one it is. The photo goes to the AI you set up in the vault; nothing personal goes with it."],
+"eq.identWait":["Olhando a foto…","Looking at the photo…"],
+"eq.identHit":["Parece ser:","Looks like:"],
+"eq.identMaybe":["Ou talvez:","Or maybe:"],
+"eq.identNone":["Não reconheci nenhum aparelho da lista nessa foto. Tente outro ângulo, com o aparelho inteiro no quadro, ou procure pelo nome.","I couldn't match any machine on the list. Try another angle with the whole machine in the frame, or search by name."],
+"eq.identSave":["Guardar esta foto como a do meu aparelho","Keep this photo as my machine's photo"],
+"eq.identAgain":["Outra foto","Another photo"],
+"eq.identKey":["Para identificar pela foto, salve uma chave de IA no cofre (Gemini tem plano grátis).","To identify by photo, save an AI key in the vault (Gemini has a free tier)."],
+"eq.identOpenVault":["Abrir o cofre de IA","Open the AI vault"],
 "eq.what":["O que é","What it is"],
 "eq.tap":["Toque na foto para ampliar","Tap the photo to enlarge"],
 "eq.simpleNote":["Não precisa saber o nome: olhe a foto, leia para que serve e marque o que existe onde você treina.","No need to know the name: look at the photo, read what it's for and tick what exists where you train."],
@@ -2947,6 +2958,38 @@ const EQ_DESC={
 };
 function eqDesc(id){ const d=EQ_DESC[id]; return d? (LANG==="pt"?d[0]:d[1]) : ""; }
 /* cartão "for dummies": foto grande, nome, o que é, e o botão "Sim, eu tenho" — usado na biblioteca e em Meus recursos */
+/* Identificar pela foto: a IA do cofre (visão) recebe a foto pequena e a lista de aparelhos, e devolve os ids. Nada da pessoa vai junto. */
+function eqShrink(dataUrl, cb){
+  const im=new Image(); im.onload=()=>{ const k=Math.min(1, 800/Math.max(im.width,im.height)); const c=document.createElement("canvas"); c.width=Math.round(im.width*k); c.height=Math.round(im.height*k); c.getContext("2d").drawImage(im,0,0,c.width,c.height); cb(c.toDataURL("image/jpeg",0.8)); }; im.onerror=()=>cb(dataUrl); im.src=dataUrl;
+}
+function eqIdentify(onDone){
+  if(!AI_PROVIDERS.some(p=>aiKey(p[0]))){
+    const m=modal(mh(t("eq.ident"))+'<p>'+t("eq.identKey")+'</p><button class="btn" id="eqi_vault">'+I("key")+t("eq.identOpenVault")+"</button>");
+    m.querySelector("#eqi_vault").onclick=()=>{ m.remove(); go("ia"); }; return;
+  }
+  pickImage(foto=>eqShrink(foto, small=>{
+    const m=modal(mh(t("eq.ident"))+'<img src="'+small+'" alt="" style="width:100%;max-height:36vh;object-fit:contain;border-radius:12px;background:var(--surface2)">'+
+      '<p id="eqi_st" style="margin:10px 0">⏳ '+t("eq.identWait")+'</p><div id="eqi_out"></div>',{wide:true});
+    const lista=Object.values(EQUIP).map(e=>e.id+" = "+e.pt+" / "+e.en).join("\n");
+    const sys="You identify gym equipment in photos. Answer ONLY with JSON: {\"ids\":[...]} using ids from the list, best match first, up to 3, or {\"ids\":[]} if none fits.";
+    const q="Which equipment from this list is in the photo?\n"+lista;
+    aiAsk(q, msg=>toast(msg), {img:small, sys}).then(txt=>{
+      let ids=[]; try{ ids=(JSON.parse((txt.match(/\{[^]*\}/)||["{}"])[0]).ids||[]).filter(id=>EQUIP[id]); }catch(e){}
+      const st=m.querySelector("#eqi_st"), out=m.querySelector("#eqi_out");
+      if(!ids.length){ st.textContent=t("eq.identNone"); out.innerHTML='<button class="btn line sm" id="eqi_again">'+I("camera")+t("eq.identAgain")+"</button>"; }
+      else {
+        st.innerHTML='<b>'+t("eq.identHit")+"</b>";
+        out.innerHTML='<div class="eqgrid2">'+eqCardHTML(EQUIP[ids[0]])+"</div>"+
+          (ids.length>1?'<p class="tiny muted" style="margin:10px 0 4px">'+t("eq.identMaybe")+'</p><div class="eqgrid2">'+ids.slice(1).map(id=>eqCardHTML(EQUIP[id])).join("")+"</div>":"")+
+          '<div class="row" style="margin-top:12px"><button class="btn sm line" id="eqi_save">'+I("camera")+t("eq.identSave")+'</button><button class="btn sm ghost" id="eqi_again">'+t("eq.identAgain")+"</button></div>";
+        out.querySelectorAll("[data-eqhave]").forEach(b=>b.onchange=()=>{ eqSetHave(b.getAttribute("data-eqhave"), b.checked); b.closest(".eqcard2").classList.toggle("have", b.checked); if(onDone) onDone(); });
+        out.querySelectorAll("[data-eqsheet]").forEach(b=>b.onclick=()=>eqModal(b.getAttribute("data-eqsheet")));
+        out.querySelector("#eqi_save").onclick=()=>{ STATE.equipPhotos=STATE.equipPhotos||{}; STATE.equipPhotos[ids[0]]=small; eqSetHave(ids[0],true); save(); toast(t("common.saved")); m.remove(); if(onDone) onDone(); };
+      }
+      const ag=out.querySelector("#eqi_again"); if(ag) ag.onclick=()=>{ m.remove(); eqIdentify(onDone); };
+    }).catch(e=>{ const st=m.querySelector("#eqi_st"); st.textContent=(e.message==="offline"? t("ia.offline") : t("ia.error")+" "+e.message); });
+  }));
+}
 function eqCardHTML(e){
   return '<div class="eqcard2'+(eqHave(e.id)?" have":"")+'"><button class="eqopen" data-eqsheet="'+e.id+'" aria-label="'+esc(t("eq.sheet"))+'">'+eqFig(e)+"</button>"+
     '<div class="eqinfo"><div class="nm">'+esc(LANG==="pt"?e.pt:e.en)+'</div><div class="ds">'+esc(eqDesc(e.id))+"</div>"+
@@ -2967,10 +3010,11 @@ function eqSetMany(ids){ STATE.equipHave={}; (ids||Object.keys(EQUIP)).forEach(i
 function recursosModal(){
   let q="", grupo="";
   const m=modal(mh(t("rc.title"))+'<p class="tiny muted" style="margin:-4px 0 10px">'+t("rc.sub")+"</p>"+
-    '<span class="kicker">'+t("rc.cenarios")+'</span><div class="tiles" style="margin:6px 0 12px">'+RC_CENARIOS.map(c=>
+    '<span class="kicker">'+t("rc.cenarios")+'</span><div class="tiles rc-tiles" style="margin:6px 0 12px">'+RC_CENARIOS.map(c=>
       '<button class="tile" data-rcc="'+c[0]+'"><span class="ibub grey">'+I(c[0]==="rua"?"flame":(c[0]==="casa"?"home":"dumbbell"))+'</span><span class="tl">'+t("rc."+c[0])+'</span><span class="td">'+t("rc."+c[0]+"D")+"</span></button>").join("")+"</div>"+
     '<span class="kicker">'+t("rc.itens")+' · <span id="rc_n">'+t("rc.count").replace("{n}",eqHaveCount())+"</span></span>"+
     '<p class="tiny muted" style="margin:2px 0 8px">'+t("eq.simpleNote")+"</p>"+
+    '<button class="btn wide" id="rc_ident" style="margin-bottom:8px">'+I("camera")+t("eq.ident")+'</button><p class="tiny muted" style="margin:-2px 0 10px">'+t("eq.identSub")+"</p>"+
     '<div class="help-q" style="margin:0 0 8px">'+I("search")+'<input type="search" id="rc_q" placeholder="'+t("eq.search")+'" autocomplete="off"></div>'+
     '<div class="chips" style="margin-bottom:10px"><button class="chip on" data-rcg="">'+t("common.all")+"</button>"+EQ_GRUPOS.map(g=>'<button class="chip" data-rcg="'+g+'">'+t("eq.g."+g)+"</button>").join("")+"</div>"+
     '<div id="rc_list"></div>'+
@@ -2986,6 +3030,7 @@ function recursosModal(){
   };
   list();
   const inp=m.querySelector("#rc_q"); inp.oninput=()=>{ q=inp.value; list(); };
+  m.querySelector("#rc_ident").onclick=()=>eqIdentify(list);
   m.querySelectorAll("[data-rcg]").forEach(b=>b.onclick=()=>{ grupo=b.getAttribute("data-rcg"); m.querySelectorAll("[data-rcg]").forEach(x=>x.classList.toggle("on", x===b)); list(); });
   m.querySelectorAll("[data-rcc]").forEach(b=>b.onclick=()=>{ const c=RC_CENARIOS.find(x=>x[0]===b.getAttribute("data-rcc")); eqSetMany(c[1]); list(); toast(t("common.saved")); });
   m.querySelector("#rc_clear").onclick=()=>{ eqSetMany([]); list(); };
@@ -3800,6 +3845,7 @@ SCREENS.ex = function(){
   const eqs=eqBusca(EXF.eqq||"", EXF.eqg||"");
   h+='<details class="fold" id="eqfold" style="margin-top:14px"'+(EXF.eqOpen?" open":"")+'><summary>'+I("camera")+t("ex.equipTitle")+(nHave?' <span class="pill ok xs" style="margin-left:6px">'+nHave+"</span>":"")+"</summary><div class='fb'>"+
      '<p class="tiny muted">'+t("eq.sheetNote")+"</p>"+
+     '<button class="btn sm line" id="eqident" style="margin-bottom:8px">'+I("camera")+t("eq.ident")+"</button>"+
      '<div class="help-q" style="margin:0 0 8px">'+I("search")+'<input type="search" id="eqq" value="'+esc(EXF.eqq||"")+'" placeholder="'+t("eq.search")+'" autocomplete="off"></div>'+
      '<div class="chips" style="margin-bottom:10px"><button class="chip'+(EXF.eqg?"":" on")+'" data-eqg="">'+t("common.all")+"</button>"+EQ_GRUPOS.map(g=>'<button class="chip'+(EXF.eqg===g?" on":"")+'" data-eqg="'+g+'">'+t("eq.g."+g)+"</button>").join("")+"</div>"+
      (eqs.length? '<div class="eqgrid2">'+eqs.map(eqCardHTML).join("")+"</div>"
@@ -3845,6 +3891,7 @@ SCREENS.ex_after = function(){
   wireEqPicker();
   document.getElementById("newex").onclick=newExModal;
   document.querySelectorAll("[data-eqsheet]").forEach(b=>b.onclick=()=>{ EXF.eqOpen=true; eqModal(b.getAttribute("data-eqsheet")); });
+  const eqi=document.getElementById("eqident"); if(eqi) eqi.onclick=()=>{ EXF.eqOpen=true; eqIdentify(()=>render()); };
   document.querySelectorAll("[data-eqhave]").forEach(b=>b.onchange=()=>{ eqSetHave(b.getAttribute("data-eqhave"), b.checked); EXF.eqOpen=true; render(); });
   document.querySelectorAll("[data-eqg]").forEach(b=>b.onclick=()=>{ EXF.eqg=b.getAttribute("data-eqg"); EXF.eqOpen=true; render(); });
   const eqq=document.getElementById("eqq");
@@ -8427,23 +8474,28 @@ function aiRead(r){
     return j;
   });
 }
-function aiCall(provider, key, sys, question){
+/* img (opcional): data URL de uma foto. Os três serviços aceitam imagem junto com o texto (capacidade "visão"). */
+function aiCall(provider, key, sys, question, img){
+  const im=img? {mime:(img.match(/^data:([^;]+);/)||[])[1]||"image/jpeg", b64:img.split(",")[1]||""} : null;
   if(provider==="gemini"){
+    const parts=[{text:question}]; if(im) parts.push({inline_data:{mime_type:im.mime,data:im.b64}});
     return fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(key),
       {method:"POST",headers:{"Content-Type":"application/json"},
-       body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:[{role:"user",parts:[{text:question}]}]})})
+       body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:[{role:"user",parts}]})})
       .then(aiRead).then(j=>((j.candidates||[])[0]||{}).content?.parts?.map(p=>p.text).join("")||"");
   }
   if(provider==="openai"){
+    const user=im? [{type:"text",text:question},{type:"image_url",image_url:{url:img}}] : question;
     return fetch("https://api.openai.com/v1/chat/completions",
       {method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
-       body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"system",content:sys},{role:"user",content:question}]})})
+       body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"system",content:sys},{role:"user",content:user}]})})
       .then(aiRead).then(j=>((j.choices||[])[0]||{}).message?.content||"");
   }
+  const user=im? [{type:"image",source:{type:"base64",media_type:im.mime,data:im.b64}},{type:"text",text:question}] : question;
   return fetch("https://api.anthropic.com/v1/messages",
     {method:"POST",headers:{"Content-Type":"application/json","x-api-key":key,
       "anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-     body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:900,system:sys,messages:[{role:"user",content:question}]})})
+     body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:900,system:sys,messages:[{role:"user",content:user}]})})
     .then(aiRead).then(j=>(j.content||[]).map(p=>p.text).join(""));
 }
 /* Por que a IA falhou: "cota" (sem cota/crédito, limite), "chave" (recusada) ou "" (outra coisa: não vale trocar) */
@@ -8454,21 +8506,22 @@ function aiFalha(e){
   return "";
 }
 const AI_SKIP={}; /* serviço que acabou de falhar por cota ou chave: {id: até quando (ms)}. Não insistir nele por uns minutos */
-function aiAsk(question, onNota){
+function aiAsk(question, onNota, opts){
+  opts=opts||{};
   const c=aiCfg();
   if(!navigator.onLine) return Promise.reject(new Error("offline"));
   const ordem=[c.provider].concat(AI_PROVIDERS.map(p=>p[0]).filter(id=>id!==c.provider)).filter(id=>aiKey(id));
   if(!ordem.length) return Promise.reject(new Error("nokey"));
-  const sys=(LANG==="pt"
+  const sys=opts.sys || ((LANG==="pt"
     ? "Você é um assistente de treino e alimentação dentro do app RiseONE. Responda em português do Brasil, de forma curta, prática e cuidadosa. Não dê diagnóstico médico; quando o assunto for saúde, oriente a procurar profissional."
     : "You are a training and nutrition assistant inside the RiseONE app. Answer in English, short, practical and careful. Do not give medical diagnosis; for health matters, advise seeing a professional.")
-    + (c.useContext && aiContext() ? ("\n"+(LANG==="pt"?"Dados da pessoa":"Person data")+": "+aiContext()) : "");
+    + (c.useContext && aiContext() ? ("\n"+(LANG==="pt"?"Dados da pessoa":"Person data")+": "+aiContext()) : ""));
   const nota=(de,para,tipo)=>{ if(onNota) onNota(t(tipo==="chave"?"ia.switchKey":"ia.switchQuota").replace("{a}",aiName(de)).replace("{b}",aiName(para))); };
   /* quem falhou há pouco fica para o fim da fila, avisando na tela */
   const agora=Date.now(); let fila=ordem.filter(id=>!(AI_SKIP[id]>agora));
   if(fila.length && fila[0]!==ordem[0]) nota(ordem[0], fila[0], AI_SKIP[ordem[0]+":tipo"]);
   if(!fila.length) fila=ordem;
-  const tenta=i=>aiCall(fila[i], aiKey(fila[i]), sys, question).catch(e=>{
+  const tenta=i=>aiCall(fila[i], aiKey(fila[i]), sys, question, opts.img).catch(e=>{
     const prox=fila[i+1], tipo=aiFalha(e);
     if(!prox || !tipo) throw e;
     AI_SKIP[fila[i]]=Date.now()+10*60*1000; AI_SKIP[fila[i]+":tipo"]=tipo;
@@ -8770,7 +8823,7 @@ function assistSet(on){ ROOT.prefs.assist=on?1:0; saveRoot(); assistApply(); if(
 const ASSIST_ACOES={
  home:[["dumbbell","Treino de hoje","Today's workout",()=>go("workout")],["sliders","Meus recursos","My gear",()=>recursosModal()],["clipboard","Registrar o dia","Log the day",()=>go("progress","hoje")],["leaf","Dieta de hoje","Today's diet",()=>go("diet")]],
  workout:[["book","Biblioteca","Library",()=>go("ex")],["sliders","Meus recursos","My gear",()=>recursosModal()],["flame","Aquecer & Alongar","Warm up & Stretch",()=>go("warm")]],
- ex:[["sliders","Meus recursos","My gear",()=>recursosModal()],["body","Mapa do corpo","Body map",()=>go("body")],["dumbbell","Meus treinos","My workouts",()=>go("workout")]],
+ ex:[["camera","Identificar aparelho pela foto","Identify machine by photo",()=>eqIdentify(()=>render())],["sliders","Meus recursos","My gear",()=>recursosModal()],["body","Mapa do corpo","Body map",()=>go("body")],["dumbbell","Meus treinos","My workouts",()=>go("workout")]],
  body:[["book","Biblioteca","Library",()=>go("ex")]],
  diet:[["book","Alimentos","Foods",()=>go("diet","alimentos")],["sparkles","Sugestões de pratos","Dish suggestions",()=>go("diet","pratos")],["camera","Ler rótulo","Read a label",()=>{ SCANMODE="label"; go("scan"); }]],
  progress:[["chart","Peso","Weight",()=>go("progress","peso")],["flask","Exames","Lab results",()=>go("progress","exames")]],
