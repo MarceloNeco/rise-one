@@ -863,6 +863,14 @@ main{padding-bottom:88px}
 .eqbig.zoom .eqfig>img{max-height:none;width:200%;max-width:none}
 .eqbig.zoom .eqfig svg{width:120%;height:440px}
 @media(max-width:560px){ .pratoitem{flex-direction:column;align-items:stretch} .pratoitem .gr{width:100%} .pratoitem>.row{justify-content:flex-end} }
+/* ---- personal trainer: avatar e escolha ---- */
+.ptav{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;color:#fff;font-weight:900;font-size:.8rem;flex-shrink:0;overflow:hidden}
+.ptav img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.ptav img.ok{opacity:1}
+.ptgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.ptcard{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;cursor:pointer;color:var(--text);font:inherit;display:flex;flex-direction:column;align-items:center;gap:6px}
+.ptcard.on{border-color:var(--accent);background:var(--accent-soft)}
+.ptcard .nm{font-weight:800;font-size:.9rem}
 /* ---- câmera: medidor de nitidez e anel de foco ---- */
 .camfocus{display:flex;align-items:center;gap:10px;margin:8px 0 2px;font-size:.8rem;font-weight:700}
 .camfocus .bar{flex:1;margin:0}
@@ -1975,6 +1983,17 @@ Object.assign(L,{
 "ia.switchQuota":["🔁 {a} está sem cota agora — usando {b}","🔁 {a} is out of quota right now — using {b}"],
 "ia.switchKey":["🔁 {a} recusou a chave — usando {b}","🔁 {a} refused the key — using {b}"],
 "as.name":["AssistONE","AssistONE"],
+"pt.title":["Personal trainer","Personal trainer"],
+"pt.sub":["Quem narra o seu treino. Cada personal tem o próprio jeito de falar; a voz vem do aparelho (acima).","Who narrates your workout. Each trainer has their own way of talking; the voice comes from the device (above)."],
+"pt.sample":["Ouvir amostra","Hear a sample"],
+"pt.inUse":["narrando","narrating"],
+"pt.neutro":["Neutro","Neutral"],
+"pt.neutroD":["Só o essencial: exercício, séries e descanso.","Just the essentials: exercise, sets and rest."],
+"pt.knox":["KnoX","KnoX"],
+"pt.knoxD":["Calmo e técnico. Lembra a postura e a respiração.","Calm and technical. Reminds you of posture and breathing."],
+"pt.musclemill":["MuscleMill","MuscleMill"],
+"pt.musclemillD":["Energia lá em cima. Empurra você até a última repetição.","High energy. Pushes you to the last rep."],
+"pt.avatarNote":["Foto do personal: arquivo personal/NOME.png na raiz do app (ex.: personal/knox.png, personal/musclemill.png). Sem o arquivo, aparece o desenho.","Trainer photo: file personal/NAME.png at the app root (e.g. personal/knox.png, personal/musclemill.png). Without it, the drawing shows."],
 "eq.search":["Buscar aparelho: perna, braço, cadeira, polia…","Search machine: leg, arm, seat, cable…"],
 "eq.have":["Tenho","I have it"],
 "eq.haveCount":["{a} marcados como \"tenho\"","{a} ticked as \"I have it\""],
@@ -4311,7 +4330,7 @@ function runWorkout(id){
     const it=w.items[idx], p=prog[idx], x=allEx().find(e=>e.id===it.exId);
     const eq=EQUIP[x?x.eq:""];
     m.querySelector("#runbox").innerHTML=
-      '<div class="mh"><div><span class="pill acc">'+t("wk.running")+'</span><h3 style="margin:.3em 0 0">'+esc(w.name)+"</h3></div><button class='iconbtn' id='rclose'>&times;</button></div>"+
+      '<div class="mh"><div class="row nowrap">'+(vozCfg().on?personalAvatar(personal(),40):"")+'<div><span class="pill acc">'+t("wk.running")+'</span>'+(vozCfg().on?' <span class="tiny muted">'+esc(personalNome(personal()))+"</span>":"")+'<h3 style="margin:.3em 0 0">'+esc(w.name)+"</h3></div></div><button class='iconbtn' id='rclose'>&times;</button></div>"+
       '<div class="bar" style="margin:6px 0 12px"><i style="width:'+((idx)/w.items.length*100)+'%"></i></div>'+
       '<div class="row" style="margin-bottom:10px">'+(idx===0?'<button class="btn ghost sm" id="r_warm">'+I("flame")+t("wu.warmBtn")+"</button>":"")+
         musBtn("ghost sm")+'<button class="btn ghost sm" data-tvbtn="1" id="r_tv">'+I("cast")+t("tv.short")+"</button>"+hrBadge()+"</div>"+
@@ -4333,11 +4352,17 @@ function runWorkout(id){
       '<div class="sep"></div><button class="btn wide" id="r_fin">'+I("check")+t("wk.finish")+"</button>";
     initAnims(m);
     /* voz: fala o exercicio so quando ele muda, nao a cada serie anotada */
-    if(typeof sayExercise==="function" && saidIdx!==idx){ saidIdx=idx; sayExercise(x?exName(x):it.exId, it.sets, it.reps); }
+    if(typeof sayExercise==="function" && saidIdx!==idx){
+      const primeira=(saidIdx===-1), nomeEx=x?exName(x):it.exId; saidIdx=idx;
+      /* na abertura, saudação e primeiro exercício vão juntos na fila (falar um cancelaria o outro) */
+      if(primeira && vozCfg().on && vozCfg().narraTreino) speakQueue([personalFrase("inicio",{treino:w.name}), personalFrase("ex",{ex:nomeEx,series:it.sets,reps:it.reps})].filter(Boolean));
+      else sayExercise(nomeEx, it.sets, it.reps);
+    }
     m.querySelector("#rclose").onclick=()=>{ if(confirm(LANG==="pt"?"Sair sem salvar o treino?":"Leave without saving the workout?")) m.remove(); };
     m.querySelector("#r_set").onclick=()=>{
       p.reps=m.querySelector("#r_reps").value; p.load=num(m.querySelector("#r_load").value,0);
       p.sets.push({reps:p.reps, load:p.load});
+      if(typeof saySet==="function") saySet(p.sets.length, p.target);
       if(p.sets.length>=p.target && idx<w.items.length-1){ idx++; paint(); timerModal(it.rest||60); }
       else { paint(); timerModal(it.rest||60); }
     };
@@ -5637,6 +5662,7 @@ SCREENS.set = function(){
     h+=musCard(uiRole()==="admin");
     h+=hrCard();
     h+=vozCard();
+    h+=personalCard();
     h+=a11yCard();
   }
   if(v==="avisos"){
@@ -5696,6 +5722,7 @@ SCREENS.set_after = function(){
   document.querySelectorAll("[data-th]").forEach(b=>b.onclick=()=>{ applyTheme(b.getAttribute("data-th")); render(); });
   if($("bgsw")) $("bgsw").onchange=e=>{ applyBg(e.target.checked); };
   if($("as_sw")) $("as_sw").onchange=e=>assistSet(e.target.checked);
+  wirePersonal();
   if($("as_open")) $("as_open").onclick=()=>{ if(!assistOn()) assistSet(true); assistOpen("hi"); };
   if($("as_reset")) $("as_reset").onclick=()=>{ ROOT.prefs.tipsSeen={}; ROOT.prefs.assistHi=0; saveRoot(); toast(t("as.restarted")); };
   document.querySelectorAll("[data-lvl]").forEach(b=>b.onclick=()=>{ STATE.termsLevel=+b.getAttribute("data-lvl"); save(); render(); });
@@ -9394,8 +9421,10 @@ function speak(txt, opts){
   /* o Chrome derruba um speak colado no cancel: 60 ms de respiro */
   setTimeout(speakNext, 60);
 }
-function speakQueue(list){
+function speakQueue(list, opts){
+  opts=opts||{};
   if(!hasTTS() || !list || !list.length) return;
+  if(!vozCfg().on && !opts.force) return;
   speakStop();
   list.forEach(s=>SPK.queue.push(String(s)));
   setTimeout(speakNext, 60);
@@ -9410,8 +9439,9 @@ function speakNext(){
   if(v) u.voice=v;
   /* o idioma vai sempre completo, mesmo quando a voz veio como pt_BR */
   u.lang=langWanted();
-  u.rate=Math.max(.5,Math.min(2,+c.rate||1));
-  u.pitch=Math.max(0,Math.min(2,+c.pitch||1));
+  const pp=(typeof personal==="function")? personal() : {rate:0,pitch:0};
+  u.rate=Math.max(.5,Math.min(2,(+c.rate||1)+(pp.rate||0)));
+  u.pitch=Math.max(0,Math.min(2,(+c.pitch||1)+(pp.pitch||0)));
   u.volume=Math.max(0,Math.min(1,+c.vol||1));
   SPK.busy=true;
   const done=()=>{ if(!SPK.busy) return; SPK.busy=false; clearTimeout(SPK.guard); setTimeout(speakNext,40); };
@@ -9425,13 +9455,83 @@ function speakNext(){
   try{ window.speechSynthesis.cancel(); }catch(e){}
   setTimeout(()=>{ try{ window.speechSynthesis.speak(u); }catch(e){ done(); } }, 60);
 }
+/* --- personal trainer: quem narra, e como --- */
+/* Por que: a mesma voz do aparelho vira "gente" diferente com frases, ritmo e tom próprios. A pessoa escolhe quem
+   a acompanha. Os nomes vêm dos arquivos de arte (personal/<id>.png); sem a arte, um avatar desenhado. */
+const PERSONAIS=[
+ {id:"neutro", rate:0, pitch:0, cor:"#8a93a1",
+  f:{pt:{inicio:["{treino}. Vamos começar."], ex:["{ex}, {series} séries de {reps} repetições."], serie:["Série {n} de {total} feita."],
+         descanso:["Descanso, {seg} segundos."], proximo:["Próximo: {ex}."], fim:["Treino concluído. Muito bem."], anima:[]},
+     en:{inicio:["{treino}. Let's start."], ex:["{ex}, {series} sets of {reps} reps."], serie:["Set {n} of {total} done."],
+         descanso:["Rest, {seg} seconds."], proximo:["Next: {ex}."], fim:["Workout finished. Well done."], anima:[]}}},
+ {id:"knox", rate:-0.05, pitch:-0.05, cor:"#4a90e8",
+  f:{pt:{inicio:["Olá. Aqui é o KnoX. Hoje é {treino}. Respire fundo, ajuste a postura e vamos com calma."],
+         ex:["{ex}. {series} séries de {reps}. Coluna neutra, movimento controlado."],
+         serie:["Série {n} de {total}. Boa execução. Solte o ar na força."],
+         descanso:["Descanse {seg} segundos. Respire pelo nariz e relaxe os ombros."],
+         proximo:["Próximo exercício: {ex}. Prepare o aparelho com calma."],
+         fim:["Treino concluído. Alongue por alguns minutos e beba água. Até a próxima."],
+         anima:["Técnica antes de carga.","Amplitude completa, sem pressa.","Se doer de verdade, pare."]},
+     en:{inicio:["Hi, this is KnoX. Today is {treino}. Take a deep breath, set your posture and let's go steady."],
+         ex:["{ex}. {series} sets of {reps}. Neutral spine, controlled movement."],
+         serie:["Set {n} of {total}. Good form. Exhale on the effort."],
+         descanso:["Rest {seg} seconds. Breathe through the nose and relax your shoulders."],
+         proximo:["Next exercise: {ex}. Set the machine up calmly."],
+         fim:["Workout finished. Stretch for a few minutes and drink water. See you next time."],
+         anima:["Technique before load.","Full range, no rush.","If it really hurts, stop."]}}},
+ {id:"musclemill", rate:0.1, pitch:-0.1, cor:"#ff7a2f",
+  f:{pt:{inicio:["MuscleMill na área! {treino} hoje. Bora, sem moleza!"],
+         ex:["{ex}! {series} séries de {reps}. Vai com tudo!"],
+         serie:["Série {n} de {total}! Isso! Ainda tem mais no tanque."],
+         descanso:["{seg} segundos de descanso. Bebe água e volta forte!"],
+         proximo:["Agora {ex}! Foco total."],
+         fim:["Treino fechado! Você mandou muito bem. Orgulho!"],
+         anima:["Mais uma! Você aguenta!","Última rep é a que conta!","Aperta o abdômen e vai!"]},
+     en:{inicio:["MuscleMill here! {treino} today. Let's go, no slacking!"],
+         ex:["{ex}! {series} sets of {reps}. Give it everything!"],
+         serie:["Set {n} of {total}! Yes! There's more in the tank."],
+         descanso:["{seg} seconds rest. Drink water and come back strong!"],
+         proximo:["Now {ex}! Full focus."],
+         fim:["Workout done! You crushed it. Proud of you!"],
+         anima:["One more! You've got it!","The last rep is the one that counts!","Brace your core and go!"]}}}
+];
+function personal(){ const id=vozCfg().personal||"neutro"; return PERSONAIS.find(p=>p.id===id)||PERSONAIS[0]; }
+function personalNome(p){ return t("pt."+p.id); }
+function personalFrase(tipo, vars){
+  const p=personal(), lista=(p.f[LANG]||p.f.pt)[tipo]||[]; if(!lista.length) return "";
+  let s=lista[Math.floor(Math.random()*lista.length)];
+  Object.keys(vars||{}).forEach(k=>{ s=s.split("{"+k+"}").join(String(vars[k])); });
+  return s;
+}
+function personalFala(tipo, vars, opts){ const s=personalFrase(tipo, vars); if(s) speak(s, opts); }
+/* avatar: a foto (personal/<id>.png) cobre o desenho quando existe */
+function personalAvatar(p, tam){
+  tam=tam||44;
+  const ini=personalNome(p).slice(0,2).toUpperCase();
+  return '<span class="ptav" style="width:'+tam+'px;height:'+tam+'px;background:'+p.cor+'"><span>'+esc(ini)+'</span><img src="personal/'+p.id+'.png" alt="" onload="this.classList.add(\'ok\')" onerror="this.remove()"></span>';
+}
+function personalCard(){
+  const c=vozCfg(), cur=personal();
+  return '<div class="card">'+cardHead("user", t("pt.title"), t("pt.sub"))+
+    '<div class="ptgrid">'+PERSONAIS.map(p=>'<button class="ptcard'+(p.id===cur.id?" on":"")+'" data-pt="'+p.id+'" aria-pressed="'+(p.id===cur.id)+'">'+personalAvatar(p,56)+
+      '<div class="nm">'+esc(personalNome(p))+(p.id===cur.id?' <span class="pill acc xs">'+t("pt.inUse")+"</span>":"")+'</div><div class="tiny muted">'+t("pt."+p.id+"D")+"</div></button>").join("")+"</div>"+
+    '<div class="row" style="margin-top:10px"><button class="btn sm line" id="pt_sample">'+I("play")+t("pt.sample")+"</button></div>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("pt.avatarNote")+"</p></div>";
+}
+function wirePersonal(){
+  document.querySelectorAll("[data-pt]").forEach(b=>b.onclick=()=>{ vozCfg().personal=b.getAttribute("data-pt"); save(); render(); });
+  const sm=document.getElementById("pt_sample");
+  if(sm) sm.onclick=()=>{ const c=vozCfg(); const ex=LANG==="pt"?"Agachamento":"Squat"; speakQueue([personalFrase("inicio",{treino:LANG==="pt"?"treino de pernas":"leg day"}), personalFrase("ex",{ex,series:3,reps:12}), personalFrase("descanso",{seg:60})].filter(Boolean), {force:true}); };
+}
 /* --- o que o personal fala durante o treino e a rotina --- */
 function sayExercise(nome, series, reps){
   const c=vozCfg(); if(!c.on || !c.narraTreino) return;
-  let s=nome;
-  if(series && reps) s += LANG==="pt" ? (", "+series+" séries de "+reps+" repetições") : (", "+series+" sets of "+reps+" reps");
-  speak(s);
+  if(series && reps) personalFala("ex", {ex:nome, series, reps}); else speak(nome);
 }
+function sayStart(treino){ const c=vozCfg(); if(!c.on || !c.narraTreino) return; personalFala("inicio", {treino}); }
+function saySet(n, total){ const c=vozCfg(); if(!c.on || !c.narraTreino) return;
+  const anima=(Math.random()<0.35)? personalFrase("anima") : "";
+  speakQueue([personalFrase("serie",{n,total})].concat(anima?[anima]:[])); }
 function sayMove(nome, seg, lado){
   const c=vozCfg(); if(!c.on || !c.narraRotina) return;
   let s=nome;
@@ -9441,9 +9541,8 @@ function sayMove(nome, seg, lado){
 }
 function sayNext(nome){ const c=vozCfg(); if(!c.on || !c.narraRotina) return; speak(t("wu.next")+": "+nome); }
 function sayCount(n){ const c=vozCfg(); if(!c.on || !c.contagem) return; speak(String(n), {solo:false}); }
-function sayRest(seg){ const c=vozCfg(); if(!c.on || !c.narraTreino) return;
-  speak(t("wk.restNow")+", "+seg+(LANG==="pt"?" segundos":" seconds")); }
-function sayDone(){ const c=vozCfg(); if(!c.on) return; speak(t("vz.doneMsg")); }
+function sayRest(seg){ const c=vozCfg(); if(!c.on || !c.narraTreino) return; personalFala("descanso", {seg}, {solo:false}); }
+function sayDone(){ const c=vozCfg(); if(!c.on) return; personalFala("fim"); }
 
 /* --- escutar: comandos de voz --- */
 const STT_CMDS={

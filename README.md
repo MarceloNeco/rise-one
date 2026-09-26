@@ -23,6 +23,9 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
   as sugestões, monta o plano do dia e marca "Para você" no rótulo; pratos próprios; cardápio pela IA.
 - **Câmera e OCR.** Foco por toque e contínuo, medidor de nitidez ao vivo, lanterna, foto em
   resolução cheia. O OCR endireita, recorta, amplia e limpa a imagem e faz até três leituras.
+- **Personal trainer narrado.** Escolha quem narra o treino em Preferências (Neutro, KnoX ou MuscleMill):
+  frases, ritmo e tom próprios na abertura, em cada exercício, série, descanso e no fim. Foto em
+  `personal/knox.png` e `personal/musclemill.png`.
 - **Aparelhos da academia.** 53 aparelhos em desenho de linha, busca por termo, ficha ampliável e a
   marcação "Tenho", que filtra a biblioteca. Um `aparelhos/<id>.png` sem fundo substitui o desenho.
 
