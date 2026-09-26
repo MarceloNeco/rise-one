@@ -589,6 +589,12 @@ html[data-theme="light"]{--eq-machine:#1f6fd0; --eq-weight:#4a5261; --eq-person:
 .rag.a{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent)} .rag.a .dot{background:var(--warn)} .rag.a b{color:var(--warn)}
 .rag.r{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent)} .rag.r .dot{background:var(--bad)} .rag.r b{color:var(--bad)}
 .altoem{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.ntwrap{display:flex;gap:14px;align-items:flex-start;margin-top:8px}
+.ntbig{flex-shrink:0;width:58px;height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.5rem;color:#fff}
+.ntbig.g{background:var(--ok)} .ntbig.a{background:var(--warn)} .ntbig.r{background:var(--bad)}
+.ntb{margin-bottom:8px}
+.nbar{position:relative;height:8px;border-radius:99px;margin:4px 0 2px;background:linear-gradient(90deg,var(--bad),var(--warn),var(--ok))}
+.nbar i{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--text);transform:translate(-50%,-50%)}
 .altoem .ae{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:52px;padding:8px 14px;border:3px solid var(--text);border-radius:6px;font-weight:900;font-size:.8rem;text-transform:uppercase;letter-spacing:.02em;line-height:1.15;max-width:170px}
 .pill.xs{font-size:.66rem;padding:1px 7px}
 .exind{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px}
@@ -2101,6 +2107,17 @@ Object.assign(L,{
 "nu.r.castanhas":["Sem castanhas e nozes","Nut-free"],
 "nu.r.frutosmar":["Sem peixe e frutos do mar","No fish or seafood"],
 "nu.r.acucar":["Sem açúcar adicionado","No added sugar"],
+"nu.r.peixe":["Sem peixe","Fish-free"],
+"nu.r.corantes":["Sem corantes artificiais","No artificial colours"],
+"nu.match":["Combina com você?","Does it match you?"],
+"nu.matchOk":["Combina","Good match"],
+"nu.matchNo":["Atenção","Watch out"],
+"nu.why.emagrecer":["Muita caloria por 100 g","High calories per 100 g"],
+"nu.why.pressao":["Alto em sódio","High in sodium"],
+"nu.why.diabetes":["Alto em açúcar","High in sugar"],
+"nu.why.criancas":["Aditivo de cor ou sabor, ou açúcar alto","Colour or flavour additive, or high sugar"],
+"nu.why.massa":["Pouca proteína por 100 g","Little protein per 100 g"],
+"nu.matchNote":["Regra simples do app, pela tabela e pela lista do rótulo. Não substitui orientação profissional.","Simple app rule, from the table and ingredient list. Not professional advice."],
 "cam.focus":["Focar","Focus"],
 "cam.torch":["Lanterna","Torch"],
 "cam.sharp":["Nítido ✓ — pode fotografar","Sharp ✓ — go ahead"],
@@ -2348,6 +2365,16 @@ Object.assign(L,{
 "rt.ragR":["Muito processado","Heavily processed"],
 "rt.ragWhy":["{c} aditivos de aparência ou sabor · {a} avisos de “alto em” · {i} ingredientes na lista","{c} cosmetic or flavour additives · {a} “high in” warnings · {i} ingredients in the list"],
 "rt.alto":["Alto em","High in"],
+"rt.nota":["Nota do app","App score"],
+"rt.proc":["Processamento","Processing"],
+"rt.nutri":["Nutrientes","Nutrients"],
+"rt.adit":["Aditivos","Additives"],
+"rt.moreRisk":["Mais risco","More risk"],
+"rt.lessRisk":["Menos risco","Less risk"],
+"rt.stepIng":["Ingredientes","Ingredients"],
+"rt.stepTab":["Tabela","Table"],
+"rt.addPhoto":["Fotografar a outra parte","Photograph the other part"],
+"rt.addPhotoSub":["Rótulo grande? Tire uma foto dos ingredientes e outra da tabela. O app junta as duas.","Big label? Take one photo of the ingredients and another of the table. The app joins them."],
 "rt.acucar":["Açúcares","Sugars"],
 "rt.gordSat":["Gordura saturada","Saturated fat"],
 "rt.sodio":["Sódio","Sodium"],
@@ -4579,7 +4606,9 @@ const NUT_RESTR=[
  ["amendoim", /amendoim|peanut/],
  ["castanhas",/castanha|\bnozes\b|\bnoz\b|amendoa|avela|pistache|macadamia|\bpeca\b/],
  ["frutosmar",/peixe|camar|frutos do mar|\batum\b|sardinha|salm|bacalhau|tilapia|\blula\b|polvo|marisco|mexilh/],
- ["acucar",   /acucar|xarope|glicose|frutose|maltodextrina|\bmel\b|dextrose|sacarose|glucose|refrigerante|chocolate/]
+ ["acucar",   /acucar|xarope|glicose|frutose|maltodextrina|\bmel\b|dextrose|sacarose|glucose|refrigerante|chocolate/],
+ ["peixe",    /peixe|\batum\b|sardinha|salm|bacalhau|tilapia|merluza|anchova|pescada/],
+ ["corantes", /corante|tartrazina|caramelo iv|amarelo crepusculo|vermelho 40|azul brilhante|ponceau|eritrosina|\bins 1[0-8]\d\b/]
 ];
 function dietPrefs(){ STATE.diet.prefs=STATE.diet.prefs||{objetivos:[],restricoes:[]}; return STATE.diet.prefs; }
 function nutTags(text){ const x=norm(text||""); return NUT_RESTR.filter(r=>r[1].test(x)).map(r=>r[0]); }
@@ -4601,7 +4630,7 @@ function nutKcalLeft(){
 function foodFromLabel(o){
   const k=(o.portion&&o.portion>0)? 100/o.portion : 1;
   const por100={}; [["kcal","kcal"],["prot","prot"],["carb","carb"],["fat","fat"],["fiber","fiber"],["sugar","sugar"],["satFat","satFat"],["sodium","sodium"]].forEach(([a,b])=>{ if(o[a]!=null) por100[b]=Math.round(o[a]*k*10)/10; });
-  return {nome:"", marca:o.brand||"", porcao:o.portion||0, por100, ingRaw:o.ingRaw||"", ings:o.ings||[], selos:o.dietas||[], rag:o.rag?o.rag.cor:"", altoEm:o.altoEm||[], fonte:"rotulo"};
+  return {nome:"", marca:o.brand||"", porcao:o.portion||0, por100, ingRaw:o.ingRaw||"", ings:o.ings||[], selos:o.dietas||[], rag:o.rag?o.rag.cor:"", altoEm:o.altoEm||[], nota:notaRotulo(o).nota, fonte:"rotulo"};
 }
 /* bloco "Para você" no cartão do rótulo: o que a pessoa evita e apareceu nos ingredientes */
 function nutForYouHTML(o){
@@ -4616,13 +4645,43 @@ function nutForYouHTML(o){
   h+='<p class="tiny muted">'+t("nu.forYouNote")+"</p>";
   return h;
 }
+/* nota 0–100 do rótulo, com três barras (como o Desrotulando): processamento, nutrientes e aditivos.
+   Critério do app, escrito na tela. Cada barra vai de 0 (pior) a 100 (melhor). */
+function notaRotulo(o){
+  const cos=(o.aditivos||[]).filter(a=>COSMETICO.indexOf(a.papel)>=0).length, adit=(o.aditivos||[]).length, n=(o.ings||[]).length;
+  const proc=Math.max(0, 100 - Math.max(0,n-5)*6 - cos*15);
+  let nut=100 - (o.altoEm||[]).length*30 - (o.transFat>0?20:0);
+  if(o.fiber!=null && o.fiber>=3) nut+=5; if(o.prot!=null && o.prot>=10) nut+=5;
+  nut=Math.max(0,Math.min(100,nut));
+  const ad=Math.max(0, 100 - adit*10 - cos*15);
+  return {nota:Math.round(proc*.35+nut*.4+ad*.25), proc, nut, adit:ad};
+}
+function notaBarra(rot, v){
+  return '<div class="ntb"><div class="row" style="justify-content:space-between"><span class="kicker">'+esc(rot)+'</span><b class="tiny">'+Math.round(v)+'</b></div>'+
+    '<div class="nbar"><i style="left:'+Math.max(2,Math.min(98,v))+'%"></i></div><div class="row tiny muted" style="justify-content:space-between"><span>'+t("rt.moreRisk")+"</span><span>"+t("rt.lessRisk")+"</span></div></div>";
+}
+function notaHTML(o){
+  const s=notaRotulo(o), cor=s.nota>=70?"g":(s.nota>=40?"a":"r");
+  return '<div class="ntwrap"><span class="ntbig '+cor+'">'+s.nota+'</span><div class="gr">'+notaBarra(t("rt.proc"),s.proc)+notaBarra(t("rt.nutri"),s.nut)+notaBarra(t("rt.adit"),s.adit)+"</div></div>";
+}
+/* objetivos da pessoa × o que o rótulo mostra (valores por 100 g) */
+function nutMatchHTML(o){
+  const obj=dietPrefs().objetivos; if(!obj.length) return "";
+  const k=(o.portion&&o.portion>0)?100/o.portion:1, v=key=>o[key]!=null? o[key]*k : null;
+  const cos=(o.aditivos||[]).some(a=>COSMETICO.indexOf(a.papel)>=0), alto=o.altoEm||[];
+  const ruim={emagrecer: v("kcal")!=null && v("kcal")>=400, pressao: alto.indexOf("sodio")>=0, diabetes: alto.indexOf("acucar")>=0,
+    criancas: cos || alto.indexOf("acucar")>=0, massa: v("prot")!=null && v("prot")<5};
+  return '<div class="sep"></div><span class="kicker">'+t("nu.match")+'</span><div class="list" style="margin-top:6px">'+obj.map(g=>
+    '<div class="item"><span class="pill xs '+(ruim[g]?"warn":"ok")+'">'+(ruim[g]?t("nu.matchNo"):t("nu.matchOk"))+'</span><div class="gr"><div class="t">'+t("nu.obj."+g)+"</div>"+(ruim[g]?'<div class="s">'+t("nu.why."+g)+"</div>":"")+"</div></div>").join("")+
+    '</div><p class="tiny muted">'+t("nu.matchNote")+"</p>";
+}
 /* ---- tela Alimentos ---- */
 let NUT_Q="";
 function nutRow(f){
   const n=f.por100||{};
   return '<button class="item link" data-food="'+esc(f.id)+'"><span class="ibub '+(f.base?"grey":"")+'" style="width:32px;height:32px">'+I(f.base?"leaf":"book")+'</span>'+
     '<div class="gr"><div class="t">'+esc(f.nome)+(f.marca?' <span class="muted tiny">· '+esc(f.marca)+"</span>":"")+'</div><div class="s">'+fmtNum(n.kcal||0,0)+" kcal · P "+fmtNum(n.prot||0,1)+" C "+fmtNum(n.carb||0,1)+" G "+fmtNum(n.fat||0,1)+" "+t("nu.per100")+"</div></div>"+
-    (f.rag?'<span class="pill xs '+(f.rag==="g"?"ok":(f.rag==="a"?"warn":""))+'">●</span>':"")+"</button>";
+    (f.nota!=null?'<span class="pill xs '+(f.nota>=70?"ok":(f.nota>=40?"warn":""))+'">'+f.nota+"</span>":(f.rag?'<span class="pill xs '+(f.rag==="g"?"ok":(f.rag==="a"?"warn":""))+'">●</span>':""))+"</button>";
 }
 function foodsScreen(){
   const q=norm(NUT_Q);
@@ -4651,6 +4710,7 @@ function foodModal(id){
   const linhas=[["kcal","kcal",""],["prot",t("dt.prot"),"g"],["carb",t("dt.carb"),"g"],["fat",t("dt.fat"),"g"],["fiber",t("nu.fiber"),"g"],["sugar",t("nu.sugar"),"g"],["satFat",t("nu.satFat"),"g"],["sodium",t("nu.sodium"),"mg"]].filter(l=>n[l[0]]!=null);
   const g0=f.porcao||100;
   const m=modal(mh(f.nome+(f.marca?" · "+f.marca:""))+
+    (f.nota!=null?'<p class="tiny muted" style="margin:-4px 0 8px"><span class="pill xs '+(f.nota>=70?"ok":(f.nota>=40?"warn":""))+'">'+f.nota+"</span> "+t("rt.nota")+"</p>":"")+
     (f.tags&&f.tags.length?'<div class="chips" style="margin-bottom:8px">'+f.tags.map(r=>'<span class="chip'+(dietPrefs().restricoes.indexOf(r)>=0?" on":"")+'">'+esc(t("nu.contains"))+" "+esc(t("nu.r."+r).replace(/^(Sem|No) /,""))+"</span>").join("")+"</div>":"")+
     '<span class="kicker">'+t("rt.tabela")+" · "+t("nu.per100")+'</span><div class="grid g4" style="margin:6px 0 12px">'+linhas.map(l=>stat(l[1], fmtNum(n[l[0]], l[0]==="kcal"?0:1), l[2],"")).join("")+"</div>"+
     '<div class="card tight soft"><span class="kicker">'+t("nu.calc")+'</span><label class="fld" style="margin-top:6px"><span>'+t("nu.grams")+'</span><input type="number" id="fm_g" value="'+g0+'" min="0"></label>'+
@@ -5253,7 +5313,7 @@ setInterval(function(){
 },20000);
 
 /* ---------- 27. OCR / VISAO COMPUTACIONAL ---------- */
-let SCANMODE="label", SCANIMG=null, SCANTEXT="", SCANFOUND=null;
+let SCANMODE="label", SCANIMG=null, SCANTEXT="", SCANFOUND=null, SCANPREV="";  /* SCANPREV: texto da foto anterior, quando a pessoa fotografa o rótulo em partes */
 const OCR_CDN=["https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.1/tesseract.min.js",
                "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"];
 function loadTesseract(cb){
@@ -5277,7 +5337,7 @@ function parseLabel(raw){
   const x=norm(raw).replace(/ /g," ");
   const o={};
   o.portion = grab(x,[/por[cç]?ao[^\d]{0,24}(\d+(?:[.,]\d+)?)\s*(?:g|ml)/, /serving size[^\d]{0,24}(\d+(?:[.,]\d+)?)/]);
-  o.kcal = grab(x,[/valor energetico[^\d]{0,40}(\d+(?:[.,]\d+)?)\s*kcal/, /(\d+(?:[.,]\d+)?)\s*kcal/, /calorie[s]?[^\d]{0,24}(\d+(?:[.,]\d+)?)/]);
+  o.kcal = grab(x,[/valor energetico\s*\(?\s*kcal\s*\)?[^\d]{0,12}(\d+(?:[.,]\d+)?)/, /valor energetico[^\d]{0,40}(\d+(?:[.,]\d+)?)\s*kcal/, /(\d+(?:[.,]\d+)?)\s*kcal/, /calorie[s]?[^\d]{0,24}(\d+(?:[.,]\d+)?)/]);
   o.prot = grab(x,[/proteina[s]?[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /protein[^\d]{0,30}(\d+(?:[.,]\d+)?)/]);
   o.carb = grab(x,[/carboidrato[s]?[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /carbohydrate[s]?[^\d]{0,30}(\d+(?:[.,]\d+)?)/]);
   o.fat  = grab(x,[/gorduras? totai?s?[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /total fat[^\d]{0,30}(\d+(?:[.,]\d+)?)/, /gordura[^\d]{0,30}(\d+(?:[.,]\d+)?)/]);
@@ -5357,7 +5417,7 @@ SCREENS.scan = function(){
   return h;
 };
 SCREENS.scan_after = function(){
-  document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{ SCANMODE=b.getAttribute("data-mode"); SCANFOUND=null; SCANTEXT=""; render(); });
+  document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{ SCANMODE=b.getAttribute("data-mode"); SCANFOUND=null; SCANTEXT=""; SCANPREV=""; render(); });
   document.getElementById("opencam2").onclick=()=>askConsent("camera",()=>
     startCam2(document.getElementById("camwrap2"), d=>{ stopCam(); document.getElementById("camwrap2").innerHTML=""; runOCR(d); }));
   document.getElementById("fileinp2").onchange=e=>{ const f=e.target.files[0]; if(f) lerArquivoExame(f); };
@@ -5509,7 +5569,7 @@ function runOCR(dataUrl, rot){
         const next=()=>{
           if(SCANIMG+":"+SCANROT!==meu) return;
           if(i>=passes.length || (best && best.ok && best.conf>=78)){
-            SCANTEXT=best? best.text : ""; bar(100); paintScan();
+            SCANTEXT=(SCANPREV? SCANPREV+"\n" : "")+(best? best.text : ""); SCANPREV=""; bar(100); paintScan();
             const o2=document.getElementById("scanout");
             if(o2 && best){ const c=document.createElement("p"); c.className="tiny muted"; c.textContent=t("sc.conf").replace("{a}",Math.round(best.conf))+(best.conf<55?" · "+t("sc.confLow"):""); o2.prepend(c); }
             return;
@@ -5561,7 +5621,10 @@ function paintScan(){
   }
   SCANFOUND=parsed;
   if(SCANMODE==="label" && parsed){
-    body='<div class="row"><button class="btn line sm" id="lblsave">'+I("book")+t("nu.saveFood")+"</button></div>";
+    const temIng=parsed.ings.length>0, temTab=parsed.kcal!=null;
+    body='<div class="chips" style="margin-bottom:10px"><span class="chip'+(temIng?" on":"")+'">'+(temIng?I("check"):"")+t("rt.stepIng")+'</span><span class="chip'+(temTab?" on":"")+'">'+(temTab?I("check"):"")+t("rt.stepTab")+"</span></div>"+
+      (temIng&&temTab?"":'<p class="tiny muted">'+t("rt.addPhotoSub")+"</p>")+
+      '<div class="row"><button class="btn line sm" id="lblsave">'+I("book")+t("nu.saveFood")+'</button><button class="btn ghost sm" id="lblmore">'+I("camera")+t("rt.addPhoto")+"</button></div>";
   } else if(SCANMODE==="card" && parsed){
     body='<div class="grid g2 collapse">'+
       '<label class="fld"><span>'+t("pl.oper")+'</span><input id="cd_o" type="text" value="'+esc(parsed.operadora||"")+'"></label>'+
@@ -5590,6 +5653,7 @@ function paintScan(){
   const ok=out.querySelector("#scok"); if(ok) ok.onclick=commitScan;
   out.querySelector("#scman").onclick=()=>manualFor(SCANMODE, prefillFrom(parsed));
   const ls=out.querySelector("#lblsave"); if(ls) ls.onclick=()=>foodEditModal(foodFromLabel(parsed));
+  const lm=out.querySelector("#lblmore"); if(lm) lm.onclick=()=>{ SCANPREV=SCANTEXT; document.getElementById("opencam2").click(); window.scrollTo({top:0,behavior:"smooth"}); };
 }
 function scLabel(k){ return {waist:t("pg.waist"),hip:t("pg.hip"),chest:t("pg.chest"),arm:t("pg.arm"),thigh:t("pg.thigh"),
   calf:t("pg.calf"),weight:t("home.weight"),fat:t("pg.fat"),muscle:(LANG==="pt"?"Massa magra":"Lean mass")}[k]||k; }
@@ -10599,6 +10663,7 @@ function rotuloCard(o){
   let h='<div class="card">'+cardHead("apple", o.brand||t("rt.prod"), t("rt.sub"));
   h+='<div class="rag '+r.cor+'"><span class="dot"></span><div><b>'+esc(ragLabel(r.cor))+"</b><br><small>"+t("rt.ragWhy")
      .replace("{c}",r.cos).replace("{a}",r.alto).replace("{i}",o.ings.length)+"</small></div></div>";
+  h+='<span class="kicker" style="display:block;margin-top:12px">'+t("rt.nota")+"</span>"+notaHTML(o);
   if((o.altoEm||[]).length){
     h+='<div class="altoem">'+o.altoEm.map(k=>'<span class="ae">'+t("rt.alto")+" "+t("rt."+k)+"</span>").join("")+"</div>"+
        '<p class="tiny muted">'+t("rt.altoNote")+"</p>";
@@ -10632,6 +10697,7 @@ function rotuloCard(o){
       '<p class="tiny muted">'+t("rt.ingsNote")+"</p></div></details>";
   }
   h+=nutForYouHTML(o);
+  h+=nutMatchHTML(o);
   h+='<p class="tiny muted" style="margin-top:12px">'+t("rt.criterio")+"</p>";
   h+="</div>";
   return h;
