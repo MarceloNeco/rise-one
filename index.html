@@ -357,6 +357,12 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .item .gr{flex:1;min-width:0}
 .item .t{font-weight:800;font-size:.92rem}
 .item .s{font-size:.78rem;color:var(--text2)}
+.item .acts{display:flex;gap:6px;flex-shrink:0;align-items:center}
+.item.wrap{flex-wrap:wrap}
+.item.wrap .gr{flex:1 1 55%}
+@media (max-width:640px){ .item.wrap .acts{width:100%;justify-content:flex-end;padding-top:2px} }
+.musbox{display:none}
+.musbox.open{display:block;margin-top:4px;padding:4px 0 6px}
 button.item{width:100%;text-align:left;font:inherit;color:inherit}
 .item.link{cursor:pointer;transition:.15s}
 .item.link:hover{border-color:var(--accent)}
@@ -2414,6 +2420,8 @@ Object.assign(L,{
 "ex.onlyBody":["Só o corpo","Bodyweight only"],
 "ex.eqClear":["Limpar escolha","Clear selection"],
 "ex.eqChoose":["Escolher aparelho","Choose equipment"],
+"ex.musChoose":["Escolher músculo","Choose muscle"],
+"ex.musAll":["Todos os músculos","All muscles"],
 "ex.eqChosen":["{n} escolhidos","{n} chosen"],
 "ex.eqSheetSub":["Marque um ou mais. A lista mostra só exercícios que dá para fazer com eles.","Tick one or more. The list shows only exercises you can do with them."],
 "ex.eqApply":["Aplicar","Apply"],
@@ -3916,10 +3924,21 @@ function eqKindOf(id){
   for(const [k,ids] of EQ_KINDS) if(ids.indexOf(id)>=0) return k;
   const g=(EQ_TAGS[id]||{g:[]}).g; if(g.indexOf("cardio")>=0) return "cardio"; if(g.indexOf("polias")>=0) return "polias"; if(g.indexOf("cadeiras")>=0) return "maquinas"; return "acessorios";
 }
+/* músculo: mesmo padrão do aparelho — atalho "Todos", o escolhido como ficha e um bloco que abre/fecha com as bolhas por região */
+function musPickerHTML(){
+  const cur=EXF.m, open=!!EXF.musOpen;
+  let h='<span class="kicker">'+t("ex.filterMuscle")+'</span><div class="eqpick" style="margin-top:6px">'+
+    '<button class="eqchip'+(cur?"":" on")+'" data-mus="" aria-pressed="'+(cur?"false":"true")+'">'+t("common.all")+"</button>"+
+    (cur?'<button class="eqtoken" data-mus="" aria-label="'+esc(t("common.del"))+': '+esc(mName(cur))+'"><span>'+esc(mName(cur))+"</span>"+I("x")+"</button>":"")+
+    '<button class="eqchip more" id="musmore" aria-expanded="'+(open?"true":"false")+'" aria-controls="musbox">'+I(open?"chevup":"chevdown")+"<span>"+t("ex.musChoose")+"</span></button></div>";
+  h+='<div id="musbox" class="musbox'+(open?" open":"")+'">'+["front","back"].map(r=>'<p class="kicker" style="margin:10px 0 6px">'+t(r==="front"?"body.front":"body.back")+'</p><div class="eqpick">'+
+    MUSCLES.filter(m=>m.region===r).map(m=>'<button class="eqchip'+(cur===m.id?" on":"")+'" data-mus="'+m.id+'" aria-pressed="'+(cur===m.id?"true":"false")+'">'+esc(mName(m.id))+"</button>").join("")+"</div>").join("")+"</div>";
+  return h+'<div class="sep"></div>';
+}
 function eqPickerHTML(){
   const sel=EXF.eqs||[], nHave=Object.keys(STATE.equipHave||{}).length;
   const chip=(id,label,on,extra)=>'<button class="eqchip'+(on?" on":"")+'" '+(extra||'data-eqpick="'+id+'"')+' aria-pressed="'+(on?"true":"false")+'">'+label+"</button>";
-  let h='<div class="sep"></div><span class="kicker">'+t("ex.equipPick")+'</span>'+
+  let h='<span class="kicker">'+t("ex.equipPick")+'</span>'+
         '<p class="tiny muted" style="margin:2px 0 8px">'+t("ex.equipPickSub")+"</p>"+
         '<div class="eqpick">'+
         chip("", t("common.all"), !sel.length && !EXF.soMeus)+
@@ -3971,8 +3990,7 @@ SCREENS.ex = function(){
   let h='<div class="pagehead"><div><h1>'+t("ex.title")+'</h1><small>'+list.length+" "+t("ex.count")+" · "+t("ex.sub")+"</small></div>"+
     '<button class="btn ghost sm" id="newex">'+I("plus")+t("ex.addMine")+"</button></div>";
   h+='<div class="card tight"><div class="help-q" style="margin-bottom:10px">'+I("search")+'<input type="search" id="exq" value="'+esc(EXF.q)+'" placeholder="'+t("ex.searchph")+'"></div>'+
-     '<label class="fld" style="margin:0"><span>'+t("ex.filterMuscle")+'</span><select id="exm"><option value="">'+t("common.all")+"</option>"+
-     MUSCLES.map(m=>'<option value="'+m.id+'"'+(EXF.m===m.id?" selected":"")+">"+esc(mName(m.id))+"</option>").join("")+"</select></label>"+
+     musPickerHTML()+
      eqPickerHTML()+"</div>";
   h+='<div class="exlist" id="exgrid">'+(list.length?list.map(exCard).join(""):emptyBox("search", t("ex.noHits"), t("ex.noHitsSub")))+"</div>";
   const nHave=STATE.equipHave? Object.keys(STATE.equipHave).length : 0;
@@ -4005,6 +4023,20 @@ function wireEqPicker(){
   const mn=document.getElementById("eqmine");
   if(mn) mn.onclick=()=>{ EXF.soMeus=!EXF.soMeus; EXF.eqs=[]; render(); };
 }
+/* Busca tolerante: sem acento, palavra por palavra, por prefixo ("bicep" acha "Bíceps"), com um erro de digitação
+   em palavras de 5 letras ou mais ("supinu" acha "supino"). Cada palavra digitada precisa casar com alguma do texto. */
+function lev1(a,b){ /* distância de edição limitada a 1: bem mais barato que Levenshtein completo */
+  if(a===b) return 0; if(Math.abs(a.length-b.length)>1) return 2;
+  let i=0; while(i<a.length && i<b.length && a[i]===b[i]) i++;
+  if(a.length===b.length) return a.slice(i+1)===b.slice(i+1)?1:2;
+  return (a.length>b.length? a.slice(i+1)===b.slice(i) : b.slice(i+1)===a.slice(i))?1:2;
+}
+function exMatch(q, hay){
+  const toks=norm(q).split(/[^a-z0-9]+/).filter(Boolean); if(!toks.length) return true;
+  const words=norm(hay).split(/[^a-z0-9]+/).filter(Boolean);
+  return toks.every(tk=>{ const tk2=tk.replace(/s$/,"");
+    return words.some(w=>w.indexOf(tk)===0 || (tk2.length>=3 && w.indexOf(tk2)===0) || (tk.length>=5 && lev1(tk, w.slice(0,tk.length))<=1)); });
+}
 function filterEx(){
   const q=EXF.q.toLowerCase().trim();
   return allEx().filter(x=>{
@@ -4013,8 +4045,8 @@ function filterEx(){
     if(EXF.eqs && EXF.eqs.length && EXF.eqs.indexOf(x.eq)<0) return false;
     if(EXF.soMeus && x.eq!=="livre" && !eqHave(x.eq)) return false;
     if(!q) return true;
-    const hay=(x.pt+" "+x.en+" "+x.gpt+" "+x.gen+" "+mName(x.m,1)+" "+mName(x.m,2)+" "+mName(x.m,3)+" "+eqName(x.eq)).toLowerCase();
-    if(hay.indexOf(q)>=0) return true;
+    const hay=(x.pt+" "+x.en+" "+x.gpt+" "+x.gen+" "+mName(x.m,1)+" "+mName(x.m,2)+" "+mName(x.m,3)+" "+(x.sec||[]).map(sm=>mName(sm,1)+" "+mName(sm,2)).join(" ")+" "+eqName(x.eq)+" "+(EQ_DESC[x.eq]||[])[2]);
+    if(exMatch(q, hay)) return true;
     return GOALS.some(g=>g.k.some(k=>k.length>2 && q.indexOf(k)>=0) && (g.m.indexOf(x.m)>=0||x.sec.some(s=>g.m.indexOf(s)>=0)));
   });
 }
@@ -4023,7 +4055,8 @@ SCREENS.ex_after = function(){
   const q=document.getElementById("exq");
   q.oninput=()=>{ EXF.q=q.value; const g=document.getElementById("exgrid"); const l=filterEx();
     g.innerHTML=l.length?l.map(exCard).join(""):emptyBox("search", t("ex.noHits"), t("ex.noHitsSub")); wireExCards(); initAnims(g); };
-  document.getElementById("exm").onchange=e=>{ EXF.m=e.target.value; render(); };
+  document.querySelectorAll("[data-mus]").forEach(b=>b.onclick=()=>{ EXF.m=b.getAttribute("data-mus"); EXF.musOpen=false; render(); });
+  const mm=document.getElementById("musmore"); if(mm) mm.onclick=()=>{ EXF.musOpen=!EXF.musOpen; render(); };
   wireEqPicker();
   document.getElementById("newex").onclick=newExModal;
   document.querySelectorAll("[data-eqsheet]").forEach(b=>b.onclick=()=>{ EXF.eqOpen=true; eqModal(b.getAttribute("data-eqsheet")); });
@@ -4119,8 +4152,8 @@ SCREENS.workout = function(){
   /* modelos prontos */
   const openTpl = SUB.workout==="modelos" || !STATE.workouts.length;
   h+='<details class="fold" id="tplfold"'+(openTpl?" open":"")+'><summary>'+I("layers")+t("tpl.title")+' <span class="pill" style="margin-left:6px">'+TEMPLATES.length+"</span></summary><div class='fb'>"+
-     '<p class="tiny muted">'+t("tpl.sub")+'</p><div class="list">'+TEMPLATES.map(tp=>'<div class="item"><span class="ibub">'+I(tp.ic)+'</span><div class="gr"><div class="t">'+esc(tplName(tp))+'</div><div class="s">'+esc(tplDesc(tp))+" · "+tp.items.length+" "+t("ex.count")+'</div></div>'+
-     '<button class="btn xs line" data-tplprev="'+tp.id+'">'+t("wu.preview")+'</button><button class="btn sm" data-tpl="'+tp.id+'">'+I("plus")+t("tpl.use")+"</button></div>").join("")+"</div></div></details>";
+     '<p class="tiny muted">'+t("tpl.sub")+'</p><div class="list">'+TEMPLATES.map(tp=>'<div class="item wrap"><span class="ibub">'+I(tp.ic)+'</span><div class="gr"><div class="t">'+esc(tplName(tp))+'</div><div class="s">'+esc(tplDesc(tp))+" · "+tp.items.length+" "+t("ex.count")+'</div></div>'+
+     '<div class="acts"><button class="btn xs line" data-tplprev="'+tp.id+'">'+t("wu.preview")+'</button><button class="btn sm" data-tpl="'+tp.id+'">'+I("plus")+t("tpl.use")+"</button></div></div>").join("")+"</div></div></details>";
   /* historico */
   const lg=STATE.logs.slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,15);
   h+='<details class="fold"><summary>'+I("history")+t("wk.history")+(lg.length?' <span class="pill" style="margin-left:6px">'+STATE.logs.length+"</span>":"")+"</summary><div class='fb'>"+
