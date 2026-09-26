@@ -3,6 +3,33 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.8.0",
+   "data": "2026-09-26",
+   "hora": "12:30:00",
+   "pt": [
+    "Cofre de chaves de IA: uma chave por serviço (Gemini, OpenAI, Anthropic), lista com quem já tem chave no topo e selo \"✓ chave salva\" / \"sem chave\". Salvar e testar confere o formato e testa no serviço; resposta \"falta permissão\" conta como chave válida.",
+    "Se a IA escolhida falhar (sem cota, sem crédito ou chave recusada), o app espera uns 3 segundos e usa a próxima com chave, avisando na tela: \"🔁 <IA> está sem cota agora — usando <outra>\".",
+    "Visual mais leve, principalmente no celular: cantos mais suaves, barra de baixo flutuante, cabeçalho só com ícones (🔍 ⚙ 🏠 👤) e PT | EN no topo do menu ☰. A faixa do topo ficou só com anúncio.",
+    "AssistONE: o ajudante redondo do canto. Começa pela tela em que você está, com atalhos, e abre o tour, o passo a passo, a busca e a ajuda da tela. Dica curta por tela, uma vez só. Liga e desliga em Mais › Preferências.",
+    "O botão Voltar do celular agora navega dentro do app: fecha janela, menu e tela cheia, volta tela a tela, e na tela inicial avisa antes de sair.",
+    "Dieta ganhou as abas Alimentos e Pratos e sugestões (inspirado no Desrotulando): rótulo lido vira alimento com tabela por 100 g e calculadora de porção; perfil alimentar (objetivos e restrições) filtra as sugestões de pratos, monta o plano do dia e avisa \"Para você\" no rótulo; pratos próprios; cardápio pela IA do cofre.",
+    "Câmera com foco por toque, medidor de nitidez ao vivo, lanterna e foto em resolução cheia. OCR endireita, recorta, amplia e limpa a imagem e faz até três leituras escolhendo a melhor; dá para girar a foto.",
+    "Aparelhos da academia: 53 aparelhos em desenho de linha, busca por termo (perna, braço, cadeira, polia…), ficha com desenho ampliável e a marcação \"Tenho\", que filtra a biblioteca por \"só o que eu tenho\". O arquivo aparelhos/<id>.png substitui o desenho quando existir.",
+    "Bonecos de agachamento, agachamento com barra e afundo redesenhados na vista de frente."
+   ],
+   "en": [
+    "AI key vault: one key per service (Gemini, OpenAI, Anthropic), list with the ones that already have a key on top and the \"✓ key saved\" / \"no key\" badge. Save and test checks the format and tests at the service; a \"missing permission\" answer counts as a valid key.",
+    "If the chosen AI fails (no quota, no credit or key refused), the app waits about 3 seconds and uses the next one with a key, telling you on screen: \"🔁 <AI> is out of quota right now — using <other>\".",
+    "Lighter look, mostly on the phone: softer corners, floating bottom bar, icon-only header (🔍 ⚙ 🏠 👤) and PT | EN at the top of the ☰ menu. The top strip now holds ads only.",
+    "AssistONE: the round helper in the corner. It starts with the screen you are on, with shortcuts, and opens the tour, the step-by-step, search and the screen help. One short tip per screen, once. On/off under More › Preferences.",
+    "The phone's Back button now navigates inside the app: closes dialogs, menu and full-screen views, goes back screen by screen, and warns on the home screen before leaving.",
+    "Diet gained the Foods and Dishes and suggestions tabs (inspired by Desrotulando): a read label becomes a food with a per-100 g table and portion calculator; the food profile (goals and restrictions) filters dish suggestions, builds the day plan and shows \"For you\" on the label; your own dishes; a menu from the vault's AI.",
+    "Camera with tap to focus, live sharpness meter, torch and full-resolution photo. OCR straightens, crops, enlarges and cleans the image and reads up to three times keeping the best; the photo can be rotated.",
+    "Gym machines: 53 machines as line drawings, search by term (leg, arm, seat, cable…), a sheet with a zoomable drawing and the \"I have it\" tick, which filters the library by \"only what I have\". The file aparelhos/<id>.png replaces the drawing when present.",
+    "Squat, barbell squat and lunge figures redrawn in the front view."
+   ]
+  },
+  {
    "v": "3.7.0",
    "data": "2026-09-25",
    "pt": [

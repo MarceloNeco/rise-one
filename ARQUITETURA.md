@@ -28,6 +28,7 @@ Tudo roda no navegador da pessoa e os dados ficam no aparelho dela (`localStorag
 | `fotos-exercicios.jpg` | **Opcional.** Mosaico 6×6 com fotos das posições de alguns exercícios. Sem ele, o app mostra só o boneco animado | Sim, mas mantendo a ordem dos quadros (ver `PHOTOS` no código) |
 | `ajuda-botao.png`, `ajuda-icone.png` | **Opcionais.** Ícone Assist ONE do botão de ajuda. Sem eles, o app usa um ícone desenhado em SVG | Colocar os arquivos do portfólio |
 | `TESTE-riseone.html` | Página de teste das diretrizes (abre no mesmo endereço do app) | Sim |
+| `aparelhos/<id>.png` | **Opcionais.** Desenho técnico sem fundo de cada aparelho (ids em `EQUIP`, ex.: `torre-polia.png`). Sem o arquivo, o app usa o desenho em linha | Sim, um por aparelho |
 | `README.md`, `ARQUITETURA.md` | Estes textos | Sim |
 | `.github/workflows/static.yml` | Publica o site a cada upload. **Nunca apagar a pasta `.github`** | Não |
 
@@ -89,6 +90,28 @@ Procure pelo número para ir direto ao assunto.
 - **Acessibilidade** — `A11Y_DEF`, `setA11y(chave, valor)`, `applyA11y()` (põe `data-fs`, `data-contrast`,
   `data-motion`, `data-links`, `data-read` no `<html>`; o CSS faz o resto).
 - **32. Inicialização** — `boot()` e a API pública `window.RISE`.
+- **11c. Voltar do celular** — `NAV`, `navPush`/`navReplace`/`navDrop`, `navRoute` e o único `popstate`
+  do app. Janela (`modal`), gaveta, telas cheias (cronômetro, rotina, espelho) e cada tela entram no
+  histórico; abas não se empilham; na tela inicial o primeiro Voltar avisa e o segundo sai. Nada de
+  `pushState` fora daqui.
+- **24b. Alimentos, pratos e sugestões** — `STATE.foods` (rótulo ou cadastro, por 100 g), `STATE.dishes`,
+  `STATE.diet.prefs` (objetivos e restrições), `NUT_RESTR` (o que denuncia cada restrição na lista de
+  ingredientes), `PRATOS` (pratos prontos com alimentos da tabela `FOODS`), `pratoNota`/`sugerirPratos`/
+  `planoDoDia`, `nutForYouHTML` (o "Para você" do rótulo) e `nutAskAI` (cardápio pela IA do cofre).
+- **49. Cofre de IA** — `AI_PROVIDERS` (id, nome, começo da chave), `aiCfg().keys` (uma chave por serviço),
+  `aiTest` (testa no serviço; 403 "falta permissão" conta como válida), `aiAsk(pergunta, aoAvisar)` com
+  a troca automática (`aiFalha` decide se foi cota ou chave; `AI_SKIP` evita insistir por 10 min).
+- **50b. AssistONE** — `assistOpen/assistClose/assistToggle`, `ASSIST_ACOES` (atalhos por tela),
+  `assistOnRoute` (dica por tela, uma vez), `assistCard` (Preferências). `ROOT.prefs.assist` liga/desliga.
+- **60. Câmera** — além do que já havia: `camFocusOnce` (toque = foco no ponto), `camFocusContinuous`,
+  `camMeterStart` (nitidez ao vivo), `camTorch`, e `ImageCapture.takePhoto` com fallback para o vídeo.
+  **OCR**: `ocrEstimateAngle` (inclinação), `ocrCanvas` (girar, recortar o papel, ampliar, binarizar),
+  `ocrParsedOk` (a leitura do modo entendeu?), `ocrWorker` (um worker reaproveitado) e `runOCR` com três
+  passagens escolhendo a melhor.
+- **Aparelhos** — `EQUIP` (desenho em linha de cada um), `EQ_TAGS` (grupos e termos de busca),
+  `STATE.equipHave` ("tenho"), `eqBusca`, `eqModal` (ficha ampliável) e `eqFig`: se existir o arquivo
+  **`aparelhos/<id>.png`** (fundo transparente, com o nome do aparelho no desenho se quiser), ele cobre
+  o desenho em linha. É aí que entram as artes técnicas geradas fora do app.
 
 ## O que não se toca sem pensar duas vezes
 

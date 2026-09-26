@@ -5,6 +5,27 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.8.0 — cofre de IA, AssistONE, Voltar do celular, alimentos e aparelhos
+
+- **Cofre de chaves de IA.** Uma chave por serviço (Gemini, OpenAI, Anthropic). A lista mostra no topo
+  quem já tem chave, com o selo "✓ chave salva" / "sem chave". **Salvar e testar** confere o formato
+  (`AIza`, `sk-`, `sk-ant-`) e testa no serviço; quando o serviço responde "falta permissão", a chave
+  é aceita como válida. Se a IA escolhida falhar (sem cota, sem crédito, chave recusada), o app espera
+  uns 3 segundos e usa a próxima com chave, avisando na tela.
+- **Visual mais leve.** Cantos mais suaves, barra de baixo flutuante, cabeçalho só com ícones no
+  celular (🔍 ⚙ 🏠 👤) e PT | EN no topo do ☰. A faixa do topo ficou só com anúncio.
+- **AssistONE.** O ajudante redondo do canto começa pela tela atual com atalhos e abre tour, passo a
+  passo, busca e ajuda da tela. Dica curta por tela, uma vez. Liga/desliga em Mais › Preferências.
+- **Voltar do celular dentro do app.** Fecha janela, menu e tela cheia, volta tela a tela e avisa
+  antes de sair.
+- **Dieta › Alimentos e Pratos e sugestões.** Rótulo lido vira alimento com tabela por 100 g e
+  calculadora de porção ("cabe na meta: até X g"); perfil alimentar com objetivos e restrições filtra
+  as sugestões, monta o plano do dia e marca "Para você" no rótulo; pratos próprios; cardápio pela IA.
+- **Câmera e OCR.** Foco por toque e contínuo, medidor de nitidez ao vivo, lanterna, foto em
+  resolução cheia. O OCR endireita, recorta, amplia e limpa a imagem e faz até três leituras.
+- **Aparelhos da academia.** 53 aparelhos em desenho de linha, busca por termo, ficha ampliável e a
+  marcação "Tenho", que filtra a biblioteca. Um `aparelhos/<id>.png` sem fundo substitui o desenho.
+
 ## Novo na versão 3.7.0 — importar o PDF direto, e a faixa do laudo no gráfico
 
 - **Importar agora aceita o PDF do laudo.** Antes o botão só abria `.json`, então quem tinha o PDF
