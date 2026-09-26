@@ -871,6 +871,12 @@ main{padding-bottom:88px}
 .eqfig>img.ok{opacity:1;background:#fff}
 .eqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .eqgrid2{display:grid;grid-template-columns:1fr;gap:10px}
+.ytlist{display:grid;gap:8px}
+.ytitem{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:12px;overflow:hidden;background:#000;cursor:pointer;padding:0}
+.ytitem img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.ytitem .yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.ytitem .yt-t{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-size:.82rem;font-weight:700;text-align:left}
+.ytframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000}
 @media (max-width:600px){ .rc-tiles{grid-template-columns:1fr 1fr;gap:6px} .rc-tiles .tile{padding:8px;min-height:0} .rc-tiles .tile .ibub{width:30px;height:30px} .rc-tiles .tile .tl{font-size:.82rem} .rc-tiles .tile .td{font-size:.68rem} }
 @media (min-width:760px){ .eqgrid2{grid-template-columns:1fr 1fr} }
 .eqcard2{display:flex;gap:12px;align-items:stretch;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px}
@@ -2059,6 +2065,11 @@ Object.assign(L,{
 "eq.noHits":["Nenhum aparelho com esse termo.","No machine matches that."],
 "eq.yesHave":["Sim, eu tenho","Yes, I have it"],
 "eq.ident":["Identificar pela foto (IA)","Identify by photo (AI)"],
+"eq.videos":["Vídeos","Videos"],
+"eq.ytSearch":["Buscar vídeos no YouTube","Search videos on YouTube"],
+"eq.ytHow":["como usar","how to use"],
+"eq.ytNote":["Os vídeos são do YouTube e abrem só quando você toca. O app não guarda nada.","Videos come from YouTube and load only when you tap. The app stores nothing."],
+"eq.central":["Conteúdo publicado pelo RootifyONE","Content published by RootifyONE"],
 "eq.identSub":["Fotografe o aparelho e a IA diz qual é. A foto vai para a IA que você configurou no cofre; não vai nada seu junto.","Photograph the machine and the AI says which one it is. The photo goes to the AI you set up in the vault; nothing personal goes with it."],
 "eq.identWait":["Olhando a foto…","Looking at the photo…"],
 "eq.identHit":["Parece ser:","Looks like:"],
@@ -2956,7 +2967,56 @@ const EQ_DESC={
  bosu:["Meia bola com base plana. Equilíbrio e abdômen.","Half ball on a flat base. Balance and core.","meia bola bola cortada equilibrio"],
  "abdominal-maquina":["Sentado, você dobra o tronco contra uma resistência. Abdômen.","Seated, you curl your torso against resistance. Core.","abdominal sentado maquina de abdominal"]
 };
-function eqDesc(id){ const d=EQ_DESC[id]; return d? (LANG==="pt"?d[0]:d[1]) : ""; }
+/* ---- Conteúdo central (RootifyONE → solverone-dados/conteudo/rise-one/aparelhos.json) ----
+   Texto, foto e vídeos de cada aparelho podem ser trocados no RootifyONE sem mexer no app. Ordem: cópia guardada
+   no aparelho → arquivo central (rede primeiro, 4 s) → reserva local conteudo-aparelhos.json. Nunca derruba a tela. */
+const CONT={aparelhos:{}};
+function contBase(){ return location.origin+"/solverone-dados/"; }
+function contApply(j){
+  if(!j || !Array.isArray(j.aparelhos)) return;
+  CONT.aparelhos={};
+  j.aparelhos.forEach(a=>{
+    if(!a || !a.id || a.ativo===false) return;
+    CONT.aparelhos[a.id]=a;
+    if(!EQUIP[a.id]){ EQ(a.id, (a.nome&&a.nome.pt)||a.id, (a.nome&&a.nome.en)||a.id, EQUIP.maquina.svg); }
+    if(!EQ_TAGS[a.id] || (a.grupos&&a.grupos.length)) EQ_TAGS[a.id]=Object.assign({g:[],k:""}, EQ_TAGS[a.id]||{}, a.grupos&&a.grupos.length?{g:a.grupos}:{});
+  });
+}
+function contLoad(){
+  try{ const c=JSON.parse(localStorage.getItem("rise:conteudo")||"null"); if(c) contApply(c); }catch(e){}
+  if(!navigator.onLine) return;
+  const ctl=("AbortController" in window)? new AbortController() : null;
+  if(ctl) setTimeout(()=>ctl.abort(), 4000);
+  fetch(contBase()+"conteudo/rise-one/aparelhos.json", Object.assign({cache:"no-cache"}, ctl?{signal:ctl.signal}:{}))
+    .then(r=>r.ok? r.json() : null).catch(()=>null)
+    .then(j=>j || fetch("conteudo-aparelhos.json",{cache:"no-cache"}).then(r=>r.ok? r.json() : null).catch(()=>null))
+    .then(j=>{ if(!j) return; contApply(j); try{ localStorage.setItem("rise:conteudo", JSON.stringify(j)); }catch(e){} if(ROUTE==="ex") render(); });
+}
+function contDe(id){ return CONT.aparelhos[id]||null; }
+/* foto: "app:aparelhos/x.png" (arquivo do próprio app), caminho no solverone-dados, endereço https ou data: */
+function contFoto(id){
+  const c=contDe(id), f=c&&c.foto;
+  if(!f) return "aparelhos/"+id+".png";
+  if(f.indexOf("app:")===0) return f.slice(4);
+  if(/^(https?:|data:)/.test(f)) return f;
+  return contBase()+f;
+}
+function contVideos(id){ const c=contDe(id); return (c&&c.videos||[]).filter(v=>v&&v.url); }
+function ytId(url){ const m=String(url||"").match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{6,})/); return m? m[1] : ""; }
+function ytHTML(id){
+  const vids=contVideos(id), nome=eqName(id);
+  const busca="https://www.youtube.com/results?search_query="+encodeURIComponent(nome+" "+t("eq.ytHow"));
+  let h='<div class="sep"></div><span class="kicker">'+t("eq.videos")+'</span>';
+  if(vids.length) h+='<div class="ytlist" style="margin-top:8px">'+vids.map(v=>{ const y=ytId(v.url); if(!y) return "";
+    return '<button class="ytitem" data-yt="'+esc(y)+'" aria-label="'+esc(v.titulo||nome)+'"><img src="https://img.youtube.com/vi/'+esc(y)+'/mqdefault.jpg" alt="" loading="lazy"><span class="yt-play">▶</span><span class="yt-t">'+esc(v.titulo||nome)+"</span></button>"; }).join("")+"</div>";
+  h+='<a class="btn sm line" style="margin-top:8px" href="'+busca+'" target="_blank" rel="noopener">'+I("search")+t("eq.ytSearch")+"</a>"+
+     '<p class="tiny muted" style="margin-top:6px">'+t("eq.ytNote")+"</p>";
+  return h;
+}
+function ytWire(root){
+  root.querySelectorAll("[data-yt]").forEach(b=>b.onclick=()=>{ const y=b.getAttribute("data-yt"); const f=document.createElement("iframe"); f.src="https://www.youtube-nocookie.com/embed/"+y+"?autoplay=1"; f.allow="autoplay; encrypted-media; picture-in-picture"; f.allowFullscreen=true; f.title=b.getAttribute("aria-label")||"YouTube"; b.replaceWith(f); f.className="ytframe"; });
+}
+function eqDesc(id){ const c=contDe(id); if(c&&c.descricao&&c.descricao[LANG]) return c.descricao[LANG]; const d=EQ_DESC[id]; return d? (LANG==="pt"?d[0]:d[1]) : ""; }
 /* cartão "for dummies": foto grande, nome, o que é, e o botão "Sim, eu tenho" — usado na biblioteca e em Meus recursos */
 /* Identificar pela foto: a IA do cofre (visão) recebe a foto pequena e a lista de aparelhos, e devolve os ids. Nada da pessoa vai junto. */
 function eqShrink(dataUrl, cb){
@@ -2992,7 +3052,7 @@ function eqIdentify(onDone){
 }
 function eqCardHTML(e){
   return '<div class="eqcard2'+(eqHave(e.id)?" have":"")+'"><button class="eqopen" data-eqsheet="'+e.id+'" aria-label="'+esc(t("eq.sheet"))+'">'+eqFig(e)+"</button>"+
-    '<div class="eqinfo"><div class="nm">'+esc(LANG==="pt"?e.pt:e.en)+'</div><div class="ds">'+esc(eqDesc(e.id))+"</div>"+
+    '<div class="eqinfo"><div class="nm">'+esc(eqName(e.id))+'</div><div class="ds">'+esc(eqDesc(e.id))+"</div>"+
     '<label class="eqtenho"><input type="checkbox" data-eqhave="'+e.id+'" '+(eqHave(e.id)?"checked":"")+'><span class="tr"></span><span>'+t("eq.yesHave")+"</span></label></div></div>";
 }
 function eqHave(id){ return !!(STATE.equipHave && STATE.equipHave[id]); }
@@ -3044,7 +3104,7 @@ function recursosCard(){
 /* desenho técnico do aparelho: quando existe o arquivo aparelhos/<id>.png (sem fundo), ele cobre o ícone; senão fica o ícone */
 function eqFig(e){
   const mine=STATE.equipPhotos&&STATE.equipPhotos[e.id];
-  return '<div class="eqfig">'+e.svg+'<img src="aparelhos/'+e.id+'.png" alt="" loading="lazy" onload="this.classList.add(\'ok\')" onerror="this.remove()">'+(mine?'<img class="eqmine2" src="'+mine+'" alt="">':"")+"</div>";
+  return '<div class="eqfig">'+e.svg+'<img src="'+esc(contFoto(e.id))+'" alt="" loading="lazy" onload="this.classList.add(\'ok\')" onerror="this.remove()">'+(mine?'<img class="eqmine2" src="'+mine+'" alt="">':"")+"</div>";
 }
 function eqBusca(q, grupo){
   const x=norm(q).trim();
@@ -3052,8 +3112,8 @@ function eqBusca(q, grupo){
     const tg=EQ_TAGS[e.id]||{g:[],k:""};
     if(grupo && tg.g.indexOf(grupo)<0) return false;
     if(!x) return true;
-    const d=EQ_DESC[e.id]||["","",""];
-    const hay=norm(e.id+" "+e.pt+" "+e.en+" "+tg.k+" "+d[2]+" "+d[0]+" "+d[1]+" "+tg.g.map(g=>t("eq.g."+g)).join(" "));
+    const d=EQ_DESC[e.id]||["","",""], c=CONT.aparelhos[e.id]||{};
+    const hay=norm(e.id+" "+e.pt+" "+e.en+" "+eqName(e.id)+" "+tg.k+" "+d[2]+" "+(c.termos||"")+" "+eqDesc(e.id)+" "+d[0]+" "+d[1]+" "+tg.g.map(g=>t("eq.g."+g)).join(" "));
     return x.split(/\s+/).every(w=>hay.indexOf(w)>=0);
   });
 }
@@ -3061,19 +3121,21 @@ function eqBusca(q, grupo){
 function eqModal(id){
   const e=EQUIP[id]; if(!e) return;
   const tg=EQ_TAGS[id]||{g:[]};
-  const m=modal(mh(LANG==="pt"?e.pt:e.en)+
+  const m=modal(mh(eqName(id))+
     '<div class="eqbig" id="eqbig">'+eqFig(e)+"</div>"+
-    '<div class="row" style="margin-top:8px"><button class="btn xs line" id="eqzoom">'+I("zoomin")+t("eq.zoom")+'</button><a class="btn xs ghost" id="eqopen" href="aparelhos/'+e.id+'.png" target="_blank" rel="noopener">'+I("upload")+t("eq.open")+"</a></div>"+
+    '<div class="row" style="margin-top:8px"><button class="btn xs line" id="eqzoom">'+I("zoomin")+t("eq.zoom")+'</button><a class="btn xs ghost" id="eqopen" href="'+esc(contFoto(e.id))+'" target="_blank" rel="noopener">'+I("upload")+t("eq.open")+"</a></div>"+
     (eqDesc(id)?'<p style="margin:10px 0 0"><span class="kicker">'+t("eq.what")+'</span><br>'+esc(eqDesc(id))+"</p>":"")+
     '<div class="chips" style="margin:10px 0">'+tg.g.map(g=>'<span class="chip">'+t("eq.g."+g)+"</span>").join("")+"</div>"+
     '<label class="switch"><input type="checkbox" id="eqhave" '+(eqHave(id)?"checked":"")+'><span class="tr"></span><span>'+t("eq.have")+"</span></label>"+
-    '<div class="row" style="justify-content:space-between;margin-top:12px"><button class="btn sm line" id="eqphoto">'+I("camera")+t("ex.takephoto")+'</button><button class="btn sm" id="eqex">'+t("body.seeEx")+"</button></div>",{wide:true});
+    '<div class="row" style="justify-content:space-between;margin-top:12px"><button class="btn sm line" id="eqphoto">'+I("camera")+t("ex.takephoto")+'</button><button class="btn sm" id="eqex">'+t("body.seeEx")+"</button></div>"+
+    ytHTML(id)+(contDe(id)?'<p class="tiny muted" style="margin-top:8px">'+t("eq.central")+"</p>":""),{wide:true});
+  ytWire(m);
   m.querySelector("#eqzoom").onclick=()=>m.querySelector("#eqbig").classList.toggle("zoom");
   m.querySelector("#eqhave").onchange=ev=>{ eqSetHave(id, ev.target.checked); if(ROUTE==="ex") render(); };
   m.querySelector("#eqex").onclick=()=>{ m.remove(); EXF.eqs=[id]; EXF.eq=""; EXF.q=""; EXF.eqOpen=false; go("ex"); };
   m.querySelector("#eqphoto").onclick=()=>pickImage(dataUrl=>{ STATE.equipPhotos=STATE.equipPhotos||{}; STATE.equipPhotos[id]=dataUrl; save(); m.remove(); eqModal(id); toast(t("common.saved")); });
   /* sem o arquivo do desenho, o link "abrir" não faz sentido */
-  const probe=new Image(); probe.onerror=()=>{ const a=m.querySelector("#eqopen"); if(a) a.remove(); }; probe.src="aparelhos/"+e.id+".png";
+  const probe=new Image(); probe.onerror=()=>{ const a=m.querySelector("#eqopen"); if(a) a.remove(); }; probe.src=contFoto(e.id);
 }
 
 /* aparelhos da academia fotografada (set/2026): desenho em linha com os estofados sombreados. _f = estofado */
@@ -3250,7 +3312,7 @@ const EXI = {}; EXS.forEach(x=>EXI[x.id]=x);
 function exName(x){ return LANG==="pt"?x.pt:x.en; }
 function exTip(x){ return LANG==="pt"?x.tpt:x.ten; }
 function exTech(x){ return LANG==="pt"?x.gpt:x.gen; }
-function eqName(id){ const e=EQUIP[id]; return e?(LANG==="pt"?e.pt:e.en):id; }
+function eqName(id){ const c=(typeof CONT!=="undefined")&&CONT.aparelhos[id]; if(c&&c.nome&&c.nome[LANG]) return c.nome[LANG]; const e=EQUIP[id]; return e?(LANG==="pt"?e.pt:e.en):id; }
 
 /* ---------- 6. DATAS E FORMATOS ---------- */
 const MON = {pt:["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],
@@ -12873,6 +12935,7 @@ function paintAnimSVG(svg, fr, d, vista){
 /* ---------- 32. INICIALIZACAO ---------- */
 function boot(){
   loadRoot();
+  try{ contLoad(); }catch(e){}
   LANG = ROOT.prefs.lang || "pt";
   applyTheme(ROOT.prefs.theme || "dark");
   applyBg(ROOT.prefs.bg===undefined ? true : !!ROOT.prefs.bg);

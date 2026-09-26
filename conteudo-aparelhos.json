@@ -1,0 +1,1007 @@
+{
+ "formato": 1,
+ "app": "rise-one",
+ "geradoEm": "2026-09-26T14:51:53.555Z",
+ "origem": "reserva local do RiseONE (o RootifyONE publica a versão central em solverone-dados/conteudo/rise-one/aparelhos.json)",
+ "aparelhos": [
+  {
+   "id": "livre",
+   "nome": {
+    "pt": "Peso do corpo",
+    "en": "Bodyweight"
+   },
+   "descricao": {
+    "pt": "Só você e o chão: flexão, agachamento, prancha. Serve em casa, na rua, em qualquer lugar.",
+    "en": "Just you and the floor: push-ups, squats, planks. Works at home, outside, anywhere."
+   },
+   "termos": "sem nada casa rua parque chao",
+   "grupos": [
+    "livre"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "halter",
+   "nome": {
+    "pt": "Halteres",
+    "en": "Dumbbells"
+   },
+   "descricao": {
+    "pt": "Pesos de mão, um em cada mão. Os mais comuns de casa e academia; servem para braço, ombro, peito e perna.",
+    "en": "Hand weights, one in each hand. The most common at home and in gyms; for arms, shoulders, chest and legs."
+   },
+   "termos": "peso de mao pesinho pesos",
+   "grupos": [
+    "bracos",
+    "peito",
+    "ombros",
+    "pernas"
+   ],
+   "foto": "app:aparelhos/halter.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "barra",
+   "nome": {
+    "pt": "Barra",
+    "en": "Barbell"
+   },
+   "descricao": {
+    "pt": "Barra comprida de ferro onde se colocam as anilhas (discos). Para agachar, supino e levantamento.",
+    "en": "Long iron bar you load with plates. For squats, bench press and deadlifts."
+   },
+   "termos": "barra grande discos",
+   "grupos": [
+    "peito",
+    "costas",
+    "pernas"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "banco",
+   "nome": {
+    "pt": "Banco",
+    "en": "Bench"
+   },
+   "descricao": {
+    "pt": "Banco acolchoado para deitar ou sentar enquanto levanta peso.",
+    "en": "Padded bench to lie or sit on while lifting."
+   },
+   "termos": "banco reto banquinho",
+   "grupos": [
+    "peito",
+    "bracos",
+    "cadeiras"
+   ],
+   "foto": "app:aparelhos/banco.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "polia-alta",
+   "nome": {
+    "pt": "Polia alta / puxador",
+    "en": "Lat pulldown"
+   },
+   "descricao": {
+    "pt": "Puxador com cabo que vem de cima: você senta e puxa a barra até o peito. Trabalha as costas.",
+    "en": "Cable pulled from above: you sit and pull the bar down to your chest. Works the back."
+   },
+   "termos": "puxador puxada costas cabo de cima",
+   "grupos": [
+    "costas",
+    "bracos",
+    "polias"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "polia-baixa",
+   "nome": {
+    "pt": "Polia baixa / remada",
+    "en": "Cable row"
+   },
+   "descricao": {
+    "pt": "Cabo que sai de baixo, na altura do chão: você senta e puxa para o corpo. Costas e braços.",
+    "en": "Cable coming from floor level: you sit and pull towards you. Back and arms."
+   },
+   "termos": "remada sentado cabo de baixo",
+   "grupos": [
+    "costas",
+    "bracos",
+    "polias"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "crossover",
+   "nome": {
+    "pt": "Crossover",
+    "en": "Cable crossover"
+   },
+   "descricao": {
+    "pt": "Duas torres com cabos, uma de cada lado, e você no meio. Peito, ombro e braço.",
+    "en": "Two cable towers, one each side, you in the middle. Chest, shoulders and arms."
+   },
+   "termos": "cabos dos dois lados cruzamento",
+   "grupos": [
+    "peito",
+    "ombros",
+    "polias"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "maquina",
+   "nome": {
+    "pt": "Máquina guiada",
+    "en": "Machine"
+   },
+   "descricao": {
+    "pt": "Qualquer aparelho com assento, pino de peso e alavanca: o movimento já vem guiado.",
+    "en": "Any machine with a seat, weight pin and lever: the movement is guided for you."
+   },
+   "termos": "aparelho de pino qualquer maquina",
+   "grupos": [
+    "pernas",
+    "peito",
+    "costas",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "smith",
+   "nome": {
+    "pt": "Smith / guiada",
+    "en": "Smith machine"
+   },
+   "descricao": {
+    "pt": "Barra presa em trilhos que só sobe e desce. Mais segura para agachar e supino sozinho.",
+    "en": "A bar locked into rails that only goes up and down. Safer to squat or bench alone."
+   },
+   "termos": "barra guiada trilho",
+   "grupos": [
+    "pernas",
+    "peito"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "leg-press",
+   "nome": {
+    "pt": "Leg press",
+    "en": "Leg press"
+   },
+   "descricao": {
+    "pt": "Você senta ou deita inclinado e empurra uma plataforma com os pés. Coxa e bumbum.",
+    "en": "You sit or lie back and push a platform with your feet. Thighs and glutes."
+   },
+   "termos": "empurrar com os pes plataforma pernas",
+   "grupos": [
+    "pernas",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "extensora",
+   "nome": {
+    "pt": "Cadeira extensora",
+    "en": "Leg extension"
+   },
+   "descricao": {
+    "pt": "Cadeira com rolo na frente das canelas: você estica as pernas. Frente da coxa.",
+    "en": "Chair with a pad in front of your shins: you straighten your legs. Front of the thigh."
+   },
+   "termos": "cadeira de perna esticar perna coxa",
+   "grupos": [
+    "pernas",
+    "cadeiras"
+   ],
+   "foto": "app:aparelhos/extensora.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "flexora",
+   "nome": {
+    "pt": "Mesa flexora",
+    "en": "Leg curl"
+   },
+   "descricao": {
+    "pt": "Deitado de bruços, você dobra os joelhos contra um rolo. Parte de trás da coxa.",
+    "en": "Lying face down, you bend your knees against a pad. Back of the thigh."
+   },
+   "termos": "dobrar perna deitado posterior",
+   "grupos": [
+    "pernas",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "abdutora",
+   "nome": {
+    "pt": "Cadeira abdutora/adutora",
+    "en": "Ab/adductor machine"
+   },
+   "descricao": {
+    "pt": "Cadeira que abre ou fecha as pernas contra uma resistência. Lado da coxa e bumbum.",
+    "en": "Chair that opens or closes your legs against resistance. Outer thigh and glutes."
+   },
+   "termos": "abrir e fechar pernas cadeira",
+   "grupos": [
+    "pernas",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "peck",
+   "nome": {
+    "pt": "Peck deck / voador",
+    "en": "Pec deck"
+   },
+   "descricao": {
+    "pt": "Sentado, você junta os braços na frente do peito, como um abraço. Peito.",
+    "en": "Seated, you bring your arms together in front like a hug. Chest."
+   },
+   "termos": "voador abraco peito",
+   "grupos": [
+    "peito",
+    "costas",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "graviton",
+   "nome": {
+    "pt": "Barra fixa / graviton",
+    "en": "Pull-up bar"
+   },
+   "descricao": {
+    "pt": "Barra fixa para subir com os braços; o graviton tem um apoio que ajuda quem ainda não consegue.",
+    "en": "Pull-up bar; the assisted version has a pad that helps if you can't do one yet."
+   },
+   "termos": "barra fixa pendurar subir",
+   "grupos": [
+    "costas",
+    "bracos",
+    "abdomen"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "esteira",
+   "nome": {
+    "pt": "Esteira",
+    "en": "Treadmill"
+   },
+   "descricao": {
+    "pt": "Esteira para andar ou correr no lugar. A mais conhecida de todas.",
+    "en": "Treadmill to walk or run in place. The best known of all."
+   },
+   "termos": "correr andar caminhar",
+   "grupos": [
+    "cardio"
+   ],
+   "foto": "app:aparelhos/esteira.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "bike",
+   "nome": {
+    "pt": "Bicicleta ergométrica",
+    "en": "Exercise bike"
+   },
+   "descricao": {
+    "pt": "Bicicleta parada, com selim e pedais. Cardio leve para as pernas.",
+    "en": "Stationary bike with saddle and pedals. Easy cardio for the legs."
+   },
+   "termos": "bicicleta pedalar spinning",
+   "grupos": [
+    "cardio"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "elastico",
+   "nome": {
+    "pt": "Elástico / faixa",
+    "en": "Resistance band"
+   },
+   "descricao": {
+    "pt": "Faixa ou tira de borracha que estica. Cabe na mochila e substitui pesos leves.",
+    "en": "Rubber band or loop that stretches. Fits in a bag and replaces light weights."
+   },
+   "termos": "borracha faixa theraband mini band",
+   "grupos": [
+    "livre"
+   ],
+   "foto": "app:aparelhos/elastico.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "kettlebell",
+   "nome": {
+    "pt": "Kettlebell",
+    "en": "Kettlebell"
+   },
+   "descricao": {
+    "pt": "Peso redondo com alça, parece uma chaleira. Para balanço, agachamento e força.",
+    "en": "Round weight with a handle, like a kettle. For swings, squats and strength."
+   },
+   "termos": "chaleira peso com alca",
+   "grupos": [
+    "livre",
+    "pernas"
+   ],
+   "foto": "app:aparelhos/kettlebell.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "bola",
+   "nome": {
+    "pt": "Bola / colchonete",
+    "en": "Ball / mat"
+   },
+   "descricao": {
+    "pt": "Bola grande de pilates e colchonete. Abdômen, equilíbrio e alongamento.",
+    "en": "Big Swiss ball and a mat. Core, balance and stretching."
+   },
+   "termos": "bola de pilates bola grande",
+   "grupos": [
+    "abdomen",
+    "livre"
+   ],
+   "foto": "app:aparelhos/bola.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "torre-polia",
+   "nome": {
+    "pt": "Torre de polias (puxada alta + remada baixa)",
+    "en": "Cable tower (lat pulldown + low row)"
+   },
+   "descricao": {
+    "pt": "Torre preta com pino de peso e dois cabos: um de cima (puxada) e um de baixo (remada). Costas e braços.",
+    "en": "Black tower with a weight pin and two cables: one from the top (pulldown) and one from the bottom (row). Back and arms."
+   },
+   "termos": "torre cabo pino puxador remada",
+   "grupos": [
+    "costas",
+    "bracos",
+    "polias"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "polia-dupla",
+   "nome": {
+    "pt": "Estação de polias (bíceps / tríceps)",
+    "en": "Pulley station (biceps / triceps)"
+   },
+   "descricao": {
+    "pt": "Coluna com duas alturas de cabo: puxa de cima para tríceps, de baixo para bíceps.",
+    "en": "Column with cable at two heights: pull from the top for triceps, from the bottom for biceps."
+   },
+   "termos": "cabo biceps triceps coluna",
+   "grupos": [
+    "bracos",
+    "polias"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "ext-flex",
+   "nome": {
+    "pt": "Cadeira extensora / flexora",
+    "en": "Leg extension / curl machine"
+   },
+   "descricao": {
+    "pt": "Cadeira com rolos nas pernas que faz dois exercícios: esticar (frente da coxa) e dobrar (trás da coxa).",
+    "en": "Chair with leg pads that does both: straighten (front of thigh) and bend (back of thigh)."
+   },
+   "termos": "cadeira rolo perna dois em um",
+   "grupos": [
+    "pernas",
+    "cadeiras"
+   ],
+   "foto": "app:aparelhos/ext-flex.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "press-alavanca",
+   "nome": {
+    "pt": "Supino / desenvolvimento articulado",
+    "en": "Lever chest / shoulder press"
+   },
+   "descricao": {
+    "pt": "Sentado, você empurra duas alavancas para a frente ou para cima. Peito e ombro.",
+    "en": "Seated, you push two levers forward or up. Chest and shoulders."
+   },
+   "termos": "empurrar alavanca peito ombro",
+   "grupos": [
+    "peito",
+    "ombros",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "banco-regulavel",
+   "nome": {
+    "pt": "Banco regulável (reto / inclinado)",
+    "en": "Adjustable bench"
+   },
+   "descricao": {
+    "pt": "Banco que inclina o encosto em vários ângulos. Para supino, ombro e sentar com halteres.",
+    "en": "Bench whose backrest tilts to several angles. For presses, shoulders and seated dumbbell work."
+   },
+   "termos": "banco inclinado banco que levanta",
+   "grupos": [
+    "peito",
+    "bracos",
+    "cadeiras"
+   ],
+   "foto": "app:aparelhos/banco-regulavel.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "banco-abdominal",
+   "nome": {
+    "pt": "Banco abdominal (apoio de pés)",
+    "en": "Ab bench (foot rollers)"
+   },
+   "descricao": {
+    "pt": "Banco inclinado com rolos para prender os pés. Para abdominal.",
+    "en": "Tilted bench with pads to hold your feet. For sit-ups."
+   },
+   "termos": "banco de abdominal prender os pes",
+   "grupos": [
+    "abdomen",
+    "cadeiras"
+   ],
+   "foto": "app:aparelhos/banco-abdominal.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "eliptico",
+   "nome": {
+    "pt": "Elíptico",
+    "en": "Elliptical"
+   },
+   "descricao": {
+    "pt": "Aparelho em que os pés deslizam em pedais grandes e as mãos seguram alavancas. Cardio sem impacto.",
+    "en": "Machine where your feet glide on big pedals and your hands hold moving bars. No-impact cardio."
+   },
+   "termos": "esqui pedal deslizar transport",
+   "grupos": [
+    "cardio"
+   ],
+   "foto": "app:aparelhos/eliptico.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "barra-w",
+   "nome": {
+    "pt": "Barra W (rosca)",
+    "en": "EZ curl bar"
+   },
+   "descricao": {
+    "pt": "Barra curta e ondulada. Para rosca de bíceps e tríceps, com pulso mais confortável.",
+    "en": "Short wavy bar. For biceps and triceps curls, easier on the wrists."
+   },
+   "termos": "barra ondulada barra torta rosca",
+   "grupos": [
+    "bracos"
+   ],
+   "foto": "app:aparelhos/barra-w.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "barra-hex",
+   "nome": {
+    "pt": "Barra hexagonal (trap bar)",
+    "en": "Trap bar"
+   },
+   "descricao": {
+    "pt": "Barra em formato de hexágono: você fica dentro dela. Para levantar peso do chão com as costas retas.",
+    "en": "Hexagon-shaped bar you stand inside. For lifting from the floor with a straight back."
+   },
+   "termos": "barra hexagonal trap bar barra que entra dentro",
+   "grupos": [
+    "pernas",
+    "costas"
+   ],
+   "foto": "app:aparelhos/barra-hex.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "anilhas",
+   "nome": {
+    "pt": "Anilhas e suporte",
+    "en": "Weight plates and rack"
+   },
+   "descricao": {
+    "pt": "Discos de peso que vão nas barras, e o suporte onde ficam guardados.",
+    "en": "Weight discs that go on bars, and the rack that stores them."
+   },
+   "termos": "discos pesos redondos",
+   "grupos": [
+    "livre",
+    "pernas",
+    "costas"
+   ],
+   "foto": "app:aparelhos/anilhas.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "espaldar",
+   "nome": {
+    "pt": "Espaldar (barra sueca)",
+    "en": "Wall bars"
+   },
+   "descricao": {
+    "pt": "Escada de madeira presa na parede, com vários degraus. Alongar, pendurar e abdominal.",
+    "en": "Wooden ladder fixed to the wall, with many rungs. Stretching, hanging and core work."
+   },
+   "termos": "escada de madeira madeira na parede barra sueca",
+   "grupos": [
+    "abdomen",
+    "costas",
+    "livre"
+   ],
+   "foto": "app:aparelhos/espaldar.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "trx",
+   "nome": {
+    "pt": "Fita de suspensão (TRX)",
+    "en": "Suspension trainer"
+   },
+   "descricao": {
+    "pt": "Duas fitas penduradas no alto com alças. Você usa o próprio peso, inclinado.",
+    "en": "Two straps hanging from above with handles. You use your own body weight, leaning."
+   },
+   "termos": "fitas penduradas fita alca",
+   "grupos": [
+    "abdomen",
+    "costas",
+    "bracos",
+    "livre"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "bola-medicinal",
+   "nome": {
+    "pt": "Bola medicinal / wall ball",
+    "en": "Medicine ball / wall ball"
+   },
+   "descricao": {
+    "pt": "Bola pesada, de couro ou borracha. Para arremessar, agachar e abdominal.",
+    "en": "Heavy leather or rubber ball. For throws, squats and core work."
+   },
+   "termos": "bola pesada bola de arremesso",
+   "grupos": [
+    "abdomen",
+    "livre"
+   ],
+   "foto": "app:aparelhos/bola-medicinal.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "rolo",
+   "nome": {
+    "pt": "Rolo de espuma e blocos",
+    "en": "Foam roller and blocks"
+   },
+   "descricao": {
+    "pt": "Rolo de espuma e blocos para massagear e soltar a musculatura.",
+    "en": "Foam roller and blocks to massage and release tight muscles."
+   },
+   "termos": "rolo massagem espuma bloco yoga",
+   "grupos": [
+    "livre"
+   ],
+   "foto": "app:aparelhos/rolo.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "caneleira",
+   "nome": {
+    "pt": "Caneleiras",
+    "en": "Ankle weights"
+   },
+   "descricao": {
+    "pt": "Peso que se prende no tornozelo com velcro. Deixa os exercícios de perna mais pesados.",
+    "en": "Weight strapped to the ankle with velcro. Makes leg exercises heavier."
+   },
+   "termos": "peso de tornozelo peso na perna velcro",
+   "grupos": [
+    "pernas",
+    "livre"
+   ],
+   "foto": "app:aparelhos/caneleira.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "roda",
+   "nome": {
+    "pt": "Roda abdominal",
+    "en": "Ab wheel"
+   },
+   "descricao": {
+    "pt": "Roda pequena com uma alça de cada lado: você rola para a frente de joelhos. Abdômen.",
+    "en": "Small wheel with a handle each side: you roll forward on your knees. Core."
+   },
+   "termos": "rodinha abdominal",
+   "grupos": [
+    "abdomen",
+    "livre"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "colchonete",
+   "nome": {
+    "pt": "Colchonete",
+    "en": "Exercise mat"
+   },
+   "descricao": {
+    "pt": "Tapete fino para deitar no chão. Abdominal, alongamento, yoga.",
+    "en": "Thin mat to lie on the floor. Core, stretching, yoga."
+   },
+   "termos": "tapete tapetinho yoga mat",
+   "grupos": [
+    "abdomen",
+    "livre"
+   ],
+   "foto": "app:aparelhos/colchonete.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "hack",
+   "nome": {
+    "pt": "Hack / agachamento guiado",
+    "en": "Hack squat"
+   },
+   "descricao": {
+    "pt": "Você fica de pé, apoiado em um encosto inclinado, e agacha em trilhos. Coxa.",
+    "en": "You stand against a tilted backrest and squat along rails. Thighs."
+   },
+   "termos": "agachamento na maquina",
+   "grupos": [
+    "pernas"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "romana",
+   "nome": {
+    "pt": "Cadeira romana (lombar)",
+    "en": "Back extension bench"
+   },
+   "descricao": {
+    "pt": "Banco em que você prende os pés e fica com o tronco solto para subir e descer. Lombar e bumbum.",
+    "en": "Bench where you lock your feet and your torso hangs free to lift and lower. Lower back and glutes."
+   },
+   "termos": "lombar banco de costas",
+   "grupos": [
+    "costas",
+    "abdomen",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "paralelas",
+   "nome": {
+    "pt": "Paralelas (mergulho)",
+    "en": "Dip station"
+   },
+   "descricao": {
+    "pt": "Duas barras paralelas na altura da cintura: você apoia as mãos e desce o corpo. Tríceps e peito.",
+    "en": "Two parallel bars at waist height: you hold on and lower your body. Triceps and chest."
+   },
+   "termos": "mergulho barras paralelas",
+   "grupos": [
+    "bracos",
+    "peito"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "remo",
+   "nome": {
+    "pt": "Remo (máquina)",
+    "en": "Rowing machine"
+   },
+   "descricao": {
+    "pt": "Aparelho em que você senta num carrinho e puxa uma alça, como remar. Corpo inteiro.",
+    "en": "Machine where you sit on a sliding seat and pull a handle, like rowing. Whole body."
+   },
+   "termos": "remar remo",
+   "grupos": [
+    "cardio",
+    "costas"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "escada",
+   "nome": {
+    "pt": "Escada (stair climber)",
+    "en": "Stair climber"
+   },
+   "descricao": {
+    "pt": "Escada que gira, como uma escada rolante ao contrário. Cardio de perna.",
+    "en": "Rotating staircase, like an escalator in reverse. Leg cardio."
+   },
+   "termos": "escada rolante subir escada",
+   "grupos": [
+    "cardio",
+    "pernas"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "gluteo",
+   "nome": {
+    "pt": "Máquina de glúteo (kickback)",
+    "en": "Glute machine"
+   },
+   "descricao": {
+    "pt": "Máquina em que você empurra uma alavanca para trás com o pé. Bumbum.",
+    "en": "Machine where you push a lever back with your foot. Glutes."
+   },
+   "termos": "bumbum chute para tras",
+   "grupos": [
+    "pernas"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "panturrilha",
+   "nome": {
+    "pt": "Máquina de panturrilha",
+    "en": "Calf machine"
+   },
+   "descricao": {
+    "pt": "Você fica na ponta dos pés contra um peso. Batata da perna.",
+    "en": "You rise on tiptoes against a weight. Calves."
+   },
+   "termos": "batata da perna ponta do pe",
+   "grupos": [
+    "pernas"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "rack",
+   "nome": {
+    "pt": "Gaiola / power rack",
+    "en": "Power rack"
+   },
+   "descricao": {
+    "pt": "Gaiola de ferro com apoios para a barra. Para agachar e supino com segurança.",
+    "en": "Iron cage with hooks for the bar. To squat and bench safely."
+   },
+   "termos": "gaiola power rack",
+   "grupos": [
+    "pernas",
+    "peito",
+    "costas"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "supino-maquina",
+   "nome": {
+    "pt": "Supino / chest press (máquina)",
+    "en": "Chest press machine"
+   },
+   "descricao": {
+    "pt": "Sentado, você empurra duas alavancas para a frente, como um supino sem barra. Peito.",
+    "en": "Seated, you push two levers forward, like a bench press without a bar. Chest."
+   },
+   "termos": "empurrar para frente peito",
+   "grupos": [
+    "peito",
+    "cadeiras"
+   ],
+   "foto": "app:aparelhos/supino-maquina.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "remada-articulada",
+   "nome": {
+    "pt": "Remada articulada (máquina)",
+    "en": "Seated row machine"
+   },
+   "descricao": {
+    "pt": "Sentado, com o peito apoiado, você puxa duas alavancas para trás. Costas.",
+    "en": "Seated with your chest on a pad, you pull two levers back. Back."
+   },
+   "termos": "puxar para tras costas apoiado",
+   "grupos": [
+    "costas",
+    "cadeiras"
+   ],
+   "foto": "app:aparelhos/remada-articulada.png",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "scott",
+   "nome": {
+    "pt": "Banco Scott (rosca)",
+    "en": "Preacher curl bench"
+   },
+   "descricao": {
+    "pt": "Banco com apoio inclinado para os braços. Para rosca de bíceps sem roubar.",
+    "en": "Bench with a tilted arm pad. For biceps curls without cheating."
+   },
+   "termos": "banco de biceps rosca",
+   "grupos": [
+    "bracos",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "corda",
+   "nome": {
+    "pt": "Corda de pular",
+    "en": "Jump rope"
+   },
+   "descricao": {
+    "pt": "Corda de pular. Cardio barato em qualquer lugar.",
+    "en": "Jump rope. Cheap cardio anywhere."
+   },
+   "termos": "pular corda",
+   "grupos": [
+    "cardio",
+    "livre"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "step",
+   "nome": {
+    "pt": "Step",
+    "en": "Step platform"
+   },
+   "descricao": {
+    "pt": "Degrau de plástico para subir e descer. Cardio e perna.",
+    "en": "Plastic step to go up and down. Cardio and legs."
+   },
+   "termos": "degrau caixote",
+   "grupos": [
+    "cardio",
+    "pernas",
+    "livre"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "bosu",
+   "nome": {
+    "pt": "Bosu / meia bola",
+    "en": "Bosu ball"
+   },
+   "descricao": {
+    "pt": "Meia bola com base plana. Equilíbrio e abdômen.",
+    "en": "Half ball on a flat base. Balance and core."
+   },
+   "termos": "meia bola bola cortada equilibrio",
+   "grupos": [
+    "abdomen",
+    "livre"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  },
+  {
+   "id": "abdominal-maquina",
+   "nome": {
+    "pt": "Abdominal (máquina)",
+    "en": "Ab crunch machine"
+   },
+   "descricao": {
+    "pt": "Sentado, você dobra o tronco contra uma resistência. Abdômen.",
+    "en": "Seated, you curl your torso against resistance. Core."
+   },
+   "termos": "abdominal sentado maquina de abdominal",
+   "grupos": [
+    "abdomen",
+    "cadeiras"
+   ],
+   "foto": "",
+   "videos": [],
+   "ativo": true
+  }
+ ]
+}

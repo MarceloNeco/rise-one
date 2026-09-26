@@ -28,6 +28,9 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
 - **Personal trainer narrado.** Escolha quem narra o treino em Preferências (Neutro, KnoX ou MuscleMill):
   frases, ritmo e tom próprios na abertura, em cada exercício, série, descanso e no fim. Fotos em
   `personal/knox.png` e `personal/musclemill.png` (incluídas).
+- **Conteúdo dos aparelhos vem do RootifyONE.** Texto, foto e vídeos do YouTube de cada aparelho são lidos de
+  `solverone-dados/conteudo/rise-one/aparelhos.json`, com `conteudo-aparelhos.json` como reserva local. Vídeos
+  aparecem na ficha do aparelho e carregam só ao tocar.
 - **Identificar aparelho pela foto (IA).** Fotografe e a IA do cofre diz qual aparelho é; o app mostra o
   cartão para marcar "Sim, eu tenho". Só a foto vai para a IA.
 - **Aparelhos para quem não entende de academia.** Cartão com foto real, nome, uma frase do que é e o
