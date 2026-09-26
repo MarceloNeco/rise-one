@@ -7,6 +7,7 @@
    "data": "2026-09-26",
    "hora": "12:30:00",
    "pt": [
+    "Filtro de aparelhos da biblioteca reorganizado: na tela ficam só os atalhos (Todos, Só o que eu tenho, Só o corpo) e os aparelhos escolhidos como fichas removíveis; a lista completa abre em \"Escolher aparelho\", com busca, categorias por tipo (pesos livres, máquinas, polias e cabos, cardio, acessórios) e \"mostrar só o que eu tenho\".",
     "Busca de vídeos no YouTube com frase própria por aparelho (\"banco regulável academia exercícios supino\" em vez de \"banco como usar\"), editável no RootifyONE.",
     "Conteúdo dos aparelhos gerenciado no RootifyONE, sem commit: texto, foto e vídeos vêm de solverone-dados/conteudo/rise-one/aparelhos.json (rede primeiro, cópia guardada, reserva local conteudo-aparelhos.json). Na ficha de cada aparelho, vídeos do YouTube: os publicados pelo admin (carregam só ao tocar, sem cookies) e o botão \"Buscar vídeos no YouTube\".",
     "Identificar aparelho pela foto (IA): fotografe o aparelho e a IA do cofre (Gemini, OpenAI ou Claude, com visão) diz qual dos aparelhos é; o app mostra o cartão para marcar \"Sim, eu tenho\" e guardar a foto. Botão em Meus recursos, na biblioteca e no AssistONE. Só a foto vai para a IA, nada seu junto.",
@@ -28,6 +29,7 @@
     "Bonecos de agachamento, agachamento com barra e afundo redesenhados na vista de frente."
    ],
    "en": [
+    "Library equipment filter reorganised: only the shortcuts stay on screen (All, Only what I have, Bodyweight) plus chosen equipment as removable tokens; the full list opens under \"Choose equipment\", with search, categories by type (free weights, machines, pulleys, cardio, accessories) and \"show only what I have\".",
     "YouTube video search with a phrase of its own per machine (no more \"bench how to use\" hitting banks), editable in RootifyONE.",
     "Equipment content managed in RootifyONE, no commit: text, photo and videos come from solverone-dados/conteudo/rise-one/aparelhos.json (network first, cached copy, local reserve conteudo-aparelhos.json). On each machine's sheet, YouTube videos: the ones published by the admin (load only on tap, no cookies) and a \"Search videos on YouTube\" button.",
     "Identify equipment by photo (AI): photograph the machine and the vault AI (Gemini, OpenAI or Claude, with vision) says which one it is; the app shows the card to tick \"Yes, I have it\" and keep the photo. Button in My gear, in the library and in AssistONE. Only the photo goes to the AI.",
