@@ -5,6 +5,37 @@ Todo o código fica em **um arquivo só**: `index.html`. Os outros arquivos são
 
 Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro: `ARQUITETURA.md`
 
+## Novo na versão 3.8.0 — cofre de IA, AssistONE, Voltar do celular, alimentos e aparelhos
+
+- **Cofre de chaves de IA.** Uma chave por serviço (Gemini, OpenAI, Anthropic). A lista mostra no topo
+  quem já tem chave, com o selo "✓ chave salva" / "sem chave". **Salvar e testar** confere o formato
+  (`AIza`, `sk-`, `sk-ant-`) e testa no serviço; quando o serviço responde "falta permissão", a chave
+  é aceita como válida. Se a IA escolhida falhar (sem cota, sem crédito, chave recusada), o app espera
+  uns 3 segundos e usa a próxima com chave, avisando na tela.
+- **Menu ☰ em grupos.** Ações rápidas no topo, grupos por intenção e partes em acordeão (Dieta, Evolução,
+  Exercícios › Aparelhos, Ajustes). Engrenagem ⚙ de Configurações no cabeçalho.
+- **Visual mais leve.** Cantos mais suaves, barra de baixo flutuante, cabeçalho só com ícones no
+  celular (🔍 ⚙ 🏠 👤) e PT | EN no topo do ☰. A faixa do topo ficou só com anúncio.
+- **AssistONE.** O ajudante redondo do canto começa pela tela atual com atalhos e abre tour, passo a
+  passo, busca e ajuda da tela. Dica curta por tela, uma vez. Liga/desliga em Mais › Preferências.
+- **Voltar do celular dentro do app.** Fecha janela, menu e tela cheia, volta tela a tela e avisa
+  antes de sair.
+- **Dieta › Alimentos e Pratos e sugestões.** Rótulo lido vira alimento com tabela por 100 g e
+  calculadora de porção ("cabe na meta: até X g"); perfil alimentar com objetivos e restrições filtra
+  as sugestões, monta o plano do dia e marca "Para você" no rótulo; pratos próprios; cardápio pela IA.
+- **Câmera e OCR.** Foco por toque e contínuo, medidor de nitidez ao vivo, lanterna, foto em
+  resolução cheia. O OCR endireita, recorta, amplia e limpa a imagem e faz até três leituras.
+- **Personal trainer narrado.** Escolha quem narra o treino em Preferências (Neutro, KnoX ou MuscleMill):
+  frases, ritmo e tom próprios na abertura, em cada exercício, série, descanso e no fim. Fotos em
+  `personal/knox.png` e `personal/musclemill.png` (incluídas).
+- **O que eu tenho para treinar.** Atalho na Início, no AssistONE e em Preferências: escolha um cenário
+  (só a rua, casa com pouca coisa, academia do prédio, academia completa) e ajuste item por item.
+- **Aparelhos da academia.** 53 aparelhos, busca por termo, ficha ampliável e a marcação "Tenho",
+  que filtra a biblioteca. 20 deles já vêm com desenho sem fundo feito de fotos reais (`aparelhos/<id>.png`);
+  os outros usam o desenho em linha.
+- **Rótulo com nota 0–100.** Barras de processamento, nutrientes e aditivos, "Combina com você?" por
+  objetivo, restrições "sem peixe" e "sem corantes", e rótulo lido em duas fotos (ingredientes + tabela).
+
 ## Novo na versão 3.7.0 — importar o PDF direto, e a faixa do laudo no gráfico
 
 - **Importar agora aceita o PDF do laudo.** Antes o botão só abria `.json`, então quem tinha o PDF
