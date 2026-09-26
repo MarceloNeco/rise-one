@@ -7,6 +7,7 @@
    "data": "2026-09-26",
    "hora": "12:30:00",
    "pt": [
+    "Biblioteca: busca tolerante (sem acento, por prefixo e com um erro de digitação: \"bicep\" acha Bíceps, \"supinu\" acha supino); filtro de músculo com bolhas por Frente/Costas que abrem e fecham, no lugar da lista nativa; cartões dos Modelos prontos com os botões numa linha própria no celular.",
     "Filtro de aparelhos da biblioteca reorganizado: na tela ficam só os atalhos (Todos, Só o que eu tenho, Só o corpo) e os aparelhos escolhidos como fichas removíveis; a lista completa abre em \"Escolher aparelho\", com busca, categorias por tipo (pesos livres, máquinas, polias e cabos, cardio, acessórios) e \"mostrar só o que eu tenho\".",
     "Busca de vídeos no YouTube com frase própria por aparelho (\"banco regulável academia exercícios supino\" em vez de \"banco como usar\"), editável no RootifyONE.",
     "Conteúdo dos aparelhos gerenciado no RootifyONE, sem commit: texto, foto e vídeos vêm de solverone-dados/conteudo/rise-one/aparelhos.json (rede primeiro, cópia guardada, reserva local conteudo-aparelhos.json). Na ficha de cada aparelho, vídeos do YouTube: os publicados pelo admin (carregam só ao tocar, sem cookies) e o botão \"Buscar vídeos no YouTube\".",
@@ -29,6 +30,7 @@
     "Bonecos de agachamento, agachamento com barra e afundo redesenhados na vista de frente."
    ],
    "en": [
+    "Library: tolerant search (accent-free, by prefix and with one typo: \"bicep\" finds Biceps); muscle filter with Front/Back bubbles that expand and collapse instead of the native list; template cards with the buttons on their own row on phones.",
     "Library equipment filter reorganised: only the shortcuts stay on screen (All, Only what I have, Bodyweight) plus chosen equipment as removable tokens; the full list opens under \"Choose equipment\", with search, categories by type (free weights, machines, pulleys, cardio, accessories) and \"show only what I have\".",
     "YouTube video search with a phrase of its own per machine (no more \"bench how to use\" hitting banks), editable in RootifyONE.",
     "Equipment content managed in RootifyONE, no commit: text, photo and videos come from solverone-dados/conteudo/rise-one/aparelhos.json (network first, cached copy, local reserve conteudo-aparelhos.json). On each machine's sheet, YouTube videos: the ones published by the admin (load only on tap, no cookies) and a \"Search videos on YouTube\" button.",
