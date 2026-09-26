@@ -806,6 +806,83 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
 .gvbar .gr{flex:1;min-width:180px;font-size:.88rem}
 .gvbar .row{margin:0}
 [data-contrast="1"] .gvbar{background:var(--surface);border-width:2px}
+/* ============ 3.8: VISUAL MAIS LEVE (cantos suaves, menos peso, celular primeiro) + ASSISTONE ============ */
+:root{--radius:22px;--radius-sm:16px;--radius-xs:12px;--border:rgba(255,255,255,.065);--shadow-sm:0 1px 3px rgba(0,0,0,.16)}
+html[data-theme="light"]{--border:#e9ecf1;--shadow-sm:0 1px 3px rgba(15,20,30,.06)}
+.btn{border-radius:14px} .btn.sm{border-radius:12px} .btn.xs{border-radius:10px}
+input[type=text],input[type=number],input[type=password],input[type=date],input[type=time],input[type=email],input[type=search],select,textarea{border-radius:14px}
+.iconbtn{border-radius:14px} .ibub{border-radius:13px}
+.modal .box,.adpop{border-radius:24px} .toast{border-radius:16px}
+.seg{border-radius:16px} .seg button{border-radius:12px}
+header.app{border-bottom-color:transparent;box-shadow:0 1px 0 var(--border)}
+.hrow{gap:8px}
+/* idioma: no computador fica no cabeçalho; no celular, no topo do ☰ */
+.langsw{display:inline-flex;align-items:center;gap:1px;font-weight:800;font-size:.78rem;letter-spacing:.04em;cursor:pointer;color:var(--text2)}
+.langsw .lg{opacity:.5} .langsw .lg.on{opacity:1;color:var(--accent)} .langsw i{font-style:normal;opacity:.35;margin:0 3px}
+#langbtn{width:auto;padding:0 10px}
+#langbtn2{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:0 12px;min-height:36px;margin-left:auto}
+#homebtn.on{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-line)}
+#topbar{min-height:0}
+#topbar:has(#adbar.hidden){display:none}
+a.ditem{text-decoration:none}
+main{padding-bottom:88px}
+@media(max-width:820px){
+  .hrow{min-height:52px;padding:6px 12px;gap:4px}
+  .iconbtn{width:40px;height:40px;border-radius:12px;background:transparent;border-color:transparent}
+  .whoami{background:transparent;border-color:transparent;padding:4px;height:40px}
+  .whoami .nm{display:none}
+  #langbtn{display:none}
+  header.app{box-shadow:none}
+  h1{font-size:1.35rem}
+  .pagehead{margin-bottom:12px} .pagehead small{font-size:.8rem}
+  .card{padding:16px;margin-bottom:12px;box-shadow:none}
+  .card.hero{box-shadow:var(--shadow-sm)}
+  #bottombar{left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom));border:1px solid var(--border);border-radius:24px;
+    padding:6px;background:color-mix(in srgb,var(--surface) 92%,transparent);box-shadow:var(--shadow)}
+  #bottombar button .ic{width:48px;height:28px}
+  main{padding-bottom:112px !important}
+  footer.app{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  .toast{bottom:calc(168px + env(safe-area-inset-bottom))}
+}
+@media(min-width:821px){ #langbtn2{display:none} }
+/* ---- AssistONE: personagem redondo flutuante ---- */
+#helpbtn.assist{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:58px;height:58px;border-radius:50%;padding:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink);border:0;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;overflow:visible;transition:width .25s cubic-bezier(.22,.8,.3,1),height .25s cubic-bezier(.22,.8,.3,1);
+  animation:assistfloat 4s ease-in-out infinite}
+#helpbtn.assist svg{width:28px;height:28px}
+#helpbtn.assist img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover}
+#helpbtn.assist .badge{top:1px;right:1px;width:13px;height:13px;background:#fff;border:2px solid var(--accent)}
+#helpbtn.assist.open{animation:none;width:116px;height:116px}
+@keyframes assistfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes assistgrow{from{opacity:0;transform:scale(.88) translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:820px){ #helpbtn.assist{bottom:calc(84px + env(safe-area-inset-bottom))} }
+body.fs #helpbtn,body.noscroll #helpbtn,body:has(.modal) #helpbtn,body:has(.tour-card) #helpbtn,html[data-assist="0"] #helpbtn{display:none}
+body.fs #assistballoon,body:has(.modal) #assistballoon,body.fs #assisttip,body:has(.modal) #assisttip,body.noscroll #assisttip{display:none}
+#assistballoon,#assisttip{position:fixed;right:16px;z-index:61;background:var(--surface);border:1px solid var(--border2);box-shadow:var(--shadow);
+  transform-origin:bottom right;animation:assistgrow .22s cubic-bezier(.22,.8,.3,1)}
+#assistballoon{bottom:calc(142px + env(safe-area-inset-bottom));width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 160px);overflow:auto;border-radius:22px;padding:14px}
+#assisttip{bottom:calc(84px + env(safe-area-inset-bottom));z-index:59;width:min(320px,calc(100vw - 32px));border-radius:18px;padding:12px 14px;font-size:.86rem;line-height:1.4}
+@media(max-width:820px){
+  #assistballoon{bottom:calc(210px + env(safe-area-inset-bottom));max-height:calc(100vh - 226px)}
+  #assisttip{bottom:calc(152px + env(safe-area-inset-bottom))}
+}
+.as-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.as-head .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.as-head .av img{width:100%;height:100%;object-fit:cover}
+.as-head h3{margin:0;font-size:1rem} .as-head small{display:block;font-size:.76rem;line-height:1.3}
+.as-here{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:10px 12px;margin-bottom:8px}
+.as-here p{margin:3px 0 0;font-size:.85rem;color:var(--text2);line-height:1.4}
+.as-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.as-list{display:flex;flex-direction:column;gap:2px}
+.as-item{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:8px 10px;background:none;border:0;border-radius:12px;color:var(--text);font:inherit;font-weight:700;text-align:left;cursor:pointer}
+.as-item:hover,.as-item:focus-visible{background:var(--surface2)}
+.as-item .ic{width:22px;color:var(--accent)}
+.as-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:8px}
+.as-foot button{background:none;border:0;color:var(--text3);font-size:.76rem;font-weight:700;cursor:pointer;padding:6px 4px;min-height:32px}
+#assisttip .row{margin-top:8px;gap:6px}
+@media (prefers-reduced-motion:reduce){ #helpbtn.assist{animation:none;transition:none} #assistballoon,#assisttip{animation:none} }
+html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-motion="0"] #assistballoon,html[data-motion="0"] #assisttip{animation:none}
 </style>
 </head>
 <body>
@@ -864,10 +941,8 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
 </script>
 <div id="bgart" aria-hidden="true"></div>
 
-<!-- ===== FAIXA DO TOPO: [PT|EN] · [IA] · [ANÚNCIO] · [carrossel] · [×] ===== -->
+<!-- ===== FAIXA DO TOPO: só anúncio — [ANÚNCIO] · [carrossel] · [×] (o idioma mora no cabeçalho e no ☰) ===== -->
 <div id="topbar">
-  <button class="tb" id="langbtn" title="Português / English" aria-label="Idioma / Language"><span class="lg on" data-lg="pt">PT</span><i>|</i><span class="lg" data-lg="en">EN</span></button>
-  <button class="tb" id="iabtn" title="Assistente de IA / AI assistant"><span class="ic" data-icon="sparkles"></span><span>IA</span></button>
   <div id="adbar" class="hidden">
     <span class="adtag" data-i18n="ad.tag">ANÚNCIO</span>
     <div class="adviewport"><div class="adtrack" id="adtrack"></div></div>
@@ -889,8 +964,10 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
       <span>Rise<span class="one">ONE</span></span>
     </button>
     <span class="spacer"></span>
+    <button class="iconbtn langsw" id="langbtn" title="Português / English" aria-label="Idioma / Language"><span class="lg on" data-lg="pt">PT</span><i>|</i><span class="lg" data-lg="en">EN</span></button>
     <button class="iconbtn" id="searchbtn" aria-label="Buscar / Search" title="Buscar / Search"><span class="ic" data-icon="search"></span></button>
-    <button class="iconbtn" id="helpbtn" title="Ajuda / Help"><span class="ic" id="helpic" data-icon="help"></span><span class="hl" data-i18n="help.btn">Ajuda</span></button>
+    <button class="iconbtn" id="setbtn" aria-label="Configurações / Settings" title="Configurações / Settings"><span class="ic" data-icon="sliders"></span></button>
+    <button class="iconbtn" id="homebtn" aria-label="Início / Home" title="Início / Home"><span class="ic" data-icon="home"></span></button>
     <button class="whoami" id="whoami" title="Perfil"><span class="av" id="whoav">?</span><span class="nm" id="whonm">Visitante</span></button>
   </div>
   <nav class="tabs" id="tabs"></nav>
@@ -912,12 +989,18 @@ html[data-contrast="1"] .pose .aout line,html[data-contrast="1"] .pose .phb{stro
 <aside id="drawer" class="hidden" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1">
   <div class="dhead">
     <span class="dtitle">Rise<span class="one">ONE</span></span>
+    <button class="langsw" id="langbtn2" title="Português / English" aria-label="Idioma / Language"><span class="lg on" data-lg="pt">PT</span><i>|</i><span class="lg" data-lg="en">EN</span></button>
     <button class="iconbtn" id="drawerclose" aria-label="Fechar"><span class="ic" data-icon="x"></span></button>
   </div>
   <div class="dbody" id="drawerbody"></div>
 </aside>
 
 <nav id="bottombar"></nav>
+
+<!-- ===== ASSISTONE: o ajudante redondo, sempre no mesmo canto; o balão abre acima dele ===== -->
+<button id="helpbtn" class="assist" title="AssistONE" aria-label="AssistONE" aria-expanded="false" aria-controls="assistballoon"><span class="ic" id="helpic" data-icon="help"></span></button>
+<div id="assistballoon" class="hidden" role="dialog" aria-label="AssistONE"></div>
+<div id="assisttip" class="hidden" role="status"></div>
 
 <script>
 "use strict";
@@ -1695,7 +1778,7 @@ Object.assign(L,{
 "tour.finish":["Concluir","Finish"],
 "tour.done":["Tutorial concluído. Ele fica no botão Ajuda.","Tutorial complete. It stays under the Help button."],
 "tour.welcomeT":["Quer um tour rápido?","Want a quick tour?"],
-"tour.welcomeD":["Em menos de um minuto você conhece as cinco áreas do RiseONE. Depois, o botão Ajuda está sempre no cabeçalho.","In under a minute you get to know RiseONE's five areas. Afterwards, the Help button is always in the header."],
+"tour.welcomeD":["Em menos de um minuto você conhece as cinco áreas do RiseONE. Depois, o AssistONE fica sempre no canto da tela.","In under a minute you get to know RiseONE's five areas. Afterwards, the Help button is always in the header."],
 "wiz.setupTitle":["Primeiros passos","First steps"],
 "wiz.setupSub":["Idioma, seus dados, objetivo e avisos — em poucos minutos o app fica do seu jeito.","Language, your data, goal and alerts — in a few minutes the app fits you."],
 "wiz.start":["Começar","Start"],
@@ -1801,7 +1884,7 @@ Object.assign(L,{
 "st.tabAccount":["Conta","Account"],
 "st.tabData":["Dados","Data"],
 "st.profileSub":["Dados básicos usados nos cálculos.","Basic data used in the calculations."],
-"st.langSub":["Também fica no botão PT | EN da faixa do topo.","Also in the PT | EN button of the top bar."],
+"st.langSub":["Também no botão PT | EN do cabeçalho (computador) ou no topo do menu ☰ (celular).","Also in the PT | EN button in the header (computer) or at the top of the ☰ menu (phone)."],
 "st.dateNow":["Data de hoje neste idioma","Today's date in this language"],
 "st.themeSub":["Escuro ou claro.","Dark or light."],
 "st.bgArt":["Arte de fundo","Background art"],
@@ -1865,6 +1948,29 @@ Object.assign(L,{
 "ia.fallbackNote":["Se a IA escolhida falhar (sem cota, sem crédito ou chave recusada), o app espera uns 3 segundos e usa a próxima com chave salva, na ordem da lista.","If the chosen AI fails (no quota, no credit or key refused), the app waits about 3 seconds and uses the next one with a saved key, in list order."],
 "ia.switchQuota":["🔁 {a} está sem cota agora — usando {b}","🔁 {a} is out of quota right now — using {b}"],
 "ia.switchKey":["🔁 {a} recusou a chave — usando {b}","🔁 {a} refused the key — using {b}"],
+"as.name":["AssistONE","AssistONE"],
+"as.hi":["Olá! Eu sou o AssistONE 👋","Hi! I am AssistONE 👋"],
+"as.hiSub":["Posso te mostrar o app, começar o passo a passo ou explicar a tela em que você está.","I can show you around, start the step-by-step or explain the screen you are on."],
+"as.here":["Você está em","You are in"],
+"as.start":["Começar","Get started"],
+"as.tour":["Tour rápido","Quick tour"],
+"as.search":["Procurar algo","Find something"],
+"as.searchPh":["O que você procura?","What are you looking for?"],
+"as.screenHelp":["Ajuda desta tela","Help for this screen"],
+"as.off":["Desligar o AssistONE","Turn AssistONE off"],
+"as.offToast":["AssistONE desligado. Para religar: Mais › Preferências.","AssistONE is off. To turn it back on: More › Preferences."],
+"as.onSub":["O ajudante redondo no canto da tela: tour, passo a passo, busca e a explicação de cada tela.","The round helper in the corner of the screen: tour, step-by-step, search and each screen's explanation."],
+"as.enabled":["AssistONE ativado","AssistONE on"],
+"as.open":["Abrir o AssistONE","Open AssistONE"],
+"as.restart":["Recomeçar o passo a passo e as dicas","Restart the step-by-step and the tips"],
+"as.restarted":["Pronto: a saudação e as dicas de cada tela vão aparecer de novo.","Done: the greeting and each screen's tips will show again."],
+"as.tip":["Dica","Tip"],
+"as.gotIt":["Entendi","Got it"],
+"as.more":["Mais ajuda","More help"],
+"as.exit":["Toque em Voltar de novo para sair do RiseONE","Tap Back again to leave RiseONE"],
+"as.portal":["Portal SolverONE","SolverONE Portal"],
+"hd.settings":["Configurações","Settings"],
+"hd.home":["Início","Home"],
 "ad.sub":["Campanhas na faixa do topo e no pop-up, com exibições e cliques.","Campaigns in the top bar and the pop-up, with impressions and clicks."],
 "dt.noMeals":["Nenhuma refeição hoje","No meals today"],
 "dt.noMealsSub":["Adicione o que comeu ou leia o rótulo com a câmera.","Add what you ate or read the label with the camera."],
@@ -2649,8 +2755,9 @@ function toast(msg){
 function modal(html, opts){
   opts=opts||{};
   if(TOURST.active) tourEnd();
-  const m=document.createElement("div"); m.className="modal";
+  const m=document.createElement("div"); m.className="modal"; m.setAttribute("data-nav","1");
   m.innerHTML='<div class="box'+(opts.wide?" wide":"")+'">'+html+"</div>";
+  navPush({layer:"modal"});
   m.addEventListener("click", e=>{ if(e.target===m && !opts.sticky) m.remove(); });
   document.body.appendChild(m);
   m.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>m.remove()));
@@ -2797,9 +2904,54 @@ function segBar(route, items){
 }
 function go(id, sub){
   if(sub) SUB[id]=sub;
-  ROUTE=id; buildNav(); render();
+  const de=ROUTE; ROUTE=id; buildNav(); render();
   window.scrollTo({top:0,behavior:"smooth"}); maybePopupAd();
+  navRoute(de, id, sub);
 }
+/* ---------- 11c. VOLTAR DO CELULAR: navega dentro do app ---------- */
+/* Por que: o Voltar do aparelho saía do app e caía no Portal. Cada tela, janela, gaveta e tela cheia ganha
+   uma entrada no histórico; no popstate fecha-se só a camada de cima. Abas não se empilham (ficam uma camada
+   acima do Início); só a área Mais empilha suas subtelas. Na tela inicial, o primeiro Voltar avisa e só o segundo sai.
+   Regras: nada de pushState espalhado — só aqui (navPush/navDrop). Entrada criada sem toque da pessoa é ignorada
+   pelo Chrome, por isso a entrada de guarda nasce no primeiro toque. */
+const NAV={skip:0, popping:false, depth:0, guard:false, after:[]};
+function navPush(st){ if(NAV.skip>0){ NAV.after.push(()=>navPush(st)); return; } try{ history.pushState(Object.assign({rise:1},st),""); }catch(e){} }
+function navReplace(st){ if(NAV.skip>0){ NAV.after.push(()=>navReplace(st)); return; } try{ history.replaceState(Object.assign({rise:1},st),""); }catch(e){} }
+/* fechou pelo botão da tela: tira a entrada do histórico sem disparar o fechamento de novo */
+function navDrop(layer){ const s=history.state; if(!NAV.popping && s && s.rise && s.layer===layer){ NAV.skip++; history.back(); } }
+function navGuard(){ if(NAV.guard) return; NAV.guard=true; navPush({guard:1}); }
+function navRoute(de, para, sub){
+  if(NAV.popping) return;
+  if(para==="home"){ if(NAV.depth>0){ const n=NAV.depth; NAV.depth=0; NAV.skip+=n; history.go(-n); } return; }
+  const empilha = NAV.depth===0 || (de==="more" && sectionOf(para).id==="more");
+  if(empilha){ NAV.depth++; navPush({route:para, sub:sub||null, depth:NAV.depth}); }
+  else navReplace({route:para, sub:sub||null, depth:NAV.depth});
+}
+window.addEventListener("popstate", e=>{
+  if(NAV.skip>0){ NAV.skip--; if(NAV.skip===0){ const fs=NAV.after; NAV.after=[]; fs.forEach(f=>f()); } return; }
+  const st=e.state||{};
+  NAV.popping=true;
+  try{
+    if(TOURST.active){ tourEnd(); return; }
+    const modais=[...document.querySelectorAll("body > .modal")];
+    if(modais.length){ modais[modais.length-1].remove(); return; }
+    if(document.querySelector("#mirrorscreen")){ closeMirror(); return; }
+    if(document.querySelector("#routinescreen")){ closeRoutine(); return; }
+    if(document.querySelector("#timerscreen")){ minimizeTimer(); return; }
+    const d=document.getElementById("drawer");
+    if(d && !d.classList.contains("hidden")){ closeDrawer(); return; }
+    if(typeof ASSIST!=="undefined" && ASSIST.open) assistClose();
+    if(st.route){ NAV.depth=st.depth||1; ROUTE=st.route; if(st.sub) SUB[ROUTE]=st.sub; buildNav(); render(); window.scrollTo({top:0}); return; }
+    NAV.depth=0;
+    if(ROUTE!=="home"){ ROUTE="home"; buildNav(); render(); window.scrollTo({top:0}); }
+    if(!st.guard){ NAV.guard=false; toast(t("as.exit")); }   /* chegou na primeira entrada: o próximo Voltar sai */
+  } finally { NAV.popping=false; }
+});
+try{ history.replaceState({rise:1, inicio:1},""); }catch(e){}
+["pointerdown","keydown"].forEach(ev=>document.addEventListener(ev, navGuard, {once:false, capture:true}));
+/* janela fechada por qualquer caminho (botão, Esc, código): a entrada dela sai do histórico */
+new MutationObserver(ms=>{ if(NAV.popping) return; ms.forEach(m=>m.removedNodes.forEach(n=>{ if(n.nodeType===1 && n.classList && n.classList.contains("modal") && n.getAttribute("data-nav")) navDrop("modal"); })); }).observe(document.body,{childList:true});
+
 document.addEventListener("click", e=>{
   const b=e.target.closest("[data-go]");
   if(b){ const m=b.closest(".modal"); if(m && !b.closest("#screen")) m.remove(); go(b.getAttribute("data-go"), b.getAttribute("data-sub")||undefined); }
@@ -2852,9 +3004,10 @@ function render(){
   if(window.RISE_OK) RISE_OK();
   (SCREENS[ROUTE+"_after"]||function(){})();
   initAnims(el);
-  refreshWho(); paintTarja();
+  refreshWho(); paintTarja(); paintHomeBtn();
   if(typeof HELP_ONSCREEN==="function") HELP_ONSCREEN();
 }
+function paintHomeBtn(){ const b=document.getElementById("homebtn"); if(!b) return; b.classList.toggle("on", ROUTE==="home"); if(ROUTE==="home") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
 function refreshWho(){
   const s=ROOT.session||{role:"guest",name:t("role.guest")};
   const nm=s.name||t("role.guest");
@@ -3408,7 +3561,7 @@ function openTimer(seconds, onEnd, autostart, autoBack){
   TIMER.onEnd=onEnd||null;
   if(TIMER.mini){ TIMER.mini.remove(); TIMER.mini=null; }
   if(!TIMER.el){
-    const d=document.createElement("div"); d.id="timerscreen"; document.body.appendChild(d); TIMER.el=d; document.body.classList.add("fs");
+    const d=document.createElement("div"); d.id="timerscreen"; document.body.appendChild(d); TIMER.el=d; document.body.classList.add("fs"); navPush({layer:"fs"});
   }
   buildTimer();
   if(autostart && !TIMER.running) startTimer();
@@ -3418,13 +3571,13 @@ function closeTimer(){
   TIMER.autoBack=false;
   if(typeof SER!=="undefined" && SER.tick){ clearInterval(SER.tick); SER.tick=null; SER.running=false; }
   stopRing(); pauseTimer(); releaseAwake();
-  if(TIMER.el){ TIMER.el.remove(); TIMER.el=null; }
+  if(TIMER.el){ TIMER.el.remove(); TIMER.el=null; navDrop("fs"); }
   if(TIMER.mini){ TIMER.mini.remove(); TIMER.mini=null; }
   document.body.classList.remove("fs");
   TIMER.mode==="up" ? (TIMER.up=0, TIMER.accum=0) : (TIMER.left=TIMER.total);
 }
 function minimizeTimer(){
-  if(TIMER.el){ TIMER.el.remove(); TIMER.el=null; }
+  if(TIMER.el){ TIMER.el.remove(); TIMER.el=null; navDrop("fs"); }
   document.body.classList.remove("fs");
   if(!TIMER.mini){
     const b=document.createElement("button"); b.id="timermini";
@@ -4682,6 +4835,7 @@ SCREENS.set = function(){
       '<p class="tiny muted" style="margin:6px 0 0">'+t("st.bgArtSub")+"</p></div>";
     h+='<div class="card">'+cardHead("body", t("st.terms"), t("body.level"))+
       '<div class="optionlist">'+[1,2,3].map(i=>'<button class="opt '+(STATE.termsLevel===i?"on":"")+'" data-lvl="'+i+'"><span class="ibub '+(STATE.termsLevel===i?"":"grey")+'">'+I(i===1?"chat":(i===2?"book":"flask"))+'</span><span><span class="ot">'+t("body.lv"+i)+'</span><br><span class="od">'+t("body.lv"+i+"d")+"</span></span></button>").join("")+"</div></div>";
+    h+=assistCard();
     h+=favsCard();
     h+=musCard(uiRole()==="admin");
     h+=hrCard();
@@ -4744,6 +4898,9 @@ SCREENS.set_after = function(){
   document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>applyLang(b.getAttribute("data-lang")));
   document.querySelectorAll("[data-th]").forEach(b=>b.onclick=()=>{ applyTheme(b.getAttribute("data-th")); render(); });
   if($("bgsw")) $("bgsw").onchange=e=>{ applyBg(e.target.checked); };
+  if($("as_sw")) $("as_sw").onchange=e=>assistSet(e.target.checked);
+  if($("as_open")) $("as_open").onclick=()=>{ if(!assistOn()) assistSet(true); assistOpen("hi"); };
+  if($("as_reset")) $("as_reset").onclick=()=>{ ROOT.prefs.tipsSeen={}; ROOT.prefs.assistHi=0; saveRoot(); toast(t("as.restarted")); };
   document.querySelectorAll("[data-lvl]").forEach(b=>b.onclick=()=>{ STATE.termsLevel=+b.getAttribute("data-lvl"); save(); render(); });
   const pro=$("pro"); if(pro) pro.onchange=()=>{ STATE.pro=pro.checked; save(); paintAd(); render(); };
   const mk=$("mkacc"); if(mk) mk.onclick=()=>loginModal("student");
@@ -5525,7 +5682,7 @@ function runRoutine(list,title){
   closeRoutine(true);
   RUN.list=list; RUN.i=0; RUN.title=title||t("wu.title"); RUN.started=Date.now(); RUN.done=false;
   RUN.intro=true; RUN.left=6; RUN.endAt=Date.now()+6000; RUN.running=true; RUN.lastBeep=-1;
-  const d=document.createElement("div"); d.id="routinescreen"; document.body.appendChild(d); RUN.el=d; document.body.classList.add("fs");
+  const d=document.createElement("div"); d.id="routinescreen"; document.body.appendChild(d); RUN.el=d; document.body.classList.add("fs"); navPush({layer:"fs"});
   try{ AC = AC || new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==="suspended") AC.resume(); }catch(e){}
   keepAwake();
   buildRoutineUI();
@@ -5533,7 +5690,7 @@ function runRoutine(list,title){
 }
 function closeRoutine(silent){
   clearInterval(RUN.tick); RUN.tick=null; RUN.running=false;
-  if(RUN.el){ RUN.el.remove(); RUN.el=null; }
+  if(RUN.el){ RUN.el.remove(); RUN.el=null; navDrop("fs"); }
   if(!document.querySelector("#timerscreen,#mirrorscreen")) document.body.classList.remove("fs");
   if(!silent) releaseAwake();
 }
@@ -6657,7 +6814,7 @@ function openMirror(animId, title){
   if(!canUse("mirror")) return gotItLocked("mirror");
   closeMirror(true);
   MIR.anim=animId||null; MIR.title=title||t("mir.title"); MIR.msgs=[];
-  const d=document.createElement("div"); d.id="mirrorscreen"; document.body.appendChild(d); MIR.el=d; document.body.classList.add("fs");
+  const d=document.createElement("div"); d.id="mirrorscreen"; document.body.appendChild(d); MIR.el=d; document.body.classList.add("fs"); navPush({layer:"fs"});
   d.innerHTML=
     '<div class="mhead"><button class="iconbtn" id="mclose">&times;</button>'+
       '<div style="flex:1;min-width:0"><div class="tiny muted">'+t("mir.title")+'</div><strong style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(MIR.title)+"</strong></div>"+
@@ -6703,7 +6860,7 @@ function startMirrorCam(){
 function closeMirror(silent){
   if(MIR.raf){ cancelAnimationFrame(MIR.raf); MIR.raf=null; }
   if(MIR.stream){ MIR.stream.getTracks().forEach(t2=>t2.stop()); MIR.stream=null; }
-  if(MIR.el){ MIR.el.remove(); MIR.el=null; }
+  if(MIR.el){ MIR.el.remove(); MIR.el=null; navDrop("fs"); }
   if(!document.querySelector("#timerscreen,#routinescreen")) document.body.classList.remove("fs");
   MIR.ai=false;
   if(!silent) releaseAwake();
@@ -7502,7 +7659,7 @@ function tourReposition(){
   if(top<12) top=Math.max(12, Math.min(vh-chh-12, r.bottom+12));
   card.style.left=left+"px"; card.style.top=top+"px";
 }
-function HELP_ONSCREEN(){ if(TOURST.active) setTimeout(tourReposition, 80); }
+function HELP_ONSCREEN(){ if(TOURST.active) setTimeout(tourReposition, 80); assistOnRoute(); }
 
 /* --- motor de wizard: sequência, progresso, pular, guardar, retomar --- */
 /* Cada app declara os passos; o motor cuida do resto. Os dados ficam em STATE.wiz[id]. */
@@ -7547,6 +7704,108 @@ function wizRun(id, opts){
   }
   draw();
   return m;
+}
+
+/* ---------- 50b. ASSISTONE: o ajudante redondo do canto ---------- */
+/* Por que: um lugar só, igual em todas as telas (WCAG 3.2.6), que começa pela ajuda da tela atual.
+   O balão não entra no histórico: o Voltar do celular continua levando às telas. Liga/desliga em Mais › Preferências. */
+const ASSIST={open:false, tipT:null};
+function assistOn(){ return ROOT.prefs.assist!==0; }
+function assistApply(){ document.documentElement.setAttribute("data-assist", assistOn()?"1":"0"); }
+function assistSet(on){ ROOT.prefs.assist=on?1:0; saveRoot(); assistApply(); if(!on){ assistClose(); assistTipHide(); toast(t("as.offToast")); } }
+/* atalhos por tela: até 3 ações que já executam (ícone, PT, EN, ação) */
+const ASSIST_ACOES={
+ home:[["dumbbell","Treino de hoje","Today's workout",()=>go("workout")],["clipboard","Registrar o dia","Log the day",()=>go("progress","hoje")],["leaf","Dieta de hoje","Today's diet",()=>go("diet")]],
+ workout:[["book","Biblioteca","Library",()=>go("ex")],["flame","Aquecer & Alongar","Warm up & Stretch",()=>go("warm")]],
+ ex:[["body","Mapa do corpo","Body map",()=>go("body")],["dumbbell","Meus treinos","My workouts",()=>go("workout")]],
+ body:[["book","Biblioteca","Library",()=>go("ex")]],
+ diet:[["camera","Ler rótulo","Read a label",()=>go("scan")],["chart","Evolução","Progress",()=>go("progress")]],
+ progress:[["chart","Peso","Weight",()=>go("progress","peso")],["flask","Exames","Lab results",()=>go("progress","exames")]],
+ more:[["sparkles","Assistente de IA","AI assistant",()=>go("ia")],["sliders","Preferências","Preferences",()=>go("set","pref")]],
+ ia:[["key","Cofre de chaves","Key vault",()=>{ const d=document.querySelector("#screen details.fold"); if(d){ d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); } }]],
+ set:[["user","Ficha de saúde","Health profile",()=>go("set","perfil")],["bell","Avisos","Alerts",()=>go("set","avisos")]]
+};
+function assistBalloonHTML(mode){
+  const r=routeInfo(ROUTE)||{k:"nav.home",ic:"home"};
+  const items=helpItemsFor(ROUTE, SUB[ROUTE]), tip=HELP_TIPS[ROUTE];
+  const frase=items.length? (LANG==="pt"?items[0][3]:items[0][4]) : (tip? (LANG==="pt"?tip[0]:tip[1]) : t("help.noScreenHelp"));
+  const acts=(ASSIST_ACOES[ROUTE]||[]).slice(0,3);
+  const av=HELP_ICON_OK?'<img src="ajuda-icone.png" alt="">':I("help");
+  let h='<div class="as-head"><span class="av">'+av+'</span><div style="flex:1;min-width:0"><h3>'+(mode==="hi"?t("as.hi"):t("as.name"))+'</h3><small class="muted">'+(mode==="hi"?t("as.hiSub"):t("help.sub"))+'</small></div><button class="iconbtn" id="as_x" aria-label="'+t("common.close")+'">'+I("x")+"</button></div>";
+  h+='<div class="as-here"><div class="kicker">📍 '+t("as.here")+" "+esc(t(r.k))+"</div><p>"+frase+"</p>"+
+     (acts.length?'<div class="as-acts">'+acts.map((a,i)=>'<button class="chip" data-asact="'+i+'">'+I(a[0])+esc(LANG==="pt"?a[1]:a[2])+"</button>").join("")+"</div>":"")+"</div>";
+  h+='<div class="as-list">'+
+    (role()!=="guest" && WIZARDS.setup ? '<button class="as-item" data-as="wiz">'+I("wand")+t("as.start")+"</button>":"")+
+    '<button class="as-item" data-as="tour">'+I("compass")+t("as.tour")+"</button>"+
+    '<button class="as-item" data-as="busca" aria-expanded="false">'+I("search")+t("as.search")+"</button>"+
+    '<div id="as_bwrap" class="hidden" style="padding:0 4px 6px"><div class="help-q">'+I("search")+'<input type="search" id="as_q" placeholder="'+t("as.searchPh")+'" autocomplete="off"></div><div id="as_res" style="margin-top:8px"></div></div>'+
+    '<button class="as-item" data-as="tela">'+I("eye")+t("as.screenHelp")+"</button></div>";
+  h+='<div class="as-foot"><button data-as="later">'+t("wu.later")+'</button><button data-as="off">'+t("as.off")+"</button></div>";
+  return h;
+}
+function assistOpen(mode){
+  if(!assistOn()) return;
+  assistTipHide();
+  const b=document.getElementById("assistballoon"), btn=document.getElementById("helpbtn");
+  if(!b || !btn) return;
+  b.innerHTML=assistBalloonHTML(mode||""); b.classList.remove("hidden"); ASSIST.open=true;
+  btn.classList.add("open"); btn.setAttribute("aria-expanded","true");
+  b.querySelector("#as_x").onclick=assistClose;
+  b.querySelectorAll("[data-asact]").forEach(x=>x.onclick=()=>{ const a=(ASSIST_ACOES[ROUTE]||[])[+x.getAttribute("data-asact")]; assistClose(); if(a) a[3](); });
+  b.querySelectorAll("[data-as]").forEach(x=>x.onclick=()=>{
+    const k=x.getAttribute("data-as");
+    if(k==="busca"){ const w=b.querySelector("#as_bwrap"); w.classList.toggle("hidden"); const ab=w.classList.contains("hidden"); x.setAttribute("aria-expanded", ab?"false":"true"); if(!ab) setTimeout(()=>b.querySelector("#as_q").focus(),40); return; }
+    assistClose();
+    if(k==="wiz") wizRun("setup", {restart:wizState("setup").done});
+    else if(k==="tour") tourStart(0);
+    else if(k==="tela") openHelp("tela");
+    else if(k==="off") assistSet(false);
+  });
+  const q=b.querySelector("#as_q");
+  q.oninput=()=>helpSearch(q.value, b.querySelector("#as_res"));
+  q.onkeydown=e=>{ if(e.key==="Enter"){ const f=b.querySelector("#as_res [data-go]"); if(f) f.click(); } };
+  b.addEventListener("click", e=>{ if(e.target.closest("[data-go]")) assistClose(); });
+  setTimeout(()=>document.addEventListener("pointerdown", assistOutside, true), 0);
+}
+function assistOutside(e){ if(!ASSIST.open) return; if(e.target.closest("#assistballoon,#helpbtn")) return; assistClose(); }
+function assistClose(){
+  const b=document.getElementById("assistballoon"), btn=document.getElementById("helpbtn");
+  if(b) b.classList.add("hidden");
+  ASSIST.open=false; WELCOME_PENDING=false;
+  if(btn){ btn.classList.remove("open"); btn.setAttribute("aria-expanded","false"); }
+  document.removeEventListener("pointerdown", assistOutside, true);
+}
+function assistToggle(){
+  if(ASSIST.open){ assistClose(); return; }
+  const hi=!ROOT.prefs.assistHi;
+  if(hi){ ROOT.prefs.assistHi=1; saveRoot(); }
+  assistOpen(hi?"hi":"");
+}
+/* dica curta por tela, uma vez só, alguns segundos depois de entrar; some sozinha */
+function assistTipHide(){ const d=document.getElementById("assisttip"); if(d){ d.classList.add("hidden"); d.innerHTML=""; } clearTimeout(ASSIST.tipT); }
+function assistOnRoute(){
+  clearTimeout(ASSIST.tipT); assistTipHide();
+  if(ASSIST.open) assistClose();
+  if(!assistOn() || TOURST.active) return;
+  const rota=ROUTE, tip=HELP_TIPS[rota]; if(!tip) return;
+  const seen=ROOT.prefs.tipsSeen||{}; if(seen[rota]) return;
+  ASSIST.tipT=setTimeout(()=>{
+    if(ROUTE!==rota || TOURST.active || ASSIST.open || WELCOME_PENDING || document.querySelector(".modal")) return;
+    const d=document.getElementById("assisttip"); if(!d) return;
+    ROOT.prefs.tipsSeen=Object.assign({}, seen, {[rota]:1}); saveRoot();
+    const r=routeInfo(rota)||{k:"nav.home"};
+    d.innerHTML='<div class="kicker">💡 '+t("as.tip")+" · "+esc(t(r.k))+"</div><div>"+(LANG==="pt"?tip[0]:tip[1])+"</div>"+
+      '<div class="row"><button class="btn xs" id="tip_ok">'+t("as.gotIt")+'</button><button class="btn xs ghost" id="tip_more">'+t("as.more")+"</button></div>";
+    d.classList.remove("hidden");
+    d.querySelector("#tip_ok").onclick=assistTipHide;
+    d.querySelector("#tip_more").onclick=()=>{ assistTipHide(); assistOpen(""); };
+    ASSIST.tipT=setTimeout(assistTipHide, 12000);
+  }, 2500);
+}
+function assistCard(){
+  return '<div class="card">'+cardHead("help", t("as.name"), t("as.onSub"))+
+    '<label class="switch"><input type="checkbox" id="as_sw" '+(assistOn()?"checked":"")+'><span class="tr"></span><span>'+t("as.enabled")+"</span></label>"+
+    '<div class="row" style="margin-top:10px"><button class="btn sm line" id="as_open">'+I("help")+t("as.open")+'</button><button class="btn sm ghost" id="as_reset">'+I("refresh")+t("as.restart")+"</button></div></div>";
 }
 
 /* ---------- 51. CONTEUDO DA AJUDA: o que cada tela faz, glossário e roteiro do tutorial ---------- */
@@ -7687,7 +7946,7 @@ const GLOSS=[
 /* roteiro do tutorial: [tela, subtela, seletor do destaque, icone, PT [titulo, texto], EN [titulo, texto]] */
 const TOUR=[
  {route:"home", sel:null, ic:"compass", pt:["Bem-vindo ao RiseONE","Um tour rápido pelas cinco áreas do app. Você pode parar quando quiser e voltar pelo botão Ajuda."], en:["Welcome to RiseONE","A quick tour of the app's five areas. Stop anytime and come back through the Help button."]},
- {route:"home", sel:"#topbar", ic:"globe", pt:["Faixa do topo","Aqui ficam o idioma (PT | EN), o assistente de IA e os anúncios dos outros apps. O × fecha os anúncios até o próximo login."], en:["Top bar","Language (PT | EN), the AI assistant and the ads of the other apps live here. The × closes the ads until the next login."]},
+ {route:"home", sel:"#homebtn", ic:"home", pt:["Cabeçalho","Sempre no mesmo lugar: 🔍 busca, ⚙ configurações, 🏠 início e 👤 conta. O idioma PT | EN fica ao lado no computador e no topo do menu ☰ no celular. Anúncios dos outros apps aparecem na faixa acima; o × fecha até o próximo login."], en:["Header","Always in the same place: 🔍 search, ⚙ settings, 🏠 home and 👤 account. The PT | EN language switch sits next to them on the computer and at the top of the ☰ menu on the phone. Ads of the other apps show in the strip above; the × closes them until the next login."]},
  {route:"home", sel:"nav.tabs .active, #bottombar .active", ic:"home", pt:["Início","Sua tela do dia: o próximo passo, os números de hoje, as missões e os atalhos."], en:["Home","Your daily screen: the next step, today's numbers, missions and shortcuts."]},
  {route:"home", sel:".card.hero", ic:"zap", pt:["Próximo passo","Este cartão muda conforme o dia: começar o treino, completar seus primeiros passos ou registrar o dia."], en:["Next step","This card changes with the day: start the workout, finish your first steps or log the day."]},
  {route:"workout", sel:"#subnav", ic:"dumbbell", pt:["Treinar","Tudo do treino num lugar: seus treinos, a biblioteca de exercícios, o mapa do corpo e o aquecimento. Troque pelas abas."], en:["Train","Everything about training in one place: your workouts, the exercise library, the body map and warm-up. Switch with the tabs."]},
@@ -7698,7 +7957,7 @@ const TOUR=[
  {route:"diet", sel:".card", ic:"leaf", pt:["Dieta","Anel de calorias, metas do dia e refeições. Leia o rótulo com a câmera para não digitar."], en:["Diet","Calorie ring, daily targets and meals. Read the label with the camera instead of typing."]},
  {route:"progress", sel:".seg", ic:"chart", pt:["Evolução","Registro do dia, peso, fotos antes e depois, medidas, exames, missões e lembretes — cada um na sua aba."], en:["Progress","Daily log, weight, before/after photos, measurements, lab results, missions and reminders — each in its own tab."]},
  {route:"more", sel:".tiles", ic:"grid", pt:["Mais","Câmera, assistente, perfil e ficha de saúde, avisos, conta, dados, preferências e ajuda."], en:["More","Camera, assistant, profile and health intake, alerts, account, data, preferences and help."]},
- {route:"more", sel:"#helpbtn", ic:"help", pt:["Ajuda sempre à mão","Este botão abre o tutorial, o guia passo a passo, a busca por termos e a explicação da tela em que você está."], en:["Help always at hand","This button opens the tutorial, the step-by-step guide, term search and the explanation of the screen you are on."]}
+ {route:"more", sel:"#helpbtn", ic:"help", pt:["AssistONE sempre à mão","O ajudante redondo do canto começa pela tela em que você está, com atalhos, e abre o tour, o passo a passo, a busca e a explicação de cada tela."], en:["AssistONE always at hand","The round helper in the corner starts with the screen you are on, with shortcuts, and opens the tour, the step-by-step, search and each screen's explanation."]}
 ];
 /* --- guia "Primeiros passos": o app declara os passos, o motor faz o resto --- */
 const WIZ_SETUP={ic:"wand", title:"wiz.setupTitle", sub:"wiz.setupSub", steps:[
@@ -7738,6 +7997,7 @@ function maybeWelcome(){
   WELCOME_PENDING=true;
   setTimeout(()=>{
     ROOT.prefs.welcomed=1; saveRoot();
+    if(assistOn()){ ROOT.prefs.assistHi=1; saveRoot(); assistOpen("hi"); return; }
     const m=modal('<div class="center" style="padding:6px 0 4px"><span class="ibub" style="width:56px;height:56px;border-radius:18px;margin-bottom:10px">'+I("compass")+'</span><h2>'+t("tour.welcomeT")+'</h2><p class="muted">'+t("tour.welcomeD")+"</p>"+
       '<div class="row" style="justify-content:center;margin-top:14px"><button class="btn" id="wl_go">'+I("play")+t("help.tourStart")+'</button><button class="btn line" data-close>'+t("wu.later")+"</button></div></div>",{sticky:true});
     m.querySelector("#wl_go").onclick=()=>{ m.remove(); tourStart(0); };
@@ -10177,7 +10437,8 @@ function buildDrawer(){
   });
   h+='<div class="dgroup"><div class="dg">'+I("help")+t("help.title")+"</div>"+
      drawerItemHTML("help")+
-     '<button class="ditem" data-dlegal="1">'+I("file")+'<span class="dl">'+t("legal.title")+"</span></button></div>";
+     '<button class="ditem" data-dlegal="1">'+I("file")+'<span class="dl">'+t("legal.title")+"</span></button>"+
+     (/^https?:/.test(location.protocol)? '<a class="ditem" href="'+esc(location.origin+"/")+'" target="_blank" rel="noopener">'+I("globe")+'<span class="dl">'+t("as.portal")+" ↗</span></a>" : "")+"</div>";
   h+='<p class="tiny muted" style="padding:10px 14px 0">RiseONE v'+APP_VERSION+"</p>";
   box.innerHTML=h;
   fillIcons(box);
@@ -10190,7 +10451,7 @@ function openDrawer(){
   const d=document.getElementById("drawer"), bk=document.getElementById("drawerback"), bt=document.getElementById("menubtn");
   if(!d) return;
   DRAWER_LAST=document.activeElement;
-  buildDrawer();
+  buildDrawer(); navPush({layer:"drawer"});
   bk.classList.remove("hidden"); d.classList.remove("hidden");
   requestAnimationFrame(()=>{ bk.classList.add("show"); d.classList.add("show"); });
   if(bt) bt.setAttribute("aria-expanded","true");
@@ -10200,6 +10461,7 @@ function openDrawer(){
 function closeDrawer(){
   const d=document.getElementById("drawer"), bk=document.getElementById("drawerback"), bt=document.getElementById("menubtn");
   if(!d || d.classList.contains("hidden")) return;
+  navDrop("drawer");
   d.classList.remove("show"); bk.classList.remove("show");
   if(bt) bt.setAttribute("aria-expanded","false");
   document.body.classList.remove("noscroll");
@@ -11316,7 +11578,7 @@ function boot(){
   LANG = ROOT.prefs.lang || "pt";
   applyTheme(ROOT.prefs.theme || "dark");
   applyBg(ROOT.prefs.bg===undefined ? true : !!ROOT.prefs.bg);
-  applyA11y();
+  applyA11y(); assistApply();
   document.documentElement.lang = LANG==="pt"?"pt-BR":"en";
   paintLangBtn();
   document.getElementById("vertxt").textContent = "v"+APP_VERSION;
@@ -11337,14 +11599,15 @@ function boot(){
   buildNav(); render(); paintAd(); cloudCaptureToken();
   gateDisclaimer(()=>{ maybeWelcome(); popupAfterLogin(); });
 }
-function paintLangBtn(){ document.querySelectorAll("#langbtn .lg").forEach(n=>n.classList.toggle("on", n.getAttribute("data-lg")===LANG)); }
+function paintLangBtn(){ document.querySelectorAll(".langsw .lg").forEach(n=>n.classList.toggle("on", n.getAttribute("data-lg")===LANG)); }
 
 /* faixa do topo */
 document.getElementById("adclose").onclick=()=>{ sessionStorage.setItem("riseone.addismiss","1"); document.getElementById("adbar").classList.add("hidden"); };
-document.getElementById("langbtn").onclick=()=>applyLang(LANG==="pt"?"en":"pt");
-document.getElementById("iabtn").onclick=()=>go("ia");
-/* cabecalho */
-document.getElementById("helpbtn").onclick=()=>openHelp(ROUTE==="home"?"tutorial":"tela");
+document.querySelectorAll(".langsw").forEach(b=>b.onclick=()=>applyLang(LANG==="pt"?"en":"pt"));
+/* cabecalho: 🔍 ⚙ 🏠 👤 sempre no mesmo lugar; o AssistONE é o personagem do canto */
+document.getElementById("helpbtn").onclick=()=>assistToggle();
+document.getElementById("setbtn").onclick=()=>go("set");
+document.getElementById("homebtn").onclick=()=>go("home");
 document.getElementById("searchbtn").onclick=()=>openBusca("");
 document.getElementById("whoami").onclick=()=>loginModal();
 document.getElementById("brandbtn").onclick=()=>go("home");
@@ -11356,6 +11619,7 @@ document.getElementById("legalbtn").onclick=e=>{ e.preventDefault(); legalModal(
 window.addEventListener("beforeunload", ()=>{ stopCam(); });
 document.addEventListener("keydown", e=>{
   if(e.key==="Escape" && TOURST.active){ tourEnd(); return; }
+  if(e.key==="Escape" && ASSIST.open){ assistClose(); return; }
   if(e.key==="Escape"){
     const abertas=[...document.querySelectorAll(".modal:not([data-sticky])")];
     if(abertas.length){ abertas[abertas.length-1].remove(); return; }
