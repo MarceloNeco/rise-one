@@ -24,10 +24,13 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
 - **Câmera e OCR.** Foco por toque e contínuo, medidor de nitidez ao vivo, lanterna, foto em
   resolução cheia. O OCR endireita, recorta, amplia e limpa a imagem e faz até três leituras.
 - **Personal trainer narrado.** Escolha quem narra o treino em Preferências (Neutro, KnoX ou MuscleMill):
-  frases, ritmo e tom próprios na abertura, em cada exercício, série, descanso e no fim. Foto em
-  `personal/knox.png` e `personal/musclemill.png`.
-- **Aparelhos da academia.** 53 aparelhos em desenho de linha, busca por termo, ficha ampliável e a
-  marcação "Tenho", que filtra a biblioteca. Um `aparelhos/<id>.png` sem fundo substitui o desenho.
+  frases, ritmo e tom próprios na abertura, em cada exercício, série, descanso e no fim. Fotos em
+  `personal/knox.png` e `personal/musclemill.png` (incluídas).
+- **Aparelhos da academia.** 53 aparelhos, busca por termo, ficha ampliável e a marcação "Tenho",
+  que filtra a biblioteca. 20 deles já vêm com desenho sem fundo feito de fotos reais (`aparelhos/<id>.png`);
+  os outros usam o desenho em linha.
+- **Rótulo com nota 0–100.** Barras de processamento, nutrientes e aditivos, "Combina com você?" por
+  objetivo, restrições "sem peixe" e "sem corantes", e rótulo lido em duas fotos (ingredientes + tabela).
 
 ## Novo na versão 3.7.0 — importar o PDF direto, e a faixa do laudo no gráfico
 

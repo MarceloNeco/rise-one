@@ -28,8 +28,8 @@ Tudo roda no navegador da pessoa e os dados ficam no aparelho dela (`localStorag
 | `fotos-exercicios.jpg` | **Opcional.** Mosaico 6×6 com fotos das posições de alguns exercícios. Sem ele, o app mostra só o boneco animado | Sim, mas mantendo a ordem dos quadros (ver `PHOTOS` no código) |
 | `ajuda-botao.png`, `ajuda-icone.png` | **Opcionais.** Ícone Assist ONE do botão de ajuda. Sem eles, o app usa um ícone desenhado em SVG | Colocar os arquivos do portfólio |
 | `TESTE-riseone.html` | Página de teste das diretrizes (abre no mesmo endereço do app) | Sim |
-| `personal/<id>.png` | **Opcionais.** Foto de cada personal trainer (`knox.png`, `musclemill.png`). Sem o arquivo, o app desenha um avatar | Sim, um por personal |
-| `aparelhos/<id>.png` | **Opcionais.** Desenho técnico sem fundo de cada aparelho (ids em `EQUIP`, ex.: `torre-polia.png`). Sem o arquivo, o app usa o desenho em linha | Sim, um por aparelho |
+| `personal/<id>.png` | Foto de cada personal trainer (`knox.png`, `musclemill.png`, incluídas). Sem o arquivo, o app desenha um avatar | Sim, um por personal |
+| `aparelhos/<id>.png` | Desenho sem fundo de cada aparelho (ids em `EQUIP`; 20 incluídos, feitos de fotos com remoção de fundo). Sem o arquivo, o app usa o desenho em linha | Sim, um por aparelho |
 | `README.md`, `ARQUITETURA.md` | Estes textos | Sim |
 | `.github/workflows/static.yml` | Publica o site a cada upload. **Nunca apagar a pasta `.github`** | Não |
 
@@ -113,6 +113,7 @@ Procure pelo número para ir direto ao assunto.
   proximo, fim, anima), `personal()`, `personalFrase(tipo, vars)`, `personalAvatar` e `personalCard` (Preferências).
   `sayStart`/`sayExercise`/`saySet`/`sayRest`/`sayDone` usam as frases do personal escolhido (`settings.voz.personal`).
   Foto: **`personal/<id>.png`** (ex.: `personal/knox.png`); sem o arquivo, avatar desenhado com as iniciais.
+- **Nota do rótulo** — `notaRotulo(o)` (0–100: processamento 35 %, nutrientes 40 %, aditivos 25 %), `notaHTML`, `nutMatchHTML` (objetivos × tabela por 100 g). `SCANPREV` guarda o texto da foto anterior quando o rótulo é lido em duas fotos.
 - **Aparelhos** — `EQUIP` (desenho em linha de cada um), `EQ_TAGS` (grupos e termos de busca),
   `STATE.equipHave` ("tenho"), `eqBusca`, `eqModal` (ficha ampliável) e `eqFig`: se existir o arquivo
   **`aparelhos/<id>.png`** (fundo transparente, com o nome do aparelho no desenho se quiser), ele cobre
