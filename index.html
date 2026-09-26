@@ -1847,6 +1847,24 @@ Object.assign(L,{
 "wu.libFold":["Biblioteca de movimentos","Movement library"],
 "role.guest":["Visitante","Guest"],
 "ia.setupFold":["Chave e serviço de IA","AI key and service"],
+"ia.vault":["Cofre de chaves","Key vault"],
+"ia.vaultSub":["Toque numa IA para colar a chave dela. As que já têm chave ficam no topo.","Tap an AI to paste its key. The ones that already have a key stay on top."],
+"ia.keySaved":["✓ chave salva","✓ key saved"],
+"ia.noKeyBadge":["sem chave","no key"],
+"ia.inUse":["em uso","in use"],
+"ia.keyFor":["Chave do {a}","{a} key"],
+"ia.saveTest":["Salvar e testar","Save and test"],
+"ia.removeKey":["Apagar chave","Remove key"],
+"ia.testing":["Testando a chave no {a}…","Testing the key with {a}…"],
+"ia.testOk":["✓ Chave do {a} aceita e salva.","✓ {a} key accepted and saved."],
+"ia.testQuota":["✓ Chave do {a} salva. Ele está sem cota agora; se outra IA tiver chave, o app usa ela.","✓ {a} key saved. It is out of quota right now; if another AI has a key, the app uses it."],
+"ia.testBlocked":["Chave salva, mas o navegador bloqueou o teste (bloqueador ou rede). Tente perguntar.","Key saved, but the browser blocked the test (blocker or network). Try asking."],
+"ia.testBad":["O {a} recusou a chave. Copie a chave inteira ou crie outra no site dele.","{a} refused the key. Copy the whole key or create a new one on its site."],
+"ia.testFormat":["Essa chave não parece do {a}: as dele começam com {b}.","That key does not look like a {a} key: theirs start with {b}."],
+"ia.keyRemoved":["Chave do {a} apagada.","{a} key removed."],
+"ia.fallbackNote":["Se a IA escolhida falhar (sem cota, sem crédito ou chave recusada), o app espera uns 3 segundos e usa a próxima com chave salva, na ordem da lista.","If the chosen AI fails (no quota, no credit or key refused), the app waits about 3 seconds and uses the next one with a saved key, in list order."],
+"ia.switchQuota":["🔁 {a} está sem cota agora — usando {b}","🔁 {a} is out of quota right now — using {b}"],
+"ia.switchKey":["🔁 {a} recusou a chave — usando {b}","🔁 {a} refused the key — using {b}"],
 "ad.sub":["Campanhas na faixa do topo e no pop-up, com exibições e cliques.","Campaigns in the top bar and the pop-up, with impressions and clicks."],
 "dt.noMeals":["Nenhuma refeição hoje","No meals today"],
 "dt.noMealsSub":["Adicione o que comeu ou leia o rótulo com a câmera.","Add what you ate or read the label with the camera."],
@@ -7161,12 +7179,22 @@ SCREENS.admin_after = function(){
     paintAd(); });
 };
 /* ---------- 49. ASSISTENTE DE IA ---------- */
+/* Os serviços de IA, na ordem em que o app tenta quando o escolhido falha (sem cota, sem crédito, chave recusada).
+   Cada um: id, nome, começo esperado da chave. Serviço novo = uma linha aqui + o pedido em aiCall + o teste em aiTest. */
+const AI_PROVIDERS=[["gemini","Google Gemini","AIza"],["openai","OpenAI","sk-"],["claude","Anthropic Claude","sk-ant-"]];
+function aiName(id){ const p=AI_PROVIDERS.find(x=>x[0]===id); return p?p[1]:id; }
 function aiCfg(){
   STATE.settings=STATE.settings||{};
-  const d={provider:"gemini", key:"", useContext:true, history:[]};
-  STATE.settings.ai=Object.assign({},d,STATE.settings.ai||{});
-  return STATE.settings.ai;
+  const d={provider:"gemini", keys:{}, useContext:true, history:[]};
+  const c=STATE.settings.ai=Object.assign({},d,STATE.settings.ai||{});
+  if(!c.keys || typeof c.keys!=="object") c.keys={};
+  /* versões antigas guardavam uma chave só (c.key); ela vira a chave do serviço escolhido */
+  if(c.key){ if(!c.keys[c.provider]) c.keys[c.provider]=c.key; delete c.key; }
+  return c;
 }
+function aiKey(id){ return String(aiCfg().keys[id]||"").trim(); }
+/* Lista do cofre: quem já tem chave vem primeiro, mantendo a ordem entre iguais */
+function aiListed(){ const ps=AI_PROVIDERS.slice(); return ps.filter(p=>aiKey(p[0])).concat(ps.filter(p=>!aiKey(p[0]))); }
 function aiContext(){
   const a=anam(), w=anamWeight(), v=bmi();
   const parts=[];
@@ -7182,51 +7210,101 @@ function aiContext(){
   if(STATE.diet&&STATE.diet.kcal) parts.push((LANG==="pt"?"meta ":"target ")+fmtNum(STATE.diet.kcal,0)+" kcal");
   return parts.join("; ");
 }
-function aiAsk(question){
+/* Lê a resposta HTTP guardando o status: sem ele não dá para saber se foi cota, chave ou outra coisa */
+function aiRead(r){
+  return r.json().catch(()=>({})).then(j=>{
+    if(!r.ok || j.error){ const e=new Error((j.error&&j.error.message)||("HTTP "+r.status)); e.status=r.status; throw e; }
+    return j;
+  });
+}
+function aiCall(provider, key, sys, question){
+  if(provider==="gemini"){
+    return fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(key),
+      {method:"POST",headers:{"Content-Type":"application/json"},
+       body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:[{role:"user",parts:[{text:question}]}]})})
+      .then(aiRead).then(j=>((j.candidates||[])[0]||{}).content?.parts?.map(p=>p.text).join("")||"");
+  }
+  if(provider==="openai"){
+    return fetch("https://api.openai.com/v1/chat/completions",
+      {method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
+       body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"system",content:sys},{role:"user",content:question}]})})
+      .then(aiRead).then(j=>((j.choices||[])[0]||{}).message?.content||"");
+  }
+  return fetch("https://api.anthropic.com/v1/messages",
+    {method:"POST",headers:{"Content-Type":"application/json","x-api-key":key,
+      "anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+     body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:900,system:sys,messages:[{role:"user",content:question}]})})
+    .then(aiRead).then(j=>(j.content||[]).map(p=>p.text).join(""));
+}
+/* Por que a IA falhou: "cota" (sem cota/crédito, limite), "chave" (recusada) ou "" (outra coisa: não vale trocar) */
+function aiFalha(e){
+  const st=e.status||0, m=String(e.message||"").toLowerCase();
+  if(st===429||st===402||/quota|cr[eé]dit|billing|insufficient|exceeded|exhausted|rate.?limit/.test(m)) return "cota";
+  if(st===401||st===403||/api key|invalid|unauthori[sz]|permission|forbidden/.test(m)) return "chave";
+  return "";
+}
+const AI_SKIP={}; /* serviço que acabou de falhar por cota ou chave: {id: até quando (ms)}. Não insistir nele por uns minutos */
+function aiAsk(question, onNota){
   const c=aiCfg();
-  if(!c.key) return Promise.reject(new Error("nokey"));
   if(!navigator.onLine) return Promise.reject(new Error("offline"));
+  const ordem=[c.provider].concat(AI_PROVIDERS.map(p=>p[0]).filter(id=>id!==c.provider)).filter(id=>aiKey(id));
+  if(!ordem.length) return Promise.reject(new Error("nokey"));
   const sys=(LANG==="pt"
     ? "Você é um assistente de treino e alimentação dentro do app RiseONE. Responda em português do Brasil, de forma curta, prática e cuidadosa. Não dê diagnóstico médico; quando o assunto for saúde, oriente a procurar profissional."
     : "You are a training and nutrition assistant inside the RiseONE app. Answer in English, short, practical and careful. Do not give medical diagnosis; for health matters, advise seeing a professional.")
     + (c.useContext && aiContext() ? ("\n"+(LANG==="pt"?"Dados da pessoa":"Person data")+": "+aiContext()) : "");
-  if(c.provider==="gemini"){
-    return fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(c.key),
-      {method:"POST",headers:{"Content-Type":"application/json"},
-       body:JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:[{role:"user",parts:[{text:question}]}]})})
-      .then(r=>r.json()).then(j=>{
-        if(j.error) throw new Error(j.error.message||"erro");
-        return ((j.candidates||[])[0]||{}).content?.parts?.map(p=>p.text).join("")||"";
-      });
-  }
-  if(c.provider==="openai"){
-    return fetch("https://api.openai.com/v1/chat/completions",
-      {method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+c.key},
-       body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"system",content:sys},{role:"user",content:question}]})})
-      .then(r=>r.json()).then(j=>{ if(j.error) throw new Error(j.error.message||"erro");
-        return ((j.choices||[])[0]||{}).message?.content||""; });
-  }
-  return fetch("https://api.anthropic.com/v1/messages",
-    {method:"POST",headers:{"Content-Type":"application/json","x-api-key":c.key,
-      "anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-     body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:900,system:sys,messages:[{role:"user",content:question}]})})
-    .then(r=>r.json()).then(j=>{ if(j.error) throw new Error(j.error.message||"erro");
-      return (j.content||[]).map(p=>p.text).join(""); });
+  const nota=(de,para,tipo)=>{ if(onNota) onNota(t(tipo==="chave"?"ia.switchKey":"ia.switchQuota").replace("{a}",aiName(de)).replace("{b}",aiName(para))); };
+  /* quem falhou há pouco fica para o fim da fila, avisando na tela */
+  const agora=Date.now(); let fila=ordem.filter(id=>!(AI_SKIP[id]>agora));
+  if(fila.length && fila[0]!==ordem[0]) nota(ordem[0], fila[0], AI_SKIP[ordem[0]+":tipo"]);
+  if(!fila.length) fila=ordem;
+  const tenta=i=>aiCall(fila[i], aiKey(fila[i]), sys, question).catch(e=>{
+    const prox=fila[i+1], tipo=aiFalha(e);
+    if(!prox || !tipo) throw e;
+    AI_SKIP[fila[i]]=Date.now()+10*60*1000; AI_SKIP[fila[i]+":tipo"]=tipo;
+    nota(fila[i], prox, tipo);
+    /* com outra IA disponível, espera só uns 3 segundos e troca */
+    return new Promise(res=>setTimeout(res,3000)).then(()=>tenta(i+1));
+  });
+  return tenta(0);
+}
+/* Testa a chave no próprio serviço. Resolve com "ok", "cota" (válida, sem cota agora) ou "bloqueio" (o navegador não deixou testar);
+   rejeita só quando o serviço diz que a chave não vale. "Falta permissão" (403) conta como válida: a chave existe, só não pode listar. */
+function aiTest(provider, key){
+  const h=provider==="openai"?{"Authorization":"Bearer "+key}
+        : provider==="claude"?{"x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"}:{};
+  const url=provider==="gemini"?"https://generativelanguage.googleapis.com/v1beta/models?key="+encodeURIComponent(key)
+          : provider==="openai"?"https://api.openai.com/v1/models":"https://api.anthropic.com/v1/models";
+  return fetch(url,{headers:h}).then(r=>r.json().catch(()=>({})).then(j=>{
+    if(r.ok) return "ok";
+    const m=String((j.error&&j.error.message)||"").toLowerCase();
+    if(r.status===403||/permission|scope|forbidden/.test(m)) return "ok";
+    if(r.status===429||/quota|exceeded|exhausted/.test(m)) return "cota";
+    if(r.status===401||r.status===400||/api key|invalid|unauthori[sz]/.test(m)) throw new Error("bad");
+    return "ok";
+  }), ()=>"bloqueio");
+}
+function aiKeyRow(p, c){
+  const tem=!!aiKey(p[0]), on=c.provider===p[0];
+  return '<button class="item link" data-aip="'+p[0]+'" aria-pressed="'+on+'"><span class="ibub '+(tem?"":"grey")+'" style="width:32px;height:32px">'+I(tem?"key":"sparkles")+'</span>'+
+    '<div class="gr"><div class="t">'+p[1]+(on?' <span class="pill acc xs">'+t("ia.inUse")+"</span>":"")+'</div></div>'+
+    '<span class="pill '+(tem?"ok":"")+' xs">'+t(tem?"ia.keySaved":"ia.noKeyBadge")+"</span></button>";
 }
 SCREENS.ia = function(){
   if(!canUse("ia")) return lockedScreen("ia");
-  const c=aiCfg();
+  const c=aiCfg(), temAlguma=AI_PROVIDERS.some(p=>aiKey(p[0])), nome=aiName(c.provider);
   let h='<div class="pagehead"><div><h1>'+t("ia.title")+'</h1><small>'+t("ia.sub")+"</small></div></div>";
-  h+='<details class="fold" style="margin:0 0 14px"'+(c.key?"":" open")+'><summary>'+I("key")+t("ia.setup")+(c.key?' <span class="pill ok" style="margin-left:6px">'+I("check")+"</span>":"")+"</summary><div class='fb'>"+
-    '<div class="chips" style="margin-bottom:10px">'+[["gemini","Google Gemini"],["openai","OpenAI"],["claude","Anthropic Claude"]]
-      .map(o=>'<button class="chip '+(c.provider===o[0]?"on":"")+'" data-aip="'+o[0]+'">'+o[1]+"</button>").join("")+"</div>"+
-    '<label class="fld"><span>'+t("ia.key")+'</span><input type="password" id="ia_k" value="'+esc(c.key)+'" placeholder="'+t("ia.keyPh")+'"></label>'+
-    '<label class="switch" style="margin-bottom:10px"><input type="checkbox" id="ia_c" '+(c.useContext?"checked":"")+'><span class="tr"></span><span class="tiny">'+t("ia.ctx")+"</span></label>"+
-    '<div class="row"><button class="btn ghost sm" id="ia_save">'+I("check")+t("common.save")+"</button></div>"+
-    '<p class="tiny muted" style="margin-top:8px">'+t("ia.keyNote")+"</p></div></details>";
+  h+='<details class="fold" style="margin:0 0 14px"'+(temAlguma?"":" open")+'><summary>'+I("key")+t("ia.vault")+(temAlguma?' <span class="pill ok" style="margin-left:6px">'+I("check")+"</span>":"")+"</summary><div class='fb'>"+
+    '<p class="tiny muted" style="margin:0 0 8px">'+t("ia.vaultSub")+"</p>"+
+    '<div class="list" style="margin-bottom:12px">'+aiListed().map(p=>aiKeyRow(p,c)).join("")+"</div>"+
+    '<label class="fld"><span>'+t("ia.keyFor").replace("{a}",nome)+'</span><input type="password" id="ia_k" value="'+esc(aiKey(c.provider))+'" placeholder="'+t("ia.keyPh")+'" autocomplete="off"></label>'+
+    '<div class="row"><button class="btn sm" id="ia_save">'+I("check")+t("ia.saveTest")+"</button>"+(aiKey(c.provider)?'<button class="btn ghost sm" id="ia_del">'+I("trash")+t("ia.removeKey")+"</button>":"")+"</div>"+
+    '<div id="ia_st" class="tiny" style="margin-top:8px;min-height:1em" aria-live="polite"></div>'+
+    '<label class="switch" style="margin:10px 0"><input type="checkbox" id="ia_c" '+(c.useContext?"checked":"")+'><span class="tr"></span><span class="tiny">'+t("ia.ctx")+"</span></label>"+
+    '<p class="tiny muted" style="margin-top:8px">'+t("ia.fallbackNote")+" "+t("ia.keyNote")+"</p></div></details>";
   h+='<div class="card">'+cardHead("chat", t("ia.chat"), "", '<button class="btn xs line" id="ia_clr">'+t("ia.clear")+"</button>")+
     '<div id="ia_log" class="list">'+ (c.history.length? c.history.map(mm=>
-      '<div class="item" style="align-items:flex-start"><span class="pill '+(mm.r==="u"?"acc":"")+'">'+(mm.r==="u"?I("user"):I("sparkles"))+'</span><div class="gr"><div class="s" style="white-space:pre-wrap;color:var(--text)">'+esc(mm.t)+"</div></div></div>").join("")
+      '<div class="item" style="align-items:flex-start"><span class="pill '+(mm.r==="u"?"acc":(mm.r==="n"?"warn":""))+'">'+(mm.r==="u"?I("user"):(mm.r==="n"?I("refresh"):I("sparkles")))+'</span><div class="gr"><div class="s" style="white-space:pre-wrap;color:var(--text)">'+esc(mm.t)+"</div></div></div>").join("")
       : '<div class="empty">'+t("ia.empty")+"</div>")+"</div>"+
     '<div class="sep"></div><div class="chips" style="margin-bottom:8px">'+
       [t("ia.q1"),t("ia.q2"),t("ia.q3"),t("ia.q4")].map(q=>'<button class="chip" data-iaq="'+esc(q)+'">'+esc(q)+"</button>").join("")+"</div>"+
@@ -7238,21 +7316,35 @@ SCREENS.ia = function(){
 SCREENS.ia_after = function(){
   const lk=document.getElementById("lk_go");
   if(lk){ lk.onclick=()=>{ uiRole()==="guest"? loginModal("student") : go("set","conta"); }; return; }
-  const c=aiCfg();
+  const c=aiCfg(), nome=aiName(c.provider);
+  const st=document.getElementById("ia_st");
   document.querySelectorAll("[data-aip]").forEach(b=>b.onclick=()=>{ c.provider=b.getAttribute("data-aip"); save(); render(); });
+  document.getElementById("ia_c").onchange=e=>{ c.useContext=e.target.checked; save(); };
+  const del=document.getElementById("ia_del");
+  if(del) del.onclick=()=>{ delete c.keys[c.provider]; save(); toast(t("ia.keyRemoved").replace("{a}",nome)); render(); };
   document.getElementById("ia_save").onclick=()=>{
-    c.key=document.getElementById("ia_k").value.trim();
-    c.useContext=document.getElementById("ia_c").checked; save(); toast(t("common.saved")); };
+    const k=document.getElementById("ia_k").value.trim(), p=AI_PROVIDERS.find(x=>x[0]===c.provider);
+    if(!k){ if(del) del.onclick(); return; }
+    if(/\s/.test(k) || k.length<20 || k.indexOf(p[2])!==0){ st.textContent=t("ia.testFormat").replace("{a}",nome).replace("{b}",p[2]); return; }
+    st.textContent=t("ia.testing").replace("{a}",nome);
+    aiTest(c.provider, k).then(res=>{
+      c.keys[c.provider]=k; delete AI_SKIP[c.provider]; save();
+      const msg=t(res==="cota"?"ia.testQuota":(res==="bloqueio"?"ia.testBlocked":"ia.testOk")).replace("{a}",nome);
+      toast(msg); render(); const s2=document.getElementById("ia_st"); if(s2) s2.textContent=msg;
+    }).catch(()=>{ st.textContent=t("ia.testBad").replace("{a}",nome); });
+  };
   document.getElementById("ia_clr").onclick=()=>{ c.history=[]; save(); render(); };
   document.querySelectorAll("[data-iaq]").forEach(b=>b.onclick=()=>{ document.getElementById("ia_q").value=b.getAttribute("data-iaq"); });
   document.getElementById("ia_go").onclick=()=>{
     const q=document.getElementById("ia_q").value.trim(); if(!q) return;
-    c.key=document.getElementById("ia_k").value.trim();
-    if(!c.key){ toast(t("ia.noKey")); return; }
+    if(!AI_PROVIDERS.some(p=>aiKey(p[0]))){ toast(t("ia.noKey")); return; }
     c.history.push({r:"u",t:q}); save(); render();
     const log=document.getElementById("ia_log");
     if(log) log.insertAdjacentHTML("beforeend",'<div class="item"><span class="pill">'+I("sparkles")+'</span><div class="gr"><div class="s">'+t("ia.thinking")+"</div></div></div>");
-    aiAsk(q).then(ans=>{ c.history.push({r:"a",t:ans||t("ia.empty2")}); save(); render(); })
+    /* aviso de troca de IA: fica no histórico (na tela) e aparece também como toast */
+    const nota=msg=>{ c.history.push({r:"n",t:msg}); save(); toast(msg);
+      const l2=document.getElementById("ia_log"); if(l2) l2.insertAdjacentHTML("beforeend",'<div class="item"><span class="pill warn">'+I("refresh")+'</span><div class="gr"><div class="s">'+esc(msg)+"</div></div></div>"); };
+    aiAsk(q, nota).then(ans=>{ c.history.push({r:"a",t:ans||t("ia.empty2")}); save(); render(); })
       .catch(e=>{ const msg = e.message==="offline"? t("ia.offline") : (e.message==="nokey"? t("ia.noKey") : (t("ia.error")+" "+e.message));
         c.history.push({r:"a",t:msg}); save(); render(); });
   };
@@ -7516,7 +7608,7 @@ const HELP={
   ["check","Confirmar","Confirm","O app mostra o que entendeu; confira e confirme, ou corrija à mão antes de salvar.","The app shows what it understood; check and confirm, or fix by hand before saving."]
  ],
  ia:[
-  ["key","Sua chave","Your key","O assistente usa a sua própria chave de IA (Google Gemini, OpenAI ou Anthropic). Ela fica só no seu aparelho.","The assistant uses your own AI key (Google Gemini, OpenAI or Anthropic). It stays on your device only."],
+  ["key","Cofre de chaves","Key vault","Cole a chave de uma ou mais IAs (Google Gemini, OpenAI, Anthropic). Quem já tem chave fica no topo com o selo \"chave salva\". Se a IA escolhida ficar sem cota ou recusar a chave, o app avisa e usa a próxima com chave. Tudo fica só no seu aparelho.","Paste the key of one or more AIs (Google Gemini, OpenAI, Anthropic). The ones with a key stay on top with the \"key saved\" badge. If the chosen AI runs out of quota or refuses the key, the app tells you and uses the next one with a key. Everything stays on your device."],
   ["chat","Perguntas","Questions","Pergunte sobre treino e alimentação. Se quiser, o app envia junto seus dados da ficha de saúde para a resposta ficar mais certeira.","Ask about training and food. If you like, the app sends your health profile along so the answer fits you better."]
  ],
  coach:[
