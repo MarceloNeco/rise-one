@@ -662,6 +662,15 @@ html[data-theme="light"]{--eq-machine:#1f6fd0; --eq-weight:#4a5261; --eq-person:
 .vlist .vl{display:block;font-size:.72rem;color:var(--text3)}
 
 .eqpick{display:flex;flex-wrap:wrap;gap:8px}
+.eqchip.more{border-style:dashed;color:var(--accent)}
+.eqchip.have{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ok) 55%,transparent)}
+.eqtokens{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.eqtoken{display:inline-flex;align-items:center;gap:6px;padding:4px 8px 4px 6px;border-radius:999px;border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--text);font-size:.8rem;font-weight:600;cursor:pointer;min-height:34px}
+.eqtoken .ic{width:14px;height:14px;color:var(--text2)}
+.chips.scrollx{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips.scrollx::-webkit-scrollbar{display:none}
+.chips.scrollx .chip{flex-shrink:0}
+.eqsheetlist{max-height:52vh;overflow:auto;padding-right:2px}
 .eqchip{display:inline-flex;align-items:center;gap:7px;padding:7px 12px 7px 8px;border-radius:999px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);font-size:.82rem;font-weight:600;cursor:pointer;min-height:40px;transition:border-color .15s,background .15s,color .15s}
 .eqchip:hover{border-color:var(--accent-line);color:var(--text)}
 .eqchip.on{background:var(--accent-soft);border-color:var(--accent-line);color:var(--text)}
@@ -2401,9 +2410,21 @@ Object.assign(L,{
 "vz.sttNote":["O reconhecimento é do próprio navegador. Em alguns aparelhos ele envia o áudio para o serviço do fabricante — por isso pedimos autorização antes.","Recognition is done by the browser itself. On some devices it sends the audio to the maker's service — that is why we ask for permission first."],
 /* --- carteirinha do plano (usado na tela de dados) --- */
 "ex.equipPick":["Aparelhos disponíveis","Equipment available"],
-"ex.equipPickSub":["Toque no que você tem à mão. Pode marcar mais de um. Sem nada marcado, mostramos todos os exercícios.","Tap what you have at hand. You can pick more than one. With nothing picked we show every exercise."],
+"ex.equipPickSub":["Use um atalho ou escolha aparelhos na lista. Sem nada marcado, mostramos todos os exercícios.","Use a shortcut or pick equipment from the list. With nothing ticked, we show every exercise."],
 "ex.onlyBody":["Só o corpo","Bodyweight only"],
 "ex.eqClear":["Limpar escolha","Clear selection"],
+"ex.eqChoose":["Escolher aparelho","Choose equipment"],
+"ex.eqChosen":["{n} escolhidos","{n} chosen"],
+"ex.eqSheetSub":["Marque um ou mais. A lista mostra só exercícios que dá para fazer com eles.","Tick one or more. The list shows only exercises you can do with them."],
+"ex.eqApply":["Aplicar","Apply"],
+"ex.eqMineOnly":["Mostrar só o que eu tenho","Show only what I have"],
+"ex.eqNoMine":["Você ainda não marcou o que tem. Faça isso em Meus recursos.","You haven't ticked what you have yet. Do it in My gear."],
+"eq.k.livres":["Pesos livres","Free weights"],
+"eq.k.maquinas":["Máquinas","Machines"],
+"eq.k.polias":["Polias e cabos","Pulleys and cables"],
+"eq.k.cardio":["Cardio","Cardio"],
+"eq.k.acessorios":["Acessórios","Accessories"],
+"eq.k.corpo":["Sem aparelho","No equipment"],
 "nw.title":["Novidades","What's new"],
 "nw.sub":["O que mudou nesta versão","What changed in this version"],
 "nw.loading":["Carregando…","Loading…"],
@@ -3880,23 +3901,70 @@ function videoModal(id){
 let EXF = {q:"", m:"", eq:"", eqs:[]};
 /* escolha de vários aparelhos ao mesmo tempo, com o desenho de cada um.
    Sem nada marcado, mostra tudo. "Só o corpo" deixa apenas o que não precisa de equipamento. */
+/* Tipos de aparelho para escolher na biblioteca (revelação progressiva: só os atalhos ficam na tela;
+   a lista completa abre numa folha com busca e categorias). Ids fora da lista caem em "acessórios"
+   ou, se forem máquina de assento, em "máquinas". */
+const EQ_KINDS=[
+ ["corpo",     ["livre"]],
+ ["livres",    ["halter","barra","barra-w","barra-hex","anilhas","kettlebell","banco","banco-regulavel","scott","rack","smith"]],
+ ["maquinas",  ["maquina","leg-press","extensora","flexora","ext-flex","abdutora","peck","hack","gluteo","panturrilha","supino-maquina","remada-articulada","press-alavanca","abdominal-maquina","romana","banco-abdominal"]],
+ ["polias",    ["polia-alta","polia-baixa","crossover","torre-polia","polia-dupla","graviton"]],
+ ["cardio",    ["esteira","bike","eliptico","remo","escada","corda","step"]],
+ ["acessorios",["elastico","bola","bola-medicinal","rolo","caneleira","roda","colchonete","trx","espaldar","paralelas","bosu"]]
+];
+function eqKindOf(id){
+  for(const [k,ids] of EQ_KINDS) if(ids.indexOf(id)>=0) return k;
+  const g=(EQ_TAGS[id]||{g:[]}).g; if(g.indexOf("cardio")>=0) return "cardio"; if(g.indexOf("polias")>=0) return "polias"; if(g.indexOf("cadeiras")>=0) return "maquinas"; return "acessorios";
+}
 function eqPickerHTML(){
-  const sel=EXF.eqs||[];
-  const chip=(id,label,svg,on)=>'<button class="eqchip'+(on?" on":"")+'" data-eqpick="'+id+'" aria-pressed="'+(on?"true":"false")+'">'+
-    (svg?'<span class="eqchipic">'+svg+"</span>":"")+"<span>"+esc(label)+"</span></button>";
+  const sel=EXF.eqs||[], nHave=Object.keys(STATE.equipHave||{}).length;
+  const chip=(id,label,on,extra)=>'<button class="eqchip'+(on?" on":"")+'" '+(extra||'data-eqpick="'+id+'"')+' aria-pressed="'+(on?"true":"false")+'">'+label+"</button>";
   let h='<div class="sep"></div><span class="kicker">'+t("ex.equipPick")+'</span>'+
         '<p class="tiny muted" style="margin:2px 0 8px">'+t("ex.equipPickSub")+"</p>"+
-        '<div class="eqpick">';
-  h+=chip("", t("common.all"), "", !sel.length && !EXF.soMeus);
-  if(STATE.equipHave && Object.keys(STATE.equipHave).length) h+='<button class="eqchip'+(EXF.soMeus?" on":"")+'" id="eqmine" aria-pressed="'+(EXF.soMeus?"true":"false")+'">'+I("check")+"<span>"+t("eq.onlyMine")+"</span></button>";
-  Object.values(EQUIP).forEach(e=>{
-    const mine=STATE.equipPhotos&&STATE.equipPhotos[e.id];
-    const fig=mine? '<img src="'+mine+'" alt="">' : e.svg;
-    h+=chip(e.id, (e.id==="livre"? t("ex.onlyBody") : (LANG==="pt"?e.pt:e.en)), fig, sel.indexOf(e.id)>=0);
-  });
-  h+="</div>";
-  if(sel.length) h+='<div class="row" style="margin-top:8px"><button class="btn xs ghost" id="eqclr">'+I("x")+t("ex.eqClear")+"</button></div>";
+        '<div class="eqpick">'+
+        chip("", t("common.all"), !sel.length && !EXF.soMeus)+
+        (nHave? chip("", I("check")+"<span>"+t("eq.onlyMine")+" · "+nHave+"</span>", EXF.soMeus, 'id="eqmine"') : "")+
+        chip("livre", '<span class="eqchipic">'+EQUIP.livre.svg+"</span><span>"+t("ex.onlyBody")+"</span>", sel.indexOf("livre")>=0)+
+        '<button class="eqchip more" id="eqmore" aria-haspopup="dialog">'+I("plus")+"<span>"+t("ex.eqChoose")+(sel.filter(x=>x!=="livre").length?" · "+sel.filter(x=>x!=="livre").length:"")+"</span></button>"+
+        "</div>";
+  const tokens=sel.filter(id=>id!=="livre" && EQUIP[id]);
+  if(tokens.length) h+='<div class="eqtokens">'+tokens.map(id=>'<button class="eqtoken" data-eqpick="'+id+'" aria-label="'+esc(t("common.del"))+': '+esc(eqName(id))+'"><span class="eqchipic">'+(STATE.equipPhotos&&STATE.equipPhotos[id]?'<img src="'+STATE.equipPhotos[id]+'" alt="">':EQUIP[id].svg)+"</span><span>"+esc(eqName(id))+"</span>"+I("x")+"</button>").join("")+
+     '<button class="btn xs ghost" id="eqclr">'+t("ex.eqClear")+"</button></div>";
   return h;
+}
+/* folha de escolha: busca + categorias por tipo + chips; várias escolhas; Aplicar */
+function eqPickSheet(){
+  let q="", kind="", soMeus=false, sel=(EXF.eqs||[]).slice();
+  const nHave=Object.keys(STATE.equipHave||{}).length;
+  const m=modal(mh(t("ex.eqChoose"))+'<p class="tiny muted" style="margin:-4px 0 10px">'+t("ex.eqSheetSub")+"</p>"+
+    '<div class="help-q" style="margin:0 0 8px">'+I("search")+'<input type="search" id="eqs_q" placeholder="'+t("eq.search")+'" autocomplete="off"></div>'+
+    '<div class="chips scrollx" id="eqs_k"><button class="chip on" data-k="">'+t("common.all")+"</button>"+EQ_KINDS.map(k=>'<button class="chip" data-k="'+k[0]+'">'+t("eq.k."+k[0])+"</button>").join("")+"</div>"+
+    (nHave?'<label class="switch sm" style="margin:8px 0"><input type="checkbox" id="eqs_mine"><span class="tr"></span><span class="tiny">'+t("ex.eqMineOnly")+"</span></label>":'<p class="tiny muted" style="margin:6px 0">'+t("ex.eqNoMine")+"</p>")+
+    '<div id="eqs_list" class="eqsheetlist"></div>'+
+    '<div class="row" style="margin-top:12px;justify-content:space-between"><button class="btn line sm" id="eqs_clear">'+t("ex.eqClear")+'</button><button class="btn" id="eqs_ok">'+t("ex.eqApply")+' <span id="eqs_n"></span></button></div>',{wide:true});
+  const paintN=()=>{ const n=m.querySelector("#eqs_n"); n.textContent=sel.length? "("+sel.length+")" : ""; };
+  const list=()=>{
+    const box=m.querySelector("#eqs_list"); const x=norm(q).trim();
+    const kinds=kind? EQ_KINDS.filter(k=>k[0]===kind) : EQ_KINDS;
+    let h="";
+    kinds.forEach(k=>{
+      const ids=Object.keys(EQUIP).filter(id=>eqKindOf(id)===k[0]).filter(id=>!soMeus || eqHave(id) || id==="livre")
+        .filter(id=>!x || eqBusca(q).some(e=>e.id===id));
+      if(!ids.length) return;
+      h+=(kind?"":'<p class="kicker" style="margin:10px 0 6px">'+t("eq.k."+k[0])+"</p>")+'<div class="eqpick">'+ids.map(id=>{
+        const on=sel.indexOf(id)>=0, mine=STATE.equipPhotos&&STATE.equipPhotos[id];
+        return '<button class="eqchip'+(on?" on":"")+(eqHave(id)?" have":"")+'" data-eqs="'+id+'" aria-pressed="'+(on?"true":"false")+'"><span class="eqchipic">'+(mine?'<img src="'+mine+'" alt="">':EQUIP[id].svg)+"</span><span>"+esc(id==="livre"?t("ex.onlyBody"):eqName(id))+"</span></button>"; }).join("")+"</div>";
+    });
+    box.innerHTML=h||'<p class="tiny muted">'+t("eq.noHits")+"</p>";
+    box.querySelectorAll("[data-eqs]").forEach(b=>b.onclick=()=>{ const id=b.getAttribute("data-eqs"); const i=sel.indexOf(id); if(i>=0) sel.splice(i,1); else sel.push(id); b.classList.toggle("on",i<0); b.setAttribute("aria-pressed",i<0?"true":"false"); paintN(); });
+    paintN();
+  };
+  list();
+  const inp=m.querySelector("#eqs_q"); inp.oninput=()=>{ q=inp.value; list(); };
+  m.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{ kind=b.getAttribute("data-k"); m.querySelectorAll("[data-k]").forEach(x=>x.classList.toggle("on",x===b)); list(); });
+  const mine=m.querySelector("#eqs_mine"); if(mine) mine.onchange=()=>{ soMeus=mine.checked; list(); };
+  m.querySelector("#eqs_clear").onclick=()=>{ sel=[]; list(); };
+  m.querySelector("#eqs_ok").onclick=()=>{ EXF.eqs=sel; EXF.soMeus=false; EXF.eq=""; m.remove(); render(); };
 }
 SCREENS.ex = function(){
   const list=filterEx();
@@ -3932,6 +4000,8 @@ function wireEqPicker(){
   });
   const c=document.getElementById("eqclr");
   if(c) c.onclick=()=>{ EXF.eqs=[]; render(); };
+  const mo=document.getElementById("eqmore");
+  if(mo) mo.onclick=()=>eqPickSheet();
   const mn=document.getElementById("eqmine");
   if(mn) mn.onclick=()=>{ EXF.soMeus=!EXF.soMeus; EXF.eqs=[]; render(); };
 }
