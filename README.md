@@ -26,6 +26,8 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
 - **Personal trainer narrado.** Escolha quem narra o treino em Preferências (Neutro, KnoX ou MuscleMill):
   frases, ritmo e tom próprios na abertura, em cada exercício, série, descanso e no fim. Fotos em
   `personal/knox.png` e `personal/musclemill.png` (incluídas).
+- **O que eu tenho para treinar.** Atalho na Início, no AssistONE e em Preferências: escolha um cenário
+  (só a rua, casa com pouca coisa, academia do prédio, academia completa) e ajuste item por item.
 - **Aparelhos da academia.** 53 aparelhos, busca por termo, ficha ampliável e a marcação "Tenho",
   que filtra a biblioteca. 20 deles já vêm com desenho sem fundo feito de fotos reais (`aparelhos/<id>.png`);
   os outros usam o desenho em linha.

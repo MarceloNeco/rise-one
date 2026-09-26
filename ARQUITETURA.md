@@ -114,6 +114,7 @@ Procure pelo número para ir direto ao assunto.
   `sayStart`/`sayExercise`/`saySet`/`sayRest`/`sayDone` usam as frases do personal escolhido (`settings.voz.personal`).
   Foto: **`personal/<id>.png`** (ex.: `personal/knox.png`); sem o arquivo, avatar desenhado com as iniciais.
 - **Nota do rótulo** — `notaRotulo(o)` (0–100: processamento 35 %, nutrientes 40 %, aditivos 25 %), `notaHTML`, `nutMatchHTML` (objetivos × tabela por 100 g). `SCANPREV` guarda o texto da foto anterior quando o rótulo é lido em duas fotos.
+- **Meus recursos** — `RC_CENARIOS` (cenários que marcam vários aparelhos de uma vez), `recursosModal()` (janela com cenários e chips por grupo), `recursosCard()` (Preferências); botão `#rc_open` na Início e ação no AssistONE.
 - **Aparelhos** — `EQUIP` (desenho em linha de cada um), `EQ_TAGS` (grupos e termos de busca),
   `STATE.equipHave` ("tenho"), `eqBusca`, `eqModal` (ficha ampliável) e `eqFig`: se existir o arquivo
   **`aparelhos/<id>.png`** (fundo transparente, com o nome do aparelho no desenho se quiser), ele cobre

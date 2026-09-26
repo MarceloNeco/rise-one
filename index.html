@@ -2004,6 +2004,23 @@ Object.assign(L,{
 "eq.have":["Tenho","I have it"],
 "eq.haveCount":["{a} marcados como \"tenho\"","{a} ticked as \"I have it\""],
 "eq.onlyMine":["Só o que eu tenho","Only what I have"],
+"rc.title":["O que eu tenho para treinar","What I have to train with"],
+"rc.sub":["Marque onde e com o quê você treina. A biblioteca e as sugestões passam a respeitar isso.","Mark where and with what you train. The library and suggestions follow it."],
+"rc.short":["Meus recursos","My gear"],
+"rc.cenarios":["Comece por um cenário","Start from a scenario"],
+"rc.rua":["Só a rua ou o parque","Just the street or park"],
+"rc.ruaD":["Correr, andar, peso do corpo","Run, walk, bodyweight"],
+"rc.casa":["Casa com pouca coisa","Home with a few things"],
+"rc.casaD":["Halteres, elástico, colchonete","Dumbbells, band, mat"],
+"rc.condo":["Academia do prédio","Building gym"],
+"rc.condoD":["Esteira, bike, halteres, banco, polia","Treadmill, bike, dumbbells, bench, pulley"],
+"rc.gym":["Academia completa","Full gym"],
+"rc.gymD":["Tudo marcado","Everything checked"],
+"rc.itens":["Ou marque item por item","Or pick item by item"],
+"rc.count":["{n} marcados","{n} checked"],
+"rc.none":["Nada marcado ainda: a biblioteca mostra tudo.","Nothing checked yet: the library shows everything."],
+"rc.seeEx":["Ver exercícios com o que tenho","See exercises with what I have"],
+"rc.clear":["Limpar","Clear"],
 "eq.zoom":["Ampliar","Zoom"],
 "eq.open":["Abrir o desenho","Open the drawing"],
 "eq.sheet":["Ficha do aparelho","Machine sheet"],
@@ -2834,6 +2851,38 @@ const EQ_TAGS={
 const EQ_GRUPOS=["pernas","bracos","peito","costas","ombros","abdomen","cadeiras","polias","cardio","livre"];
 function eqHave(id){ return !!(STATE.equipHave && STATE.equipHave[id]); }
 function eqSetHave(id,on){ STATE.equipHave=STATE.equipHave||{}; if(on) STATE.equipHave[id]=1; else delete STATE.equipHave[id]; save(); }
+/* "O que eu tenho para treinar": um lugar só, de acesso fácil (Início, AssistONE, Preferências), para dizer
+   onde e com o quê a pessoa treina. Cenários marcam vários de uma vez; depois dá para ajustar item a item. */
+const RC_CENARIOS=[
+ ["rua",  ["livre","escada"]],
+ ["casa", ["livre","halter","elastico","colchonete","rolo","bola","caneleira","step"]],
+ ["condo",["livre","halter","esteira","bike","eliptico","banco-regulavel","torre-polia","polia-alta","polia-baixa","colchonete","bola","elastico","kettlebell","anilhas","barra","espaldar"]],
+ ["gym",  null]
+];
+function eqHaveCount(){ return Object.keys(STATE.equipHave||{}).length; }
+function eqSetMany(ids){ STATE.equipHave={}; (ids||Object.keys(EQUIP)).forEach(id=>{ if(EQUIP[id]) STATE.equipHave[id]=1; }); save(); }
+function recursosModal(){
+  const grupos=EQ_GRUPOS.filter(g=>g!=="livre").concat(["livre"]);
+  const chip=e=>'<button class="eqchip'+(eqHave(e.id)?" on":"")+'" data-rc="'+e.id+'" aria-pressed="'+(eqHave(e.id)?"true":"false")+'"><span class="eqchipic">'+e.svg+"</span><span>"+esc(eqName(e.id))+"</span></button>";
+  const m=modal(mh(t("rc.title"))+'<p class="tiny muted" style="margin:-4px 0 10px">'+t("rc.sub")+"</p>"+
+    '<span class="kicker">'+t("rc.cenarios")+'</span><div class="tiles" style="margin:6px 0 12px">'+RC_CENARIOS.map(c=>
+      '<button class="tile" data-rcc="'+c[0]+'"><span class="ibub grey">'+I(c[0]==="rua"?"flame":(c[0]==="casa"?"home":"dumbbell"))+'</span><span class="tl">'+t("rc."+c[0])+'</span><span class="td">'+t("rc."+c[0]+"D")+"</span></button>").join("")+"</div>"+
+    '<span class="kicker">'+t("rc.itens")+' · <span id="rc_n">'+t("rc.count").replace("{n}",eqHaveCount())+"</span></span>"+
+    grupos.map(g=>{ const lst=eqBusca("",g); return lst.length?'<p class="tiny muted" style="margin:10px 0 4px">'+t("eq.g."+g)+'</p><div class="eqpick">'+lst.map(chip).join("")+"</div>":""; }).join("")+
+    '<p class="tiny muted" id="rc_none" style="margin-top:10px'+(eqHaveCount()?";display:none":"")+'">'+t("rc.none")+"</p>"+
+    '<div class="row" style="margin-top:14px"><button class="btn" id="rc_ex">'+I("book")+t("rc.seeEx")+'</button><button class="btn line" id="rc_clear">'+t("rc.clear")+"</button></div>");
+  const paint=()=>{ m.querySelectorAll("[data-rc]").forEach(b=>{ const on=eqHave(b.getAttribute("data-rc")); b.classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false"); });
+    const n=m.querySelector("#rc_n"); if(n) n.textContent=t("rc.count").replace("{n}",eqHaveCount()); const z=m.querySelector("#rc_none"); if(z) z.style.display=eqHaveCount()?"none":""; };
+  m.querySelectorAll("[data-rc]").forEach(b=>b.onclick=()=>{ const id=b.getAttribute("data-rc"); eqSetHave(id,!eqHave(id)); paint(); });
+  m.querySelectorAll("[data-rcc]").forEach(b=>b.onclick=()=>{ const c=RC_CENARIOS.find(x=>x[0]===b.getAttribute("data-rcc")); eqSetMany(c[1]); paint(); toast(t("common.saved")); });
+  m.querySelector("#rc_clear").onclick=()=>{ eqSetMany([]); paint(); };
+  m.querySelector("#rc_ex").onclick=()=>{ EXF.soMeus=eqHaveCount()>0; EXF.eqs=[]; m.remove(); go("ex"); };
+}
+function recursosCard(){
+  const n=eqHaveCount();
+  return '<div class="card">'+cardHead("dumbbell", t("rc.title"), n?t("rc.count").replace("{n}",n):t("rc.none"),
+    '<button class="btn sm" id="rc_open">'+I("sliders")+t("rc.short")+"</button>")+"</div>";
+}
 /* desenho técnico do aparelho: quando existe o arquivo aparelhos/<id>.png (sem fundo), ele cobre o ícone; senão fica o ícone */
 function eqFig(e){
   const mine=STATE.equipPhotos&&STATE.equipPhotos[e.id];
@@ -3304,6 +3353,7 @@ try{ history.replaceState({rise:1, inicio:1},""); }catch(e){}
 new MutationObserver(ms=>{ if(NAV.popping) return; ms.forEach(m=>m.removedNodes.forEach(n=>{ if(n.nodeType===1 && n.classList && n.classList.contains("modal") && n.getAttribute("data-nav")) navDrop("modal"); })); }).observe(document.body,{childList:true});
 
 document.addEventListener("click", e=>{
+  if(e.target.closest("#rc_open")){ recursosModal(); return; }
   const b=e.target.closest("[data-go]");
   if(b){ const m=b.closest(".modal"); if(m && !b.closest("#screen")) m.remove(); go(b.getAttribute("data-go"), b.getAttribute("data-sub")||undefined); }
 });
@@ -3423,6 +3473,7 @@ SCREENS.home = function(){
      '<button class="tile" data-go="scan"><span class="ibub">'+I("scan")+'</span><span class="tl">'+t("nav.scan")+"</span></button>"+
      '<button class="tile" data-go="body"><span class="ibub">'+I("body")+'</span><span class="tl">'+t("body.title")+"</span></button>"+
      '<button class="tile" data-go="ex"><span class="ibub">'+I("book")+'</span><span class="tl">'+t("ex.title")+"</span></button>"+
+     '<button class="tile" id="rc_open"><span class="ibub">'+I("dumbbell")+'</span><span class="tl">'+t("rc.short")+"</span></button>"+
      '<button class="tile" data-go="ia"><span class="ibub">'+I("sparkles")+'</span><span class="tl">'+t("ia.title")+"</span></button>"+
      "</div></div>";
   h+="</div>";
@@ -5721,6 +5772,7 @@ SCREENS.set = function(){
       '<p class="tiny muted" style="margin:6px 0 0">'+t("st.bgArtSub")+"</p></div>";
     h+='<div class="card">'+cardHead("body", t("st.terms"), t("body.level"))+
       '<div class="optionlist">'+[1,2,3].map(i=>'<button class="opt '+(STATE.termsLevel===i?"on":"")+'" data-lvl="'+i+'"><span class="ibub '+(STATE.termsLevel===i?"":"grey")+'">'+I(i===1?"chat":(i===2?"book":"flask"))+'</span><span><span class="ot">'+t("body.lv"+i)+'</span><br><span class="od">'+t("body.lv"+i+"d")+"</span></span></button>").join("")+"</div></div>";
+    h+=recursosCard();
     h+=assistCard();
     h+=favsCard();
     h+=musCard(uiRole()==="admin");
@@ -8603,9 +8655,9 @@ function assistApply(){ document.documentElement.setAttribute("data-assist", ass
 function assistSet(on){ ROOT.prefs.assist=on?1:0; saveRoot(); assistApply(); if(!on){ assistClose(); assistTipHide(); toast(t("as.offToast")); } }
 /* atalhos por tela: até 3 ações que já executam (ícone, PT, EN, ação) */
 const ASSIST_ACOES={
- home:[["dumbbell","Treino de hoje","Today's workout",()=>go("workout")],["clipboard","Registrar o dia","Log the day",()=>go("progress","hoje")],["leaf","Dieta de hoje","Today's diet",()=>go("diet")]],
- workout:[["book","Biblioteca","Library",()=>go("ex")],["flame","Aquecer & Alongar","Warm up & Stretch",()=>go("warm")]],
- ex:[["body","Mapa do corpo","Body map",()=>go("body")],["dumbbell","Meus treinos","My workouts",()=>go("workout")]],
+ home:[["dumbbell","Treino de hoje","Today's workout",()=>go("workout")],["sliders","Meus recursos","My gear",()=>recursosModal()],["clipboard","Registrar o dia","Log the day",()=>go("progress","hoje")],["leaf","Dieta de hoje","Today's diet",()=>go("diet")]],
+ workout:[["book","Biblioteca","Library",()=>go("ex")],["sliders","Meus recursos","My gear",()=>recursosModal()],["flame","Aquecer & Alongar","Warm up & Stretch",()=>go("warm")]],
+ ex:[["sliders","Meus recursos","My gear",()=>recursosModal()],["body","Mapa do corpo","Body map",()=>go("body")],["dumbbell","Meus treinos","My workouts",()=>go("workout")]],
  body:[["book","Biblioteca","Library",()=>go("ex")]],
  diet:[["book","Alimentos","Foods",()=>go("diet","alimentos")],["sparkles","Sugestões de pratos","Dish suggestions",()=>go("diet","pratos")],["camera","Ler rótulo","Read a label",()=>{ SCANMODE="label"; go("scan"); }]],
  progress:[["chart","Peso","Weight",()=>go("progress","peso")],["flask","Exames","Lab results",()=>go("progress","exames")]],
