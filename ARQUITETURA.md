@@ -28,6 +28,7 @@ Tudo roda no navegador da pessoa e os dados ficam no aparelho dela (`localStorag
 | `fotos-exercicios.jpg` | **Opcional.** Mosaico 6×6 com fotos das posições de alguns exercícios. Sem ele, o app mostra só o boneco animado | Sim, mas mantendo a ordem dos quadros (ver `PHOTOS` no código) |
 | `ajuda-botao.png`, `ajuda-icone.png` | **Opcionais.** Ícone Assist ONE do botão de ajuda. Sem eles, o app usa um ícone desenhado em SVG | Colocar os arquivos do portfólio |
 | `TESTE-riseone.html` | Página de teste das diretrizes (abre no mesmo endereço do app) | Sim |
+| `personal/<id>-<pose>.png` | Poses opcionais do personal: `serie`, `descanso`, `fim` (ex.: `knox-serie.png`). Sem a pose, usa `<id>.png` | Sim |
 | `personal/<id>.png` | Foto de cada personal trainer (`knox.png`, `musclemill.png`, incluídas). Sem o arquivo, o app desenha um avatar | Sim, um por personal |
 | `conteudo-aparelhos.json` | Reserva local do conteúdo dos aparelhos (ids, nomes, textos, termos, grupos, fotos, vídeos). A versão central é publicada pelo RootifyONE em `solverone-dados/conteudo/rise-one/aparelhos.json` | Sim, a cada aparelho novo no código |
 | `aparelhos/<id>.png` | Desenho sem fundo de cada aparelho (ids em `EQUIP`; 20 incluídos, feitos de fotos com remoção de fundo). Sem o arquivo, o app usa o desenho em linha | Sim, um por aparelho |
@@ -110,6 +111,7 @@ Procure pelo número para ir direto ao assunto.
   **OCR**: `ocrEstimateAngle` (inclinação), `ocrCanvas` (girar, recortar o papel, ampliar, binarizar),
   `ocrParsedOk` (a leitura do modo entendeu?), `ocrWorker` (um worker reaproveitado) e `runOCR` com três
   passagens escolhendo a melhor.
+- **Palco do personal** — `ptStageHTML()` (avatar grande + balão), `ptStageSet(pose, txt)` (chamado por saySet/sayRest/sayDone e pelo `speakNext`, que mostra a frase no balão), `ptPickModal()`, `countReps(n)` (fila 1…n + frase de ânimo), cartão `.ptstrip` na tela Treino.
 - **Personal trainer** — `PERSONAIS` (id, ritmo e tom relativos, frases PT/EN por momento: inicio, ex, serie, descanso,
   proximo, fim, anima), `personal()`, `personalFrase(tipo, vars)`, `personalAvatar` e `personalCard` (Preferências).
   `sayStart`/`sayExercise`/`saySet`/`sayRest`/`sayDone` usam as frases do personal escolhido (`settings.voz.personal`).

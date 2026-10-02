@@ -926,6 +926,14 @@ main{padding-bottom:88px}
 .ptav img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
 .ptav img.ok{opacity:1}
 .ptgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.ptstrip .acts{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.ptstage{display:flex;gap:12px;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;margin:0 0 10px}
+.ptstage .ptbig .ptav{border-radius:18px;background:#fff !important}
+.ptstage .ptbig .ptav img{object-fit:contain}
+.ptstage .gr{flex:1;min-width:0}
+.ptsay{position:relative;margin-top:6px;padding:8px 10px;border-radius:12px;background:var(--surface);border:1px solid var(--border);font-size:.86rem;line-height:1.35}
+.ptsay::before{content:"";position:absolute;left:-7px;top:12px;border:6px solid transparent;border-right-color:var(--border);border-left:0}
+@media (max-width:420px){ .ptstage .ptbig .ptav{width:64px !important;height:64px !important} }
 .ptcard{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;cursor:pointer;color:var(--text);font:inherit;display:flex;flex-direction:column;align-items:center;gap:6px}
 .ptcard.on{border-color:var(--accent);background:var(--accent-soft)}
 .ptcard .nm{font-weight:800;font-size:.9rem}
@@ -2045,6 +2053,14 @@ Object.assign(L,{
 "pt.sub":["Quem narra o seu treino. Cada personal tem o próprio jeito de falar; a voz vem do aparelho (acima).","Who narrates your workout. Each trainer has their own way of talking; the voice comes from the device (above)."],
 "pt.sample":["Ouvir amostra","Hear a sample"],
 "pt.inUse":["narrando","narrating"],
+"pt.yours":["Seu personal","Your trainer"],
+"pt.change":["Trocar","Change"],
+"pt.voiceOff":["Voz desligada: o personal não fala.","Voice off: the trainer stays silent."],
+"pt.voiceOn":["Ligar a voz do personal","Turn the trainer's voice on"],
+"pt.count":["Contar repetições","Count reps"],
+"pt.counting":["Contando…","Counting…"],
+"pt.music":["Música do Spotify toca junto; a voz entra por cima.","Spotify keeps playing; the voice comes over it."],
+"pt.pick":["Escolher personal","Choose trainer"],
 "pt.neutro":["Neutro","Neutral"],
 "pt.neutroD":["Só o essencial: exercício, séries e descanso.","Just the essentials: exercise, sets and rest."],
 "pt.knox":["KnoX","KnoX"],
@@ -4134,6 +4150,10 @@ function startCam(host, cb){
 SCREENS.workout = function(){
   let h='<div class="pagehead"><div><h1>'+t("wk.title")+'</h1><small>'+t("wk.sub")+'</small></div><div class="row nowrap"><button class="btn ghost sm" id="timerbtn2">'+I("timer")+t("tm.short")+'</button><button class="btn" id="newwk">'+I("plus")+t("wk.new")+"</button></div></div>";
   h+=guestBanner();
+  { const c=vozCfg(), pp=personal();
+    h+='<div class="card tight ptstrip"><div class="row nowrap">'+personalAvatar(pp,56)+'<div class="gr"><span class="kicker">'+t("pt.yours")+'</span><div><b>'+esc(personalNome(pp))+'</b> <span class="tiny muted">· '+t("pt."+pp.id+"D")+"</span></div>"+
+      (c.on? "" : '<div class="tiny" style="color:var(--warn);margin-top:2px">'+t("pt.voiceOff")+"</div>")+"</div>"+
+      '<div class="acts"><button class="btn xs line" id="pt_strip_change">'+t("pt.change")+'</button>'+(c.on?'<button class="btn xs ghost" id="pt_strip_sample">'+I("play")+t("pt.sample")+"</button>":'<button class="btn xs" id="pt_strip_on">'+I("speaker")+t("pt.voiceOn")+"</button>")+"</div></div></div>"; }
   if(!STATE.workouts.length) h+='<div class="card">'+emptyBox("dumbbell", t("wk.none"), t("wk.noneSub"))+"</div>";
   STATE.workouts.forEach(w=>{
     const days=(w.days||[]).map(d=>weekdayName(d)).join(" · ");
@@ -4164,6 +4184,9 @@ SCREENS.workout = function(){
   return h;
 };
 SCREENS.workout_after = function(){
+  const psc=document.getElementById("pt_strip_change"); if(psc) psc.onclick=()=>ptPickModal(()=>render());
+  const pso=document.getElementById("pt_strip_on"); if(pso) pso.onclick=()=>{ const c=vozCfg(); c.on=true; c.narraTreino=true; save(); render(); toast(t("common.saved")); };
+  const pss=document.getElementById("pt_strip_sample"); if(pss) pss.onclick=()=>{ const ex=LANG==="pt"?"Agachamento":"Squat"; speakQueue([personalFrase("inicio",{treino:LANG==="pt"?"treino de pernas":"leg day"}), personalFrase("ex",{ex,series:3,reps:12})].filter(Boolean),{force:true}); };
   wireGuestBanner();
   document.getElementById("newwk").onclick=()=>editWorkout(null);
   const tb=document.getElementById("timerbtn2"); if(tb) tb.onclick=()=>openTimer();
@@ -4737,10 +4760,11 @@ function runWorkout(id){
     const it=w.items[idx], p=prog[idx], x=allEx().find(e=>e.id===it.exId);
     const eq=EQUIP[x?x.eq:""];
     m.querySelector("#runbox").innerHTML=
-      '<div class="mh"><div class="row nowrap">'+(vozCfg().on?personalAvatar(personal(),40):"")+'<div><span class="pill acc">'+t("wk.running")+'</span>'+(vozCfg().on?' <span class="tiny muted">'+esc(personalNome(personal()))+"</span>":"")+'<h3 style="margin:.3em 0 0">'+esc(w.name)+"</h3></div></div><button class='iconbtn' id='rclose'>&times;</button></div>"+
+      '<div class="mh"><div class="row nowrap"><div><span class="pill acc">'+t("wk.running")+'</span><h3 style="margin:.3em 0 0">'+esc(w.name)+"</h3></div></div><button class='iconbtn' id='rclose'>&times;</button></div>"+
       '<div class="bar" style="margin:6px 0 12px"><i style="width:'+((idx)/w.items.length*100)+'%"></i></div>'+
+      ptStageHTML()+
       '<div class="row" style="margin-bottom:10px">'+(idx===0?'<button class="btn ghost sm" id="r_warm">'+I("flame")+t("wu.warmBtn")+"</button>":"")+
-        musBtn("ghost sm")+'<button class="btn ghost sm" data-tvbtn="1" id="r_tv">'+I("cast")+t("tv.short")+"</button>"+hrBadge()+"</div>"+
+        musBtn("ghost sm")+(musAtiva()&&vozCfg().on?'<span class="tiny muted">'+t("pt.music")+"</span>":"")+'<button class="btn ghost sm" data-tvbtn="1" id="r_tv">'+I("cast")+t("tv.short")+"</button>"+hrBadge()+"</div>"+
       '<div class="card tight" style="margin:0 0 12px"><div class="row nowrap">'+((x&&exAnimId(x))?'<div class="runfig">'+exFigure(x)+"</div>":(eq?'<div class="eqic" style="width:52px;height:52px">'+eq.svg+"</div>":""))+
       '<div><h2 style="margin:0">'+esc(x?exName(x):it.exId)+'</h2><small class="muted">'+esc(x?mName(x.m):"")+" · "+(idx+1)+"/"+w.items.length+"</small></div></div>"+
       '<p class="tiny muted" style="margin:.6em 0 0">'+esc(x?exTip(x):"")+"</p>"+
@@ -4752,6 +4776,7 @@ function runWorkout(id){
       '<div class="row">'+p.sets.map((s,i)=>'<span class="pill ok">'+(i+1)+": "+s.reps+"×"+fmtNum(s.load,1)+"</span>").join("")+
       '<span class="pill">'+p.sets.length+" / "+p.target+"</span></div>"+
       '<div class="row" style="margin-top:12px"><button class="btn" id="r_set">'+I("check")+t("wk.setDone")+'</button>'+
+      '<button class="btn ghost" id="r_count">'+I("speaker")+t("pt.count")+"</button>"+
       '<button class="btn ghost" id="r_rest">'+I("timer")+t("wk.restNow")+" ("+(it.rest||60)+"s)</button>"+
       '<button class="btn line" id="r_prev" '+(idx===0?"disabled":"")+">"+I("chevl")+t("wk.prev")+'</button>'+
       '<button class="btn line" id="r_next" '+(idx>=w.items.length-1?"disabled":"")+">"+t("wk.next")+I("chevr")+'</button>'+
@@ -4762,6 +4787,7 @@ function runWorkout(id){
     if(typeof sayExercise==="function" && saidIdx!==idx){
       const primeira=(saidIdx===-1), nomeEx=x?exName(x):it.exId; saidIdx=idx;
       /* na abertura, saudação e primeiro exercício vão juntos na fila (falar um cancelaria o outro) */
+      if(primeira){ PTST.pose=""; PTST.last=""; }
       if(primeira && vozCfg().on && vozCfg().narraTreino) speakQueue([personalFrase("inicio",{treino:w.name}), personalFrase("ex",{ex:nomeEx,series:it.sets,reps:it.reps})].filter(Boolean));
       else sayExercise(nomeEx, it.sets, it.reps);
     }
@@ -4774,6 +4800,9 @@ function runWorkout(id){
       else { paint(); timerModal(it.rest||60); }
     };
     m.querySelector("#r_rest").onclick=()=>timerModal(it.rest||60);
+    m.querySelector("#r_count").onclick=()=>countReps(m.querySelector("#r_reps").value);
+    const pc=m.querySelector("#pt_change"); if(pc) pc.onclick=()=>ptPickModal(()=>paint());
+    const pv=m.querySelector("#pt_von"); if(pv) pv.onclick=()=>{ const c=vozCfg(); c.on=true; c.narraTreino=true; save(); saidIdx=-1; paint(); };
     const rmr=m.querySelector("#r_mir");
     if(rmr) rmr.onclick=()=>openMirror(exAnimId(x), exName(x));
     const rw=m.querySelector("#r_warm");
@@ -9897,6 +9926,7 @@ function speakNext(){
   SPK.busy=true;
   const done=()=>{ if(!SPK.busy) return; SPK.busy=false; clearTimeout(SPK.guard); setTimeout(speakNext,40); };
   u.onend=done; u.onerror=done;
+  if(/^\d+$/.test(txt)===false && typeof ptStageSet==="function") ptStageSet("", txt);
   /* vigia: se o motor travar, a fila não pode parar para sempre */
   clearTimeout(SPK.guard);
   SPK.guard=setTimeout(done, Math.max(6000, txt.length*120));
@@ -9956,10 +9986,40 @@ function personalFrase(tipo, vars){
 }
 function personalFala(tipo, vars, opts){ const s=personalFrase(tipo, vars); if(s) speak(s, opts); }
 /* avatar: a foto (personal/<id>.png) cobre o desenho quando existe */
-function personalAvatar(p, tam){
+/* pose (opcional): serie, descanso, fim. Sem o arquivo da pose, cai no personal/<id>.png; sem esse, iniciais */
+function personalAvatar(p, tam, pose){
   tam=tam||44;
   const ini=personalNome(p).slice(0,2).toUpperCase();
-  return '<span class="ptav" style="width:'+tam+'px;height:'+tam+'px;background:'+p.cor+'"><span>'+esc(ini)+'</span><img src="personal/'+p.id+'.png" alt="" onload="this.classList.add(\'ok\')" onerror="this.remove()"></span>';
+  const src=pose? "personal/"+p.id+"-"+pose+".png" : "personal/"+p.id+".png";
+  const err=pose? "this.onerror=function(){this.remove()};this.src=\'personal/"+p.id+".png\'" : "this.remove()";
+  return '<span class="ptav" style="width:'+tam+'px;height:'+tam+'px;background:'+p.cor+'"><span>'+esc(ini)+'</span><img src="'+src+'" alt="" onload="this.classList.add(\'ok\')" onerror="'+err+'"></span>';
+}
+/* palco do personal dentro do treino: avatar na pose do momento + balão com o que ele acabou de dizer */
+const PTST={pose:"", last:""};
+function ptStageHTML(){
+  const c=vozCfg(), pp=personal();
+  return '<div class="ptstage" id="ptstage"><div class="ptbig">'+personalAvatar(pp, 84, PTST.pose)+'</div>'+
+    '<div class="gr"><div class="row nowrap" style="gap:6px"><b>'+esc(personalNome(pp))+'</b><button class="btn xs ghost" id="pt_change">'+t("pt.change")+"</button></div>"+
+    (c.on? '<div class="ptsay" id="ptsay">'+esc(PTST.last||t("pt."+pp.id+"D"))+"</div>" : '<button class="btn xs line" id="pt_von">'+I("speaker")+t("pt.voiceOn")+"</button>")+"</div></div>";
+}
+function ptStageSet(pose, txt){
+  PTST.pose=pose||PTST.pose; if(txt) PTST.last=txt;
+  const st=document.getElementById("ptstage"); if(!st) return;
+  if(pose){ const big=st.querySelector(".ptbig"); if(big) big.innerHTML=personalAvatar(personal(), 84, pose); }
+  const say=document.getElementById("ptsay"); if(say && txt) say.textContent=txt;
+}
+function ptPickModal(after){
+  const m=modal(mh(t("pt.pick"))+personalCard());
+  wirePersonal();
+  m.querySelectorAll("[data-pt]").forEach(b=>b.addEventListener("click",()=>{ setTimeout(()=>{ m.remove(); if(after) after(); },150); }));
+}
+/* contagem de repetições narrada: 1, 2, 3… no ritmo do personal, e uma frase de ânimo no fim */
+function countReps(n){
+  n=Math.max(1,Math.min(50, parseInt(n,10)||10));
+  const c=vozCfg(); if(!c.on){ toast(t("pt.voiceOff")); return; }
+  const list=[]; for(let i=1;i<=n;i++) list.push(String(i));
+  const fim=personalFrase("anima")||personalFrase("serie",{n:"",total:""}); if(fim) list.push(fim);
+  ptStageSet("serie", t("pt.counting")); speakQueue(list);
 }
 function personalCard(){
   const c=vozCfg(), cur=personal();
@@ -9979,8 +10039,8 @@ function sayExercise(nome, series, reps){
   const c=vozCfg(); if(!c.on || !c.narraTreino) return;
   if(series && reps) personalFala("ex", {ex:nome, series, reps}); else speak(nome);
 }
-function sayStart(treino){ const c=vozCfg(); if(!c.on || !c.narraTreino) return; personalFala("inicio", {treino}); }
-function saySet(n, total){ const c=vozCfg(); if(!c.on || !c.narraTreino) return;
+function sayStart(treino){ const c=vozCfg(); if(!c.on || !c.narraTreino) return; PTST.pose=""; personalFala("inicio", {treino}); }
+function saySet(n, total){ const c=vozCfg(); if(!c.on || !c.narraTreino) return; ptStageSet("serie");
   const anima=(Math.random()<0.35)? personalFrase("anima") : "";
   speakQueue([personalFrase("serie",{n,total})].concat(anima?[anima]:[])); }
 function sayMove(nome, seg, lado){
@@ -9992,8 +10052,8 @@ function sayMove(nome, seg, lado){
 }
 function sayNext(nome){ const c=vozCfg(); if(!c.on || !c.narraRotina) return; speak(t("wu.next")+": "+nome); }
 function sayCount(n){ const c=vozCfg(); if(!c.on || !c.contagem) return; speak(String(n), {solo:false}); }
-function sayRest(seg){ const c=vozCfg(); if(!c.on || !c.narraTreino) return; personalFala("descanso", {seg}, {solo:false}); }
-function sayDone(){ const c=vozCfg(); if(!c.on) return; personalFala("fim"); }
+function sayRest(seg){ const c=vozCfg(); if(!c.on || !c.narraTreino) return; ptStageSet("descanso"); personalFala("descanso", {seg}, {solo:false}); }
+function sayDone(){ const c=vozCfg(); if(!c.on) return; ptStageSet("fim"); personalFala("fim"); }
 
 /* --- escutar: comandos de voz --- */
 const STT_CMDS={
