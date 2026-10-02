@@ -3,6 +3,25 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.9.0",
+   "data": "2026-10-02",
+   "hora": "18:00:00",
+   "pt": [
+    "AssistONE igual aos outros apps: o personagem (ajuda-botao.png) num botão redondo de 58 px, fundo sempre escuro (também no tema claro), anel dourado e balanço leve; para quando o balão está aberto ou com \"Reduzir animações\". O arquivo entra na cópia sem internet.",
+    "Topo padronizado (celular e computador): ☰ na ponta esquerda e o nome RiseONE logo depois (tocar leva ao início); à direita só 🔍 busca, 📥 caixa de entrada e 👤 perfil. Saíram o 🏠, a engrenagem ⚙ e o PT | EN do topo e do menu ☰: o idioma mora em Configurações › Preferências.",
+    "Menu do 👤 perfil: mostra quem está conectado (nome, papel, plano, e-mail, desde quando e como entrou) e traz Configurações, Tema (liga/desliga), Som da voz do personal, Trocar de perfil (aluno, personal trainer, administrador…) e Sair; visitante vê Entrar. Funciona com teclado (setas, Esc) e leitor de tela. O 👤 do topo mostra as iniciais (ou a foto) e o primeiro nome também no celular.",
+    "📥 Caixa de entrada: reúne as novidades da versão, os recados do administrador (arquivo recados.json na raiz, com início, fim e nível, sem servidor; dá para marcar como lido e arquivar), os treinos prescritos pelo personal, o atalho para receber o código do personal e os avisos. Contador de não lidas no topo, anunciado ao leitor de tela e no ícone do app instalado.",
+    "\"Ajustes\" virou \"Configurações\" em todas as telas, textos e ajuda (EN: Settings)."
+   ],
+   "en": [
+    "AssistONE like the other apps: the character (ajuda-botao.png) in a 58 px round button, always-dark background (also in the light theme), golden ring and a gentle float; it stops when the balloon is open or with \"Reduce animations\". The file is now part of the offline copy.",
+    "Standard header (phone and computer): ☰ at the far left and the RiseONE name right after it (tap = home); on the right only 🔍 search, 📥 inbox and 👤 profile. The 🏠, the ⚙ gear and the PT | EN switch left the header and the ☰ menu: language lives in Settings › Preferences.",
+    "👤 profile menu: shows who is signed in (name, role, plan, e-mail, since when and how) and offers Settings, Theme (toggle), Trainer voice sound, Switch profile (student, personal trainer, administrator…) and Sign out; a guest sees Sign in. Works with keyboard (arrows, Esc) and screen readers. The 👤 in the header shows initials (or photo) and the first name on the phone too.",
+    "📥 Inbox: gathers the version news, the administrator's messages (recados.json in the root, with start, end and level, no server; can be marked as read and archived), workouts prescribed by the trainer, the shortcut to receive the trainer's code and the alerts. Unread counter in the header, announced to screen readers and on the installed app icon.",
+    "\"Ajustes\" became \"Configurações\" on every screen, text and help (EN: Settings)."
+   ]
+  },
+  {
    "v": "3.8.0",
    "data": "2026-09-26",
    "hora": "12:30:00",

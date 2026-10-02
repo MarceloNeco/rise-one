@@ -1,0 +1,14 @@
+{
+ "_leia_me": "Recados do administrador para a caixa de entrada (📥) do RiseONE. Funciona sem servidor: o app lê este arquivo e mostra cada recado entre 'inicio' e 'fim' (datas AAAA-MM-DD) para o 'nivel' indicado (todos, guest, member, premium, student, trainer, admin). 'id' precisa ser único: é por ele que o app lembra o que já foi lido.",
+ "_readme": "Administrator messages for the RiseONE inbox (📥). Works without a server: the app reads this file and shows each message between 'inicio' and 'fim' (YYYY-MM-DD dates) for the given 'nivel' (todos, guest, member, premium, student, trainer, admin). 'id' must be unique: it is how the app remembers what was read.",
+ "recados": [
+  {
+   "id": "2026-10-02-topo-padronizado",
+   "inicio": "2026-10-02",
+   "fim": "2026-12-31",
+   "nivel": "todos",
+   "pt": {"titulo": "Topo novo e caixa de entrada", "texto": "O menu do 👤 agora reúne Configurações, Tema, Som, Trocar de perfil e Sair. O idioma PT | EN fica em Configurações › Preferências. As novidades de cada versão e os recados do administrador chegam aqui, na caixa de entrada."},
+   "en": {"titulo": "New header and inbox", "texto": "The 👤 menu now gathers Settings, Theme, Sound, Switch profile and Sign out. The PT | EN language lives in Settings › Preferences. Each version's news and the administrator's messages arrive here, in the inbox."}
+  }
+ ]
+}

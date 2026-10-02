@@ -20,13 +20,14 @@ Tudo roda no navegador da pessoa e os dados ficam no aparelho dela (`localStorag
 | `icone-192.png`, `icone-512.png`, `icone-maskable.png` | Ícones do app | Trocar por outros do mesmo tamanho |
 | `fundo.jpg`, `fundo-celular.jpg`, `fundo-claro.jpg`, `fundo-claro-celular.jpg` | Arte de fundo (escuro/claro, computador/celular) | Trocar por outras do mesmo formato |
 | `cid.json` | Lista de consulta de códigos CID-10 do aparelho musculoesquelético. **Lista inicial** — confira na tabela oficial. TUSS fica vazio de propósito | Sim, é uma lista |
+| `recados.json` | Recados do administrador para a 📥 caixa de entrada: `id` único, `inicio`, `fim`, `nivel` e texto PT/EN. Lido/arquivado fica em `ROOT.prefs.recados` | Sim, a cada recado |
 | `versoes.json` | O que mudou em cada versão, em PT e EN. O app desenha a tela "Novidades" a partir dele | Sim, a cada versão |
 | `LICENSE` | Licença MIT mais o aviso de que o app é orientativo e não substitui profissional | Raramente |
 | `CREDITOS.md` | De onde vem cada coisa de fora e sob qual licença | A cada dependência nova |
 | `TESTE-VOZ-riseone.html` | Página avulsa para testar voz e comando de voz no aparelho | Sim |
 | `ABRIR-TESTE-riseone.command` / `.bat` | Atalho que serve a pasta em `http://localhost:8123` e abre a página de teste | Não |
 | `fotos-exercicios.jpg` | **Opcional.** Mosaico 6×6 com fotos das posições de alguns exercícios. Sem ele, o app mostra só o boneco animado | Sim, mas mantendo a ordem dos quadros (ver `PHOTOS` no código) |
-| `ajuda-botao.png`, `ajuda-icone.png` | **Opcionais.** Ícone Assist ONE do botão de ajuda. Sem eles, o app usa um ícone desenhado em SVG | Colocar os arquivos do portfólio |
+| `ajuda-botao.png` | Personagem do AssistONE (arquivo canônico do portfólio, md5 `00d65eed…`), usado no botão redondo e no balão. Sem ele, o app usa um ícone desenhado em SVG | Colocar os arquivos do portfólio |
 | `TESTE-riseone.html` | Página de teste das diretrizes (abre no mesmo endereço do app) | Sim |
 | `personal/<id>-<pose>.png` | Poses opcionais do personal: `serie`, `descanso`, `fim` (ex.: `knox-serie.png`). Sem a pose, usa `<id>.png` | Sim |
 | `personal/<id>.png` | Foto de cada personal trainer (`knox.png`, `musclemill.png`, incluídas). Sem o arquivo, o app desenha um avatar | Sim, um por personal |
@@ -75,6 +76,7 @@ Procure pelo número para ir direto ao assunto.
 - **52. Conteúdo extra** — exercícios e movimentos vindos de fichas reais, modelos de treino (`TEMPLATES`) e mapa das fotos (`PHOTOS`).
 - **53. Conferência de versão** — pergunta ao site qual versão está publicada (lê o `CACHE_VER` do `sw.js`)
   e oferece "Atualizar agora", que limpa caches e service worker e recarrega.
+- **Topo e menu do 👤** — `refreshWho()` (iniciais/foto, primeiro nome e `aria-label` com a identidade), `pmOpen/pmClose/pmToggle` e `pmHTML()` (menu do perfil: Configurações, Tema, Som, Trocar de perfil, Sair), `inboxModal()`/`paintInbox()` (📥 novidades, recados de `recados.json` via `recadosLoad/recadosAtivos/recadoMarcar`, treino do personal, avisos; contador com `setAppBadge` e região `aria-live`). O idioma PT|EN fica só em Configurações › Preferências.
 - **11b. Gaveta lateral e favoritos** — `DRAWER_GROUPS` (o que aparece no ☰), `openDrawer`/`closeDrawer`,
   `favs()`/`setFavs()` (a barra de baixo do celular).
 - **56. Privacidade** — `consent()`, `askConsent(finalidade, aoAceitar)`, `disclaimerModal()` (o "Estou ciente"),
@@ -186,4 +188,4 @@ Procure pelo número para ir direto ao assunto.
 | App de relógio (Wear OS / watchOS) | Um site no GitHub Pages não vira app de relógio. O que dá é ler cinta peitoral ou pulseira por Web Bluetooth (Chrome do Android; no iPhone nenhum navegador tem Bluetooth para sites) |
 | Controlar o Spotify | Nenhum site troca faixa ou dá pause no app de música. O RiseONE abre a playlist num toque e a voz do treinador toca por cima, sem parar a música |
 | Projeção na TV | Resolvido na 3.2.0: a própria TV abre `tv-riseone.html` (Presentation API, com Chromecast ou Google TV). Sem Chromecast, cai para janelinha flutuante ou tela cheia, e aí quem leva a imagem é o espelhamento do aparelho. Câmera ao vivo o navegador não deixa transmitir |
-| Inbox (caixa de recados) | Exige servidor. Não existe ainda no RiseONE |
+| Inbox (caixa de recados) | A 📥 do topo (3.9.0) mostra novidades, recados do administrador (`recados.json`) e o que veio do personal. Recado entre pessoas exige servidor e ainda não existe |
