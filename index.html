@@ -3785,16 +3785,18 @@ function pmOpen(){
   m.innerHTML=pmHTML(); pmPlace();
   m.classList.remove("hidden"); requestAnimationFrame(()=>m.classList.add("show"));
   PM.open=true; b.setAttribute("aria-expanded","true");
-  m.querySelectorAll("[data-pm]").forEach(x=>x.onclick=()=>{
-    const k=x.getAttribute("data-pm");
+  /* o handler fica nomeado: depois de redesenhar o menu (tema/som), os botões novos recebem o mesmo */
+  const onPm=function(){
+    const x=this, k=x.getAttribute("data-pm");
     if(k==="theme"){ applyTheme(document.documentElement.getAttribute("data-theme")==="light"?"dark":"light"); if(ROUTE==="set") render(); m.innerHTML=pmHTML(); pmWire(); m.querySelector('[data-pm="theme"]').focus(); return; }
     if(k==="sound"){ const c=vozCfg(); c.on=!c.on; save(); if(!c.on && typeof speakStop==="function") speakStop(); if(ROUTE==="set") render(); m.innerHTML=pmHTML(); pmWire(); m.querySelector('[data-pm="sound"]').focus(); return; }
     pmClose();
     if(k==="set") go("set");
     else if(k==="switch" || k==="in") loginModal();
     else if(k==="out") sair();
-  });
-  function pmWire(){ m.querySelectorAll("[data-pm]").forEach(x=>x.onclick=m.querySelector("[data-pm]").onclick); }
+  };
+  function pmWire(){ m.querySelectorAll("[data-pm]").forEach(x=>x.onclick=onPm); }
+  pmWire();
   m.onkeydown=e=>{
     const its=[...m.querySelectorAll("[data-pm]")], i=its.indexOf(document.activeElement);
     if(e.key==="Escape"){ e.preventDefault(); pmClose(); }
