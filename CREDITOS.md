@@ -15,7 +15,7 @@ direto do endereço oficial, e só quando a pessoa usa a função:
 | YouTube (iframe) | Mostrar o vídeo do exercício, quando há um link escolhido | Termos do YouTube | www.youtube.com |
 
 Serviços de IA (Gemini, OpenAI, Anthropic) só são chamados se a própria pessoa
-colocar a chave dela nos Ajustes. A chave fica no aparelho dela e não vai para
+colocar a chave dela em Configurações. A chave fica no aparelho dela e não vai para
 lugar nenhum além do serviço escolhido.
 
 ## Conteúdo

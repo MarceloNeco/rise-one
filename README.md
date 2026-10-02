@@ -13,9 +13,11 @@ Site: https://marceloneco.github.io/rise-one/ · Como o app é feito por dentro:
   é aceita como válida. Se a IA escolhida falhar (sem cota, sem crédito, chave recusada), o app espera
   uns 3 segundos e usa a próxima com chave, avisando na tela.
 - **Menu ☰ em grupos.** Ações rápidas no topo, grupos por intenção e partes em acordeão (Dieta, Evolução,
-  Exercícios › Aparelhos, Ajustes). Engrenagem ⚙ de Configurações no cabeçalho.
-- **Visual mais leve.** Cantos mais suaves, barra de baixo flutuante, cabeçalho só com ícones no
-  celular (🔍 ⚙ 🏠 👤) e PT | EN no topo do ☰. A faixa do topo ficou só com anúncio.
+  Exercícios › Aparelhos, Configurações).
+- **Visual mais leve.** Cantos mais suaves, barra de baixo flutuante e a faixa do topo só com anúncio.
+- **Topo padronizado (3.9.0).** ☰ na ponta esquerda e o nome RiseONE (tocar = início); à direita 🔍 busca,
+  📥 caixa de entrada e 👤 perfil. O menu do 👤 traz a identidade conectada, Configurações, Tema, Som,
+  Trocar de perfil e Sair. O idioma PT | EN fica em Configurações › Preferências.
 - **AssistONE.** O ajudante redondo do canto começa pela tela atual com atalhos e abre tour, passo a
   passo, busca e ajuda da tela. Dica curta por tela, uma vez. Liga/desliga em Mais › Preferências.
 - **Voltar do celular dentro do app.** Fecha janela, menu e tela cheia, volta tela a tela e avisa
@@ -194,16 +196,16 @@ isso eles são leves, nítidos em qualquer tela e mudam de cor junto com o tema.
 
 - **Lupa no cabeçalho**, em todas as telas. Ela procura em tudo ao mesmo tempo: exercícios,
   alongamentos, situações de Dor e alívio, códigos CID e TUSS já carregados, os seus treinos, telas,
-  ajustes, glossário e a própria lista de novidades. **Cada resultado é clicável e leva direto ao
+  configurações, glossário e a própria lista de novidades. **Cada resultado é clicável e leva direto ao
   lugar** — um exercício abre a janela dele, uma dor abre a situação já aberta na tela certa, um
   ajuste abre a aba certa das Configurações. No computador, `/` ou `Ctrl+K` abrem a busca; as setas
   escolhem e o Enter abre. A busca também está no menu ☰.
-- **A lista de versões agora fica em Ajustes › Sobre**, com o que mudou em cada uma, em PT e EN — é o
+- **A lista de versões agora fica em Configurações › Sobre**, com o que mudou em cada uma, em PT e EN — é o
   que a diretriz do portfólio pede. Ela continua também em Mais › Novidades.
 - **Botão de créditos e fontes** nas Configurações, apontando para o `CREDITOS.md`.
 - **Música virou lista**: várias playlists com nome, você escolhe a do dia, e o app já vem com
   sugestões de treino no arquivo `musicas.json`. Dá para adicionar, renomear e apagar as suas.
-- **Tocador do Spotify dentro do app**, opcional (Ajustes › Preferências › Música do treino). Sem
+- **Tocador do Spotify dentro do app**, opcional (Configurações › Preferências › Música do treino). Sem
   conta logada no navegador ele toca trechos de 30 segundos; com a conta logada, toca inteiro. Ele
   para quando você troca de app ou apaga a tela — por isso o botão que abre o app da música continua
   sendo o caminho mais confiável.
@@ -363,7 +365,7 @@ aba nova — honesto e sempre funciona.
   verdade, oferecido na primeira visita), **Guia passo a passo** (Primeiros passos: idioma, seus dados,
   objetivo, lesões, saúde e avisos — com pular, salvar e retomar de onde parou), **Buscar por termo**
   (glossário: série, IMC, backup, missão…) e **Esta tela** (o que cada parte da tela faz). Tudo em PT e EN.
-  Se os arquivos `ajuda-botao.png` e `ajuda-icone.png` do portfólio estiverem na raiz, o botão usa eles.
+  O botão usa o `ajuda-botao.png` canônico do portfólio (está na raiz e na cópia sem internet).
 - **Faixa do topo na ordem da diretriz** — [PT | EN] · [IA] · [ANÚNCIO] · [carrossel] · [×]. O × fecha só os
   anúncios; o idioma continua sempre à vista. Conta Premium vê só PT | EN e IA.
 - **Níveis Visitante → Membro → Premium** — o administrador define cada recurso, testa o app

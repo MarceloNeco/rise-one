@@ -101,7 +101,6 @@ small{color:var(--text2)}
 #topbar .tb{background:transparent;border:0;border-right:1px solid var(--border);color:var(--text2);padding:0 12px;cursor:pointer;
   display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:.78rem;letter-spacing:.04em;white-space:nowrap;transition:.15s}
 #topbar .tb:hover{color:var(--text);background:var(--surface3)}
-#langbtn .lg{opacity:.55} #langbtn .lg.on{opacity:1;color:var(--accent)} #langbtn i{font-style:normal;opacity:.35;margin:0 2px}
 #iabtn{color:var(--accent)}
 #iabtn svg{width:15px;height:15px}
 #adbar{flex:1;display:flex;align-items:stretch;min-width:0;min-height:52px}
@@ -850,12 +849,36 @@ input[type=text],input[type=number],input[type=password],input[type=date],input[
 .seg{border-radius:16px} .seg button{border-radius:12px}
 header.app{border-bottom-color:transparent;box-shadow:0 1px 0 var(--border)}
 .hrow{gap:8px}
-/* idioma: no computador fica no cabeçalho; no celular, no topo do ☰ */
-.langsw{display:inline-flex;align-items:center;gap:1px;font-weight:800;font-size:.78rem;letter-spacing:.04em;cursor:pointer;color:var(--text2)}
-.langsw .lg{opacity:.5} .langsw .lg.on{opacity:1;color:var(--accent)} .langsw i{font-style:normal;opacity:.35;margin:0 3px}
-#langbtn{width:auto;padding:0 10px}
-#langbtn2{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:0 12px;min-height:36px;margin-left:auto}
-#homebtn.on{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-line)}
+/* topo (diretriz): ☰ · nome (= início) | … | 🔍 · 📥 · 👤. O idioma PT|EN mora em Configurações › Preferências */
+#inboxbtn{position:relative}
+.srlive{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#inboxbtn .cnt{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--accent-ink);
+  font-size:.66rem;font-weight:800;line-height:18px;text-align:center;pointer-events:none}
+.whoami{min-width:44px;min-height:44px}
+.whoami .av img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+#pmenu{position:fixed;z-index:70;width:min(320px,calc(100vw - 24px));background:var(--surface);border:1px solid var(--border2);border-radius:20px;box-shadow:var(--shadow);
+  padding:8px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;transition:opacity .2s ease,transform .2s cubic-bezier(.22,.8,.3,1)}
+#pmenu.show{opacity:1;transform:none}
+#pmenu.hidden{display:none}
+.pm-head{display:flex;align-items:center;gap:10px;padding:8px 8px 10px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.pm-head .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0;overflow:hidden}
+.pm-head .av img{width:100%;height:100%;object-fit:cover}
+.pm-head b{display:block;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm-head small{display:block;font-size:.74rem;color:var(--text2);line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm-head small.wrap{white-space:normal}
+.pm-item{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:8px 10px;background:none;border:0;border-radius:12px;color:var(--text);font:inherit;font-weight:700;text-align:left;cursor:pointer}
+.pm-item:hover,.pm-item:focus-visible{background:var(--surface2);outline:none}
+.pm-item:focus-visible{box-shadow:0 0 0 2px var(--accent) inset}
+.pm-item .ic{width:20px;height:20px;color:var(--accent);flex:0 0 20px}
+.pm-item .dl{flex:1;min-width:0}
+.pm-item .sw{width:36px;height:20px;border-radius:999px;background:var(--surface3);border:1px solid var(--border2);position:relative;flex-shrink:0;transition:background .2s}
+.pm-item .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--text2);transition:transform .2s,background .2s}
+.pm-item[aria-checked="true"] .sw{background:var(--accent)} .pm-item[aria-checked="true"] .sw::after{transform:translateX(16px);background:var(--accent-ink)}
+.pm-item.danger{color:var(--danger,#e5484d)} .pm-item.danger .ic{color:inherit}
+.pm-item.acc{color:var(--accent)}
+.pm-sep{height:1px;background:var(--border);margin:6px 4px}
+@media (prefers-reduced-motion:reduce){ #pmenu{transition:none} .pm-item .sw,.pm-item .sw::after{transition:none} }
+html[data-motion="0"] #pmenu{transition:none}
 #topbar{min-height:0}
 #topbar:has(#adbar.hidden){display:none}
 a.ditem{text-decoration:none}
@@ -864,8 +887,7 @@ main{padding-bottom:88px}
   .hrow{min-height:52px;padding:6px 12px;gap:4px}
   .iconbtn{width:40px;height:40px;border-radius:12px;background:transparent;border-color:transparent}
   .whoami{background:transparent;border-color:transparent;padding:4px;height:40px}
-  .whoami .nm{display:none}
-  #langbtn{display:none}
+  .whoami .nm{display:block;max-width:72px;font-size:.74rem}
   header.app{box-shadow:none}
   h1{font-size:1.35rem}
   .pagehead{margin-bottom:12px} .pagehead small{font-size:.8rem}
@@ -878,7 +900,6 @@ main{padding-bottom:88px}
   footer.app{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
   .toast{bottom:calc(168px + env(safe-area-inset-bottom))}
 }
-@media(min-width:821px){ #langbtn2{display:none} }
 /* ---- aparelhos: desenho técnico por cima do ícone, ficha ampliável, "tenho" ---- */
 .eqfig{position:relative;width:100%;height:90px;display:flex;align-items:center;justify-content:center}
 .eqfig svg{width:100%;height:100%}
@@ -945,16 +966,19 @@ main{padding-bottom:88px}
 .camring{position:absolute;width:64px;height:64px;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%) scale(1.3);opacity:0;pointer-events:none;transition:transform .25s,opacity .25s}
 .camring.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .camstage{cursor:crosshair}
-/* ---- AssistONE: personagem redondo flutuante ---- */
-#helpbtn.assist{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:58px;height:58px;border-radius:50%;padding:0;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink);border:0;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer;
+/* ---- AssistONE: personagem redondo flutuante (diretriz: fundo SEMPRE escuro, anel dourado, balanço 3.2 s) ---- */
+#helpbtn.assist{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;width:58px;height:58px;border-radius:50%;padding:0;
+  background:radial-gradient(circle at 50% 38%,#232838,#11141c 72%);color:#e6c168;border:1px solid rgba(201,162,74,.55);
+  box-shadow:0 6px 18px rgba(0,0,0,.28),0 0 0 3px rgba(201,162,74,.16);cursor:pointer;
   display:flex;align-items:center;justify-content:center;overflow:visible;transition:width .25s cubic-bezier(.22,.8,.3,1),height .25s cubic-bezier(.22,.8,.3,1);
-  animation:assistfloat 4s ease-in-out infinite}
+  animation:aone-flutua 3.2s ease-in-out infinite}
+#helpbtn.assist:hover{background:radial-gradient(circle at 50% 38%,#2b3144,#11141c 72%);color:#e6c168}
+#helpbtn.assist:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 #helpbtn.assist svg{width:28px;height:28px}
-#helpbtn.assist img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover}
+#helpbtn.assist img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover;pointer-events:none}
 #helpbtn.assist .badge{top:1px;right:1px;width:13px;height:13px;background:#fff;border:2px solid var(--accent)}
-#helpbtn.assist.open{animation:none;width:116px;height:116px}
-@keyframes assistfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+#helpbtn.assist.open,#helpbtn.assist[aria-expanded="true"]{animation:none;width:116px;height:116px}
+@keyframes aone-flutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes assistgrow{from{opacity:0;transform:scale(.88) translateY(10px)}to{opacity:1;transform:none}}
 @media(max-width:820px){ #helpbtn.assist{bottom:calc(84px + env(safe-area-inset-bottom))} }
 body.fs #helpbtn,body.noscroll #helpbtn,body:has(.modal) #helpbtn,body:has(.tour-card) #helpbtn,html[data-assist="0"] #helpbtn{display:none}
@@ -1041,7 +1065,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
 </script>
 <div id="bgart" aria-hidden="true"></div>
 
-<!-- ===== FAIXA DO TOPO: só anúncio — [ANÚNCIO] · [carrossel] · [×] (o idioma mora no cabeçalho e no ☰) ===== -->
+<!-- ===== FAIXA DO TOPO: só anúncio — [ANÚNCIO] · [carrossel] · [×] (o idioma mora em 👤 › Configurações) ===== -->
 <div id="topbar">
   <div id="adbar" class="hidden">
     <span class="adtag" data-i18n="ad.tag">ANÚNCIO</span>
@@ -1055,7 +1079,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
 <header class="app">
   <div class="hrow">
     <button class="iconbtn menu" id="menubtn" aria-expanded="false" aria-controls="drawer" aria-label="Menu" title="Menu"><span class="ic" data-icon="menu"></span></button>
-    <button class="brand" id="brandbtn" title="RiseONE">
+    <button class="brand" id="brandbtn" title="RiseONE — Início / Home" aria-label="RiseONE — Início / Home">
       <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
         <rect width="64" height="64" rx="14" fill="var(--surface2)"/>
         <defs><linearGradient id="mkg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#e8563a"/><stop offset="1" stop-color="#ffaa3c"/></linearGradient></defs>
@@ -1064,11 +1088,10 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
       <span>Rise<span class="one">ONE</span></span>
     </button>
     <span class="spacer"></span>
-    <button class="iconbtn langsw" id="langbtn" title="Português / English" aria-label="Idioma / Language"><span class="lg on" data-lg="pt">PT</span><i>|</i><span class="lg" data-lg="en">EN</span></button>
     <button class="iconbtn" id="searchbtn" aria-label="Buscar / Search" title="Buscar / Search"><span class="ic" data-icon="search"></span></button>
-    <button class="iconbtn" id="setbtn" aria-label="Configurações / Settings" title="Configurações / Settings"><span class="ic" data-icon="cog"></span></button>
-    <button class="iconbtn" id="homebtn" aria-label="Início / Home" title="Início / Home"><span class="ic" data-icon="home"></span></button>
-    <button class="whoami" id="whoami" title="Perfil"><span class="av" id="whoav">?</span><span class="nm" id="whonm">Visitante</span></button>
+    <button class="iconbtn" id="inboxbtn" aria-label="Caixa de entrada / Inbox" title="Caixa de entrada / Inbox"><span class="ic" data-icon="inbox"></span></button>
+    <span id="inboxlive" class="srlive" aria-live="polite"></span>
+    <button class="whoami" id="whoami" title="Perfil / Profile" aria-label="Perfil / Profile" aria-haspopup="menu" aria-expanded="false" aria-controls="pmenu"><span class="av" id="whoav">?</span><span class="nm" id="whonm">Visitante</span></button>
   </div>
   <nav class="tabs" id="tabs"></nav>
 </header>
@@ -1089,13 +1112,15 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
 <aside id="drawer" class="hidden" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1">
   <div class="dhead">
     <span class="dtitle">Rise<span class="one">ONE</span></span>
-    <button class="langsw" id="langbtn2" title="Português / English" aria-label="Idioma / Language"><span class="lg on" data-lg="pt">PT</span><i>|</i><span class="lg" data-lg="en">EN</span></button>
     <button class="iconbtn" id="drawerclose" aria-label="Fechar"><span class="ic" data-icon="x"></span></button>
   </div>
   <div class="dbody" id="drawerbody"></div>
 </aside>
 
 <nav id="bottombar"></nav>
+
+<!-- ===== MENU DO 👤: identidade conectada, Configurações, Tema, Som, Trocar de perfil, Sair ===== -->
+<div id="pmenu" class="hidden" role="menu" aria-label="Perfil / Profile"></div>
 
 <!-- ===== ASSISTONE: o ajudante redondo, sempre no mesmo canto; o balão abre acima dele ===== -->
 <button id="helpbtn" class="assist" title="AssistONE" aria-label="AssistONE" aria-expanded="false" aria-controls="assistballoon"><span class="ic" id="helpic" data-icon="help"></span></button>
@@ -1108,7 +1133,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.8.0";
+const APP_VERSION = "3.9.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -1128,6 +1153,7 @@ const ICONS={
  sparkles:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/><path d="M5 2l.5 1.5L7 4l-1.5.5L5 6l-.5-1.5L3 4l1.5-.5z"/>',
  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
  users:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-5-6.7"/>',
+ inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
  megaphone:'<path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
@@ -1229,7 +1255,7 @@ const L = {
 "nav.scan":["Escanear","Scan"],
 "nav.coach":["Personal","Trainer"],
 "nav.ads":["Anúncios","Ads"],
-"nav.set":["Ajustes","Settings"],
+"nav.set":["Configurações","Settings"],
 "role.guest":["Visitante","Guest"],
 "role.student":["Aluno","Student"],
 "role.trainer":["Personal Trainer","Personal Trainer"],
@@ -1248,7 +1274,7 @@ const L = {
 "login.new":["Ainda não tenho acesso","I don't have access yet"],
 "login.bio":["Usar biometria / senha do aparelho","Use biometrics / device password"],
 "login.social":["Entrar com Google","Sign in with Google"],
-"login.soon":["Configuração pendente — veja Ajustes › Nuvem e login","Setup pending — see Settings › Cloud and sign-in"],
+"login.soon":["Configuração pendente — veja Configurações › Nuvem e login","Setup pending — see Settings › Cloud and sign-in"],
 "login.wrong":["Senha incorreta.","Wrong password."],
 "login.exists":["Já existe um acesso com esse nome.","An access with that name already exists."],
 "login.nomatch":["As senhas não são iguais.","Passwords do not match."],
@@ -1532,7 +1558,7 @@ const L = {
 "tr.prescribe":["Prescrever treino","Prescribe workout"],
 "tr.prescribeDiet":["Prescrever dieta","Prescribe diet"],
 "tr.sendCode":["Gerar código do aluno","Generate student code"],
-"tr.codeNote":["O aluno cola este código em Ajustes › Receber do personal.","The student pastes this code in Settings › Receive from trainer."],
+"tr.codeNote":["O aluno cola este código em Configurações › Receber do personal.","The student pastes this code in Settings › Receive from trainer."],
 "tr.copy":["Copiar","Copy"],
 "tr.copied":["Copiado","Copied"],
 "tr.receive":["Receber do personal","Receive from trainer"],
@@ -1551,7 +1577,7 @@ const L = {
 "ad.ctr":["Taxa de clique","Click rate"],
 "ad.note":["Os números contam as exibições deste aparelho. Para uma campanha real, o painel se liga a um servidor de anúncios.","Numbers count impressions on this device. For a real campaign, the panel connects to an ad server."],
 "ad.preview":["Prévia no topo","Top preview"],
-"st.title":["Ajustes","Settings"],
+"st.title":["Configurações","Settings"],
 "st.profile":["Meu perfil","My profile"],
 "st.height":["Altura (cm)","Height (cm)"],
 "st.birth":["Nascimento","Birth date"],
@@ -1597,7 +1623,7 @@ const L = {
 "st.install":["Instalar como aplicativo","Install as an app"],
 "st.installNote":["No celular: menu do navegador › “Adicionar à tela de início”.","On mobile: browser menu › “Add to Home screen”."],
 "legal.title":["Aviso legal e privacidade","Legal notice and privacy"],
-"legal.body":["Este aplicativo é de uso pessoal e para fins de estudo e pesquisa. A conferência de postura pela câmera é automática e aproximada, feita no próprio aparelho, sem gravar nem enviar imagens, e não substitui a correção de um profissional. As informações sobre exercícios, alimentação e saúde têm caráter informativo e não substituem avaliação de profissional de educação física, nutricionista ou médico. Antes de iniciar qualquer programa de exercícios ou dieta, recomenda-se orientação profissional. O uso é por conta e risco de quem utiliza, não havendo responsabilidade por lesões, danos à saúde ou perdas de qualquer natureza. Os dados registrados (peso, medidas, fotos, refeições e resultados de exames) ficam armazenados no próprio dispositivo e não são enviados a servidores do aplicativo. A remoção dos dados pode ser feita a qualquer momento em Ajustes. Tratamento de dados realizado exclusivamente para fins particulares e não econômicos, nos termos do art. 4º, I, da Lei nº 13.709/2018 (LGPD).","This application is for personal use and for study and research purposes. The camera posture check is automatic and approximate, runs on the device itself without recording or sending images, and does not replace a professional’s correction. Information about exercise, food and health is informative and does not replace assessment by a physical education professional, dietitian or physician. Professional guidance is recommended before starting any exercise or diet programme. Use is at the user's own risk, with no liability for injury, health damage or losses of any kind. Recorded data (weight, measurements, photos, meals and lab results) is stored on the device itself and is not sent to application servers. Data can be removed at any time in Settings. Data processing carried out exclusively for private, non-economic purposes."],
+"legal.body":["Este aplicativo é de uso pessoal e para fins de estudo e pesquisa. A conferência de postura pela câmera é automática e aproximada, feita no próprio aparelho, sem gravar nem enviar imagens, e não substitui a correção de um profissional. As informações sobre exercícios, alimentação e saúde têm caráter informativo e não substituem avaliação de profissional de educação física, nutricionista ou médico. Antes de iniciar qualquer programa de exercícios ou dieta, recomenda-se orientação profissional. O uso é por conta e risco de quem utiliza, não havendo responsabilidade por lesões, danos à saúde ou perdas de qualquer natureza. Os dados registrados (peso, medidas, fotos, refeições e resultados de exames) ficam armazenados no próprio dispositivo e não são enviados a servidores do aplicativo. A remoção dos dados pode ser feita a qualquer momento em Configurações. Tratamento de dados realizado exclusivamente para fins particulares e não econômicos, nos termos do art. 4º, I, da Lei nº 13.709/2018 (LGPD).","This application is for personal use and for study and research purposes. The camera posture check is automatic and approximate, runs on the device itself without recording or sending images, and does not replace a professional’s correction. Information about exercise, food and health is informative and does not replace assessment by a physical education professional, dietitian or physician. Professional guidance is recommended before starting any exercise or diet programme. Use is at the user's own risk, with no liability for injury, health damage or losses of any kind. Recorded data (weight, measurements, photos, meals and lab results) is stored on the device itself and is not sent to application servers. Data can be removed at any time in Settings. Data processing carried out exclusively for private, non-economic purposes."],
 "footer.legal":["Aviso legal e privacidade","Legal notice and privacy"],
 "share.text":["RiseONE — treino, dieta e evolução em um só lugar.","RiseONE — workout, diet and progress in one place."],
 "share.copied":["Link copiado","Link copied"],
@@ -1740,7 +1766,7 @@ const L = {
 "pl.includedDesc":["Liberado para quem tem conta, sem precisar assinar.","Available to anyone with an account, no subscription needed."],
 "pl.premiumDesc":["Só para conta premium (assinante).","Premium (subscriber) accounts only."],
 "pl.needAccount":["Este recurso pede uma conta. Criar uma é rápido e o histórico passa a ficar guardado.","This feature needs an account. Creating one is quick and your history starts being kept."],
-"pl.needPremium":["Este recurso é da conta premium. Você pode ativar em Ajustes › Anúncios.","This feature is part of the premium account. You can switch it on in Settings › Ads."],
+"pl.needPremium":["Este recurso é da conta premium. Você pode ativar em Configurações › Anúncios.","This feature is part of the premium account. You can switch it on in Settings › Ads."],
 "pl.adminNote":["Quem define o que é premium, incluso ou aberto é o perfil de administrador.","The administrator profile decides what is premium, included or open."],
 "adm.title":["Administrador","Administrator"],
 "adm.sub":["Escolha, recurso por recurso, quem pode usar o quê. Tudo começa aberto, do jeito que o app já funcionava.","Choose, feature by feature, who can use what. Everything starts open, exactly as the app already worked."],
@@ -1853,7 +1879,7 @@ Object.assign(L,{
 "nav.train":["Treinar","Train"],
 "nav.scan":["Ler com a câmera","Read with camera"],
 "nav.ia":["Assistente","Assistant"],
-"nav.set":["Ajustes","Settings"],
+"nav.set":["Configurações","Settings"],
 "nav.progress":["Evolução","Progress"],
 "nav.diet":["Dieta","Diet"],
 "help.btn":["Ajuda","Help"],
@@ -1984,7 +2010,7 @@ Object.assign(L,{
 "st.tabAccount":["Conta","Account"],
 "st.tabData":["Dados","Data"],
 "st.profileSub":["Dados básicos usados nos cálculos.","Basic data used in the calculations."],
-"st.langSub":["Também no botão PT | EN do cabeçalho (computador) ou no topo do menu ☰ (celular).","Also in the PT | EN button in the header (computer) or at the top of the ☰ menu (phone)."],
+"st.langSub":["Português ou English: troca tudo, inclusive as datas.","Português or English: switches everything, including dates."],
 "st.dateNow":["Data de hoje neste idioma","Today's date in this language"],
 "st.themeSub":["Escuro ou claro.","Dark or light."],
 "st.bgArt":["Arte de fundo","Background art"],
@@ -2254,6 +2280,35 @@ Object.assign(L,{
 "as.more":["Mais ajuda","More help"],
 "as.exit":["Toque em Voltar de novo para sair do RiseONE","Tap Back again to leave RiseONE"],
 "as.portal":["Portal SolverONE","SolverONE Portal"],
+/* menu do 👤 e caixa de entrada (diretriz topo e menus, v3.9) */
+"pm.profile":["Perfil","Profile"],
+"pm.menu":["Menu do perfil","Profile menu"],
+"pm.settings":["Configurações","Settings"],
+"pm.theme":["Tema escuro","Dark theme"],
+"pm.sound":["Som da voz do personal","Trainer voice sound"],
+"pm.switch":["Trocar de perfil","Switch profile"],
+"pm.out":["Sair","Sign out"],
+"pm.in":["Entrar","Sign in"],
+"pm.since":["Conectado desde","Signed in since"],
+"pm.viaPass":["via senha","via password"],
+"pm.viaGuest":["sem conta, neste aparelho","no account, on this device"],
+"pm.plan":["Plano","Plan"],
+"pm.a11y":["Acessibilidade","Accessibility"],
+"ib.title":["Caixa de entrada","Inbox"],
+"ib.sub":["Novidades do app e o que o seu personal mandou.","App news and what your trainer sent."],
+"ib.news":["Novidades da versão","What's new in version"],
+"ib.newsN":["versão(ões) nova(s) para ler","new version(s) to read"],
+"ib.newsSeen":["Você já viu as novidades desta versão.","You have already seen this version's news."],
+"ib.coach":["Treino prescrito pelo personal","Workout prescribed by your trainer"],
+"ib.receive":["Receber código do personal","Receive the trainer's code"],
+"ib.alerts":["Avisos e lembretes","Alerts and reminders"],
+"ib.note":["Recados entre pessoas precisam de servidor e ainda não existem no RiseONE. Por enquanto, a caixa reúne as novidades e o que chega do personal por código.","Messages between people need a server and do not exist in RiseONE yet. For now, the inbox gathers the news and what arrives from the trainer by code."],
+"ib.unread":["não lida(s)","unread"],
+"ib.admin":["Recado do administrador","Message from the administrator"],
+"ib.read":["Marcar como lido","Mark as read"],
+"ib.archive":["Arquivar","Archive"],
+"ib.archived":["Arquivados","Archived"],
+"ib.live":["Caixa de entrada atualizada","Inbox updated"],
 "hd.settings":["Configurações","Settings"],
 "hd.home":["Início","Home"],
 "ad.sub":["Campanhas na faixa do topo e no pop-up, com exibições e cliques.","Campaigns in the top bar and the pop-up, with impressions and clicks."],
@@ -2394,11 +2449,11 @@ Object.assign(L,{
 "ac.speak":["Ler a tela em voz alta","Read the screen aloud"],
 "ac.speakD":["Usa a voz do aparelho para ler o que está na tela.","Uses the device voice to read what is on the screen."],
 "ac.norm":["Voltar ao padrão","Back to default"],
-"ac.normD":["Desfaz todos os ajustes desta tela.","Undoes every setting on this screen."],
+"ac.normD":["Desfaz todas as configurações desta tela.","Undoes every setting on this screen."],
 /* --- voz --- */
 "vz.title":["Voz do treinador","Trainer voice"],
 "vz.sub":["O app fala com você durante o treino","The app talks to you during the workout"],
-"vz.settings":["Ajustes da voz","Voice settings"],
+"vz.settings":["Configurações da voz","Voice settings"],
 "vz.test":["Testar","Test"],
 "vz.stop":["Parar","Stop"],
 "vz.reload":["Procurar vozes de novo","Look for voices again"],
@@ -2570,11 +2625,11 @@ Object.assign(L,{
 "dw.day":["Comer e evoluir","Eat and progress"],
 "dw.quick":["Ações rápidas","Quick actions"],
 "dw.parts":["Ver as partes","Show parts"],
-"dw.setAll":["Ajustes","Settings"],
+"dw.setAll":["Configurações","Settings"],
 "dw.helpMore":["Ajuda e mais","Help and more"],
 "dw.eqs":["Aparelhos","Equipment"],
 "dw.tools":["Ferramentas","Tools"],
-"dw.account":["Conta e ajustes","Account and settings"],
+"dw.account":["Conta e configurações","Account and settings"],
 "dw.todayW":["Treino de hoje","Today's workout"],
 "dw.pro":["Área profissional","Professional area"],
 "fav.title":["Atalhos da barra de baixo","Bottom bar shortcuts"],
@@ -2740,7 +2795,7 @@ Object.assign(L,{
 "bs.noneT":["Nada com esse termo","Nothing matches"],
 "bs.noneS":["Tente outra palavra, ou abra a Ajuda para ver o glossário.","Try another word, or open Help for the glossary."],
 "bs.tip":["Atalhos: “/” ou Ctrl+K abrem esta busca. Setas escolhem, Enter abre.","Shortcuts: “/” or Ctrl+K open this search. Arrows choose, Enter opens."],
-"bs.gTela":["Telas e ajustes","Screens and settings"],
+"bs.gTela":["Telas e configurações","Screens and settings"],
 "bs.gEx":["Exercícios","Exercises"],
 "bs.gMov":["Aquecimento e alongamento","Warm-up and stretching"],
 "bs.gDor":["Dor e alívio","Pain relief"],
@@ -3568,7 +3623,7 @@ function subNav(){
   const rs=sec.routes.map(routeInfo).filter(r=>r && r.roles.indexOf(uiRole())>=0);
   return '<div class="seg" id="subnav">'+rs.map(r=>'<button data-go="'+r.id+'" class="'+(r.id===ROUTE?"on":"")+'">'+I(r.ic)+"<span>"+t(r.k)+"</span>"+(ROUTE_FEAT[r.id]?lockBadge(ROUTE_FEAT[r.id]):"")+"</button>").join("")+"</div>";
 }
-/* subtelas dentro de uma tela (Evolução, Ajustes) */
+/* subtelas dentro de uma tela (Evolução, Configurações) */
 function segBar(route, items){
   const cur=SUB[route]||items[0][0];
   return '<div class="seg">'+items.map(it=>'<button data-go="'+route+'" data-sub="'+it[0]+'" class="'+(cur===it[0]?"on":"")+'">'+(it[2]?I(it[2]):"")+"<span>"+esc(it[1])+"</span></button>").join("")+"</div>";
@@ -3679,12 +3734,149 @@ function render(){
   refreshWho(); paintTarja(); paintHomeBtn();
   if(typeof HELP_ONSCREEN==="function") HELP_ONSCREEN();
 }
-function paintHomeBtn(){ const b=document.getElementById("homebtn"); if(!b) return; b.classList.toggle("on", ROUTE==="home"); if(ROUTE==="home") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
+/* o nome do app é o "início": marca aria-current quando a tela inicial está aberta */
+function paintHomeBtn(){ const b=document.getElementById("brandbtn"); if(!b) return; if(ROUTE==="home") b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); }
+function iniciais(nm){ const p=String(nm||"").trim().split(/\s+/).filter(Boolean); return ((p[0]||"?")[0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase(); }
+function whoPhoto(){ const p=(STATE&&STATE.profile)||{}; return p.photo||p.foto||""; }
 function refreshWho(){
   const s=ROOT.session||{role:"guest",name:t("role.guest")};
-  const nm=s.name||t("role.guest");
-  document.getElementById("whonm").textContent=nm;
-  document.getElementById("whoav").textContent=(nm[0]||"?").toUpperCase();
+  const nm=s.name||t("role.guest"), r=s.role||"guest";
+  const b=document.getElementById("whoami"), av=document.getElementById("whoav");
+  document.getElementById("whonm").textContent=nm.split(" ")[0];
+  const ph=whoPhoto();
+  if(av){ av.innerHTML = ph? '<img src="'+esc(ph)+'" alt="">' : esc(iniciais(nm)); }
+  if(b){
+    const papel=(r==="guest"? t("lvl.guest") : t("role."+r)+" · "+(STATE&&STATE.pro?t("lvl.premium"):t("lvl.member")));
+    b.setAttribute("aria-label", t("pm.profile")+": "+nm+" · "+papel+". "+t("pm.menu"));
+    b.title=nm+" · "+papel;
+  }
+  if(typeof paintInbox==="function") paintInbox();
+}
+/* ---------- MENU DO 👤 (diretriz): identidade conectada, Configurações, Tema, Som, Trocar de perfil, Sair ---------- */
+const PM={open:false, last:null};
+function pmHTML(){
+  const s=ROOT.session||{role:"guest",name:t("role.guest")};
+  const r=s.role||"guest", nm=s.name||t("role.guest"), u=s.uid?ROOT.users[s.uid]:null;
+  const ph=whoPhoto();
+  const papel=(r==="guest"? t("lvl.guest") : t("role."+r)+" · "+(STATE&&STATE.pro?t("lvl.premium"):t("lvl.member")));
+  const desde=s.since? t("pm.since")+" "+fmtDate(todayISO(new Date(s.since)))+" "+new Date(s.since).toTimeString().slice(0,5) : "";
+  const via=r==="guest"? t("pm.viaGuest") : t("pm.viaPass");
+  const dark=document.documentElement.getAttribute("data-theme")!=="light";
+  const som=!!(typeof vozCfg==="function" && STATE && vozCfg().on);
+  let h='<div class="pm-head"><span class="av">'+(ph?'<img src="'+esc(ph)+'" alt="">':esc(iniciais(nm)))+'</span><div style="flex:1;min-width:0"><b>'+esc(nm)+'</b><small>'+esc(papel)+'</small>'+
+    (u&&u.email?'<small>'+esc(u.email)+'</small>':"")+'<small class="wrap">'+esc((desde?desde+" · ":"")+via)+'</small></div></div>';
+  h+='<button class="pm-item" role="menuitem" data-pm="set">'+I("cog")+'<span class="dl">'+t("pm.settings")+'</span></button>';
+  h+='<button class="pm-item" role="menuitemcheckbox" aria-checked="'+(dark?"true":"false")+'" data-pm="theme">'+I(dark?"moon":"sun")+'<span class="dl">'+t("pm.theme")+'</span><span class="sw" aria-hidden="true"></span></button>';
+  h+='<button class="pm-item" role="menuitemcheckbox" aria-checked="'+(som?"true":"false")+'" data-pm="sound">'+I("speaker")+'<span class="dl">'+t("pm.sound")+'</span><span class="sw" aria-hidden="true"></span></button>';
+  h+='<button class="pm-item" role="menuitem" data-pm="switch">'+I("users")+'<span class="dl">'+t("pm.switch")+'</span></button>';
+  h+='<div class="pm-sep"></div>';
+  h+= r==="guest" ? '<button class="pm-item acc" role="menuitem" data-pm="in">'+I("user")+'<span class="dl">'+t("pm.in")+'</span></button>'
+                  : '<button class="pm-item danger" role="menuitem" data-pm="out">'+I("logout")+'<span class="dl">'+t("pm.out")+'</span></button>';
+  return h;
+}
+function pmPlace(){
+  const m=document.getElementById("pmenu"), b=document.getElementById("whoami"); if(!m||!b) return;
+  const r=b.getBoundingClientRect();
+  m.style.top=Math.round(r.bottom+6)+"px"; m.style.right=Math.max(12, Math.round(window.innerWidth-r.right))+"px";
+}
+function pmOpen(){
+  const m=document.getElementById("pmenu"), b=document.getElementById("whoami"); if(!m||!b) return;
+  PM.last=document.activeElement;
+  m.innerHTML=pmHTML(); pmPlace();
+  m.classList.remove("hidden"); requestAnimationFrame(()=>m.classList.add("show"));
+  PM.open=true; b.setAttribute("aria-expanded","true");
+  m.querySelectorAll("[data-pm]").forEach(x=>x.onclick=()=>{
+    const k=x.getAttribute("data-pm");
+    if(k==="theme"){ applyTheme(document.documentElement.getAttribute("data-theme")==="light"?"dark":"light"); if(ROUTE==="set") render(); m.innerHTML=pmHTML(); pmWire(); m.querySelector('[data-pm="theme"]').focus(); return; }
+    if(k==="sound"){ const c=vozCfg(); c.on=!c.on; save(); if(!c.on && typeof speakStop==="function") speakStop(); if(ROUTE==="set") render(); m.innerHTML=pmHTML(); pmWire(); m.querySelector('[data-pm="sound"]').focus(); return; }
+    pmClose();
+    if(k==="set") go("set");
+    else if(k==="switch" || k==="in") loginModal();
+    else if(k==="out") sair();
+  });
+  function pmWire(){ m.querySelectorAll("[data-pm]").forEach(x=>x.onclick=m.querySelector("[data-pm]").onclick); }
+  m.onkeydown=e=>{
+    const its=[...m.querySelectorAll("[data-pm]")], i=its.indexOf(document.activeElement);
+    if(e.key==="Escape"){ e.preventDefault(); pmClose(); }
+    else if(e.key==="ArrowDown"){ e.preventDefault(); its[(i+1)%its.length].focus(); }
+    else if(e.key==="ArrowUp"){ e.preventDefault(); its[(i-1+its.length)%its.length].focus(); }
+  };
+  setTimeout(()=>{ const f=m.querySelector("[data-pm]"); if(f) f.focus(); document.addEventListener("pointerdown", pmOutside, true); window.addEventListener("resize", pmPlace); }, 0);
+}
+function pmOutside(e){ if(!PM.open) return; if(e.target.closest("#pmenu,#whoami")) return; pmClose(); }
+function pmClose(){
+  const m=document.getElementById("pmenu"), b=document.getElementById("whoami");
+  if(!m || m.classList.contains("hidden")) return;
+  PM.open=false; m.classList.remove("show"); if(b) b.setAttribute("aria-expanded","false");
+  document.removeEventListener("pointerdown", pmOutside, true); window.removeEventListener("resize", pmPlace);
+  setTimeout(()=>m.classList.add("hidden"), 200);
+  if(b && PM.last && PM.last!==document.body) try{ b.focus(); }catch(e){}
+}
+function pmToggle(){ if(PM.open) pmClose(); else pmOpen(); }
+/* ---------- CAIXA DE ENTRADA (📥): novidades + o que chegou do personal ---------- */
+/* quem nunca abriu as novidades ve so a versao atual como nao lida (nao as 14 do historico) */
+function newsUnread(){ if(!NEWS || !NEWS.versoes) return 0; if(!newsSeen()) return hasNews()?1:0; return NEWS.versoes.filter(v=>cmpVer(v.v, newsSeen())>0).length; }
+/* recados.json (diretriz Inbox): avisos do administrador sem servidor, com inicio, fim e nivel; lido/arquivado fica em ROOT.prefs */
+let RECADOS=null;
+function recadosLoad(cb){
+  if(RECADOS){ cb(RECADOS); return; }
+  if(location.protocol==="file:"){ RECADOS=[]; cb(RECADOS); return; }
+  fetch("recados.json?ts="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ RECADOS=(j&&Array.isArray(j.recados))?j.recados:[]; cb(RECADOS); paintInbox(); }).catch(()=>{ RECADOS=[]; cb(RECADOS); });
+}
+function recadoVale(r){
+  const hoje=todayISO(); if(r.inicio && r.inicio>hoje) return false; if(r.fim && r.fim<hoje) return false;
+  const n=r.nivel||"todos"; if(n==="todos") return true;
+  const ur=uiRole(); if(n===ur) return true;
+  if(n==="member") return ur!=="guest"; if(n==="premium") return effPro();
+  return false;
+}
+function recadosState(){ ROOT.prefs.recados=ROOT.prefs.recados||{lidos:[],arq:[]}; return ROOT.prefs.recados; }
+function recadosAtivos(){ const st=recadosState(); return (RECADOS||[]).filter(r=>recadoVale(r) && st.arq.indexOf(r.id)<0).sort((a,b)=>String(b.inicio||"").localeCompare(String(a.inicio||""))); }
+function recadosUnread(){ const st=recadosState(); return recadosAtivos().filter(r=>st.lidos.indexOf(r.id)<0).length; }
+function recadoMarcar(id, campo){ const st=recadosState(); if(st[campo].indexOf(id)<0) st[campo].push(id); if(campo==="arq" && st.lidos.indexOf(id)<0) st.lidos.push(id); saveRoot(); paintInbox(); }
+function inboxUnread(){ return newsUnread()+recadosUnread(); }
+let INBOX_LAST=-1;
+function paintInbox(){
+  const b=document.getElementById("inboxbtn"); if(!b) return;
+  const n=inboxUnread(); let c=b.querySelector(".cnt");
+  if(n>0){ if(!c){ c=document.createElement("span"); c.className="cnt"; c.setAttribute("aria-hidden","true"); b.appendChild(c); } c.textContent=n>9?"9+":String(n); }
+  else if(c) c.remove();
+  b.setAttribute("aria-label", t("ib.title")+(n>0?" · "+n+" "+t("ib.unread"):"")); b.title=t("ib.title");
+  /* aria-live discreto: so' anuncia quando o numero muda; selo no icone do app instalado (setAppBadge) */
+  const lv=document.getElementById("inboxlive");
+  if(lv && INBOX_LAST>=0 && n!==INBOX_LAST) lv.textContent=t("ib.live")+": "+n+" "+t("ib.unread");
+  INBOX_LAST=n;
+  try{ if(navigator.setAppBadge){ if(n>0) navigator.setAppBadge(n); else if(navigator.clearAppBadge) navigator.clearAppBadge(); } }catch(e){}
+}
+function inboxModal(){
+  pmClose();
+  const n=newsUnread(), coach=(STATE&&STATE.workouts||[]).filter(w=>w.fromCoach), st=recadosState();
+  let h=mh(t("ib.title"))+'<p class="muted" style="margin-top:0">'+t("ib.sub")+"</p>";
+  const recs=recadosAtivos();
+  if(recs.length){
+    h+='<div class="verlist" style="margin-bottom:10px">'+recs.map(r=>{ const tx=(LANG==="pt"?r.pt:r.en)||r.pt||{}, lido=st.lidos.indexOf(r.id)>=0;
+      return '<div class="verrow'+(lido?"":" new")+'" data-rid="'+esc(r.id)+'"><h4>'+(lido?"":'<span class="dot-new"></span>')+esc(tx.titulo||"")+'<small class="muted" style="font-weight:600">'+(r.inicio?fmtDate(r.inicio):"")+" · "+t("ib.admin")+"</small></h4>"+
+        '<p style="margin:4px 0 8px">'+esc(tx.texto||"")+'</p><div class="row">'+(lido?"":'<button class="btn xs ghost" data-rlido="'+esc(r.id)+'">'+I("check")+t("ib.read")+"</button>")+'<button class="btn xs line" data-rarq="'+esc(r.id)+'">'+I("file")+t("ib.archive")+"</button></div></div>"; }).join("")+"</div>";
+  }
+  h+='<div class="optionlist">';
+  h+='<button class="opt" data-ib="news"><span class="ibub">'+I("sparkles")+'</span><span><span class="ot">'+t("ib.news")+" "+esc(APP_VERSION)+(n?' <span class="pill acc">'+n+"</span>":"")+'</span><br><span class="od">'+(n? n+" "+t("ib.newsN") : t("ib.newsSeen"))+"</span></span></button>";
+  coach.forEach((w,i)=>{ h+='<button class="opt" data-ib="coach"><span class="ibub">'+I("grad")+'</span><span><span class="ot">'+esc(w.name)+'</span><br><span class="od">'+t("ib.coach")+"</span></span></button>"; });
+  if(role()!=="guest") h+='<button class="opt" data-ib="receive"><span class="ibub grey">'+I("grad")+'</span><span><span class="ot">'+t("ib.receive")+'</span><br><span class="od">'+t("tr.receiveSub")+"</span></span></button>";
+  h+='<button class="opt" data-ib="alerts"><span class="ibub grey">'+I("bell")+'</span><span><span class="ot">'+t("ib.alerts")+'</span><br><span class="od">'+t("nt.title")+"</span></span></button>";
+  h+="</div>"+'<p class="tiny muted" style="margin:10px 0 0">'+t("ib.note")+"</p>";
+  const m=modal(h);
+  m.querySelectorAll("[data-rlido]").forEach(b=>b.onclick=()=>{ const id=b.getAttribute("data-rlido"); recadoMarcar(id,"lidos"); const row=m.querySelector('[data-rid="'+id+'"]'); if(row){ row.classList.remove("new"); const d=row.querySelector(".dot-new"); if(d) d.remove(); } b.remove(); });
+  m.querySelectorAll("[data-rarq]").forEach(b=>b.onclick=()=>{ const id=b.getAttribute("data-rarq"); recadoMarcar(id,"arq"); const row=m.querySelector('[data-rid="'+id+'"]'); if(row) row.remove(); });
+  m.querySelectorAll("[data-ib]").forEach(b=>b.onclick=()=>{
+    const k=b.getAttribute("data-ib"); m.remove();
+    if(k==="news") openNews();
+    else if(k==="coach") go("workout");
+    else if(k==="receive") go("set","dados");
+    else if(k==="alerts") go("set","avisos");
+  });
+  if(!NEWS) loadNews(()=>{});
+  if(!RECADOS) recadosLoad(()=>{ if(document.body.contains(m)){ m.remove(); inboxModal(); } });
+  return m;
 }
 function showAds(){ return !adsOff(); }
 
@@ -6101,8 +6293,7 @@ function commitScan(){
   }
 }
 
-/* ---------- 28. TELA: AJUSTES ---------- */
-/* ---------- 28. TELA: AJUSTES (subtelas: perfil, preferências, avisos, conta, dados, sobre) ---------- */
+/* ---------- 28. TELA: CONFIGURAÇÕES (subtelas: perfil, preferências, avisos, conta, dados, sobre) ---------- */
 const SET_TABS=()=>[["perfil",t("st.tabProfile"),"clipboard"],["pref",t("st.tabPrefs"),"sliders"],["avisos",t("nt.short"),"bell"],["conta",t("st.tabAccount"),"user"],["dados",t("st.tabData"),"cloud"],["sobre",t("st.about"),"info"]];
 function setView(){ return SUB.set || "perfil"; }
 SCREENS.set = function(){
@@ -6496,7 +6687,7 @@ function findUser(who, role2){
     ((u.name||"").toLowerCase()===q || (u.email||"").toLowerCase()===q)) || null;
 }
 /* Uma função só para entrar: tudo que depende de identidade passa por aqui. Com servidor no futuro, muda só isto. */
-function entrar(sessao){ ROOT.session=sessao; saveRoot(); boot(); }
+function entrar(sessao){ if(sessao && !sessao.since) sessao.since=Date.now(); ROOT.session=sessao; saveRoot(); boot(); }
 function sair(){ ROOT.session=null; saveRoot(); boot(); }
 function recoveryModal(code){
   const m=modal(mh(t("lg.recTitle"))+
@@ -6615,7 +6806,7 @@ function loginModal(preset){
   if(preset) authForm(preset); else pickRole();
   return m;
 }
-/* --- cartao da conta em Ajustes --- */
+/* --- cartao da conta em Configurações --- */
 function accountCard(){
   const s2=ROOT.session||{};
   const u=s2.uid?ROOT.users[s2.uid]:null;
@@ -8817,7 +9008,8 @@ SCREENS.ia_after = function(){
 let HELP_ICON_OK=null;
 function checkHelpIcon(){
   const img=new Image();
-  img.onload=()=>{ HELP_ICON_OK=true; const b=document.getElementById("helpic"); if(b) b.outerHTML='<img id="helpic" src="ajuda-botao.png" alt="">'; };
+  /* fillIcons() ja trocou o <span id="helpic"> por um icone sem id: procura o icone dentro do proprio botao */
+  img.onload=()=>{ HELP_ICON_OK=true; const hb=document.getElementById("helpbtn"); const b=document.getElementById("helpic")||(hb&&hb.querySelector(".ic")); if(b) b.outerHTML='<img id="helpic" src="ajuda-botao.png" alt="">'; };
   img.onerror=()=>{ HELP_ICON_OK=false; };
   img.src="ajuda-botao.png";
 }
@@ -8832,7 +9024,7 @@ let HELP_TAB="tela";
 function openHelp(tab){
   HELP_TAB=tab||"tela";
   document.querySelectorAll(".modal.helpwrap").forEach(n=>n.remove());
-  const m=modal('<div class="mh"><div class="row nowrap"><span class="ibub">'+(HELP_ICON_OK?'<img src="ajuda-icone.png" alt="" style="width:26px;height:26px;border-radius:8px">':I("help"))+'</span><div><h2 style="margin:0">'+t("help.title")+'</h2><small class="muted">'+t("help.sub")+'</small></div></div><button class="iconbtn" data-close>&times;</button></div>'+
+  const m=modal('<div class="mh"><div class="row nowrap"><span class="ibub">'+(HELP_ICON_OK?'<img src="ajuda-botao.png" alt="" style="width:26px;height:26px;border-radius:50%">':I("help"))+'</span><div><h2 style="margin:0">'+t("help.title")+'</h2><small class="muted">'+t("help.sub")+'</small></div></div><button class="iconbtn" data-close>&times;</button></div>'+
     '<div class="seg help-tabs" id="helptabs">'+[["tutorial","compass",t("help.tabTour")],["guia","wand",t("help.tabWizard")],["busca","search",t("help.tabSearch")],["tela","eye",t("help.tabScreen")]]
       .map(x=>'<button data-ht="'+x[0]+'" class="'+(HELP_TAB===x[0]?"on":"")+'">'+I(x[1])+"<span>"+x[2]+"</span></button>").join("")+"</div>"+
     '<div id="helpbody"></div>',{wide:true});
@@ -9034,7 +9226,7 @@ function assistBalloonHTML(mode){
   const items=helpItemsFor(ROUTE, SUB[ROUTE]), tip=HELP_TIPS[ROUTE];
   const frase=items.length? (LANG==="pt"?items[0][3]:items[0][4]) : (tip? (LANG==="pt"?tip[0]:tip[1]) : t("help.noScreenHelp"));
   const acts=(ASSIST_ACOES[ROUTE]||[]).slice(0,3);
-  const av=HELP_ICON_OK?'<img src="ajuda-icone.png" alt="">':I("help");
+  const av=HELP_ICON_OK?'<img src="ajuda-botao.png" alt="">':I("help");
   let h='<div class="as-head"><span class="av">'+av+'</span><div style="flex:1;min-width:0"><h3>'+(mode==="hi"?t("as.hi"):t("as.name"))+'</h3><small class="muted">'+(mode==="hi"?t("as.hiSub"):t("help.sub"))+'</small></div><button class="iconbtn" id="as_x" aria-label="'+t("common.close")+'">'+I("x")+"</button></div>";
   h+='<div class="as-here"><div class="kicker">📍 '+t("as.here")+" "+esc(t(r.k))+"</div><p>"+frase+"</p>"+
      (acts.length?'<div class="as-acts">'+acts.map((a,i)=>'<button class="chip" data-asact="'+i+'">'+I(a[0])+esc(LANG==="pt"?a[1]:a[2])+"</button>").join("")+"</div>":"")+"</div>";
@@ -9248,7 +9440,7 @@ const GLOSS=[
  [["horario silencioso","horário silencioso","quiet hours","nao perturbe"],"Horário silencioso","Quiet hours","Período em que os avisos ficam guardados e só aparecem depois. Lembretes marcados como urgentes passam.","A period when alerts are held and only show afterwards. Reminders marked urgent go through.","set","avisos"],
  [["instalar","install","tela de inicio","tela de início","pwa","aplicativo"],"Instalar como aplicativo","Install as an app","Coloca o RiseONE na tela de início do celular, abrindo como um app e funcionando sem internet.","Puts RiseONE on the phone's home screen, opening like an app and working offline.","set","sobre"],
  [["tema","dark","claro","escuro","light"],"Tema","Theme","Aparência escura ou clara. Muda em Mais › Preferências.","Dark or light look. Change it in More › Preferences.","set","pref"],
- [["idioma","language","ingles","inglês","portugues","português"],"Idioma","Language","O botão PT | EN na faixa do topo troca tudo, inclusive as datas.","The PT | EN button in the top bar switches everything, including dates.","set","pref"],
+ [["idioma","language","ingles","inglês","portugues","português"],"Idioma","Language","Em 👤 › Configurações › Preferências › Idioma: troca tudo, inclusive as datas.","In 👤 › Settings › Preferences › Language: switches everything, including dates.","set","pref"],
  [["simples","padrao","padrão","tecnico","técnico","nome dos musculos","nomes"],"Nível dos nomes","Naming level","Simples (“peito”), Padrão (“peitoral”) ou Técnico (nome anatômico). Muda no Mapa do corpo ou em Preferências.","Simple (“chest”), Standard (“pectorals”) or Technical (anatomical name). Change it in the Body map or Preferences.","body"],
  [["assistente","ia","ai","inteligencia artificial"],"Assistente de IA","AI assistant","Responde dúvidas de treino e alimentação usando a sua chave. Pode errar: não substitui profissional.","Answers training and food questions using your key. It can be wrong: it does not replace a professional.","ia"],
  [["anuncio","anúncio","propaganda","ad","ads"],"Anúncios","Ads","A faixa do topo e o pop-up mostram os outros apps do portfólio. Conta Premium não vê.","The top bar and the pop-up show the other apps of the portfolio. Premium accounts see none.","set","conta"],
@@ -9258,7 +9450,7 @@ const GLOSS=[
 /* roteiro do tutorial: [tela, subtela, seletor do destaque, icone, PT [titulo, texto], EN [titulo, texto]] */
 const TOUR=[
  {route:"home", sel:null, ic:"compass", pt:["Bem-vindo ao RiseONE","Um tour rápido pelas cinco áreas do app. Você pode parar quando quiser e voltar pelo botão Ajuda."], en:["Welcome to RiseONE","A quick tour of the app's five areas. Stop anytime and come back through the Help button."]},
- {route:"home", sel:"#homebtn", ic:"home", pt:["Cabeçalho","Sempre no mesmo lugar: 🔍 busca, ⚙ configurações, 🏠 início e 👤 conta. O idioma PT | EN fica ao lado no computador e no topo do menu ☰ no celular. Anúncios dos outros apps aparecem na faixa acima; o × fecha até o próximo login."], en:["Header","Always in the same place: 🔍 search, ⚙ settings, 🏠 home and 👤 account. The PT | EN language switch sits next to them on the computer and at the top of the ☰ menu on the phone. Ads of the other apps show in the strip above; the × closes them until the next login."]},
+ {route:"home", sel:"#whoami", ic:"user", pt:["Cabeçalho","Sempre no mesmo lugar: ☰ menu e o nome RiseONE (tocar = início) à esquerda; 🔍 busca, 📥 caixa de entrada e 👤 perfil à direita. No 👤 ficam Configurações, Tema, Som, Trocar de perfil e Sair. O idioma PT | EN mora em Configurações › Preferências. Anúncios dos outros apps aparecem na faixa acima; o × fecha até o próximo login."], en:["Header","Always in the same place: ☰ menu and the RiseONE name (tap = home) on the left; 🔍 search, 📥 inbox and 👤 profile on the right. Under 👤 you find Settings, Theme, Sound, Switch profile and Sign out. The PT | EN language lives in Settings › Preferences. Ads of the other apps show in the strip above; the × closes them until the next login."]},
  {route:"home", sel:"nav.tabs .active, #bottombar .active", ic:"home", pt:["Início","Sua tela do dia: o próximo passo, os números de hoje, as missões e os atalhos."], en:["Home","Your daily screen: the next step, today's numbers, missions and shortcuts."]},
  {route:"home", sel:".card.hero", ic:"zap", pt:["Próximo passo","Este cartão muda conforme o dia: começar o treino, completar seus primeiros passos ou registrar o dia."], en:["Next step","This card changes with the day: start the workout, finish your first steps or log the day."]},
  {route:"workout", sel:"#subnav", ic:"dumbbell", pt:["Treinar","Tudo do treino num lugar: seus treinos, a biblioteca de exercícios, o mapa do corpo e o aquecimento. Troque pelas abas."], en:["Train","Everything about training in one place: your workouts, the exercise library, the body map and warm-up. Switch with the tabs."]},
@@ -10094,7 +10286,7 @@ function sttDo(cmd){
   else if(cmd==="repeat"){ if(run) buildRoutineUI(); }
 }
 
-/* --- tela de ajustes da voz + lista de vozes que o navegador realmente enxerga --- */
+/* --- tela de configurações da voz + lista de vozes que o navegador realmente enxerga --- */
 function voiceDiag(){
   const pt=VOICES.filter(voiceMatchesLang), eng={};
   VOICES.forEach(v=>{ eng[engineOf(v)]=1; });
@@ -11859,6 +12051,7 @@ function paintNewsDot(){
   let d=b.querySelector(".badge");
   if(hasNews()){ if(!d){ d=document.createElement("span"); d.className="badge"; b.appendChild(d); } }
   else if(d) d.remove();
+  paintInbox();
 }
 function newsList(){
   if(!NEWS) return "";
@@ -12886,7 +13079,7 @@ function wireMusCard(){
 /* ---------- 72. LUPA: BUSCA EM TUDO, COM RESULTADO CLICÁVEL ---------- */
 /* Por que: a busca que existia ficava escondida dentro da Ajuda e só explicava palavras.
    Esta procura em tudo que o app tem — telas, exercícios, alongamentos, dores, códigos, treinos,
-   ajustes, novidades — e cada linha do resultado LEVA até lá num toque. */
+   configurações, novidades — e cada linha do resultado LEVA até lá num toque. */
 const BUSCA={q:"", sel:0, el:null};
 function buscaGrupos(){
   return {
@@ -13127,17 +13320,15 @@ function boot(){
   buildNav(); render(); paintAd(); cloudCaptureToken();
   gateDisclaimer(()=>{ maybeWelcome(); popupAfterLogin(); });
 }
-function paintLangBtn(){ document.querySelectorAll(".langsw .lg").forEach(n=>n.classList.toggle("on", n.getAttribute("data-lg")===LANG)); }
+function paintLangBtn(){ document.querySelectorAll(".langsw .lg").forEach(n=>n.classList.toggle("on", n.getAttribute("data-lg")===LANG)); if(typeof refreshWho==="function") refreshWho(); }
 
 /* faixa do topo */
 document.getElementById("adclose").onclick=()=>{ sessionStorage.setItem("riseone.addismiss","1"); document.getElementById("adbar").classList.add("hidden"); };
-document.querySelectorAll(".langsw").forEach(b=>b.onclick=()=>applyLang(LANG==="pt"?"en":"pt"));
-/* cabecalho: 🔍 ⚙ 🏠 👤 sempre no mesmo lugar; o AssistONE é o personagem do canto */
+/* cabecalho (diretriz): ☰ · nome (= início) | 🔍 📥 👤; ⚙ e PT|EN vivem no 👤 › Configurações; o AssistONE é o personagem do canto */
 document.getElementById("helpbtn").onclick=()=>assistToggle();
-document.getElementById("setbtn").onclick=()=>go("set");
-document.getElementById("homebtn").onclick=()=>go("home");
 document.getElementById("searchbtn").onclick=()=>openBusca("");
-document.getElementById("whoami").onclick=()=>loginModal();
+document.getElementById("inboxbtn").onclick=()=>inboxModal();
+document.getElementById("whoami").onclick=()=>pmToggle();
 document.getElementById("brandbtn").onclick=()=>go("home");
 /* gaveta lateral: abre no ☰, fecha no ×, no Esc, tocando fora e ao escolher o destino */
 document.getElementById("menubtn").onclick=toggleDrawer;
@@ -13159,7 +13350,7 @@ document.addEventListener("keydown", e=>{
   if(e.key==="/" && !dig && !document.querySelector(".modal")){ e.preventDefault(); openBusca(""); }
 });
 fillIcons(document);
-checkBgArt(); checkHelpIcon(); checkPhotos();
+checkBgArt(); checkHelpIcon(); checkPhotos(); recadosLoad(()=>{});
 
 /* manifesto embutido — so entra em acao quando o arquivo e aberto solto (file:) */
 (function(){
