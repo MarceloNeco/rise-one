@@ -3,6 +3,19 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.9.1",
+   "data": "2026-10-09",
+   "hora": "07:50:00",
+   "pt": [
+    "📷 Câmera sem foto embaçada: em celular com várias câmeras atrás, o app agora abre a lente principal (antes podia abrir a grande-angular ou a macro, que não focam de perto). Novo botão 🔄 troca de lente se a imagem continuar embaçada, e a escolha fica guardada.",
+    "A câmera simples (foto de perfil, refeição etc.) passou a usar a câmera completa: foco contínuo, tocar na imagem para focar, lanterna, zoom e aviso de foto tremida."
+   ],
+   "en": [
+    "📷 No more blurry camera: on phones with several back cameras the app now opens the main lens (it could open the ultra-wide or macro, which don't focus up close). A new 🔄 button switches lens if the image is still blurry, and the choice is remembered.",
+    "The simple camera (profile photo, meal, etc.) now uses the full camera: continuous focus, tap to focus, torch, zoom and a shaky-photo warning."
+   ]
+  },
+  {
    "v": "3.9.0",
    "data": "2026-10-02",
    "hora": "18:00:00",

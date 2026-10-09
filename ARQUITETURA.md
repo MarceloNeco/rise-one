@@ -83,7 +83,7 @@ Procure pelo número para ir direto ao assunto.
   `privacyScreen()`. `gateDisclaimer(next)` é a porta de entrada: o aviso vem antes de qualquer outra janela.
 - **57 a 59. Dor e fisioterapia** — `ZONES` (regiões do corpo), `CONDS` (situações com o código CID-10,
   exercícios e alongamentos), `painSVG(vista, selecionada)`, e a tabela `cid.json` com `cidLoad`/`cidClear`.
-- **60. Câmera** — `startCam2` (zoom, temporizador, inverter, borrar o fundo), `sharpness()` (mede o foco;
+- **60. Câmera** — `camOpen(facing, tamanho)` abre a **lente principal** de trás (celular com várias câmeras às vezes abre a grande-angular, que não foca de perto; o botão 🔄 troca de lente e guarda em `ROOT.prefs.camId`). `startCam2` é a única câmera de foto do app (zoom, temporizador, inverter, borrar o fundo), `sharpness()` (mede o foco;
   abaixo de `BLUR_MIN` o app pede outra foto) e `projectVideo` (janelinha flutuante / tela cheia).
 - **61. Rótulo** — `parseRotulo` (ingredientes, marca, aditivos INS, selos, "alto em"), `ragRotulo`
   (o semáforo, com o critério escrito na tela) e `rotuloCard`.
