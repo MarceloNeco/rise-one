@@ -1133,7 +1133,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.9.0";
+const APP_VERSION = "3.9.1";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2250,6 +2250,8 @@ Object.assign(L,{
 "nu.matchNote":["Regra simples do app, pela tabela e pela lista do rótulo. Não substitui orientação profissional.","Simple app rule, from the table and ingredient list. Not professional advice."],
 "cam.focus":["Focar","Focus"],
 "cam.torch":["Lanterna","Torch"],
+"cam.lens":["Trocar de lente (se a imagem estiver embaçada)","Switch lens (if the image is blurry)"],
+"cam.lensN":["Lente","Lens"],
 "cam.sharp":["Nítido ✓ — pode fotografar","Sharp ✓ — go ahead"],
 "cam.blurry":["Embaçado — toque na imagem para focar e segure firme","Blurry — tap the image to focus and hold steady"],
 "cam.focusHint":["Toque na imagem para focar. A barra mostra a nitidez ao vivo.","Tap the image to focus. The bar shows sharpness live."],
@@ -4316,30 +4318,8 @@ function pickImage(cb){
   m.addEventListener("click",e=>{ if(e.target===m) stopCam(); });
   m.querySelector("[data-close]").addEventListener("click",stopCam);
   m.querySelector("#fileinp").onchange=e=>{ const f=e.target.files[0]; if(!f) return; readFile(f,d=>{ stopCam(); m.remove(); cb(d); }); };
-  m.querySelector("#opencam").onclick=()=>startCam(m.querySelector("#camwrap"), d=>{ stopCam(); m.remove(); cb(d); });
+  m.querySelector("#opencam").onclick=()=>startCam2(m.querySelector("#camwrap"), d=>{ stopCam(); m.remove(); cb(d); });
 }
-function startCam(host, cb){
-  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ toast(t("sc.noCam")); return; }
-  host.innerHTML='<video class="camprev" autoplay playsinline muted></video>'+
-    '<div class="row" style="margin-top:8px"><button class="btn" id="shoot">'+I("camera")+t("sc.shoot")+'</button>'+
-    '<button class="btn line" id="flip">'+I("refresh")+t("sc.switch")+'</button><button class="btn line" id="stopc">'+t("sc.stop")+"</button></div>";
-  const v=host.querySelector("video");
-  const open=()=>{ stopCam();
-    navigator.mediaDevices.getUserMedia({video:{facingMode:CAMFACING,width:{ideal:1280}},audio:false})
-      .then(s=>{ CAMSTREAM=s; v.srcObject=s; })
-      .catch(()=>{ toast(t("sc.denied")); host.innerHTML=""; });
-  };
-  open();
-  host.querySelector("#flip").onclick=()=>{ CAMFACING=(CAMFACING==="environment")?"user":"environment"; open(); };
-  host.querySelector("#stopc").onclick=()=>{ stopCam(); host.innerHTML=""; };
-  host.querySelector("#shoot").onclick=()=>{
-    if(!v.videoWidth){ toast(t("sc.noCam")); return; }
-    const cv=document.createElement("canvas"); cv.width=v.videoWidth; cv.height=v.videoHeight;
-    cv.getContext("2d").drawImage(v,0,0);
-    resizeImage(cv.toDataURL("image/jpeg",0.9),1400,cb);
-  };
-}
-
 /* ---------- 19. TELA: TREINO ---------- */
 SCREENS.workout = function(){
   let h='<div class="pagehead"><div><h1>'+t("wk.title")+'</h1><small>'+t("wk.sub")+'</small></div><div class="row nowrap"><button class="btn ghost sm" id="timerbtn2">'+I("timer")+t("tm.short")+'</button><button class="btn" id="newwk">'+I("plus")+t("wk.new")+"</button></div></div>";
@@ -11021,6 +11001,28 @@ function shootChecked(dataUrl, cb){
     m.querySelector("#bl_new").onclick=()=>{ m.remove(); };
   });
 }
+/* lente principal: celular com várias câmeras atrás (Samsung, Motorola…) às vezes abre a grande-angular ou a macro,
+   que não focam de perto e deixam a foto embaçada para sempre. Aqui escolhemos a principal pelo nome; o botão de lente
+   troca entre as câmeras de trás e a escolha fica guardada (ROOT.prefs.camId). */
+let CAMLIST=[];
+function camBacks(){ return CAMLIST.filter(d=>!/front|frontal|user|selfie/i.test(d.label)); }
+function camMain(l){
+  const ok=l.filter(d=>!/wide|ultra|grande|tele|macro|depth|profund|infra|ir\b/i.test(d.label));
+  const n=d=>{ const m=/(\d+)/.exec(d.label); return m? +m[1] : 99; };
+  return (ok.length?ok:l).slice().sort((a,b)=>n(a)-n(b))[0]||null;
+}
+function camOpen(facing, size){
+  const gum=v=>navigator.mediaDevices.getUserMedia({video:Object.assign({},size,v),audio:false});
+  const want=facing==="environment"? (ROOT.prefs.camId||"") : "";
+  return (want? gum({deviceId:{exact:want}}).catch(()=>{ ROOT.prefs.camId=""; saveRoot(); return gum({facingMode:facing}); }) : gum({facingMode:facing}))
+    .then(s=>navigator.mediaDevices.enumerateDevices().then(ds=>{
+      CAMLIST=ds.filter(d=>d.kind==="videoinput");
+      const tr=s.getVideoTracks()[0], cur=(tr && tr.getSettings && tr.getSettings().deviceId)||"", b=camBacks(), p=camMain(b);
+      if(facing!=="environment" || want || b.length<2 || !p || !p.deviceId || !cur || p.deviceId===cur) return s;
+      s.getTracks().forEach(x=>x.stop());
+      return gum({deviceId:{exact:p.deviceId}}).catch(()=>gum({facingMode:facing}));
+    }, ()=>s));
+}
 /* camera completa: usada pelo leitor e por quem precisar de uma foto boa */
 function startCam2(host, cb){
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ toast(t("sc.noCam")); return; }
@@ -11033,6 +11035,7 @@ function startCam2(host, cb){
       '<button class="iconbtn" id="camflip" title="'+t("sc.switch")+'">'+I("flip")+'</button>'+
       '<button class="iconbtn hidden" id="camfoc" title="'+t("cam.focus")+'" aria-label="'+t("cam.focus")+'">'+I("target")+'</button>'+
       '<button class="iconbtn hidden" id="camtorch" title="'+t("cam.torch")+'" aria-label="'+t("cam.torch")+'">'+I("zap")+'</button>'+
+      '<button class="iconbtn hidden" id="camlens" title="'+t("cam.lens")+'" aria-label="'+t("cam.lens")+'">'+I("refresh")+'</button>'+
       '<button class="iconbtn" id="campriv" title="'+t("cam.privacy")+'">'+I("eye")+"</button></div>"+
     '<div class="camfocus" id="camfocus" aria-live="polite"><div class="bar"><i style="width:4%"></i></div><span>'+t("cam.focusHint")+"</span></div>"+
     '<div class="chips" style="margin:8px 0"><span class="kicker" style="align-self:center;margin-right:4px">'+t("cam.timer")+"</span>"+
@@ -11043,7 +11046,7 @@ function startCam2(host, cb){
   const v=host.querySelector("video");
   const open=()=>{
     stopCam();
-    navigator.mediaDevices.getUserMedia({video:{facingMode:CAMFACING,width:{ideal:1920},height:{ideal:1440}},audio:false})
+    camOpen(CAMFACING,{width:{ideal:1920},height:{ideal:1440}})
       .then(s=>{
         CAMSTREAM=s; v.srcObject=s;
         CAM2.track=s.getVideoTracks()[0];
@@ -11057,6 +11060,7 @@ function startCam2(host, cb){
         CAM2.focusModes=(cap && cap.focusMode)||[]; CAM2.poi=!!(cap && cap.pointsOfInterest); CAM2.hasTorch=!!(cap && cap.torch); CAM2.torch=false;
         const fb=host.querySelector("#camfoc"); if(fb) fb.classList.toggle("hidden", !CAM2.focusModes.length);
         const tb2=host.querySelector("#camtorch"); if(tb2) tb2.classList.toggle("hidden", !CAM2.hasTorch);
+        const lb=host.querySelector("#camlens"); if(lb) lb.classList.toggle("hidden", CAMFACING!=="environment" || camBacks().length<2);
         camFocusContinuous(); camMeterStart(v); paintCamBar();
       })
       .catch(()=>{ toast(t("sc.denied")); host.innerHTML=""; });
@@ -11123,6 +11127,13 @@ function startCam2(host, cb){
   });
   const fb=host.querySelector("#camfoc"); if(fb) fb.onclick=()=>{ ring.style.left="50%"; ring.style.top="50%"; ring.classList.add("on"); setTimeout(()=>ring.classList.remove("on"),900); camFocusOnce(0.5,0.5); };
   const tb2=host.querySelector("#camtorch"); if(tb2) tb2.onclick=()=>camTorch(!CAM2.torch);
+  const lb=host.querySelector("#camlens"); if(lb) lb.onclick=()=>{
+    const l=camBacks(); if(l.length<2) return;
+    const cur=(CAM2.track && CAM2.track.getSettings && CAM2.track.getSettings().deviceId)||"";
+    const i=(l.map(d=>d.deviceId).indexOf(cur)+1)%l.length;
+    ROOT.prefs.camId=l[i].deviceId; saveRoot(); open();
+    toast(t("cam.lensN")+" "+(i+1)+"/"+l.length);
+  };
   paintCamBar();
 }
 /* ---- projetar na TV ---- */
