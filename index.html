@@ -1133,7 +1133,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.9.1";
+const APP_VERSION = "3.9.2";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2251,6 +2251,7 @@ Object.assign(L,{
 "cam.focus":["Focar","Focus"],
 "cam.torch":["Lanterna","Torch"],
 "cam.lens":["Trocar de lente (se a imagem estiver embaçada)","Switch lens (if the image is blurry)"],
+"sc.task":["Lendo a foto","Reading the photo"],
 "cam.lensN":["Lente","Lens"],
 "cam.sharp":["Nítido ✓ — pode fotografar","Sharp ✓ — go ahead"],
 "cam.blurry":["Embaçado — toque na imagem para focar e segure firme","Blurry — tap the image to focus and hold steady"],
@@ -6134,10 +6135,12 @@ function runOCR(dataUrl, rot){
   out.querySelector("#ocrrotl").onclick=()=>runOCR(dataUrl, (SCANROT+270)%360);
   out.querySelector("#ocrrotr").onclick=()=>runOCR(dataUrl, (SCANROT+90)%360);
   const st=msg=>{ const n=document.getElementById("ocrst"); if(n) n.textContent=msg; };
-  const bar=p=>{ const b=document.getElementById("ocrbar"); if(b) b.style.width=Math.max(6,Math.min(100,Math.round(p)))+"%"; };
+  const bar=p=>{ const b=document.getElementById("ocrbar"); if(b) b.style.width=Math.max(6,Math.min(100,Math.round(p)))+"%"; if(window.DGO && DGO.tarefa) DGO.tarefa.andamento("ocr", p/100); };
   const meu=SCANIMG+":"+SCANROT;   /* se a pessoa girou ou trocou a foto no meio, o resultado velho é descartado */
+  /* diretriz de tarefas longas: tela acesa, pílula "não feche o app", continua ao navegar e "✅ toque para ver" volta para cá */
+  if(window.DGO && DGO.tarefa){ DGO.tarefa.cancelar("ocr"); DGO.tarefa.iniciar({id:"ocr", titulo:t("sc.task"), executar:()=>new Promise((ok,fail)=>{ OCRFIM={ok,fail}; }), aindaNaTela:()=>!!document.getElementById("scanout"), aoAbrir:()=>{ if(!document.getElementById("scanout")) go("scan"); }}).catch(()=>{}); }
   loadTesseract(ok=>{
-    if(!ok){ st("⚠ "+t("sc.engineFail")); manualFallback(); return; }
+    if(!ok){ st("⚠ "+t("sc.engineFail")); manualFallback(); if(OCRFIM) OCRFIM.fail(new Error(t("sc.engineFail"))); return; }
     const lg = LANG==="pt" ? "por" : "eng";
     const im=new Image();
     im.onload=()=>{
@@ -6152,7 +6155,7 @@ function runOCR(dataUrl, rot){
         const next=()=>{
           if(SCANIMG+":"+SCANROT!==meu) return;
           if(i>=passes.length || (best && best.ok && best.conf>=78)){
-            SCANTEXT=(SCANPREV? SCANPREV+"\n" : "")+(best? best.text : ""); SCANPREV=""; bar(100); paintScan();
+            SCANTEXT=(SCANPREV? SCANPREV+"\n" : "")+(best? best.text : ""); SCANPREV=""; bar(100); paintScan(); if(OCRFIM){ OCRFIM.ok(); OCRFIM=null; }
             const o2=document.getElementById("scanout");
             if(o2 && best){ const c=document.createElement("p"); c.className="tiny muted"; c.textContent=t("sc.conf").replace("{a}",Math.round(best.conf))+(best.conf<55?" · "+t("sc.confLow"):""); o2.prepend(c); }
             return;
@@ -6168,9 +6171,9 @@ function runOCR(dataUrl, rot){
           }).catch(()=>{ i++; next(); });
         };
         next();
-      }).catch(()=>{ st("⚠ "+t("sc.engineFail")); manualFallback(); });
+      }).catch(()=>{ st("⚠ "+t("sc.engineFail")); manualFallback(); if(OCRFIM) OCRFIM.fail(new Error(t("sc.engineFail"))); });
     };
-    im.onerror=()=>{ st("⚠ "+t("sc.engineFail")); manualFallback(); };
+    im.onerror=()=>{ st("⚠ "+t("sc.engineFail")); manualFallback(); if(OCRFIM) OCRFIM.fail(new Error(t("sc.engineFail"))); };
     im.src=dataUrl;
   });
 }
@@ -10906,6 +10909,8 @@ function wireCid(){
 /* Por que: a foto do rótulo quase sempre sai tremida ou longe demais. Aqui a pessoa aproxima,
    usa o temporizador para não mexer no aparelho na hora do clique, e pode borrar o fundo antes
    de fotografar em lugar público. */
+let OCRFIM=null; /* tarefa longa da leitura (tarefas.js): resolve quando a foto foi lida */
+if(window.DGO && DGO.tarefa) DGO.tarefaIdioma=()=>LANG; /* a pílula de tarefa longa segue o idioma do app */
 const CAM2={zoom:1, timer:0, privacy:false, track:null, hasZoom:false, zmin:1, zmax:4, host:null, busy:false, focusModes:[], hasTorch:false, torch:false, meterT:null, poi:false};
 /* foco: pede foco contínuo ao abrir; ao tocar na imagem, um foco único naquele ponto (quando o aparelho deixa) */
 function camFocusContinuous(){
@@ -13403,5 +13408,6 @@ window.RISE={ versao:APP_VERSION, atualizar:forceUpdate, versaoDoSite:siteVersio
 </script>
 <!-- feature flags e comportamentos publicados pelo RootifyONE (Controle dos apps): centralLigado(id, padrao) / centralValor(id, padrao) -->
 <script src="recursos-central.js"></script>
+<script src="tarefas.js"></script>
 </body>
 </html>
