@@ -357,6 +357,40 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .item .t{font-weight:800;font-size:.92rem}
 .item .s{font-size:.78rem;color:var(--text2)}
 .item .acts{display:flex;gap:6px;flex-shrink:0;align-items:center}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 16px}
+@media (min-width:760px){ .hgrid{grid-template-columns:repeat(4,1fr)} }
+.htile{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:112px;padding:14px 14px 12px;border:0;border-radius:22px;color:#fff;text-align:left;font:inherit;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .15s}
+.htile:active{transform:scale(.98)}
+.htile:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.htile.wide{grid-column:span 2}
+.htile .art{position:absolute;right:-4px;top:-6px;font-size:58px;line-height:1;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));opacity:.95;pointer-events:none}
+.htile.wide .art{font-size:72px;right:6px;top:4px}
+.htile .tt{font-size:.78rem;font-weight:700;opacity:.92;max-width:72%;line-height:1.2}
+.htile .vv{font-size:1.55rem;font-weight:900;line-height:1.1;margin-top:auto;max-width:78%}
+.htile .vv small{font-size:.75rem;font-weight:700;opacity:.85;color:inherit}
+.htile .ss{font-size:.74rem;opacity:.88;line-height:1.25}
+.htile .go{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.22);border-radius:999px;padding:7px 12px;font-weight:800;font-size:.8rem}
+.htile .go .ic{width:14px;height:14px}
+.htile .mini{display:block;width:70%;height:6px;border-radius:9px;background:rgba(255,255,255,.3);margin-top:6px;overflow:hidden}
+.htile .mini i{display:block;height:100%;background:#fff;border-radius:9px}
+.c-blue{background:linear-gradient(135deg,#3f7cf2,#5aa2ff)} .c-orange{background:linear-gradient(135deg,#e8662c,#f7a24a)} .c-green{background:linear-gradient(135deg,#1f9d63,#4fcf8a)}
+.c-pink{background:linear-gradient(135deg,#c2407f,#e86fa6)} .c-teal{background:linear-gradient(135deg,#0f8a95,#2fb8bf)} .c-purple{background:linear-gradient(135deg,#6a3fd6,#a26bf2)}
+.c-amber{background:linear-gradient(135deg,#b7791f,#e5a93a)} .c-indigo{background:linear-gradient(135deg,#3b47b8,#6372e6)} .c-red{background:linear-gradient(135deg,#c2392e,#ec6b58)}
+.c-rose{background:linear-gradient(135deg,#a8346b,#d9608f)} .c-slate{background:linear-gradient(135deg,#3c4a5e,#617690)} .c-cyan{background:linear-gradient(135deg,#0e7fa8,#33b2d8)}
+.c-gray{background:linear-gradient(135deg,#4b5160,#737b8c)} .c-violet{background:linear-gradient(135deg,#7a35b8,#b067e0)} .c-brown{background:linear-gradient(135deg,#7d4b2c,#b07a4f)}
+.bio-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.bio-chip{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;display:flex;flex-direction:column;gap:3px}
+.bio-chip .lb{font-size:.74rem;color:var(--text2);font-weight:700}
+.bio-chip b{font-size:1.2rem} .bio-chip b small{font-size:.72rem;color:var(--text2)}
+.bio-tag{display:inline-block;width:fit-content;font-size:.68rem;font-weight:800;border-radius:999px;padding:2px 8px}
+.bio-tag.normal{background:var(--ok-soft);color:var(--ok)} .bio-tag.below,.bio-tag.above{background:var(--warn-soft);color:var(--warn)}
+.bio-grid{display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:640px){ .bio-grid{grid-template-columns:1fr 1fr} }
+.bio-f{display:flex;flex-direction:column;gap:4px}
+.bio-f .lb{font-size:.8rem;font-weight:700}
+.bio-f .in{display:flex;align-items:center;gap:6px}
+.bio-f input{flex:1;min-width:0}
+.bio-f em{font-style:normal;font-size:.75rem;color:var(--text2);min-width:26px}
 .item.wrap{flex-wrap:wrap}
 .item.wrap .gr{flex:1 1 55%}
 @media (max-width:640px){ .item.wrap .acts{width:100%;justify-content:flex-end;padding-top:2px} }
@@ -1133,7 +1167,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.9.2";
+const APP_VERSION = "3.10.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2122,6 +2156,40 @@ Object.assign(L,{
 "eq.noHits":["Nenhum aparelho com esse termo.","No machine matches that."],
 "eq.yesHave":["Sim, eu tenho","Yes, I have it"],
 "eq.ident":["Identificar pela foto (IA)","Identify by photo (AI)"],
+"bio.title":["Bioimpedância","Body composition"],
+"bio.read":["Ler exame de bioimpedância","Read body composition report"],
+"bio.readShort":["Ler exame","Read report"],
+"bio.none":["Fotografe o laudo (InBody ou parecido) e o app transcreve tudo: composição, gordura, músculo, medidas, segmentos e histórico.","Photograph the report (InBody or similar) and the app transcribes everything: composition, fat, muscle, measurements, segments and history."],
+"bio.reading":["Lendo o laudo…","Reading the report…"],
+"bio.readingAI":["A IA está transcrevendo o laudo. Leva uns 20 segundos.","The AI is transcribing the report. Takes about 20 seconds."],
+"bio.readingOCR":["Lendo com a câmera do aparelho (sem IA). Os campos principais aparecem; confira e complete.","Reading on this device (no AI). The main fields appear; check and complete them."],
+"bio.check":["Confira e corrija se precisar","Check and fix if needed"],
+"bio.checkSub":["Tudo o que foi lido do papel. Campo vazio = não encontrado.","Everything read from the paper. Empty field = not found."],
+"bio.hist":["Importar o histórico do laudo","Import the report's history"],
+"bio.histSub":["{n} medições anteriores impressas no papel viram registros de peso, músculo e gordura.","{n} earlier measurements printed on the paper become weight, muscle and fat records."],
+"bio.saved":["Exame salvo. Peso, gordura e medidas também foram registrados.","Report saved. Weight, fat and measurements were recorded too."],
+"bio.details":["Ver tudo","See all"],
+"bio.score":["Pontuação","Score"],
+"bio.below":["abaixo","below"],
+"bio.normal":["normal","normal"],
+"bio.above":["acima","above"],
+"bio.vsPrev":["vs. anterior","vs. previous"],
+"bio.aiFail":["A IA não conseguiu ler ({e}). Vou tentar sem IA.","The AI could not read it ({e}). Trying without AI."],
+"bio.task":["Lendo a bioimpedância","Reading the body composition test"],
+"bio.bgTip":["Pode fechar esta janela e usar o app: a leitura continua e avisa quando terminar.","You can close this window and use the app: the reading keeps going and lets you know when done."],
+"bio.noKeyTip":["Com uma chave de IA no cofre (o Gemini é grátis) a leitura sai completa, com segmentos e histórico.","With an AI key in the vault (Gemini is free) the reading is complete, with segments and history."],
+"bio.g.comp":["Composição corporal","Body composition"],
+"bio.g.musc":["Músculo e gordura","Muscle and fat"],
+"bio.g.ctrl":["Controle de peso","Weight control"],
+"bio.g.circ":["Circunferências","Circumferences"],
+"bio.g.extra":["Dados adicionais","Additional data"],
+"bio.g.segm":["Massa magra por segmento","Segmental lean mass"],
+"bio.g.segg":["Gordura por segmento","Segmental fat"],
+"home.tiles.missions":["Missões do dia","Today's missions"],
+"home.tiles.log":["Registrar o dia","Log the day"],
+"home.tiles.none":["Montar treino","Build a workout"],
+"home.tiles.diet":["Comida hoje","Food today"],
+"home.tiles.goals":["Meus objetivos","My goals"],
 "eq.videos":["Vídeos","Videos"],
 "eq.ytSearch":["Buscar vídeos no YouTube","Search videos on YouTube"],
 
@@ -3458,7 +3526,7 @@ function defaultState(name){
       {id:uid(), title:{pt:"Beber 2 litros de água",en:"Drink 2 litres of water"}, icon:"💧", days:[0,1,2,3,4,5,6]},
       {id:uid(), title:{pt:"Dormir 7 horas",en:"Sleep 7 hours"}, icon:"😴", days:[0,1,2,3,4,5,6]}
     ],
-    reminders:[], checkins:[], workouts:[], logs:[], measures:[], photos:[], meals:[], wuLogs:[],
+    reminders:[], checkins:[], workouts:[], logs:[], measures:[], bioimp:[], photos:[], meals:[], wuLogs:[],
     equipPhotos:{}, customEx:[], exams:[], laudos:[], students:[], foods:[], dishes:[],
     diet:{kcal:0,prot:0,carb:0,fat:0,water:0,restKcal:0},
     settings:{units:"metric", cloud:{provider:"", clientId:"", connected:false}, notif:false, weeklyBackup:false}
@@ -3911,6 +3979,189 @@ function nextStepCard(){
   return ["done",'<div class="card hero">'+cardHead("check", t("home.allDone"), t("home.allDoneSub"))+
     '<div class="row"><button class="btn ghost" data-go="warm">'+I("flame")+t("wu.title")+'</button><button class="btn line" data-go="progress" data-sub="peso">'+I("chart")+t("nav.progress")+"</button></div></div>"];
 }
+/* ---------- 13b. BIOIMPEDÂNCIA (InBody e parecidos) ----------
+   Por que: o laudo traz dezenas de números que a pessoa não vai digitar. A IA do cofre (visão) transcreve tudo;
+   sem chave, o OCR do aparelho pega os campos principais. Nada é salvo sem a pessoa conferir. */
+const BIO_CAMPOS=[ /* chave, grupo, pt, en, unidade */
+ ["peso","comp","Peso","Weight","kg"],["agua","comp","Água corporal total","Total body water","L"],["proteina","comp","Proteína","Protein","kg"],
+ ["minerais","comp","Minerais","Minerals","kg"],["gordura","comp","Massa de gordura","Body fat mass","kg"],["magra_mole","comp","Massa magra mole","Soft lean mass","kg"],
+ ["mlg","comp","Massa livre de gordura","Fat-free mass","kg"],
+ ["mme","musc","Massa muscular esquelética","Skeletal muscle mass","kg"],["pgc","musc","Gordura corporal","Body fat","%"],["imc","musc","IMC","BMI","kg/m²"],
+ ["pontos","musc","Pontuação","Score","/100"],
+ ["peso_ideal","ctrl","Peso ideal","Target weight","kg"],["ctrl_peso","ctrl","Controle de peso","Weight control","kg"],
+ ["ctrl_gordura","ctrl","Controle de gordura","Fat control","kg"],["ctrl_musculo","ctrl","Controle muscular","Muscle control","kg"],
+ ["c_pescoco","circ","Pescoço","Neck","cm"],["c_peito","circ","Peito","Chest","cm"],["c_abdomen","circ","Abdômen","Abdomen","cm"],["c_quadril","circ","Quadril","Hip","cm"],
+ ["c_braco_d","circ","Braço direito","Right arm","cm"],["c_braco_e","circ","Braço esquerdo","Left arm","cm"],["c_coxa_d","circ","Coxa direita","Right thigh","cm"],["c_coxa_e","circ","Coxa esquerda","Left thigh","cm"],
+ ["tmb","extra","Metabolismo basal","Basal metabolic rate","kcal"],["rcq","extra","Relação cintura-quadril","Waist-hip ratio",""],
+ ["visceral","extra","Gordura visceral (nível)","Visceral fat level",""],["osseo","extra","Mineral ósseo","Bone mineral content","kg"],
+ ["kcal_rec","extra","Calorias recomendadas","Recommended calories","kcal"],
+ ["sm_braco_e","segm","Braço esquerdo","Left arm","kg"],["sm_braco_d","segm","Braço direito","Right arm","kg"],["sm_tronco","segm","Tronco","Trunk","kg"],
+ ["sm_perna_e","segm","Perna esquerda","Left leg","kg"],["sm_perna_d","segm","Perna direita","Right leg","kg"],
+ ["sg_braco_e","segg","Braço esquerdo","Left arm","kg"],["sg_braco_d","segg","Braço direito","Right arm","kg"],["sg_tronco","segg","Tronco","Trunk","kg"],
+ ["sg_perna_e","segg","Perna esquerda","Left leg","kg"],["sg_perna_d","segg","Perna direita","Right leg","kg"]
+];
+const BIO_GRUPOS=["comp","musc","ctrl","circ","extra","segm","segg"];
+function bioNome(k){ const c=BIO_CAMPOS.find(x=>x[0]===k); return c? (LANG==="pt"?c[2]:c[3]) : k; }
+function bioUn(k){ const c=BIO_CAMPOS.find(x=>x[0]===k); return c? c[4] : ""; }
+function bioUltimo(){ const l=(STATE.bioimp||[]).slice().sort((a,b)=>a.date<b.date?1:-1); return l[0]||null; }
+function bioAnterior(rec){ const l=(STATE.bioimp||[]).filter(r=>r.date<rec.date).sort((a,b)=>a.date<b.date?1:-1); return l[0]||null; }
+function bioV(rec,k){ const c=rec&&rec.campos&&rec.campos[k]; return c&&c.v!=null&&c.v!==""? +c.v : null; }
+function bioEstado(c){ if(!c||c.v==null||c.min==null||c.max==null) return ""; return c.v<c.min?"below":(c.v>c.max?"above":"normal"); }
+
+/* OCR sem IA: InBody imprime "46. 5" com espaço depois do ponto; o texto é normalizado antes. */
+const BIO_OCR=[ /* chave, rótulo (sem acento), modo: first = 1º número depois do rótulo (+faixa), last = último número da linha */
+ ["agua","agua corporal total","first"],["proteina","proteina","first"],["minerais","minerais","first"],["gordura","massa de gordura","first"],
+ ["magra_mole","massa magra mole","first"],["mlg","massa livre de gordura","first"],["peso","peso \\(kg\\)|^peso\\b","last"],
+ ["mme","massa muscular esqueletica","last"],["imc","imc","last"],["pgc","pgc|percentual de gordura","last"],
+ ["peso_ideal","peso ideal","first"],["ctrl_peso","controle de peso","first"],["ctrl_gordura","controle de gordura","first"],["ctrl_musculo","controle muscular","first"],
+ ["c_pescoco","pescoco","first"],["c_peito","peito","first"],["c_abdomen","abdomen","first"],["c_quadril","quadril","first"],
+ ["c_braco_d","braco direito","first"],["c_braco_e","braco esquerdo","first"],["c_coxa_d","coxa direita","first"],["c_coxa_e","coxa esquerda","first"],
+ ["tmb","taxa metabolica basal","first"],["rcq","relacao cintura","first"],["visceral","gordura visceral","first"],["osseo","mineral osseo","first"],
+ ["kcal_rec","ingestao calorica","first"]
+];
+function parseBio(raw){
+  const txt=norm(raw).replace(/(\d)[.,]\s+(\d)/g,"$1.$2").replace(/(\d),(\d)/g,"$1.$2").replace(/[−–—]/g,"-");
+  const lines=txt.split(/\n+/), campos={};
+  const N="(-?\\d+(?:\\.\\d+)?)";
+  BIO_OCR.forEach(([k,lab,modo])=>{
+    if(campos[k]) return;
+    const re=new RegExp(lab);
+    for(const ln of lines){
+      const m=ln.match(re); if(!m) continue;
+      const rest=ln.slice(m.index+m[0].length);
+      if(modo==="last"){ const all=rest.match(/-?\d+(?:\.\d+)?/g); if(all&&all.length){ campos[k]={v:+all[all.length-1]}; break; } continue; }
+      const mm=rest.match(new RegExp(N+"\\s*(?:[a-z%²]{1,5}\\s*)?(?:\\(\\s*"+N+"\\s*[~-]\\s*"+N+"\\s*\\))?"));
+      if(mm){ campos[k]={v:+mm[1], min:mm[2]!=null?+mm[2]:null, max:mm[3]!=null?+mm[3]:null}; break; }
+    }
+  });
+  const sc=txt.match(/(\d{2,3})\s*\/\s*100/); if(sc) campos.pontos={v:+sc[1]};
+  const o={campos};
+  const d=txt.match(/(\d{2})\.\s?(\d{2})\.\s?(\d{4})(?:\s+(\d{2}):(\d{2}))?/);
+  if(d){ o.data=d[3]+"-"+d[2]+"-"+d[1]; if(d[4]) o.hora=d[4]+":"+d[5]; }
+  const al=txt.match(/altura[^\d]{0,20}(\d{3})\s*cm/); if(al) o.altura=+al[1];
+  return Object.keys(campos).length>=3? o : null;
+}
+/* IA (visão): pede JSON com as chaves do app; nada pessoal vai junto além da foto */
+function bioAI(img){
+  const chaves=BIO_CAMPOS.map(c=>c[0]+" = "+c[2]+" ("+c[4]+")").join("\n");
+  const sys="You transcribe body composition (bioimpedance) reports such as InBody. Answer ONLY with JSON, no prose.";
+  const q='Transcreva este laudo de bioimpedância. Responda só JSON no formato {"data":"AAAA-MM-DD","hora":"HH:MM","aparelho":"","altura":0,"idade":0,"sexo":"M|F","campos":{"chave":{"v":0,"min":null,"max":null,"pct":null}},"historico":[{"data":"AAAA-MM-DD","peso":0,"mme":0,"pgc":0}]}. '+
+    'Datas do laudo brasileiro estão em DD.MM.AAAA ou DD.MM.AA. "min"/"max" = faixa normal impressa entre parênteses. "pct" = percentual dos segmentos. Use ponto decimal. Omita o que não existir no papel. Chaves:\n'+chaves;
+  return aiAsk(q, msg=>toast(msg), {img, sys}).then(txt=>{
+    const j=JSON.parse((String(txt).match(/\{[\s\S]*\}/)||["{}"])[0]);
+    const campos={}; Object.keys(j.campos||{}).forEach(k=>{ const c=j.campos[k]; if(BIO_CAMPOS.some(x=>x[0]===k) && c && c.v!=null && !isNaN(+c.v)) campos[k]={v:+c.v, min:c.min!=null?+c.min:null, max:c.max!=null?+c.max:null, pct:c.pct!=null?+c.pct:null}; });
+    if(Object.keys(campos).length<3) throw new Error(LANG==="pt"?"poucos campos":"too few fields");
+    return {data:j.data, hora:j.hora, aparelho:j.aparelho, altura:j.altura, idade:j.idade, sexo:j.sexo, campos, historico:(j.historico||[]).filter(h=>h&&h.data), fonte:"ia"};
+  });
+}
+function bioOCR(img){
+  return new Promise((ok,bad)=>loadTesseract(okT=>{
+    if(!okT) return bad(new Error("ocr"));
+    ocrWorker(LANG==="pt"?"por":"eng", ()=>{}).then(w=>w.setParameters({tessedit_pageseg_mode:"4"}).then(()=>w.recognize(img)))
+      .then(r=>{ const o=parseBio((r&&r.data&&r.data.text)||""); if(!o) bad(new Error("ocr")); else { o.fonte="ocr"; ok(o); } }).catch(bad);
+  }));
+}
+/* a leitura roda como tarefa longa (tarefas.js): tela acesa, pílula "não feche o app", segue se a pessoa sair da tela;
+   ao terminar abre a conferência sozinha (se a janela da leitura ainda está aberta) ou pelo "✅ toque para ver" */
+function bioLer(){
+  pickImage(foto=>resizeImage(foto, 1800, img=>{
+    const temIA=AI_PROVIDERS.some(p=>aiKey(p[0])) && navigator.onLine;
+    const m=modal(mh(t("bio.title"))+'<img src="'+img+'" alt="" style="width:100%;max-height:32vh;object-fit:contain;border-radius:14px;background:var(--surface2)">'+
+      '<p id="bio_st" style="margin:12px 0 4px">⏳ '+t(temIA?"bio.readingAI":"bio.readingOCR")+'</p><div class="bar"><i id="bio_bar" style="width:12%"></i></div>'+
+      '<p class="tiny muted" style="margin-top:8px">'+t("bio.bgTip")+"</p>"+(temIA?"":'<p class="tiny muted">'+t("bio.noKeyTip")+"</p>"));
+    const ler=and=>{
+      let p=12; const tk=setInterval(()=>{ p=Math.min(92,p+4); const b=document.getElementById("bio_bar"); if(b) b.style.width=p+"%"; if(and) and(p/100); },900);
+      const fim=o=>{ clearInterval(tk); return o||{campos:{},fonte:"manual"}; };
+      const semIA=()=>bioOCR(img).then(fim).catch(()=>fim(null));
+      if(!temIA) return semIA();
+      return bioAI(img).then(fim).catch(e=>{ const st=document.getElementById("bio_st"); if(st) st.textContent="⚠ "+t("bio.aiFail").replace("{e}",e.message); return semIA(); });
+    };
+    const abrir=o=>{ if(m.isConnected) m.remove(); bioConferir(o); };
+    if(window.DGO && DGO.tarefa){
+      DGO.tarefa.cancelar("bio");
+      DGO.tarefa.iniciar({id:"bio", titulo:t("bio.task"), executar:ler, aindaNaTela:()=>m.isConnected, aoAbrir:abrir}).catch(()=>{});
+    } else ler().then(abrir);
+  }));
+}
+/* conferência: todos os campos editáveis, agrupados; segmentos com kg e % */
+function bioConferir(o){
+  const c=o.campos||{};
+  const fld=k=>{ const x=c[k]||{}, faixa=(x.min!=null&&x.max!=null)?'<span class="tiny muted">'+fmtNum(x.min,x.min%1?1:0)+"–"+fmtNum(x.max,x.max%1?1:0)+"</span>":"";
+    const seg=k.indexOf("sm_")===0||k.indexOf("sg_")===0;
+    return '<label class="bio-f"><span class="lb">'+esc(bioNome(k))+" "+faixa+'</span><span class="in"><input type="number" step="0.01" data-bio="'+k+'" value="'+(x.v!=null?x.v:"")+'"><em>'+esc(bioUn(k))+"</em>"+
+      (seg?'<input type="number" step="0.1" data-biopct="'+k+'" value="'+(x.pct!=null?x.pct:"")+'"><em>%</em>':"")+"</span></label>"; };
+  const hist=(o.historico||[]).filter(h=>h.data!==o.data);
+  const m=modal(mh(t("bio.check"))+'<p class="tiny muted" style="margin:-4px 0 10px">'+t("bio.checkSub")+"</p>"+
+    '<div class="grid g2 collapse"><label class="fld"><span>'+t("common.date")+'</span><input type="date" id="bio_d" value="'+esc(o.data||todayISO())+'"></label>'+
+    '<label class="fld"><span>'+(LANG==="pt"?"Aparelho":"Device")+'</span><input type="text" id="bio_ap" value="'+esc(o.aparelho||"InBody")+'"></label></div>'+
+    BIO_GRUPOS.map(g=>'<details class="fold"'+(g==="comp"||g==="musc"?" open":"")+'><summary>'+t("bio.g."+g)+'</summary><div class="fb bio-grid">'+BIO_CAMPOS.filter(x=>x[1]===g).map(x=>fld(x[0])).join("")+"</div></details>").join("")+
+    (hist.length?'<label class="switch" style="margin-top:10px"><input type="checkbox" id="bio_h" checked><span class="tr"></span><span>'+t("bio.hist")+'</span></label><p class="tiny muted">'+t("bio.histSub").replace("{n}",hist.length)+"</p>":"")+
+    '<div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="bio_s">'+I("check")+t("common.save")+"</button></div>",{wide:true});
+  m.querySelector("#bio_s").onclick=()=>{
+    const campos={};
+    m.querySelectorAll("[data-bio]").forEach(i=>{ const k=i.getAttribute("data-bio"), v=num(i.value,null); if(v==null||i.value==="") return;
+      const pc=m.querySelector('[data-biopct="'+k+'"]'); campos[k]=Object.assign({}, c[k]||{}, {v, pct:pc&&pc.value!==""?num(pc.value,null):(c[k]||{}).pct}); });
+    const date=m.querySelector("#bio_d").value||todayISO();
+    const rec={id:uid(), date, hora:o.hora||"", aparelho:m.querySelector("#bio_ap").value.trim(), altura:o.altura||null, idade:o.idade||null, sexo:o.sexo||"", campos, historico:hist, fonte:o.fonte||"manual"};
+    STATE.bioimp=(STATE.bioimp||[]).filter(r=>r.date!==date); STATE.bioimp.push(rec);
+    /* alimenta as medidas e o peso que o resto do app já usa */
+    const v=k=>bioV(rec,k), media=(a,b)=>(a!=null&&b!=null)?(a+b)/2:(a!=null?a:b);
+    STATE.measures=STATE.measures.filter(x=>!(x.date===date && x.fonte==="bio"));
+    STATE.measures.push({id:uid(), date, fonte:"bio", weight:v("peso"), fat:v("pgc"), muscle:v("mme"), chest:v("c_peito"), waist:v("c_abdomen"), hip:v("c_quadril"),
+      arm:media(v("c_braco_d"),v("c_braco_e")), thigh:media(v("c_coxa_d"),v("c_coxa_e")), calf:null});
+    if(v("peso")){ const ck=ensureCi(date); if(!ck.weight) ck.weight=v("peso"); }
+    const hb=m.querySelector("#bio_h");
+    if(hb && hb.checked) hist.forEach(h=>{ if(!STATE.measures.some(x=>x.date===h.data)) STATE.measures.push({id:uid(), date:h.data, fonte:"bio", weight:h.peso||null, fat:h.pgc||null, muscle:h.mme||null}); });
+    save(); m.remove(); render(); toast(t("bio.saved"));
+  };
+}
+function bioTag(c){ const e=bioEstado(c); return e?'<span class="bio-tag '+e+'">'+t("bio."+e)+"</span>":""; }
+function bioCardHTML(){
+  const r=bioUltimo();
+  if(!r) return '<div class="card">'+cardHead("heart", t("bio.title"), t("bio.none"), '<button class="btn sm" id="bio_ler">'+I("camera")+t("bio.readShort")+"</button>")+"</div>";
+  const ant=bioAnterior(r);
+  const chip=k=>{ const c=r.campos[k]; if(!c) return ""; const a=ant&&bioV(ant,k), d=(a!=null)?c.v-a:null;
+    return '<div class="bio-chip"><span class="lb">'+esc(bioNome(k))+'</span><b>'+fmtNum(c.v,c.v%1?1:0)+' <small>'+esc(bioUn(k))+"</small></b>"+bioTag(c)+(d!=null&&Math.abs(d)>=0.05?'<span class="tiny muted">'+(d>0?"+":"")+fmtNum(d,1)+" "+t("bio.vsPrev")+"</span>":"")+"</div>"; };
+  return '<div class="card">'+cardHead("heart", t("bio.title"), fmtDate(r.date)+(r.aparelho?" · "+esc(r.aparelho):""))+
+    '<div class="bio-chips">'+["pontos","peso","mme","pgc","gordura","visceral","tmb","imc"].map(chip).join("")+"</div>"+
+    '<div class="row" style="margin-top:12px"><button class="btn sm" id="bio_ver">'+t("bio.details")+'</button><button class="btn sm line" id="bio_ler">'+I("camera")+t("bio.readShort")+"</button></div></div>";
+}
+function bioDetalhe(r){
+  r=r||bioUltimo(); if(!r) return;
+  const ant=bioAnterior(r);
+  const linha=k=>{ const c=r.campos[k]; if(!c) return ""; const a=ant&&bioV(ant,k);
+    return '<tr><td>'+esc(bioNome(k))+'</td><td class="num"><b>'+fmtNum(c.v,c.v%1?2:0).replace(/[.,]?0+$/,"")+"</b> "+esc(bioUn(k))+(c.pct!=null?' · '+fmtNum(c.pct,1)+"%":"")+'</td><td>'+bioTag(c)+'</td><td class="num tiny muted">'+(a!=null?fmtNum(a,1):"")+"</td></tr>"; };
+  const hist=(r.historico||[]).concat((STATE.bioimp||[]).map(x=>({data:x.date, peso:bioV(x,"peso"), mme:bioV(x,"mme"), pgc:bioV(x,"pgc")})))
+    .reduce((acc,h)=>{ if(!acc.some(y=>y.data===h.data)) acc.push(h); return acc; },[]).sort((a,b)=>a.data<b.data?-1:1);
+  modal(mh(t("bio.title")+" · "+fmtDate(r.date))+
+    BIO_GRUPOS.map(g=>{ const rows=BIO_CAMPOS.filter(x=>x[1]===g).map(x=>linha(x[0])).join(""); return rows?'<span class="kicker" style="display:block;margin:12px 0 4px">'+t("bio.g."+g)+'</span><table class="tbl"><tbody>'+rows+"</tbody></table>":""; }).join("")+
+    (hist.length>1?'<span class="kicker" style="display:block;margin:14px 0 4px">'+(LANG==="pt"?"Histórico":"History")+'</span><table class="tbl"><thead><tr><th>'+t("common.date")+'</th><th class="num">'+bioNome("peso")+'</th><th class="num">'+bioNome("mme")+'</th><th class="num">'+bioNome("pgc")+"</th></tr></thead><tbody>"+
+      hist.map(h=>"<tr><td>"+fmtDate(h.data)+'</td><td class="num">'+(h.peso!=null?fmtNum(h.peso,1):"—")+'</td><td class="num">'+(h.mme!=null?fmtNum(h.mme,1):"—")+'</td><td class="num">'+(h.pgc!=null?fmtNum(h.pgc,1)+"%":"—")+"</td></tr>").join("")+"</tbody></table>":"")+
+    '<div class="row" style="justify-content:space-between;margin-top:12px"><button class="btn xs line" id="bio_del">'+t("common.del")+'</button><button class="btn sm line" data-close>'+t("common.close")+"</button></div>",{wide:true});
+  const del=document.getElementById("bio_del"); if(del) del.onclick=()=>{ if(!confirm(t("common.del")+"?")) return; STATE.bioimp=STATE.bioimp.filter(x=>x.id!==r.id); save(); document.querySelectorAll(".modal").forEach(x=>x.remove()); render(); };
+}
+function bioWire(){
+  const a=document.getElementById("bio_ler"); if(a) a.onclick=bioLer;
+  const b=document.getElementById("bio_ver"); if(b) b.onclick=()=>bioDetalhe();
+}
+
+/* ---------- 13c. INÍCIO EM CARTÕES (inspirado no Samsung Health) ----------
+   Grade de cartões coloridos: título curto, um número, ilustração grande no canto. Cada cartão leva à função. */
+function htile(o){
+  return '<button class="htile '+(o.wide?"wide ":"")+o.cor+'" '+(o.attrs||"")+'><span class="art" aria-hidden="true">'+o.art+'</span>'+
+    '<span class="tt">'+esc(o.t)+"</span>"+(o.v!=null?'<span class="vv">'+o.v+"</span>":"")+(o.s?'<span class="ss">'+o.s+"</span>":"")+(o.extra||"")+"</button>";
+}
+function missionsModal(){
+  const iso=todayISO();
+  const paint=()=>{ const c=ci(iso), ms=missionsToday();
+    return '<div class="list">'+(ms.length? ms.map(mm=>'<div class="item mission'+((c&&c.done.indexOf(mm.id)>=0)?" done":"")+'" data-mission="'+mm.id+'"><span class="bx">✓</span><div class="gr"><div class="t">'+esc(mm.icon||"")+" "+esc(mTitle(mm))+"</div></div></div>").join("") : emptyBox("listcheck","",t("common.empty")))+"</div>"; };
+  const m=modal(mh(t("home.tiles.missions"))+'<div id="msbox">'+paint()+'</div><button class="btn wide" style="margin-top:12px" data-go="progress" data-sub="hoje">'+I("clipboard")+t("home.tiles.log")+"</button>");
+  const wire=()=>m.querySelectorAll("[data-mission]").forEach(n=>n.onclick=()=>{ const id=n.getAttribute("data-mission"), c=ensureCi(iso), i=c.done.indexOf(id);
+    if(i>=0) c.done.splice(i,1); else c.done.push(id); save(); m.querySelector("#msbox").innerHTML=paint(); wire(); });
+  wire();
+  new MutationObserver((ch,ob)=>{ if(!document.body.contains(m)){ ob.disconnect(); if(ROUTE==="home") render(); } }).observe(document.body,{childList:true});
+}
+
 SCREENS.home = function(){
   const iso=todayISO(), c=ci(iso), ms=missionsToday(), done=c?c.done.length:0;
   const w=lastWeight(), wk=weekLogs().length, kc=sumMeals(mealsOn(iso)).kcal;
@@ -3922,36 +4173,33 @@ SCREENS.home = function(){
   if(role()==="guest") h+='<p class="tiny muted" style="margin:-6px 0 12px">'+t("guest.warn")+"</p>";
   h+=updateCard();
   const ns=nextStepCard(); h+=ns[1];
-  h+='<div class="grid g4" style="margin-bottom:14px">'+
-     stat(t("home.weight"), w?fmtNum(w,1):"—", w?"kg":"", "")+
-     stat(t("home.streak"), String(streak()), t("home.days"), "")+
-     stat(t("home.week"), String(wk), "", "")+
-     stat(t("home.kcal"), fmtNum(kc,0), "kcal", STATE.diet.kcal?("/ "+fmtNum(STATE.diet.kcal,0)):"")+
-     "</div>";
-  h+='<div class="grid g2 collapse top">';
-  /* missoes */
-  h+='<div class="card">'+cardHead("listcheck", t("home.missions"), done+" "+t("ck.doneOf")+" "+ms.length)+'<div class="list">';
-  h+= ms.length? ms.map(m=>'<div class="item mission'+((c&&c.done.indexOf(m.id)>=0)?" done":"")+'" data-mission="'+m.id+'"><span class="bx">✓</span><div class="gr"><div class="t">'+esc(m.icon||"")+" "+esc(mTitle(m))+"</div></div></div>").join("")
-       : emptyBox("listcheck", "", t("common.empty"));
-  h+='</div><div class="sep"></div><button class="btn '+(c?"ghost":"")+' wide" data-go="progress" data-sub="hoje">'+I(c?"check":"clipboard")+(c?t("home.checkinDone"):t("home.checkin"))+"</button></div>";
-  /* atalhos */
-  h+='<div class="card">'+cardHead("zap", t("home.quick"), "")+'<div class="tiles">'+
-     '<button class="tile" id="timerbtn"><span class="ibub">'+I("timer")+'</span><span class="tl">'+t("tm.short")+"</span></button>"+
-     '<button class="tile" data-go="warm"><span class="ibub">'+I("flame")+'</span><span class="tl">'+t("wu.title")+"</span></button>"+
-     '<button class="tile" data-go="scan"><span class="ibub">'+I("scan")+'</span><span class="tl">'+t("nav.scan")+"</span></button>"+
-     '<button class="tile" data-go="body"><span class="ibub">'+I("body")+'</span><span class="tl">'+t("body.title")+"</span></button>"+
-     '<button class="tile" data-go="ex"><span class="ibub">'+I("book")+'</span><span class="tl">'+t("ex.title")+"</span></button>"+
-     '<button class="tile" id="rc_open"><span class="ibub">'+I("dumbbell")+'</span><span class="tl">'+t("rc.short")+"</span></button>"+
-     '<button class="tile" data-go="ia"><span class="ibub">'+I("sparkles")+'</span><span class="tl">'+t("ia.title")+"</span></button>"+
-     "</div></div>";
-  h+="</div>";
-  /* treino de hoje (quando ja feito ou quando o card principal mostra outra coisa) */
-  if(wt && ns[0]!=="workout"){ h+='<div class="card">'+cardHead("dumbbell", t("home.todayWorkout"), wt.name+" · "+(wt.items||[]).length+" "+t("ex.count"),
-      '<button class="btn sm" data-run="'+wt.id+'">'+I("play")+t("home.start")+"</button>")+"</div>"; }
+  const ck=c, cdone=ck?ck.done.length:0, br=bioUltimo();
+  const meta=STATE.diet.kcal||0;
+  h+='<div class="hgrid">';
+  h+= wt? htile({wide:true, cor:"c-blue", art:"🏋️", t:t("home.todayWorkout"), v:esc(wt.name), s:(wt.items||[]).length+" "+t("ex.count"),
+          extra:'<span class="go" data-run="'+wt.id+'">'+I("play")+t("home.start")+"</span>", attrs:'data-go="workout"'})
+        : htile({wide:true, cor:"c-blue", art:"🏋️", t:t("home.todayWorkout"), v:t("home.tiles.none"), attrs:'data-go="workout"'});
+  h+=htile({cor:"c-orange", art:"⚖️", t:t("home.weight"), v:w?fmtNum(w,1)+'<small> kg</small>':"—", attrs:'data-go="progress" data-sub="peso"'});
+  h+=htile({cor:"c-green", art:"✅", t:t("home.tiles.missions"), v:cdone+'<small> / '+ms.length+"</small>",
+          extra:'<span class="mini"><i style="width:'+(ms.length?Math.round(cdone/ms.length*100):0)+'%"></i></span>', attrs:'id="ht_miss"'});
+  h+=htile({cor:"c-pink", art:"🥗", t:t("home.tiles.diet"), v:fmtNum(kc,0)+'<small> kcal</small>', s:meta?"/ "+fmtNum(meta,0):"", attrs:'data-go="diet"'});
+  h+=htile({cor:"c-teal", art:"🔥", t:t("home.streak"), v:String(streak())+'<small> '+t("home.days")+"</small>", s:wk+" "+t("home.week").toLowerCase(), attrs:'data-go="progress"'});
+  h+= br? htile({wide:true, cor:"c-purple", art:"🧬", t:t("bio.title"), v:(bioV(br,"pontos")!=null?bioV(br,"pontos")+'<small>/100</small>':fmtNum(bioV(br,"pgc")||0,1)+"<small>%</small>"),
+            s:[bioV(br,"pgc")!=null?t("pg.fat")+" "+fmtNum(bioV(br,"pgc"),1)+"%":"", bioV(br,"mme")!=null?(LANG==="pt"?"músculo ":"muscle ")+fmtNum(bioV(br,"mme"),1)+" kg":"", fmtDate(br.date)].filter(Boolean).join(" · "),
+            attrs:'data-go="progress" data-sub="medidas"'})
+        : htile({wide:true, cor:"c-purple", art:"🧬", t:t("bio.title"), v:t("bio.readShort"), s:"InBody", attrs:'id="ht_bio"'});
+  h+=htile({cor:"c-amber", art:"📝", t:t("home.tiles.log"), v:c?"✓":"", attrs:'data-go="progress" data-sub="hoje"'});
+  h+=htile({cor:"c-indigo", art:"📷", t:t("nav.scan"), attrs:'data-go="scan"'});
+  h+=htile({cor:"c-red", art:"🤸", t:t("wu.title"), attrs:'data-go="warm"'});
+  h+=htile({cor:"c-rose", art:"💆", t:t("nav.fisio"), attrs:'data-go="fisio"'});
+  h+=htile({cor:"c-slate", art:"📚", t:t("ex.title"), attrs:'data-go="ex"'});
+  h+=htile({cor:"c-cyan", art:"🎒", t:t("rc.short"), attrs:'id="rc_open"'});
+  h+=htile({cor:"c-gray", art:"⏱️", t:t("tm.short"), attrs:'id="timerbtn"'});
+  h+=htile({cor:"c-violet", art:"✨", t:t("ia.title"), attrs:'data-go="ia"'});
+  h+=htile({wide:true, cor:"c-brown", art:"🎯", t:t("home.tiles.goals"), v:gnames?esc(gnames):"", s:gnames?"":t("home.noGoals"), attrs:'data-go="body"'});
+  h+='</div>';
   /* objetivos + ficha de saude */
   if(!anam().done && role()!=="guest" && ns[0]!=="wizard") h+=anamCard();
-  if(gnames || role()!=="guest") h+='<div class="card">'+cardHead("target", t("home.goalsTitle"), gnames||t("home.noGoals"),
-      '<button class="btn sm ghost" data-go="body">'+t("home.setGoals")+"</button>")+"</div>";
   return h;
 };
 function stat(lb,vl,un,dl){ return '<div class="stat"><div class="lb">'+esc(lb)+'</div><div class="vl">'+esc(vl)+' <span class="un">'+esc(un||"")+'</span></div>'+(dl?'<div class="dl muted">'+esc(dl)+"</div>":"")+"</div>"; }
@@ -3961,8 +4209,10 @@ SCREENS.home_after = function(){
     const id=n.getAttribute("data-mission"), c=ensureCi(todayISO()); const i=c.done.indexOf(id);
     if(i>=0) c.done.splice(i,1); else c.done.push(id); save(); render();
   });
-  document.querySelectorAll("[data-run]").forEach(n=>n.onclick=()=>runWorkout(n.getAttribute("data-run")));
+  document.querySelectorAll("[data-run]").forEach(n=>n.onclick=e=>{ e.stopPropagation(); runWorkout(n.getAttribute("data-run")); });
   const tb=document.getElementById("timerbtn"); if(tb) tb.onclick=()=>openTimer();
+  const hm=document.getElementById("ht_miss"); if(hm) hm.onclick=missionsModal;
+  const hb=document.getElementById("ht_bio"); if(hb) hb.onclick=bioLer;
   const anb=document.getElementById("anbtn"); if(anb) anb.onclick=()=>anamModal(1);
   const un=document.getElementById("up_now"); if(un) un.onclick=forceUpdate;
   const wg=document.getElementById("wizgo"); if(wg) wg.onclick=()=>wizRun("setup");
@@ -5678,6 +5928,7 @@ SCREENS.progress = function(){
   }
   if(v==="medidas"){
     h+=guestBanner();
+    h+=bioCardHTML();
     h+='<div class="card">'+cardHead("ruler", t("pg.measures"), t("pg.measuresSub"),
        '<div class="row nowrap"><button class="btn sm line" id="scanmeas">'+I("scan")+t("sc.short")+'</button><button class="btn sm" id="addms">'+I("plus")+t("pg.addMeasure")+"</button></div>");
     if(STATE.measures.length){
@@ -5717,6 +5968,7 @@ SCREENS.progress = function(){
   return h;
 };
 SCREENS.progress_after = function(){
+  bioWire();
   if(typeof wireCards==="function") wireCards();
   const $=id=>document.getElementById(id);
   wireGuestBanner();
