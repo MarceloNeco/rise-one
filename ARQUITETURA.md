@@ -21,6 +21,9 @@ Tudo roda no navegador da pessoa e os dados ficam no aparelho dela (`localStorag
 | `fundo.jpg`, `fundo-celular.jpg`, `fundo-claro.jpg`, `fundo-claro-celular.jpg` | Arte de fundo (escuro/claro, computador/celular) | Trocar por outras do mesmo formato |
 | `cid.json` | Lista de consulta de códigos CID-10 do aparelho musculoesquelético. **Lista inicial** — confira na tabela oficial. TUSS fica vazio de propósito | Sim, é uma lista |
 | `recados.json` | Recados do administrador para a 📥 caixa de entrada: `id` único, `inicio`, `fim`, `nivel` e texto PT/EN. Lido/arquivado fica em `ROOT.prefs.recados` | Sim, a cada recado |
+| `recursos.js` | Cópia avulsa do master do RootifyONE (**não alterar o conteúdo**). Lê os interruptores do Controle dos apps (`solverone-dados/recursos/global.json` e `rise-one.json`) e oferece `SolverRecursos.ligado(id, padrão)`, `.valor(id, padrão)` e `.aoMudar(fn)`; o que tem `data-recurso="id"` some sozinho quando desligado | Só trocando pela versão nova do master |
+| `recursos-do-app.json` | Diz ao RootifyONE o que o RiseONE obedece ("Quem obedece") | Sim, sempre que ligar um interruptor novo no código |
+| `recursos-central.js` | Leitor antigo e próprio dos mesmos arquivos (`centralLigado`/`centralValor`). Nada no app o usa desde a 3.11.0 | Pode sair numa limpeza futura |
 | `versoes.json` | O que mudou em cada versão, em PT e EN. O app desenha a tela "Novidades" a partir dele | Sim, a cada versão |
 | `LICENSE` | Licença MIT mais o aviso de que o app é orientativo e não substitui profissional | Raramente |
 | `CREDITOS.md` | De onde vem cada coisa de fora e sob qual licença | A cada dependência nova |
@@ -151,6 +154,7 @@ Procure pelo número para ir direto ao assunto.
 | Mudar os passos do tutorial | `TOUR` na seção 51 |
 | Mudar os passos do guia "Primeiros passos" | `WIZ_SETUP` na seção 51 |
 | Mudar quem pode usar cada recurso | Dentro do app como administrador, depois baixar `servicos.json` |
+| Obedecer a um interruptor novo do RootifyONE | Marque o elemento com `data-recurso="id"` e/ou consulte `SolverRecursos.ligado("id", true)`; depois declare em `recursos-do-app.json` |
 | Trocar o serviço de IA | Seção 49, `aiAsk` (Gemini, OpenAI e Anthropic já estão lá; a chave é da pessoa) |
 | Ligar um servidor no futuro | `entrar`/`sair` (seção 31) e `canUse` (seção 47): só esses pontos decidem identidade e permissão |
 
@@ -190,4 +194,5 @@ Procure pelo número para ir direto ao assunto.
 | App de relógio (Wear OS / watchOS) | Um site no GitHub Pages não vira app de relógio. O que dá é ler cinta peitoral ou pulseira por Web Bluetooth (Chrome do Android; no iPhone nenhum navegador tem Bluetooth para sites) |
 | Controlar o Spotify | Nenhum site troca faixa ou dá pause no app de música. O RiseONE abre a playlist num toque e a voz do treinador toca por cima, sem parar a música |
 | Projeção na TV | Resolvido na 3.2.0: a própria TV abre `tv-riseone.html` (Presentation API, com Chromecast ou Google TV). Sem Chromecast, cai para janelinha flutuante ou tela cheia, e aí quem leva a imagem é o espelhamento do aparelho. Câmera ao vivo o navegador não deixa transmitir |
+| Interruptores `ia`, `voz`, `ocr`, `offline`, `telemetria` | Não ligados na 3.11.0: IA, voz e leitura de foto estão espalhadas por muitas telas e esconder pela metade confundiria; o app não tem telemetria; o uso sem internet é a base do app |
 | Inbox (caixa de recados) | A 📥 do topo (3.9.0) mostra novidades, recados do administrador (`recados.json`) e o que veio do personal. Recado entre pessoas exige servidor e ainda não existe |

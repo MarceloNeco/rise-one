@@ -1042,6 +1042,8 @@ body.fs #assistballoon,body:has(.modal) #assistballoon,body.fs #assisttip,body:h
 @media (prefers-reduced-motion:reduce){ #helpbtn.assist{animation:none;transition:none} #assistballoon,#assisttip{animation:none} }
 html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-motion="0"] #assistballoon,html[data-motion="0"] #assisttip{animation:none}
 </style>
+<!-- interruptores do RootifyONE (Controle dos apps): SolverRecursos.ligado(id, padrao) / .valor(id, padrao); [data-recurso] some sozinho -->
+<script src="recursos.js" data-app="rise-one"></script>
 </head>
 <body>
 <script>
@@ -1157,9 +1159,9 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
 <div id="pmenu" class="hidden" role="menu" aria-label="Perfil / Profile"></div>
 
 <!-- ===== ASSISTONE: o ajudante redondo, sempre no mesmo canto; o balão abre acima dele ===== -->
-<button id="helpbtn" class="assist" title="AssistONE" aria-label="AssistONE" aria-expanded="false" aria-controls="assistballoon"><span class="ic" id="helpic" data-icon="help"></span></button>
-<div id="assistballoon" class="hidden" role="dialog" aria-label="AssistONE"></div>
-<div id="assisttip" class="hidden" role="status"></div>
+<button id="helpbtn" data-recurso="assistone" class="assist" title="AssistONE" aria-label="AssistONE" aria-expanded="false" aria-controls="assistballoon"><span class="ic" id="helpic" data-icon="help"></span></button>
+<div id="assistballoon" data-recurso="assistone" class="hidden" role="dialog" aria-label="AssistONE"></div>
+<div id="assisttip" data-recurso="assistone" class="hidden" role="status"></div>
 
 <script>
 "use strict";
@@ -1167,7 +1169,7 @@ html[data-motion="0"] #helpbtn.assist{animation:none;transition:none} html[data-
    RiseONE — app de treino, dieta e evolucao
    Arquivo unico. Tudo roda no navegador do usuario.
    ===================================================================== */
-const APP_VERSION = "3.10.0";
+const APP_VERSION = "3.11.0";
 const AD_URL = "https://marceloneco.github.io/";
 
 /* ---------- 0. ICONES (traço simples, mesma família em todo o app) ---------- */
@@ -2343,6 +2345,7 @@ Object.assign(L,{
 "as.offToast":["AssistONE desligado. Para religar: Mais › Preferências.","AssistONE is off. To turn it back on: More › Preferences."],
 "as.onSub":["O ajudante redondo no canto da tela: tour, passo a passo, busca e a explicação de cada tela.","The round helper in the corner of the screen: tour, step-by-step, search and each screen's explanation."],
 "as.enabled":["AssistONE ativado","AssistONE on"],
+"as.adminOff":["Desligado pela administração da SolverONE.","Turned off by the SolverONE administration."],
 "as.open":["Abrir o AssistONE","Open AssistONE"],
 "as.restart":["Recomeçar o passo a passo e as dicas","Restart the step-by-step and the tips"],
 "as.restarted":["Pronto: a saudação e as dicas de cada tela vão aparecer de novo.","Done: the greeting and each screen's tips will show again."],
@@ -3167,14 +3170,15 @@ function contDe(id){ return CONT.aparelhos[id]||null; }
 /* foto: "app:aparelhos/x.png" (arquivo do próprio app), caminho no solverone-dados, endereço https ou data: */
 function contFoto(id){
   const c=contDe(id), f=c&&c.foto;
-  if(!f) return "aparelhos/"+id+".png";
+  if(!f || (f.indexOf("app:")!==0 && !SolverRecursos.ligado("fotos-centrais", true))) return "aparelhos/"+id+".png";
   if(f.indexOf("app:")===0) return f.slice(4);
   if(/^(https?:|data:)/.test(f)) return f;
   return contBase()+f;
 }
-function contVideos(id){ const c=contDe(id); return (c&&c.videos||[]).filter(v=>v&&v.url); }
+function contVideos(id){ const c=contDe(id), max=+SolverRecursos.valor("videos.maxPorAparelho", 0), l=(c&&c.videos||[]).filter(v=>v&&v.url); return max>0? l.slice(0,max) : l; }
 function ytId(url){ const m=String(url||"").match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{6,})/); return m? m[1] : ""; }
 function ytHTML(id){
+  if(!SolverRecursos.ligado("videos-youtube", true)) return "";
   const vids=contVideos(id), nome=eqName(id);
   const c=contDe(id), d=EQ_DESC[id]||[];
   /* frase de busca própria de cada aparelho ("banco como usar" acha banco de dinheiro): do RootifyONE, do código, ou nome + academia */
@@ -4359,7 +4363,7 @@ function exDetailHTML(x){
 function videoModal(id){
   const x=allEx().find(e=>e.id===id); if(!x) return;
   const foot='<div class="row">'+
-    (exAnimId(x)?'<button class="btn ghost sm" id="exmir">'+I("video")+t("mir.open")+"</button>":"")+
+    (exAnimId(x)?'<button class="btn ghost sm" id="exmir" data-recurso="espelho">'+I("video")+t("mir.open")+"</button>":"")+
     '<button class="btn sm" data-addex2="'+x.id+'">'+I("plus")+t("ex.addToWorkout")+"</button></div>";
   const m=modal(mh(exName(x))+'<div id="exbody">'+exDetailHTML(x)+"</div>"+foot,{wide:true});
   const paint=()=>{ const b=m.querySelector("#exbody"); if(!b) return; b.innerHTML=exDetailHTML(x); initAnims(b); fillIcons(b); wireVideo(b,x,paint); };
@@ -4646,6 +4650,8 @@ function editWorkout(id){
     save(); m.remove(); render();
   };
 }
+/* descanso padrão entre séries: o dono pode mudar no RootifyONE (descanso.padraoSeg); sem isso, 60 s */
+function restPadrao(){ const v=Math.round(+SolverRecursos.valor("descanso.padraoSeg", 60)); return v>=5 && v<=600? v : 60; }
 function addExToWorkout(exId){
   if(!STATE.workouts.length){ const w={id:uid(), name:LANG==="pt"?"Treino A":"Workout A", days:[], items:[]}; STATE.workouts.push(w); }
   const m=modal(mh(t("ex.addToWorkout"))+
@@ -4653,13 +4659,13 @@ function addExToWorkout(exId){
     '<div class="grid g3"><label class="fld"><span>'+t("wk.sets")+'</span><input id="ae_s" type="number" value="3" min="1"></label>'+
     '<label class="fld"><span>'+t("wk.reps")+'</span><input id="ae_r" type="text" value="12"></label>'+
     '<label class="fld"><span>'+t("wk.load")+' (kg)</span><input id="ae_l" type="number" value="0" step="0.5"></label></div>'+
-    '<label class="fld"><span>'+t("wk.rest")+' ('+t("wk.sec")+')</span><input id="ae_d" type="number" value="60" step="5"></label>'+
+    '<label class="fld"><span>'+t("wk.rest")+' ('+t("wk.sec")+')</span><input id="ae_d" type="number" value="'+restPadrao()+'" step="5"></label>'+
     '<div class="row" style="justify-content:flex-end"><button class="btn line" data-close>'+t("common.cancel")+'</button><button class="btn" id="ae_ok">'+t("common.add")+"</button></div>");
   m.querySelector("#ae_ok").onclick=()=>{
     const w=STATE.workouts.find(x=>x.id===m.querySelector("#ae_w").value);
     w.items=w.items||[];
     w.items.push({exId, sets:num(m.querySelector("#ae_s").value,3), reps:m.querySelector("#ae_r").value||"12",
-      load:num(m.querySelector("#ae_l").value,0), rest:num(m.querySelector("#ae_d").value,60)});
+      load:num(m.querySelector("#ae_l").value,0), rest:num(m.querySelector("#ae_d").value,restPadrao())});
     save(); m.remove(); toast(t("wk.added"));
   };
 }
@@ -5189,7 +5195,7 @@ function runWorkout(id){
       '<div class="bar" style="margin:6px 0 12px"><i style="width:'+((idx)/w.items.length*100)+'%"></i></div>'+
       ptStageHTML()+
       '<div class="row" style="margin-bottom:10px">'+(idx===0?'<button class="btn ghost sm" id="r_warm">'+I("flame")+t("wu.warmBtn")+"</button>":"")+
-        musBtn("ghost sm")+(musAtiva()&&vozCfg().on?'<span class="tiny muted">'+t("pt.music")+"</span>":"")+'<button class="btn ghost sm" data-tvbtn="1" id="r_tv">'+I("cast")+t("tv.short")+"</button>"+hrBadge()+"</div>"+
+        musBtn("ghost sm")+(musAtiva()&&vozCfg().on?'<span class="tiny muted">'+t("pt.music")+"</span>":"")+'<button class="btn ghost sm" data-tvbtn="1" data-recurso="modo-tv" id="r_tv">'+I("cast")+t("tv.short")+"</button>"+hrBadge()+"</div>"+
       '<div class="card tight" style="margin:0 0 12px"><div class="row nowrap">'+((x&&exAnimId(x))?'<div class="runfig">'+exFigure(x)+"</div>":(eq?'<div class="eqic" style="width:52px;height:52px">'+eq.svg+"</div>":""))+
       '<div><h2 style="margin:0">'+esc(x?exName(x):it.exId)+'</h2><small class="muted">'+esc(x?mName(x.m):"")+" · "+(idx+1)+"/"+w.items.length+"</small></div></div>"+
       '<p class="tiny muted" style="margin:.6em 0 0">'+esc(x?exTip(x):"")+"</p>"+
@@ -5202,10 +5208,10 @@ function runWorkout(id){
       '<span class="pill">'+p.sets.length+" / "+p.target+"</span></div>"+
       '<div class="row" style="margin-top:12px"><button class="btn" id="r_set">'+I("check")+t("wk.setDone")+'</button>'+
       '<button class="btn ghost" id="r_count">'+I("speaker")+t("pt.count")+"</button>"+
-      '<button class="btn ghost" id="r_rest">'+I("timer")+t("wk.restNow")+" ("+(it.rest||60)+"s)</button>"+
+      '<button class="btn ghost" id="r_rest">'+I("timer")+t("wk.restNow")+" ("+(it.rest||restPadrao())+"s)</button>"+
       '<button class="btn line" id="r_prev" '+(idx===0?"disabled":"")+">"+I("chevl")+t("wk.prev")+'</button>'+
       '<button class="btn line" id="r_next" '+(idx>=w.items.length-1?"disabled":"")+">"+t("wk.next")+I("chevr")+'</button>'+
-      ((x&&exAnimId(x))?'<button class="btn line" id="r_mir">'+I("video")+t("mir.open")+"</button>":"")+"</div>"+
+      ((x&&exAnimId(x))?'<button class="btn line" id="r_mir" data-recurso="espelho">'+I("video")+t("mir.open")+"</button>":"")+"</div>"+
       '<div class="sep"></div><button class="btn wide" id="r_fin">'+I("check")+t("wk.finish")+"</button>";
     initAnims(m);
     /* voz: fala o exercicio so quando ele muda, nao a cada serie anotada */
@@ -5221,10 +5227,10 @@ function runWorkout(id){
       p.reps=m.querySelector("#r_reps").value; p.load=num(m.querySelector("#r_load").value,0);
       p.sets.push({reps:p.reps, load:p.load});
       if(typeof saySet==="function") saySet(p.sets.length, p.target);
-      if(p.sets.length>=p.target && idx<w.items.length-1){ idx++; paint(); timerModal(it.rest||60); }
-      else { paint(); timerModal(it.rest||60); }
+      if(p.sets.length>=p.target && idx<w.items.length-1){ idx++; paint(); timerModal(it.rest||restPadrao()); }
+      else { paint(); timerModal(it.rest||restPadrao()); }
     };
-    m.querySelector("#r_rest").onclick=()=>timerModal(it.rest||60);
+    m.querySelector("#r_rest").onclick=()=>timerModal(it.rest||restPadrao());
     m.querySelector("#r_count").onclick=()=>countReps(m.querySelector("#r_reps").value);
     const pc=m.querySelector("#pt_change"); if(pc) pc.onclick=()=>ptPickModal(()=>paint());
     const pv=m.querySelector("#pt_von"); if(pv) pv.onclick=()=>{ const c=vozCfg(); c.on=true; c.narraTreino=true; save(); saidIdx=-1; paint(); };
@@ -6525,7 +6531,7 @@ function commitScan(){
   }
   if(SCANMODE==="sheet"){
     const w={id:uid(), name:(LANG==="pt"?"Treino da ficha ":"Sheet workout ")+fmtShort(todayISO()), days:[],
-      items:p.map(i=>({exId:i.exId,sets:i.sets,reps:i.reps,load:i.load,rest:60}))};
+      items:p.map(i=>({exId:i.exId,sets:i.sets,reps:i.reps,load:i.load,rest:restPadrao()}))};
     STATE.workouts.push(w); save(); toast(t("common.saved")); go("workout"); return;
   }
 }
@@ -7379,7 +7385,7 @@ function moveVideo(id){
     '<div><p style="margin:0">'+esc(mvTip(m))+'</p><p class="tiny muted" style="margin:.4em 0 0">'+t("wu.hold")+"</p></div></div>"+photoStrip(m.id)+
     '<div class="sep"></div><span class="kicker">'+t("ex.video")+"</span>"+videoBox(m.id, mvName(m))+
     '<div class="row" style="margin-top:10px"><button class="btn" id="mvgo">▶ '+t("wu.start")+"</button>"+
-    (mvAnimId(m)?'<button class="btn ghost sm" id="mvmir">'+I("video")+t("mir.open")+"</button>":"")+
+    (mvAnimId(m)?'<button class="btn ghost sm" id="mvmir" data-recurso="espelho">'+I("video")+t("mir.open")+"</button>":"")+
     '<a class="btn ghost sm" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q+'">'+t("ex.noVideo")+"</a></div>",{wide:true});
   md.querySelector("#mvgo").onclick=()=>{ md.remove(); runRoutine(expandRoutine([[m.id,m.sec]]), mvName(m)); };
   const mm=md.querySelector("#mvmir"); if(mm) mm.onclick=()=>{ md.remove(); openMirror(mvAnimId(m), mvName(m)); };
@@ -7482,7 +7488,7 @@ function buildRoutineUI(){
     "</div>"+
     '<div class="rfoot">'+
       (nx?'<div class="tiny muted" style="text-align:center;margin-bottom:8px">'+t("wu.next")+": "+esc(mvName(nx.mv))+"</div>":"")+
-      '<div class="tctl" style="margin-bottom:8px"><button class="btn line sm" id="rmir">'+I("video")+t("mir.open")+"</button></div>"+
+      '<div class="tctl" style="margin-bottom:8px"><button class="btn line sm" id="rmir" data-recurso="espelho">'+I("video")+t("mir.open")+"</button></div>"+
       '<div class="tctl"><button class="btn ghost" id="rprev">⏮ '+t("wu.prevm")+'</button>'+
       '<button class="btn big" id="rplay">⏸ '+t("tm.pause")+'</button>'+
       '<button class="btn ghost" id="rnext">'+t("wu.skip")+" ⏭</button></div>"+
@@ -8537,6 +8543,7 @@ function checkFor(animId){
 }
 /* --- abrir o espelho --- */
 function openMirror(animId, title){
+  if(!SolverRecursos.ligado("espelho", true)) return;
   if(!canUse("mirror")) return gotItLocked("mirror");
   closeMirror(true);
   MIR.anim=animId||null; MIR.title=title||t("mir.title"); MIR.msgs=[];
@@ -8545,7 +8552,7 @@ function openMirror(animId, title){
     '<div class="mhead"><button class="iconbtn" id="mclose">&times;</button>'+
       '<div style="flex:1;min-width:0"><div class="tiny muted">'+t("mir.title")+'</div><strong style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(MIR.title)+"</strong></div>"+
       '<button class="iconbtn" id="mflip" title="'+t("sc.switch")+'">'+I("refresh")+'</button>'+
-    '<button class="iconbtn" id="mcast" title="'+t("tv.title")+'">'+I("cast")+'</button></div>'+
+    '<button class="iconbtn" id="mcast" data-recurso="modo-tv" title="'+t("tv.title")+'">'+I("cast")+'</button></div>'+
     '<div class="mstage"><video id="mvid" autoplay playsinline muted></video>'+
       '<canvas id="mcv"></canvas>'+
       '<div class="mguide" id="mguide">'+(animId?animSVG(animId):"")+'</div>'+
@@ -8830,7 +8837,7 @@ function loadAnuncios(){
   }).catch(()=>{});
 }
 function adsCfg(){ ROOT.adsCfg=Object.assign({}, ADLIST.cfg, ROOT.adsCfg||{}); return ROOT.adsCfg; }
-function adsOff(){ if(role()==="admin") return viewAs()? viewAs()==="premium" : true; return !!(STATE && STATE.pro); }
+function adsOff(){ if(!SolverRecursos.ligado("anuncios", true)) return true; if(role()==="admin") return viewAs()? viewAs()==="premium" : true; return !!(STATE && STATE.pro); }
 function fullScreenOpen(){ return !!document.querySelector("#timerscreen,#routinescreen,#mirrorscreen") || document.body.classList.contains("fs"); }
 /* contagem por anuncio (guardada no aparelho) */
 function adStats(){ ROOT.adStats=ROOT.adStats||{}; return ROOT.adStats; }
@@ -9443,7 +9450,9 @@ function wizRun(id, opts){
 /* Por que: um lugar só, igual em todas as telas (WCAG 3.2.6), que começa pela ajuda da tela atual.
    O balão não entra no histórico: o Voltar do celular continua levando às telas. Liga/desliga em Mais › Preferências. */
 const ASSIST={open:false, tipT:null};
-function assistOn(){ return ROOT.prefs.assist!==0; }
+/* o dono pode desligar o AssistONE no RootifyONE (Controle dos apps): aí ele não aparece nem abre */
+function assistAdm(){ return SolverRecursos.ligado("assistone", true); }
+function assistOn(){ return ROOT.prefs.assist!==0 && assistAdm(); }
 function assistApply(){ document.documentElement.setAttribute("data-assist", assistOn()?"1":"0"); }
 function assistSet(on){ ROOT.prefs.assist=on?1:0; saveRoot(); assistApply(); if(!on){ assistClose(); assistTipHide(); toast(t("as.offToast")); } }
 /* atalhos por tela: até 3 ações que já executam (ícone, PT, EN, ação) */
@@ -9519,7 +9528,7 @@ function assistTipHide(){ const d=document.getElementById("assisttip"); if(d){ d
 function assistOnRoute(){
   clearTimeout(ASSIST.tipT); assistTipHide();
   if(ASSIST.open) assistClose();
-  if(!assistOn() || TOURST.active) return;
+  if(!assistOn() || TOURST.active || SolverRecursos.valor("assistone.dicas", true)===false) return;
   const rota=ROUTE, tip=HELP_TIPS[rota]; if(!tip) return;
   const seen=ROOT.prefs.tipsSeen||{}; if(seen[rota]) return;
   ASSIST.tipT=setTimeout(()=>{
@@ -9536,6 +9545,7 @@ function assistOnRoute(){
   }, 2500);
 }
 function assistCard(){
+  if(!assistAdm()) return '<div class="card">'+cardHead("help", t("as.name"), t("as.adminOff"))+"</div>";
   return '<div class="card">'+cardHead("help", t("as.name"), t("as.onSub"))+
     '<label class="switch"><input type="checkbox" id="as_sw" '+(assistOn()?"checked":"")+'><span class="tr"></span><span>'+t("as.enabled")+"</span></label>"+
     '<div class="row" style="margin-top:10px"><button class="btn sm line" id="as_open">'+I("help")+t("as.open")+'</button><button class="btn sm ghost" id="as_reset">'+I("refresh")+t("as.restart")+"</button></div></div>";
@@ -12383,7 +12393,7 @@ const DRAWER_EXTRA={
   scan:   {ic:"scan",     k:"nav.scan",    run:()=>go("scan")},
   eqs:    {ic:"dumbbell", k:"dw.eqs",      run:()=>{ go("ex"); setTimeout(()=>{ const f=document.getElementById("eqfold"); if(f){ f.open=true; f.scrollIntoView({behavior:"smooth",block:"start"}); } },80); }},
   timer:  {ic:"timer",    k:"tm.short",    run:()=>openTimer()},
-  mirror: {ic:"video",    k:"mir.open",    run:()=>openMirror(), feat:"mirror"},
+  mirror: {ic:"video",    k:"mir.open",    run:()=>openMirror(), feat:"mirror", rec:"espelho"},
   news:   {ic:"sparkles", k:"nw.title",    run:()=>openNews(), dot:()=>hasNews()},
   help:   {ic:"help",     k:"help.title",  run:()=>openHelp("tutorial")}
 };
@@ -12407,6 +12417,7 @@ function drawerItemHTML(id){
   const ex=DRAWER_EXTRA[id];
   if(ex){
     if(ex.feat && !canUse(ex.feat)) return "";
+    if(ex.rec && !SolverRecursos.ligado(ex.rec, true)) return "";
     return '<button class="ditem" data-drun="'+id+'">'+I(ex.ic)+'<span class="dl">'+t(ex.k)+"</span>"+((ex.dot&&ex.dot())?'<span class="dot-new"></span>':"")+"</button>";
   }
   const r=routeInfo(id);
@@ -13080,6 +13091,7 @@ function paintTvBtn(){
 }
 /* o botão único: tenta transmitir, depois janelinha, depois tela cheia */
 function tvProjetar(video){
+  if(!SolverRecursos.ligado("modo-tv", true)) return;
   if(TV.ligada){ tvDesligar(); toast(t("tv.offNow")); return; }
   if(tvSuportaCast()){
     tvConectar().then(()=>toast(t("tv.onNow"))).catch(err=>{
@@ -13570,6 +13582,7 @@ function boot(){
   applyTheme(ROOT.prefs.theme || "dark");
   applyBg(ROOT.prefs.bg===undefined ? true : !!ROOT.prefs.bg);
   applyA11y(); assistApply();
+  SolverRecursos.aoMudar(()=>{ assistApply(); if(!assistOn()){ assistClose(); assistTipHide(); } paintAd(); buildDrawer(); if(STATE) render(); });
   document.documentElement.lang = LANG==="pt"?"pt-BR":"en";
   paintLangBtn();
   document.getElementById("vertxt").textContent = "v"+APP_VERSION;

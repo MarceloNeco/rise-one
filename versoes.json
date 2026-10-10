@@ -3,6 +3,17 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
+   "v": "3.11.0",
+   "data": "2026-10-10",
+   "hora": "13:00:00",
+   "pt": [
+    "🎛️ O RiseONE passou a obedecer aos interruptores da administração da SolverONE: o AssistONE e as dicas dele, os anúncios, os vídeos do YouTube e as fotos centrais na ficha do aparelho, o espelho com câmera e o botão de TV podem ser desligados para todos sem atualizar o app. O descanso padrão entre séries e o número de vídeos por aparelho também podem ser ajustados de lá. Sem internet, tudo continua como estava."
+   ],
+   "en": [
+    "🎛️ RiseONE now follows the SolverONE administration switches: AssistONE and its tips, ads, YouTube videos and central photos on the machine card, the camera mirror and the TV button can be turned off for everyone without updating the app. The default rest between sets and the number of videos per machine can also be set from there. Offline, everything keeps working as before."
+   ]
+  },
+  {
    "v": "3.10.0",
    "data": "2026-10-10",
    "hora": "12:00:00",

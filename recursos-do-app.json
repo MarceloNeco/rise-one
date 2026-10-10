@@ -1,0 +1,65 @@
+{
+ "formato": 1,
+ "app": "rise-one",
+ "versao": "3.11.0",
+ "atualizado": "2026-10-10",
+ "nota": {
+  "pt": "O RiseONE lê os interruptores ao abrir (e ao voltar para o app). Sem arquivo ou sem internet, tudo fica ligado.",
+  "en": "RiseONE reads the switches when it opens (and when you come back to it). With no file or no internet, everything stays on."
+ },
+ "recursos": [
+  {
+   "id": "assistone",
+   "pt": "AssistONE: botão, balão e dicas somem e não abrem; o card das Preferências avisa que foi desligado pela administração",
+   "en": "AssistONE: button, balloon and tips disappear and do not open; the Preferences card says it was turned off by the administration"
+  },
+  {
+   "id": "anuncios",
+   "pt": "Faixa de anúncios do topo e pop-ups",
+   "en": "Top ad ticker and pop-ups"
+  },
+  {
+   "id": "videos-youtube",
+   "pt": "Vídeos do YouTube (e a busca) na ficha do aparelho",
+   "en": "YouTube videos (and search) on the machine card"
+  },
+  {
+   "id": "fotos-centrais",
+   "pt": "Fotos dos aparelhos vindas do RootifyONE; desligado, usa as fotos que vêm com o app",
+   "en": "Machine photos from RootifyONE; when off, uses the photos bundled with the app"
+  },
+  {
+   "id": "espelho",
+   "pt": "Espelho com câmera: botões, item do menu e abertura",
+   "en": "Camera mirror: buttons, menu item and opening"
+  },
+  {
+   "id": "modo-tv",
+   "pt": "Botão de projetar na TV (treino e espelho)",
+   "en": "Cast-to-TV button (workout and mirror)"
+  }
+ ],
+ "comportamentos": [
+  {
+   "id": "assistone.dicas",
+   "tipo": "sim/não",
+   "padrao": true,
+   "pt": "Dicas curtas por tela do AssistONE",
+   "en": "AssistONE short per-screen tips"
+  },
+  {
+   "id": "descanso.padraoSeg",
+   "tipo": "número",
+   "padrao": 60,
+   "pt": "Descanso padrão entre séries, em segundos (5 a 600), quando o exercício não tem um próprio",
+   "en": "Default rest between sets, in seconds (5 to 600), when the exercise has none of its own"
+  },
+  {
+   "id": "videos.maxPorAparelho",
+   "tipo": "número",
+   "padrao": 0,
+   "pt": "Máximo de vídeos por aparelho (0 = todos)",
+   "en": "Maximum videos per machine (0 = all)"
+  }
+ ]
+}
