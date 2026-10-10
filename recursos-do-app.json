@@ -1,7 +1,7 @@
 {
  "formato": 1,
  "app": "rise-one",
- "versao": "3.10.0",
+ "versao": "3.11.0",
  "atualizado": "2026-10-10",
  "nota": {
   "pt": "O RiseONE lê os interruptores ao abrir (e ao voltar para o app). Sem arquivo ou sem internet, tudo fica ligado.",

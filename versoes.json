@@ -3,14 +3,31 @@
  "_readme": "What changed in each RiseONE version. The app reads this file and shows it under More › What's new.",
  "versoes": [
   {
-   "v": "3.10.0",
+   "v": "3.11.0",
    "data": "2026-10-10",
-   "hora": "12:00:00",
+   "hora": "13:00:00",
    "pt": [
     "🎛️ O RiseONE passou a obedecer aos interruptores da administração da SolverONE: o AssistONE e as dicas dele, os anúncios, os vídeos do YouTube e as fotos centrais na ficha do aparelho, o espelho com câmera e o botão de TV podem ser desligados para todos sem atualizar o app. O descanso padrão entre séries e o número de vídeos por aparelho também podem ser ajustados de lá. Sem internet, tudo continua como estava."
    ],
    "en": [
     "🎛️ RiseONE now follows the SolverONE administration switches: AssistONE and its tips, ads, YouTube videos and central photos on the machine card, the camera mirror and the TV button can be turned off for everyone without updating the app. The default rest between sets and the number of videos per machine can also be set from there. Offline, everything keeps working as before."
+   ]
+  },
+  {
+   "v": "3.10.0",
+   "data": "2026-10-10",
+   "hora": "12:00:00",
+   "pt": [
+    "🎨 Início em cartões coloridos, no estilo dos apps de saúde: cada coisa num cartão pequeno com pouco texto — treino de hoje, peso, missões, comida, sequência, bioimpedância, registrar o dia, ler com a câmera, aquecer, dor, biblioteca, recursos, cronômetro, assistente e objetivos. Um toque abre.",
+    "🧬 Leitura do exame de bioimpedância (InBody e parecidos): tire foto da folha e o app transcreve tudo — composição corporal, músculo e gordura, pontuação, controle de peso, circunferências, taxa metabólica, gordura visceral, análise por segmento (braços, tronco, pernas) e o histórico impresso. Você confere campo por campo antes de salvar.",
+    "📈 O exame salvo aparece em Progresso › Medidas com o que está abaixo, normal ou acima da faixa do próprio laudo e a diferença para o exame anterior. Peso, gordura e medidas entram sozinhos nos gráficos; o histórico do laudo pode virar medições antigas.",
+    "⏳ A leitura segue a regra das tarefas longas: tela acesa, pílula \"não feche o app\", dá para fechar a janela e usar outras telas, e o \"✅ toque para ver\" abre a conferência. Com chave de IA no cofre a leitura é completa; sem chave, o leitor do aparelho pega o que conseguir."
+   ],
+   "en": [
+    "🎨 Home in colorful cards, health-app style: each thing in a small card with little text — today's workout, weight, missions, food, streak, body composition, log the day, camera reading, warm-up, pain, library, gear, timer, assistant and goals. One tap opens it.",
+    "🧬 Body composition test reading (InBody and similar): take a photo of the sheet and the app transcribes everything — body composition, muscle and fat, score, weight control, circumferences, basal metabolic rate, visceral fat, segmental analysis (arms, trunk, legs) and the printed history. You check field by field before saving.",
+    "📈 The saved test shows under Progress › Measures with what is below, normal or above the report's own range and the change since the last test. Weight, fat and measures go into the charts automatically; the report's history can become past measurements.",
+    "⏳ The reading follows the long-task rule: screen stays on, a \"don't close the app\" pill, you can close the window and use other screens, and \"✅ tap to see\" opens the review. With an AI key in the vault the reading is complete; without one, the on-device reader gets what it can."
    ]
   },
   {
